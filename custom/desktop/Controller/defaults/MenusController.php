@@ -26,14 +26,17 @@ class MenusController extends ControllerHelper implements ControllerInterface
                 ->result ();
         
         
-        foreach ($result as $menu) 
+        if (is_array ($result))
         {
-            if ( (int)$menu->get ('parent') > 0)
+            foreach ($result as $menu) 
             {
-                $route  = $menu->get ('route');
-                $route  = str_replace ('*', $slugify->slugify ($menu->get ('menu')), $route);
-                
-                $menu->set ('route', $route);
+                if ( (int)$menu->get ('parent') > 0)
+                {
+                    $route  = $menu->get ('route');
+                    $route  = str_replace ('*', $slugify->slugify ($menu->get ('menu')), $route);
+
+                    $menu->set ('route', $route);
+                }
             }
         }
 
