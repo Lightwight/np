@@ -1,0 +1,199 @@
+@import "../functions/_global_functions.scss";
+
+@mixin transition-timing-function($timingFunction) {
+    -webkit-transition-timing-function: $timingFunction;
+    -moz-transition-timing-function: $timingFunction;
+    -ms-transition-timing-function: $timingFunction;
+    -o-transition-timing-function: $timingFunction;
+    transition-timing-function: $timingFunction;
+}
+
+@mixin transition-duration($duration) {
+    -webkit-transition-duration: $duration;
+    -moz-transition-duration: $duration;
+    -ms-transition-duration: $duration;
+    -o-transition-duration: $duration;
+    transition-duration: $duration;
+}
+
+@mixin transition-property($property) {
+    @if $property == transform {
+        -webkit-transition-property: #{-webkit-}$property;
+        -moz-transition-property: #{-moz-}$property;
+        -ms-transition-property: #{-ms-}$property;
+        -o-transition-property: #{-o-}$property;
+        transition-property: $property;
+    } @else {
+        -webkit-transition-property: $property;
+        -moz-transition-property: $property;
+        -ms-transition-property: $property;
+        -o-transition-property: $property;
+        transition-property: $property;
+    }
+}
+
+@mixin transition-delay($delay) {
+    -webkit-transition-delay: $delay;
+    -moz-transition-delay: $delay;
+    -ms-transition-delay: $delay;
+    -o-transition-delay: $delay;
+    transition-delay: $delay;
+}
+
+@mixin transform($transform) {
+    -webkit-transform: $transform;
+    -moz-transform: $transform;
+    -o-transform: $transform;
+    transform: $transform;
+}
+
+@mixin transition($values...) { 
+    $transitions: ();
+    
+    @each $declaration in $values {
+        $prop: nth($declaration, 1);
+        $prop-opts: ();
+        $length: length($declaration);
+        
+        @if $length > 1 {
+            @for $i from 2 through $length {
+                $prop-opts: append($prop-opts, nth($declaration, $i));   
+            }
+        }
+        
+        $trans: ($prop, $prop-opts);
+        $transitions: append($transitions, $trans, comma);
+    }
+      
+    -webkit-transition: trans-prefix($transitions, webkit);
+    -moz-transition: trans-prefix($transitions, moz);
+    -o-transition: trans-prefix($transitions, o);
+    transition: $values;
+}
+
+@mixin display($value) {
+    @if($value == flex) {
+        display: -webkit-box;      /* OLD - iOS 6-, Safari 3.1-6 */
+        display: -moz-box;         /* OLD - Firefox 19- (buggy but mostly works) */
+        display: -ms-flexbox;      /* TWEENER - IE 10 */
+        display: -webkit-flex;     /* NEW - Chrome */
+        display: flex;
+    } @else {
+        display: $value;
+    }
+}
+
+@mixin flex-direction($value...) {
+    -webkit-flex-direction: $value;
+    flex-direction: $value;
+}
+
+@mixin flex-wrap($value...) {
+    -webkit-flex-wrap: $value;
+    flex-wrap: $value;
+}
+
+@mixin flex($value...) {
+    -webkit-box-flex: $value;      /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: $value;         /* OLD - Firefox 19- */
+    -webkit-flex: $value;          /* Chrome */
+    -ms-flex: $value;              /* IE 10 */
+    flex: $value;       
+}
+
+@mixin animation($values...) {
+    -webkit-transition: $values;
+    -moz-transition: $values;
+    -o-transition: $values;
+    transition: $values;
+}
+
+@mixin notransition($important: false) {
+    @if($important == false) {
+        -webkit-transition: none;
+        -moz-transition: none;
+        -o-transition: none;
+        transition: none;
+    } @else {
+        -webkit-transition: none !important;
+        -moz-transition: none !important;
+        -o-transition: none !important;
+        transition: none !important;
+    }
+}
+
+@mixin opacity($opacity) {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + ($opacity * 100) + ")";
+    filter: alpha(opacity=($opacity * 100));
+    -moz-opacity: $opacity;
+    -khtml-opacity: $opacity;
+    opacity: $opacity;
+}
+
+@mixin backface-visibility($hidden: hidden) {
+    -webkit-backface-visibility: $hidden;
+    backface-visibility: $hidden;
+}
+
+@mixin opacityImportant($opacity) {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=" + ($opacity * 100) + ")" !important;
+    filter: alpha(opacity=($opacity * 100)) !important;
+    -moz-opacity: $opacity !important;
+    -khtml-opacity: $opacity !important;
+    opacity: $opacity !important;
+}
+
+@mixin box-shadow($shadow...) {
+    -moz-box-shadow: $shadow;
+    -webkit-box-shadow: $shadow;
+    box-shadow: $shadow;
+}
+
+@mixin border-radius($borderRadius) {
+    -webkit-border-radius: $borderRadius;
+    -moz-border-radius: $borderRadius;
+    border-radius: $borderRadius;
+}
+
+@mixin border-top-left-radius($borderRadius) {
+    -webkit-border-top-left-radius: $borderRadius;
+    -moz-border-radius-topleft: $borderRadius;
+    border-top-left-radius: $borderRadius;
+}
+
+@mixin border-top-right-radius($borderRadius) {
+    -webkit-border-top-right-radius: $borderRadius;
+    -moz-border-radius-topright: $borderRadius;
+    border-top-right-radius: $borderRadius;    
+}
+
+@mixin border-bottom-left-radius($borderRadius) {
+    -webkit-border-bottom-left-radius: $borderRadius;
+    -moz-border-radius-bottomleft: $borderRadius;
+    border-bottom-left-radius: $borderRadius;
+}
+
+@mixin border-bottom-right-radius($borderRadius) {
+    -webkit-border-bottom-right-radius: $borderRadius;
+    -moz-border-radius-bottomright: $borderRadius;
+    border-bottom-right-radius: $borderRadius;    
+}
+
+@mixin appearance($appearance) {
+    -webkit-appearance: $appearance;
+    -moz-appearance: $appearance;
+    appearance: $appearance;
+}
+
+@mixin text-align-last($align...) {
+    text-align-last: $align;
+    -moz-text-align-last: $align;
+}
+
+@mixin user-select ($userSelect...){
+    user-select: $userSelect;
+    -moz-user-select: $userSelect;
+    -khtml-user-select: $userSelect;
+    -webkit-user-select: $userSelect;
+    -o-user-select: $userSelect;
+}

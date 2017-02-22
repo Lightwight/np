@@ -1,0 +1,125 @@
+@import "../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-admin {
+    #admin-menu-left {
+        position: fixed;
+        left: 0px;
+        top: 0px;
+        width: 250px;
+        height: 100%;
+        background-color: #474747;
+        
+        > h3,
+        ul,
+        ul li,
+        ul li a {
+            position: relative;
+            float: left;
+            width: 100%;            
+        }
+
+        ul li,
+        ul li a {
+            color: #FFF;
+        }
+        
+        > h3 {
+            color: #FFF;
+            padding-left: 12px;
+            padding-right: 12px;
+        }        
+        
+        ul {
+            list-style: none;
+            padding: 0px;
+            margin: 0px;
+
+            li {
+                a {
+                    padding-left: 12px;
+                    padding-right: 12px;
+                    width: calc(100% - 18px);
+
+                    > span {
+                        line-height: 32px;
+                    }
+                    
+                    .icon {
+                        width: 18px;
+                        height: 32px;
+                        float: right;
+                    }                     
+                }
+            }
+        }
+        
+        > ul {
+            li {
+                ul {
+                    background-color: #FFF;
+                    display: none;
+                    
+                    li,
+                    li a {
+                        color: #000;
+                    }
+                    
+                    li {
+                        a {
+                            padding-left: 24px;
+                            font-weight: normal;
+
+                            @include transition(all 350ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+                        } 
+                        
+                        .active a,
+                        a.active {
+                            font-weight: bold;
+                        }
+                    }
+                }
+                
+                &.active {
+                    ul {
+                        display: block;
+                    }                    
+                }
+
+            }
+        }
+        
+        .admin-child-menu {
+            .icon {
+                @include backface-visibility(visible);
+            }
+            
+            &.active {
+                .icon {
+                    @include transform(rotateX(180deg));
+                    @include transition(all 1050ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+                }
+            }
+        }
+    }    
+}

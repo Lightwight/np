@@ -1,0 +1,141 @@
+@import "../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+html {
+    &.np-scope-admin {
+        width: 100%;
+        height: auto;
+        
+        body {
+            width: 100%;
+            height: auto;
+            font-family: 'Quicksand', sans-serif;
+            background-color: #FFF;
+            overflow: auto;
+            
+            background-image: url(/assets/images/backgrounds/white.jpg);
+            background-size: cover;
+            background-attachment: fixed;
+            background-position: center bottom;
+            
+            * {
+                box-sizing: border-box;
+            }            
+        }
+        
+        header {
+            position: fixed;
+            width: 250px;
+            height: 100%;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: auto;
+            box-shadow: none;
+            z-index: 1000;
+            border: none;
+            background-color: transparent;
+        }
+
+        main {
+            position: absolute;
+            width: calc(100% - 275px);
+            height: auto;
+            padding: 0px;
+
+            top: 0px;
+
+            left: 275px;
+            padding-top: 25px;
+            padding-right: 25px;
+            padding-bottom: 25px;
+
+            overflow: hidden;
+            z-index: auto;
+            
+            text-align: center;
+            
+            .centered {
+                padding: 0px;
+                margin: 0px auto;
+                width: 800px;
+                text-align: center;
+            }
+
+            .main-content {
+                &.padding {
+                    padding-top: 50px;
+                    padding-bottom: 50px;
+                }                
+            }
+            
+            .hoz-title {
+                text-align: center;
+                width: 100%;
+                background-color: #44060F;
+                color: #FFF;
+                line-height: 60px;
+                margin: 0px;
+            }
+        }
+        
+        a {
+            color: #000;
+            cursor: pointer;
+            
+            &:hover,
+            &:focus,
+            &:active {
+                font-weight: 700;
+                color: #000;
+                text-decoration: none;                
+            }
+        }
+        
+        li {
+            &.active {
+                a {
+                    font-weight: 700;
+                    color: #000;
+                    text-decoration: none;
+                }
+            }
+        }
+        
+        input[type=text],
+        input[type=number],
+        input[type=email],
+        input[type=password] {
+            font-size: 16px;
+            height: 36px;
+            text-indent: 12px;
+            border: 1px #d3d3d3 solid;
+            outline: none;
+            
+            &:focus {
+                border: 1px #d3d3d3 solid;
+                outline: none;
+            }
+        }        
+    }
+}

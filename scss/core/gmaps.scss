@@ -1,0 +1,431 @@
+@import "../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+html {
+    .gmaps-outer-control {
+        background-color: #FFF;
+
+        padding: 12px;
+        margin-left: 11px;
+
+        @include box-shadow(rgba(0, 0, 0, 0.3) 0px 1px 4px -1px);
+    }
+
+    .gmaps-overlay {
+        right: 0px;
+        bottom: 0px;
+        top: auto;
+        width: 76px;
+        height: 100%;
+        background-color: rgba(0,0,0,0.25);
+        position: absolute;
+        left: auto;
+        z-index: 1;
+
+        @include box-shadow(rgba(0, 0, 0, 0.3) 0px 0px 4px 1px);
+
+        .fa {
+            position: absolute;
+            color: #4d4d4d;
+            left: 28px;
+            width: 28px;    
+        }
+
+        .fa-angle-double-up {
+            top: 12px;
+        }
+
+        .fa-angle-double-down {
+            bottom: 12px;
+        }    
+    }
+
+    .gmaps-outer-panelTop,
+    .gmaps-outer-panelLeft {
+        * {
+            white-space: normal;   
+            word-break: break-all;
+            word-wrap: break-word;
+        }
+
+        #mapsInfo {
+            > h4 {
+                border-bottom: 1px rgba(0,0,0,0.3) solid;
+                line-height: 38px;
+                margin-top: 0px;
+            }        
+        }
+
+        .gmaps-autocomplete {
+            border: none;
+
+            &:focus {
+                outline: none;
+            }
+        }
+
+        .gmaps-calc-route {
+            .btn {
+                @include border-radius(0px !important);
+            }            
+        }
+
+        .gmaps-toggle-panel {
+            top: 0px;
+            right: 0px;
+            position: absolute;
+            border-left: 1px rgba(0,0,0,0.3) solid;
+            font-size: 27px;
+            width: 46px;
+            text-align: center;
+            cursor: pointer;
+
+            @include transition(all 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+        }    
+    }
+    
+    .gmaps-outer-panelTop {
+        position: relative;
+        float: left;
+        width: 100%;
+        background-color: #FFF;
+        color: #4d4d4d;    
+        height: auto;
+
+        #mapsInfo > h4 {
+            line-height: 60px;
+            font-size: 30px;
+        }   
+        
+        table {
+            &.adp-placemark {
+                tr {
+                    td {
+                        &:first-child {
+                            padding-left: 12px;
+                        }
+                    }
+                }
+            }
+            
+            &.adp-directions {
+                width: 100%;
+            }            
+        }
+        
+        td {
+            &.adp-substep {
+                padding-left: 12px;
+            }
+        }
+        
+        .adp-summary {
+            padding: 0 3px 3px 36px;
+        }
+        
+        .adp-legal {
+            height: 30px;
+        }
+
+        .gmaps-route-info {
+            max-height: 350px;
+            overflow: auto;
+        }        
+    }
+
+    .gmaps-outer-panelLeft {
+        position: absolute;
+        left: 0px;
+        bottom: 0px;
+        top: 50px;
+        z-index: 2;
+        height: calc(100% - 50px);
+        width: 450px;
+        background-color: #FFF;
+        color: #4d4d4d;
+
+        @include box-shadow(rgba(0, 0, 0, 0.3) 0px 0px 4px 1px);
+        @include transform(translate3d(-400px,0px,0px));
+        @include transition(all 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+
+        .gmaps-toggle-panel {
+            &:after {
+                content: '>';
+            }            
+        }
+
+        
+        &.open {
+            overflow: hidden;
+            overflow-y: auto;
+
+            width: auto;
+            max-width: 450px;    
+
+            @include transform(translate3d(0px,0px,0px));
+            @include transition(all 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+
+            .gmaps-toggle-panel {
+                background-color: #F7E8D9;
+                overflow: hidden;
+
+                @include transition(all 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+                
+                &:after {
+                    content: '<';
+                }                
+            }
+
+        }
+    }
+
+    .gmaps-route-info {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: auto;
+    }    
+    
+    .gmaps-directions {
+        border-top: 1px rgba(51,51,51,0.25) solid;
+        position: relative;
+        float: left;
+        width: 100%;
+        height: auto;
+    }    
+    
+    .gmaps-input-destination {
+        input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+
+            width: 100%;
+            height: 58px;
+            line-height: 58px;
+            font-size: 15px;
+            
+            text-align: center;
+            @include text-align-last(center);
+
+            padding-right: 128px;
+            padding-left: 128px;
+            
+            &.invalid {
+                border-top: 1px maroon solid;
+                border-bottom: 1px maroon solid;
+            }            
+        }
+        
+        .find-me-container {
+            font-family: 'Quicksand', sans-serif;
+            font-size: 15px;
+            position: absolute;
+            right: 12px;
+            top: 0px;
+            height: 60px;
+            text-align: center;
+            width: 116px;
+            color: rgba(77,77,77,0.25);
+
+            cursor: pointer;
+
+            @include transition(all 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+
+            .glyphicon-map-marker {
+                font-size: 30px;
+                position: relative;
+                width: 100%;
+                margin-top: 6px;
+                float: left;
+            }
+
+            .text {
+                position: relative;
+                width: 100%;
+                font-size: 12px;
+                float: left;
+            }
+            
+            &.clicked  {
+                color: rgba(77,77,77,1);
+
+                @include transition(all 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+            }
+        }
+        
+        &:hover .find-me-container {
+            color: rgba(77,77,77,0.75);
+
+            @include transition(all 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+        }
+    }
+
+    .gmaps-travel-mode {
+        position: relative !important;
+        float: left !important;
+        clear: left !important;
+        width: 100% !important;
+        
+        button {
+            position: relative;
+            float: left;
+            clear: none;
+            width: 33.33% !important;
+            min-width: 0px !important;    
+
+            text-align: center !important;
+            @include text-align-last(center !important);
+            
+            &.gmaps-tr-car {
+                @include border-radius(3px !important);
+                @include border-top-right-radius(0px !important);
+                @include border-bottom-right-radius(0px !important);
+            }
+            
+            &.gmaps-tr-train {
+                @include border-radius(0px !important);
+            }
+            
+            &.gmaps-tr-walking {
+                @include border-radius(0px !important);
+                @include border-top-right-radius(3px !important);
+                @include border-bottom-right-radius(3px !important);
+            }
+
+            span {
+                position: relative !important;
+                float: none !important;
+                border: none !important;
+            }
+        }
+    }
+
+    .gmaps-calc-route {
+        position: relative;
+        float: left;
+        width: 100%;
+        height: auto;
+        
+        button {
+            position: relative;
+            float: left;
+            width: 100%;
+
+            @include border-bottom-right-radius(0px);
+            @include border-bottom-left-radius(3px);
+        }        
+    }
+ 
+    .pac-container {
+        z-index: 9999;
+        
+        .pac-item {
+            cursor: pointer;
+            
+            &:hover {
+                background-color: #F7E8D9;
+            }            
+        }        
+    }    
+    
+    &:not(.np-touch) {
+        .gmaps-outer-panelTop,
+        .gmaps-outer-panelLeft {
+            .gmaps-toggle-panel {
+                &:hover {
+                    background-color: #F7E8D9;
+
+                    @include transition(all 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+                }
+            }
+        }
+        
+        .gmaps-input-destination {
+            .find-me-container {
+                &:hover {
+                    color: rgba(77,77,77,1);
+
+                    @include transition(all 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+                }                
+            }
+        }
+    }
+    
+    &.np-touch {
+        .gmaps-input-destination {
+            .find-me-container {
+                color: rgba(77,77,77,0.75);
+
+                @include transition(all 300ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+            }
+        }
+    }
+    
+    /* Very small screen */
+    &.media-s-xs {
+        .gmaps-outer-panelLeft {
+            .open {
+                max-width: 100%;
+            }
+            
+            table {
+                table-layout: fixed;
+                width: 100%;
+                
+                tr {
+                    td {
+                        &:nth-child(1) {
+                            width: 25px;
+                            height: auto;
+                        }
+                        
+                        &:nth-child(2) {
+                            width: 70px;
+                            height: auto;
+                        }
+                        
+                        &:nth-child(4) {
+                            width: 96px;
+                            height: auto;
+                        }                        
+                    }
+                }
+            }            
+        }
+
+        .gmaps-input-destination {
+            .find-me-container {
+                position: relative;
+                width: 100%;
+                right: 0px;
+            }
+
+            .gmaps-autocomplete {
+                border-bottom: 1px rgba(51,51,51,0.25) solid;
+                padding: 0px 0px 14px 0px;
+                margin-bottom: 0px;
+            }    
+        }        
+    }
+}

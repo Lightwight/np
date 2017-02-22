@@ -1,0 +1,107 @@
+@import "../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-admin {
+    .admin-overview {
+        > .flexbox {
+            line-height: 45px;
+            
+            &:first-of-type {
+                background-color: rgba(211,211,211,0.25);
+                border: none;
+                width: 100%;
+                padding: 12px;
+            }            
+        }        
+        
+        .admin-table {
+            width: 100%;
+            
+            .admin-overview-row {
+                &:first-child {
+                    border: none;
+                    margin-top: 12px;
+                }
+            }
+        }   
+        
+        .flexbox {
+            > .flexrow {
+                > .input-group {
+                    top: 6px;
+                    position: relative;
+                }
+            }
+        }
+        
+        .flexrow {
+            &.sortable {
+                &:before {
+                    font: normal normal normal 14px/1 FontAwesome;
+                    display: inline-block;
+                    content: "\f0dc";
+                    padding-right: 6px;
+                }
+                
+                cursor: pointer;
+                
+                &.sort-asc {
+                    &:before {
+                        content: "\f0de";
+                    }                                    
+                }
+                
+                &.sort-desc {
+                    &:before {
+                        content: "\f0dd";
+                    }                    
+                }
+            }
+        }
+
+        .admin-overview-row {
+            background-color: #FFF;
+            width: 100%;
+            border-top: 12px rgba(211,211,211,0.25) solid;
+            padding: 12px;            
+        } 
+        
+        .input-search-container {
+            position: relative;
+            top: 4px;
+            max-width: 250px;
+            float: right;
+            width: 100%;
+            
+            .input-group {
+                position: relative;
+                float: right;
+                width: 100%;    
+            }            
+        }
+
+        .menu-bar {
+            padding-right: 0px;
+        }
+    }
+}
