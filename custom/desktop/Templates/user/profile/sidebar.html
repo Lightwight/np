@@ -1,0 +1,45 @@
+{{#view "UserProfileSidebarView"}}
+    {{#ul $="openSidebar" class="sidebar"}}
+        {{#li click="toggleSidebar" class="li-toggle"}}
+            {{#a href="#" $="openButton" class="btn-toggle"}}
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            {{/a}}
+            {{#a href="#" $="closeButton" class="btn-toggle hidden"}}
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            {{/a}}
+        {{/li}}
+        {{#li click="showUserData" class="active"}}
+            <a href="#">
+                <span class="label">Pers&ouml;nliche Daten</span>
+                <span class="sr-only">Persönliche Daten</span>
+                <span class="icon glyphicon glyphicon-chevron-right"></span>
+            </a>
+        {{/li}}
+        {{#li click="showUserCompanyData"}}
+            <a href="#">
+                <span class="label">Firmendaten</span>
+                <span class="sr-only">Firmendaten</span>
+                <span class="icon glyphicon glyphicon-chevron-right"></span>
+            </a>
+        {{/li}}
+        {{#li click="showUserAddressData"}}
+            <a href="#">
+                <span class="label">Adressdaten</span>
+                <span class="sr-only">Adressdaten</span>
+                <span class="icon glyphicon glyphicon-chevron-right"></span>
+            </a>
+        {{/li}}
+        <li class="button">
+            {{#view "AuthLoginView" id="mini-logout"}}
+                {{#a click="logout" href="#" class="btn btn-secondary"}}
+                    {{{span $="notSending" class="icon glyphicon glyphicon-off"}}}
+                    {{{span $="sending" class="icon glyphicon glyphicon-refresh hidden"}}}
+                    <span class="text">abmelden</span>
+                    <span class="sr-only">abmelden</span>
+                {{/a}}
+            {{/view}}
+        </li>
+    {{/ul}}
+{{/view}}

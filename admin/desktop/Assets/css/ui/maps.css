@@ -1,0 +1,62 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+.np-scope-admin .maps-container {
+  position: relative;
+  float: left;
+  width: 100%;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  -moz-box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.8);
+  -webkit-box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.8);
+  box-shadow: 0 0 3px 0 rgba(0, 0, 0, 0.8); }
+  .np-scope-admin .maps-container .map {
+    position: relative;
+    float: left;
+    width: auto;
+    height: auto; }
+  .np-scope-admin .maps-container .address {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    padding-left: 315px;
+    padding-top: 15px;
+    width: 100%;
+    height: 100%; }
+    .np-scope-admin .maps-container .address > * {
+      position: relative;
+      float: left;
+      font-size: 12px;
+      line-height: 20px; }
+    .np-scope-admin .maps-container .address > div,
+    .np-scope-admin .maps-container .address > label {
+      clear: left; }
+    .np-scope-admin .maps-container .address > label {
+      margin: 0px 10px 0px 0px;
+      width: 100px; }
+    .np-scope-admin .maps-container .address > .divide {
+      width: 100%;
+      height: 15px; }
+    .np-scope-admin .maps-container .address > .text {
+      position: absolute;
+      left: 315px;
+      bottom: 15px; }

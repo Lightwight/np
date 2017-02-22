@@ -1,0 +1,59 @@
+<h2 class="hoz-title">Kontoaktivierung</h2>
+
+<div class="main-content padding">
+    <div class="centered">
+        <div class="flexbox bg-grey">
+            {{#view "AuthRegistrationConfirmationView" class="fullwidth"}}
+                {{#if AuthConfirmation.confirmation}}
+                    <form>
+                        <h4 class="form-title">Kontoaktivierung erfolgreich</h4>
+                        <div class="info-box">
+                            Ihr Konto wurde erfolgreich aktiviert.<br><br>
+                            Sie k&ouml;nnen sich ab sofort mit Ihren Zugangsdaten anmelden.<br>
+                        </div>
+                        
+                        <div class="menu-bar">
+                            <a href="/shop" class="btn btn-primary">
+                                <span class="sr-only">Zum Shop</span>
+                                <span class="text">Shop</span>
+                                <span class="icon fa fa-caret-right"></span>
+                            </a>
+                            
+                            <a href="/auth/login" class="btn btn-primary">
+                                <span class="sr-only">Zur Anmeldung</span>
+                                <span class="text">Anmelden</span>
+                                <span class="icon fa fa-caret-right"></span>
+                            </a>
+                        </div>
+                    </form>             
+                {{else}}
+                    <form>
+                        <h4 class="form-title">Kontoaktivierung fehlgeschlagen</h4>
+                        <div class="info-box">
+                            Entweder ist dieser Link ung&uuml;ltig bzw. abgelaufen oder das Konto wurde bereits aktiviert.<br><br>
+                            Wenn hier ein Fehler vorliegen sollte, dann setzten Sie sich bitte mit uns in Verbindung und wir finden zusammen eine L&ouml;sung.
+                        </div>                        
+
+                        <div class="menu-bar">
+                            <a href="/" class="btn btn-primary">
+                                <span class="sr-only">Zur&uuml;ck zur Startseite</span>
+                                <span class="text">Startseite</span>
+                                <span class="icon fa fa-home"></span>
+                            </a>
+
+                            <a href="/kontakt" class="btn btn-primary">
+                                <span class="sr-only">Zum Kontakt</span>
+                                <span class="text">Kontakt</span>
+                                <span class="icon fa fa-phone"></span>                                
+                            </a>
+                        </div>
+                    </form>              
+                {{/if}}
+            {{/view}} 
+        </div>
+    </div>
+    
+    <div class="marg-top">
+        {{#partial popular-products}}    
+    </div>
+</div>

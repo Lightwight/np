@@ -1,0 +1,43 @@
+{{#view "CheckoutProgressView"}}
+    {{#div $="setProgress" init=true class="breadcrumb content-divider no-table text-center col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding"}}
+        <div class="checkout-step">
+            {{#a click="saveOrderByLogin" href="#"}}
+                <h3>Zugang</h3>
+
+                <div class="divide">
+                    <div class="col-divider"></div>
+                </div>
+            {{/a}}
+        </div>
+
+        <div class="checkout-step enabled">
+            {{#a click="saveOrderByAddress" href="#"}}
+                <h3>Empf&auml;nger</h3>
+
+                <div class="divide">
+                    <div class="col-divider"></div>
+                </div>
+            {{/a}}
+        </div>
+
+        <div class="checkout-step dl">
+            {{#a click="saveOrderByPayment" href="#"}}
+                <h3>Zahlungsart</h3>
+
+                <div class="divide">
+                    <div class="col-divider"></div>
+                </div>
+            {{/a}}
+        </div>
+
+        <div class="checkout-step">
+            {{#a click="saveOrderByVerification" href="#"}}
+                <h3>Bestellung prüfen</h3>
+
+                <div class="divide">
+                    <div class="col-divider"></div>
+                </div>
+            {{/a}}
+        </div>
+    {{/div}}
+{{/view}}

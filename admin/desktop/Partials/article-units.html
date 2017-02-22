@@ -1,0 +1,97 @@
+{{#need model Article_units}}
+
+{{#view "AdminArticleUnitsOverviewView" class="admin-overview"}}
+    <div class="flexbox">
+        {{#view "AdminArticleUnitsOverviewSortableView" class="flexrow flexrow-6"}}
+            <div class="flexbox">
+                {{#div $="setUnitID" init=true click="sortByUnitID" class="flexrow flexrow-1 t-bold f-s16 sortable"}}ID{{/div}}
+                {{#div $="setName" init=true click="sortByName" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Name{{/div}}                
+            </div>
+        {{/view}}
+
+        <div class="flexrow flexrow flexrow-1 flex-end">
+            {{#view "AdminArticleUnitsOverviewSearchView" class="input-search-container"}}
+                <div class="input-group">
+                    {{{input change="setSearch" enter="search" bindAttr="search" type="text" class="iconable" placeholder="Suchen"}}}
+                    {{#div click="search" class="fa-container"}}
+                        <span class="fa fa-search"></span>
+                        <span class="sr-only">Artikeleinheit Suchen</span>
+                    {{/div}}
+                </div>
+
+                {{#div $="toggleVisibility" init=true class="search-key-container"}}
+                    {{#button click="clearSearch" type="button" class="btn btn-primary"}}
+                        <span class="text">{{AdminArticleUnitsSearch.sentSearch}}</span>
+                        <span class="fa fa-remove"></span>
+                        <span class="sr-only">Suchbegriff löschen</span>
+                    {{/button}}
+                {{/div}}
+            {{/view}}            
+        </div>
+
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+        
+        <div class="admin-table">
+            {{#if this}}
+                {{#each Article_units}}
+                    {{#view "AdminArticleUnitOverviewView" class="admin-overview-row"}}
+                        <div class="flexbox">
+                            <div class="flexrow flexrow-1">AU{{AdminArticleUnit.unit_id}}</div>
+                            <div class="flexrow flexrow-1">{{AdminArticleUnit.name}}</div>
+                            <div class="flexrow flexrow-1 flex-end">
+                                <a href="/admin/shopmanagement/articleunit/{{AdminArticleUnit.unit_id}}" class="btn btn-primary">
+                                    <span class="text">Bearbeiten</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Artikeleinheit bearbeiten</span>
+                                    
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                </a>
+                                {{#button $="disableRemoveRow" click="removeRow" type="button" class="btn btn-primary"}}
+                                    <span class="text">Entfernen</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Artikeleinheit entfernen</span>
+
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                {{/button}}
+                            </div>
+                        </div>
+                    {{/view}}
+                {{/each}}
+            {{else}}
+                <div class="admin-overview-row">
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">Der eingegebene Suchbegriff konnte nicht gefunden werden.</div>
+                    </div>
+                <div>
+            {{/if}}                
+            
+            {{#view "AdminArticleUnitAddView" id="admin-article-unit-add" class="admin-overview-row"}}
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">(auto)</div>
+                        <div class="flexrow flexrow-1">
+                            {{{input change="setName" bindAttr="name" type="text" placeholder="Artikeleinheit Bezeichnung"}}}
+                        </div>
+                        <div class="flexrow flexrow-1 flex-end">
+                            {{#button $="disableSaveRow" click="saveRow" type="button" class="btn btn-primary"}}
+                                <span class="text">Speichern</span>
+                                <span class="fa fa-caret-right"></span>
+                                {{#span $="sending" class="cssload-container"}}
+                                    <div class="cssload-speeding-wheel"></div>
+                                {{/span}}
+                            {{/button}}
+                        </div>
+                    </div>
+            {{/view}}
+        </div>
+
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+    </div>
+{{/view}}

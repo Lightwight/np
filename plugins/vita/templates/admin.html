@@ -1,0 +1,115 @@
+{{#view "AdminPluginVitaOverviewView" id="admin-plugin-vita-view"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Vita bearbeiten</h4>
+
+        <div class="vita-main-container">
+            <div class="image-container">
+                {{#div $="setMediaSrc" init=true class="image-preview pull-left"}}
+                    Bildvorschau
+                {{/div}}
+
+                {{#button type="button" click="showMediathek" class="btn btn-primary pull-left"}}
+                    <span class="text">Mediathek</span>
+                    <span class="fa fa-film"></span>
+                {{/button}}
+            </div>
+            <div class="content-container">
+                <div class="form-group fullwidth small">
+                    {{{input change="setTitle" bindAttr="main_title" type="text" placeholder="Ihr Vita Titel" value=AdminPluginVita.main_title}}}
+                </div>
+                <div class="form-group fullwidth small">
+                    {{{textarea change="setContent" $="setContent" init=true bindAttr="main_content" placeholder="Inhalt" class="fullwidth"}}}
+                </div>
+            </div>
+        </div>
+
+        {{#view "AdminPluginVitaItemsView" id="admin-plugin-vita-sortarea"}}
+            {{#isObject AdminPluginVitaItems}}
+                {{#each AdminPluginVitaItems}}
+                    {{#view "AdminPluginVitaItemView" class="admin-plugin-vita-edit bg-grey"}}
+                        {{#sortable list="#admin-plugin-vita-sortarea" sort="sort" containment="#admin-plugin-vita-sortarea"}}
+                            <div class="vita-data">
+                                <div class="form-group fullwidth small date">
+                                    <label class="small">Von</label>
+                                    {{{input $="setDateFrom" change="setDateFrom" bindAttr="date_from" type="text" placeholder="Von" value=AdminPluginVitaItem.from}}}
+                                    <label class="small">Bis</label>
+                                    {{{input $="setDateTo" change="setDateTo" bindAttr="date_to" type="text" placeholder="Bis" value=AdminPluginVitaItem.to}}}
+                                </div>
+                                <div class="form-group fullwidth small">
+                                    {{{textarea change="setVitaContent" $="setVitaContent" init=true bindAttr="vita_content" placeholder="Inhalt" class="fullwidth"}}}
+                                </div>
+                            </div>
+                            <div class="vita-actions pull-right">
+                                <div class="form-group small">
+                                    {{#button click="removeVita" type="button" class="btn btn-simple small pull-right"}}
+                                        <span class="text">Entfernen</span>
+                                    {{/button}}
+                                </div>
+                            </div>                    
+                            <div class="vita-actions vita-order pull-right">
+                                <div class="form-group fullwidth small">
+                                    {{{span $="enableVitaUp" init=true click="moveVitaPositionUp" class="fa fa-2x fa-angle-up"}}}
+                                </div>
+
+                                <div class="form-group text-order fullwidth small">
+                                    {{#div bindAttr="order"}}{{AdminPluginVitaItem.order}}{{/div}}
+                                </div>
+
+                                <div class="form-group fullwidth small">
+                                    {{{span $="enableVitaDown" init=true click="moveVitaPositionDown" class="fa fa-2x fa-angle-down"}}}
+                                </div>                                
+                            </div>
+                        {{/sortable}}
+                    {{/view}}
+                {{/each}}
+            {{/isObject}}
+        {{/view}}
+
+        
+        {{#div $="showAddVita" class="admin-plugin-vita-edit add-vita"}}
+            <div class="vita-data">
+                <div class="form-group fullwidth small date">
+                    <label class="small">Von</label>
+                    {{{input change="setDateFrom" bindAttr="new_from" type="text" placeholder="Von"}}}
+                    <label class="small">Bis</label>
+                    {{{input change="setDateTo" bindAttr="new_to" type="text" placeholder="Bis"}}}
+                </div>
+                <div class="form-group fullwidth small">
+                    {{{textarea change="setVitaContent" bindAttr="new_vita_content" placeholder="Inhalt" class="fullwidth"}}}
+                </div>
+            </div>
+            <div class="vita-actions pull-right">
+                <div class="form-group small">
+                    {{#button $="disableSaveNewVita" click="saveNewVita" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Speichern</span>
+                        <span class="sr-only">Neuen Vita Eintrag speichern</span>
+                        {{#span $="saving" class="cssload-container"}}
+                            <span class="cssload-speeding-wheel"></span>
+                        {{/span}}    
+                    {{/button}}
+                </div>
+                <div class="form-group small">
+                    {{#button click="cancelNewVita" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Abbrechen</span>
+                    {{/button}}
+                </div>
+            </div>
+        {{/div}}        
+
+        <div class="menu-bar">
+            {{#button $="disableSaveVita" click="saveVita" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Vita speichern</span>
+                <span class="fa fa-caret-right"></span>
+                <span class="sr-only">Vita speichern</span>
+                {{#span $="saving" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}    
+            {{/button}}
+            
+            {{#button $="showAddButton" click="addVita" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Referenz hinzufügen</span>
+                <span class="fa fa-plus"></span>
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

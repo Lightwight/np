@@ -1,0 +1,28 @@
+<h2 class="hoz-title">
+    {{#auth loggedIn=false}}        
+        Anmeldung oder Registrierung
+    {{else}}
+        Herzlich Willkommen
+    {{/auth}}
+</h2>
+    
+<div class="main-content padding">
+    <div class="centered bg-grey">
+        {{#auth loggedIn=false}}        
+            <div class="flexbox">
+                <div class="flexrow-1 b-right-white">
+                    {{#partial auth-login-view}}
+                </div>
+                <div class="flexrow-1">
+                    {{#partial auth-register-view}}
+                </div>
+            </div>
+        {{else}}
+            {{#partial auth-logout-view}}
+        {{/auth}}
+    </div>
+
+    <div class="marg-top">
+        {{#partial popular-products}}    
+    </div>
+ </div>

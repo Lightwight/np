@@ -1,0 +1,71 @@
+{{#need model News}}
+
+{{#view "NavigationDividerView" data-plugin="Divider"}}
+    <div class="container">
+        <h3>Meine News - neu/bearbeiten</h3>
+        {{#partial product-search-view}}
+    </div>
+{{/view}}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    {{#view "AdminNewsEditView"}}
+        <form>
+            <div class="form-group fullwidth required">
+                <label>Titel:</label>
+                {{{input type="text" change="setTitle" bindAttr="title" value=News.title class="form-control" placeholder="Titel"}}}
+            </div>
+
+            <div class="form-group fullwidth required">
+                <label>Headline:</label>
+                {{#partial wysiwyg-editor :change="setDescr" :editorID="#inpNewsDesr" :editorRealID="inpNewsDescr" :bindAttr="descr" :toolbarID="tbDescr"}}
+            </div>
+            
+            <div class="form-group fullwidth required">
+                <label>Inhalt:</label>
+                {{#partial wysiwyg-editor :change="setContent" :editorID="#inpNewsMessage" :editorRealID="inpNewsMessage" :bindAttr="content" :toolbarID="tbContent"}}
+            </div>
+            
+            <div class="form-group fullwidth required drag-drop">
+                <label>Bild:</label>
+                {{#div $="setMediaSrc" init=true class="image-container form-control fullwidth pull-left"}}
+                    Bildvorschau
+                {{/div}}
+
+                {{#a type="button" click="showMediathek" class="btn btn-primary mediathek form-control fullwidth pull-left"}}
+                    <span class="icon glyphicon glyphicon glyphicon-film"></span>
+                    <span class="text">Mediathek</span>
+                {{/a}}
+            </div>
+            
+            <div class="form-group fullwidth required">
+                <label for="newsReleaseDate">Erscheinungsdatum</label>
+                {{{input change="setReleaseDate" bindAttr="release_date" value=News.release_date id="newsReleaseDate" type="datetime" class="form-control"}}}
+            </div>            
+            
+            <div class="form-group fullwidth required">
+                <label for="artikel">Artikelnummer</label>
+                {{{input change="setArtikel" bindAttr="article_id" value=News.article_id id="newsArtikelID" type="text" class="form-control right"}}}
+            </div>
+            
+            <div class="form-group fullwidth required">
+                <label for="newsRelease">Veröffentlichen ?</label>
+                {{#div $="setPublished" init=true class="btn-group" data-toggle="buttons"}}
+                    {{#label click="publish" class="btn btn-default active"}}
+                        <input type="radio" value="false" name="publish">
+                        Ja
+                    {{/label}}
+                    {{#label click="hide" class="btn btn-default"}}
+                        <input type="radio" value="true" name="publish">
+                        Nein
+                    {{/label}}
+                {{/div}}
+            </div>
+        </form>
+        
+        {{#a click="saveNews" $="saveEnabled" init=true class="btn btn-primary fullwidth" href="#"}}
+            <span class="icon glyphicon glyphicon-chevron-right"></span>
+            <span class="text">Speichern</span>
+            <span class="sr-only">Speichern</span>
+        {{/a}}
+    {{/view}}
+</div>

@@ -1,0 +1,66 @@
+{{#view "AdminUserProfileView" id="admin-user-profile"}}
+    {{#equals User.id -1}}
+        <form class="bg-grey">
+            <h4 class="form-title">Benutzer nicht gefunden</h4>
+            <div class="info-box">
+                Der Benutzer konnte nicht gefunden werden. Möglicherweise haben Sie einen falschen Link aufgerufen.
+            </div>
+        </form>
+    {{else}}
+        <form class="bg-grey">
+            <h4 class="form-title">Benutzerprofil</h4>
+
+            <div class="form-group fullwidth">
+                <div class="form-group fullwidth">
+                    <label>Anrede: </label>
+
+                    {{#select bindAttr="salutation" $="salutation" change="setSalutation" init=true class="selectpicker pull-left"}}
+                        <option>Herr</option>
+                        <option>Frau</option>
+                    {{/select}}
+
+                    <label>Benutzerrolle: </label>
+
+                    {{#select bindAttr="group" $="group" change="setGroup" init=true class="selectpicker"}}
+                        {{#each User.groups}}
+                            <option>{{group}}</option>
+                        {{/each}}
+                    {{/select}}
+                </div>
+
+                <div class="form-group fullwidth">
+                    {{{input change="setPrename" bindAttr="prename" type="text" class="iconable" placeholder="Vorname" value=User.prename}}}
+
+                    <div class="fa-container">
+                        {{{span $="invalidPrename" init=true class="fa fa-flash"}}}
+                        {{{span $="validPrename" init=true class="fa fa-check"}}}
+                    </div>
+                </div>
+
+                <div class="form-group fullwidth">
+                    {{{input change="setName" bindAttr="name" type="text" class="iconable" placeholder="Nachname" value=User.name}}}
+
+                    <div class="fa-container">
+                        {{{span $="invalidName" init=true class="fa fa-flash"}}}
+                        {{{span $="validName" init=true class="fa fa-check"}}}
+                    </div>
+                </div>
+
+                <div class="form-group fullwidth">
+                    <input type="email" placeholder="E-Mail-Adresse" value="{{{User.email}}}" disabled>
+                </div>
+
+                <div class="menu-bar">
+                    {{#a $="enableSubmit" click="applyUser" href="#" class="btn btn-primary pull-right disabled"}}
+                        <span class="text">&Uuml;bernehmen</span>
+                        <span class="sr-only">Änderungen übernehmen</span>
+                        <span class="icon fa fa-caret-right"></span>
+                        <span class="cssload-container">
+                            <span class="cssload-speeding-wheel"></span>
+                        </span>
+                    {{/a}}
+                </div>                
+            </div>            
+        </form>
+    {{/equals}}
+{{/view}}

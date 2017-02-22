@@ -1,0 +1,11 @@
+{{#view "AdminRoutePluginsContentView"}}
+    {{#if this}}
+        {{#each AdminPluginsContent}}
+            {{#if this.plugin_enabled}}
+                {{#view "AdminRoutePluginContentView"}}
+                    {{{handlebars AdminPluginContent.template AdminPluginContent.model}}}
+                {{/view}}
+            {{/if}}
+        {{/each}}
+    {{/if}}
+{{/view}}

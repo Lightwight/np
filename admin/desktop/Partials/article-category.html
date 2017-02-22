@@ -1,0 +1,24 @@
+{{#need model Article_categories}}
+
+{{#view "AdminArticleCategoryView"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Kategorie bearbeiten</h4>
+
+        <div class="form-group fullwidth">
+            {{{input change="setKeyBeschreibung" bindAttr="KeyBeschreibung" type="text" placeholder="Kategorie Name" value=AdminArticleCategory.KeyBeschreibung}}}
+        </div>
+        <div class="form-group fullwidth">
+            {{{input change="setSort" bindAttr="Sort" type="number" placeholder="Reihenfolge" value=AdminArticleCategory.Sort}}}
+        </div>
+
+        <div class="menu-bar">
+            {{#button $="disableSaveCategory" click="saveCategory" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Kategorie speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="sending" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

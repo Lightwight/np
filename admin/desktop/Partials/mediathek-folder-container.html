@@ -1,0 +1,42 @@
+{{#div $="showFolderContainer" init=true class="mediathek-video-embed-container"}}
+    {{#view "MediathekFoldersView"}}
+        <div class="panel panel-default pull-left fullwidth">
+            <form id="mediathek-folders-view">
+                {{#each MediathekFolders.folders}}
+                    {{#view "MediathekFolderView" class="mediathek-folder-view"}}
+                        <div class="form-group fullwidth">
+                            <label>Ordner</label>
+                            {{{input type="text" change="setFolder" bindAttr="folder" value=MediathekFolder.folder}}}
+                            
+                            {{#button click="removeFolder" type="button" class="btn btn-primary pull-right"}}
+                                <span class="text">Entfernen</span>
+                                <span class="icon fa fa-caret-right"></span>
+                                {{#span $="isRemoving" class="cssload-container"}}
+                                    <span class="cssload-speeding-wheel"></span>
+                                {{/span}}                                
+                            {{/button}}
+                            {{#button click="applyFolder" type="button" class="btn btn-primary pull-right apply"}}
+                                <span class="text">Übernehmen</span>
+                                <span class="icon fa fa-caret-right"></span>
+                                {{#span $="isApplying" class="cssload-container"}}
+                                    <span class="cssload-speeding-wheel"></span>
+                                {{/span}}                                
+                            {{/button}}                            
+                        </div>
+                    {{/view}}
+                {{/each}}
+
+                <div class="form-group marg-top fullwidth menu">
+                    {{{input change="setFolder" bindAttr="new_folder" type="text" placeholder="Neuer Ordner" class="pull-left new-folder"}}}
+                    {{#button click="addFolder" type="button" class="btn btn-primary pull-right"}}
+                        <span class="text">Ordner Hinzufügen</span>
+                        <span class="icon fa fa-caret-right"></span>
+                        {{#span $="addFolder" class="cssload-container"}}
+                            <span class="cssload-speeding-wheel"></span>
+                        {{/span}}                          
+                    {{/button}}
+                </div>
+            </form>
+        </div>
+    {{/view}}
+{{/div}}

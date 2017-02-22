@@ -1,0 +1,11 @@
+<main>
+    {{#auth loggedIn=true}} 
+        {{#inGroup "Administrator|Redakteur"}}
+            {{#yield content}}
+        {{else}}
+            {{#partial admin-no-privileges}}
+        {{/inGroup}}
+    {{else}}
+        {{#partial admin-login}}    
+    {{/auth}}
+</main>

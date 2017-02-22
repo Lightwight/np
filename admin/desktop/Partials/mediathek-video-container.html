@@ -1,0 +1,39 @@
+{{#div $="showVideoContainer" init=true class="mediathek-video-embed-container"}}
+    <div class="panel panel-default pull-left fullwidth">
+        <div class="panel-body">
+            <!-- Standar Form -->
+            <h4>Geben Sie den YouTube-Link bzw. Teilen-/Einbettcode in das folgende Textfeld ein</h4>
+
+            <div class="form-group fullwidth youtube-input">
+                {{{input change="setVideoID" paste="setVideoID" bindAttr="videoID" type="text" class="fullwidth" placeholder="Link / Embed-Code / ID"}}}
+            </div>
+            
+            <div class="form-group fullwidth youtube-input t-center">
+                {{{input change="setVideoTitle" paste="setVideoTitle" bindAttr="videoTitle" type="text" placeholder="Geben Sie hier den Videotitel ein" class="t-center fullwidth"}}}
+            </div>
+
+            <!-- Vdieo Preview -->
+            {{#div $="loadVideo" class="video-preview"}}
+                 YouTube Video Vorschau
+            {{/div}}
+            
+            {{#button $="hideVideoSaveButton" id="mediathek-save-video" click="saveVideo" class="btn btn-secondary iconable"}}
+                <span class="text">Video speichern</span>
+                <span class="fa fa-upload"></span>
+                {{#span $="savingYoutubeVideo" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+            
+            {{#button $="showVideoCancel" id="mediathek-cancel-video" click="cancelVideo" class="btn btn-secondary iconable no-display"}}
+                <span class="text">Abbrechen</span>
+                <span class="fa fa-minus-circle"></span>
+            {{/button}}
+            
+            {{#button $="showVideoApply" id="mediathek-apply-video" click="applyVideo" class="btn btn-secondary iconable no-display"}}
+                <span class="text">Video übernehmen</span>
+                <span class="fa fa-caret-right"></span>
+            {{/button}}
+        </div>
+    </div>
+{{/div}}

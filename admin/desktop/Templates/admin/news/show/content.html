@@ -1,0 +1,100 @@
+{{#need model News}}
+
+{{#view "NavigationDividerView" data-plugin="Divider"}}
+    <div class="container">
+        <h3>Meine News - alle News</h3>
+        {{#partial product-search-view}}        
+    </div>
+{{/view}}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    {{#view "AdminNewsShowView"}}
+        {{#view "AdminNewsPaginationView"}}
+            <nav>
+                {{#ul click="setPage" $="isActive" init=true class="pagination"}}
+                    {{#li $="nextEnabled" init=true}}
+                        {{#a click="prevPage" $="setPrev" href="#" aria-label="Previous"}}
+                            <span aria-hidden="true">&laquo;</span>
+                        {{/a}}
+                    {{/li}}
+
+                    {{#each AdminNews.data.pagination.pages}}
+                        {{#li}}
+                            {{#a init=true click="setItem" href="#"}}
+                                {{{page.num}}}
+                            {{/a}}
+                        {{/li}}
+                    {{/each}}
+
+                    {{#li $="prevEnabled" init=true}}
+                        {{#a click="nextPage" $="setNext" href="#" aria-label="Next"}}
+                            <span aria-hidden="true">&raquo;</span>
+                        {{/a}}
+                    {{/li}}
+                {{/ul}}
+            </nav>
+        {{/view}}
+        
+        <div class="fullwidth pull-left">
+            <div class="table-responsive">
+                {{#view "AdminNewsTableView"}}
+                    {{#table $="visibleRows" init=true class="table"}}
+                        <thead>
+                            <tr>
+                                <th>
+                                    #ID
+                                    {{{input change="setFilterID" bindAttr="filterID" type="text"}}}
+                                </th>
+                                <th>
+                                    Titel
+                                    {{{input change="setFilterTitle" bindAttr="filterTitle" type="text"}}}
+                                </th>
+                                <th>
+                                    Kurzbeschreibung
+                                    {{{input change="setFilterDescr" bindAttr="filterDescr" type="text"}}}
+                                </th>
+                                <th>
+                                    Veröffentlichungsdatum
+                                    {{{input change="setFilterReleaseDate" bindAttr="filterReleaseDate" type="text"}}}
+                                </th>
+                                <th>
+                                    Veröffentlicht
+                                    {{{input change="setFilterPublish" bindAttr="filterPublish" type="text"}}}
+                                </th>
+                                <th>
+                                    Bearbeiten
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each AdminNews.data.rows}}
+                                <tr class="hidden">
+                                    <th>{{{id}}}</th>
+                                    <td>{{{title}}}</td>
+                                    <td>{{{descr}}}</td>
+                                    <td>{{{release_date}}}</td>
+                                    <td>
+                                        {{#if published}}
+                                            ja
+                                        {{else}}
+                                            nein
+                                        {{/if}}
+                                    </td>
+                                    <td>
+                                        {{#view "AdminNewsTableLinkView"}}
+                                            {{#a $="setLink" init=true href="" class="btn btn-secondary small"}}
+                                                <span class="icon glyphicon glyphicon-edit"></span>
+                                                <span class="text">bearbeiten</span>
+                                                <span class="sr-only">bearbeiten</span>
+                                            {{/a}}
+                                        {{/view}}
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    {{/table}}
+                {{/view}}
+            </div>        
+        </div>
+    {{/view}}
+</div>

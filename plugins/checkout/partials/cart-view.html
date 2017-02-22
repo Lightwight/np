@@ -1,0 +1,28 @@
+{{#need model Article_categories}}
+{{#need plugin Checkout}}
+
+{{#view "CartView"}}
+    {{#div click="closeCart" class="cart-outer"}}{{/div}}
+    <div id="cart">
+        <div class="cart-header">
+            <span class="fa fa-2x fa-shopping-cart"></span>
+            <h3>Ihr Warenkorb</h3>
+            {{{span click="closeCart" class="btn-close"}}}
+        </div>
+        {{#div $="showCart" class="cart-outer-container" init=true}}
+            {{#each CartData.categories}}
+                <div class="cart-category-container" data-category-id="{{id}}">
+                    {{#each rows}}
+                        {{#partial cart-product-view}}
+                    {{/each}}
+                </div>
+            {{/each}}
+        {{/div}}
+        
+        {{#div $="showEmptyCart" init=true class="empty-cart"}}
+            <h2>Sie haben im Moment keinen Artikel im Warenkorb</h2>
+        {{/div}}
+        
+        {{#partial cart-total-view}}        
+    </div>
+{{/view}}

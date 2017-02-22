@@ -1,0 +1,114 @@
+{{#view "AdminPluginGalleryOverviewView" id="admin-plugin-gallery-view"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Gallerie bearbeiten</h4>
+
+        {{#view "AdminPluginGalleriesView" id="admin-plugin-gallery-sortarea" class="fullwidth"}}
+            {{#isObject AdminPluginGalleries}}
+                {{#each AdminPluginGalleries}}
+                    {{#view "AdminPluginGalleryView" class="admin-plugin-gallery-edit bg-grey"}}
+                        {{#sortable list="#admin-plugin-gallery-sortarea" sort="sort" containment="#admin-plugin-gallery-sortarea"}}
+                            <div class="image-container">
+                                {{#div $="setMediaSrc" init=true class="image-preview no-line pull-left"}}
+                                    <span class="media-src">{{AdminPluginGallery.name}}</span>
+                                {{/div}}
+
+                                {{#button type="button" click="showMediathek" class="btn btn-primary pull-left"}}
+                                    <span class="text">Mediathek</span>
+                                    <span class="fa fa-film"></span>
+                                {{/button}}
+                            </div>
+                            <div class="gallery-data">
+                                <div class="form-group fullwidth small">
+                                    {{{input change="setTitle" bindAttr="title" type="text" class="iconable" placeholder="Slide Titel" value=AdminPluginGallery.title}}}
+
+                                    <div class="fa-container">
+                                        {{{span $="validTitle" init=true class="fa fa-check"}}}
+                                    </div>
+                                </div>
+                                <div class="form-group textarea fullwidth small">
+                                    {{{textarea change="setContent" $="setContent" init=true bindAttr="content" placeholder="Inhalt" class="fullwidth"}}}
+                                </div>
+                            </div>
+                            <div class="gallery-actions pull-right">
+                                <div class="form-group small">
+                                    {{#button click="removeGallery" type="button" class="btn btn-simple small pull-right"}}
+                                        <span class="text">Entfernen</span>
+                                    {{/button}}
+                                </div>
+                            </div>                        
+                            <div class="gallery-actions gallery-order pull-right">
+                                <div class="form-group fullwidth small">
+                                    {{{span $="enableGalleryUp" init=true click="moveGalleryPositionUp" class="fa fa-2x fa-angle-up"}}}
+                                </div>
+
+                                <div class="form-group text-order fullwidth small">
+                                    {{#div bindAttr="order"}}{{AdminPluginGallery.order}}{{/div}}
+                                </div>
+
+                                <div class="form-group fullwidth small">
+                                    {{{span $="enableGalleryDown" init=true click="moveGalleryPositionDown" class="fa fa-2x fa-angle-down"}}}
+                                </div>                                
+                            </div>
+                        {{/sortable}}
+                    {{/view}}
+                {{/each}}
+            {{/isObject}}
+        {{/view}}
+
+        {{#div $="showAddGallery" class="admin-plugin-gallery-edit add-gallery"}}
+            <div class="image-container">
+                {{#div $="setMediaSrc" init=true class="image-preview pull-left"}}
+                    Vorschau
+                {{/div}}
+                
+                {{#button type="button" click="showMediathek" class="btn btn-primary pull-left"}}
+                    <span class="text">Mediathek</span>
+                    <span class="fa fa-film"></span>
+                {{/button}}
+            </div>
+            <div class="gallery-data">
+                <div class="form-group fullwidth small">
+                    {{{input change="setTitle" bindAttr="new_title" type="text" class="iconable" placeholder="Gallerie Titel"}}}
+
+                    <div class="fa-container">
+                        {{{span $="validTitle" init=true class="fa fa-check"}}}
+                    </div>
+                </div>
+                <div class="form-group textarea fullwidth small">
+                    {{{textarea change="setContent" $="setContent" init=true bindAttr="new_content" placeholder="Inhalt" class="fullwidth"}}}
+                </div>
+            </div>
+            <div class="gallery-actions pull-left">
+                <div class="form-group small">
+                    {{#button $="disableSaveNewGallery" click="saveNewGallery" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Speichern</span>
+                        <span class="sr-only">Neues Bild oder Video speichern</span>
+                        {{#span $="savingNewGallery" class="cssload-container"}}
+                            <span class="cssload-speeding-wheel"></span>
+                        {{/span}}                         
+                    {{/button}}
+                </div>
+                <div class="form-group small">
+                    {{#button click="cancelNewGallery" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Abbrechen</span>
+                        <span class="sr-only">Neues Bild oder Video abbrechen</span>
+                    {{/button}}
+                </div>
+            </div>
+        {{/div}}
+        <div class="menu-bar">
+            {{#button $="disableSaveGallery" click="saveGallery" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Gallerie speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="saving" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}                 
+            {{/button}}
+            
+            {{#button $="showAddButton" click="addGallery" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Bild/Video hinzufügen</span>
+                <span class="fa fa-plus"></span>
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

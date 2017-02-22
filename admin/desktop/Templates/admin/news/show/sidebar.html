@@ -1,0 +1,41 @@
+{{#view "AdminNewsSidebarView"}}
+    {{#ul $="openSidebar" class="sidebar"}}
+        {{#li click="toggleSidebar" class="li-toggle"}}
+            {{#a href="#" $="openButton" class="btn-toggle"}}
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="glyphicon glyphicon-chevron-right"></span>
+            {{/a}}
+            {{#a href="#" $="closeButton" class="btn-toggle hidden"}}
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="glyphicon glyphicon-chevron-left"></span>
+            {{/a}}
+        {{/li}}
+    
+        <li>
+            <a href="/admin/news/edit">
+                <span class="label">Neu erstellen</span>
+                <span class="sr-only">Neu erstellen</span>
+                <span class="icon glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </li>
+        
+        <li class="active">
+            <a href="/admin/news/show">
+                <span class="label">Alle News</span>
+                <span class="sr-only">Alle News</span>
+                <span class="icon glyphicon glyphicon-chevron-right"></span>
+            </a>
+        </li>
+
+        <li class="button">
+            {{#view "AuthLoginView" id="mini-logout"}}
+                {{#a click="logout" href="#" class="btn btn-secondary"}}
+                    {{{span $="notSending" class="icon glyphicon glyphicon-off"}}}
+                    {{{span $="sending" class="icon glyphicon glyphicon-refresh hidden"}}}
+                    <span class="text">abmelden</span>
+                    <span class="sr-only">abmelden</span>
+                {{/a}}
+            {{/view}}
+        </li>
+    {{/ul}}
+{{/view}}

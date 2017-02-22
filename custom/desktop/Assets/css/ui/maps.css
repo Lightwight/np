@@ -1,0 +1,70 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 07.08.2015, 17:32:47
+    Author     : cross
+*/
+
+.maps-container {
+    position: relative;
+    float: left;
+    width: 100%;
+    
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    
+    box-shadow: 0 0 3px 0 rgba(0%, 0%, 0%, 0.8);    
+}
+
+.maps-container .map {
+    position: relative;
+    float: left;
+    width: auto;
+    height: auto;
+}
+
+.maps-container .address {
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    
+    padding-left: 315px;
+    padding-top: 15px;
+    width: 100%;
+    height: 100%;
+}
+
+.maps-container .address > * { 
+    position: relative;
+    float: left;
+}
+
+.maps-container .address > * {
+    font-size: 12px;
+    line-height: 20px;
+}
+
+.maps-container .address > div,
+.maps-container .address > label {
+    clear: left;
+}
+
+.maps-container .address > label {
+    margin: 0px 10px 0px 0px;
+    width: 100px;
+}
+
+.maps-container .address > .divide {
+    width:  100%;
+    height: 15px;
+}
+
+.maps-container .address > .text {
+    position: absolute;
+    left: 315px;
+    bottom: 15px;
+}

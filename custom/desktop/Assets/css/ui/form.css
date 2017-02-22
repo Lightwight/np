@@ -1,0 +1,88 @@
+form {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: auto;
+    padding: 24px;
+}
+
+form * {
+    text-align: left;
+}
+
+form input[type=text],
+form input[type=number],
+form input[type=email],
+form input[type=password] {
+    position: relative;
+    float: left;
+    width: 100%;
+    border: 1px #d3d3d3 solid;
+}
+
+form .form-group {
+    position: relative;
+    float: left;
+}
+
+form .form-group.fullwidth {
+    width: 100%;
+}
+
+form .form-group input[type=text].iconable,
+form .form-group input[type=number].iconable,
+form .form-group input[type=email].iconable,
+form .form-group input[type=password].iconable {
+    width: calc(100% - 36px);
+    border: 1px #d3d3d3 solid;
+    border-right: none;
+}
+
+form .form-group .fa-container {
+    position: relative;
+    float: left;
+    width: 36px;
+    height: 36px;
+    border: 1px #d3d3d3 solid;
+    border-left: none;
+    background-color: #FFF;
+}
+
+form .form-group .fa-container .fa {
+    position: absolute;
+    width: 34px;
+    height: 34px;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    line-height: 36px;
+    text-align: center;
+    opacity: 0;
+    background-color: #FFF;
+    visibility: hidden;
+}
+
+form .menu-bar {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: auto;
+}
+
+form .menu-bar > a.btn {
+    float: right;
+    margin-left: 12px;
+}
+
+form .form-title {
+    font-weight: bold;
+}
+
+.flexrow-1:first-of-type form {
+    padding-right: 24px;
+}
+
+.flexrow-1:last-of-type form {
+    padding-left: 24px;
+}

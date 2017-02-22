@@ -1,0 +1,21 @@
+{
+     "require": {
+         "jonnyw/php-phantomjs": "4.*",
+	 "mobiledetect/mobiledetectlib": "^2.8",
+         "phpmailer/phpmailer": "~5.2",
+         "cocur/slugify" : "*",
+         "omnipay/paypal" : "~2.0",
+         "guzzlehttp/guzzle": "~6.0"
+     },
+     "config": {
+         "bin-dir": "bin"
+     },
+     "scripts": {
+         "post-install-cmd": [
+             "PhantomInstaller\\Installer::installPhantomJS"
+         ],
+         "post-update-cmd": [
+             "PhantomInstaller\\Installer::installPhantomJS"
+         ]
+     }
+ }

@@ -1,0 +1,54 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04.03.2014, 10:58:24
+    Author     : chris
+*/
+
+/* For all devices - finished */
+html, body {
+    width: 100%; 
+    height: 100%;
+}
+
+body {
+    padding: 0;
+}
+
+body * {
+     -webkit-font-smoothing: antialiased;
+}
+
+a, a:hover, a:active, a:focus {
+    outline: 0;
+}
+
+body.admin .np-layout-wrapper {
+    position: absolute;
+    width:  100%;
+    height: 100%;
+}
+
+body.admin .np-layout-wrapper div[data-layout].container-fluid {
+    width: 100%;
+    height: 100%;
+    
+    padding: 0;
+}
+
+body.admin .np-layout-wrapper div[data-layout].col {
+    height: 100%;
+    
+    border: 2px #adadad dotted;
+}
+
+.btn-group {
+    margin-right: 5px;
+}
+
+.checkbox.pull-right {
+    margin-left: 20px;
+}

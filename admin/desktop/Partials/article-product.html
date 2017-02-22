@@ -1,0 +1,313 @@
+{{#need plugin mediathek}}
+{{#need model Products}}
+{{#need model Article_categories}}
+{{#need model Article_units}}
+{{#need model Article_manufacturers}}
+{{#need model Article_suppliers}}
+{{#need model Article_warehouses}}
+{{#need model Taxes}}
+
+{{#view "AdminArticleView" id="admin-article-view"}}
+    <form class="bg-grey fullwidth">
+        <h4 class="form-title">Artikel bearbeiten</h4>
+
+        <div class="form-group fullwidth">
+            <div class="image-container">
+                {{#div $="setMediaImage" init=true class="image-preview no-line pull-left"}}{{/div}}
+
+                {{#button type="button" click="showMediathek" class="btn btn-primary"}}
+                    <span class="text">Mediathek</span>
+                    <span class="fa fa-film"></span>
+                {{/button}}
+            </div>
+            <div class="content-container">
+                <div class="form-group fullwidth">
+                    <label>Artikelname</label>
+                    {{{input change="setName" bindAttr="name" type="text" placeholder="Artikelname" value=AdminArticle.name class="input-name"}}}
+                </div>
+                <div class="form-group fullwidth">
+                    <label>Titel</label>
+                    {{{input change="setTitle" bindAttr="title" type="text" placeholder="Title" value=AdminArticle.title class="fullwidth"}}}
+                </div>
+                <div class="form-group fullwidth">
+                    <label>Beschreibung</label>
+                    {{#textarea change="setDescription" bindAttr="description" placeholder="Artikelbeschreibung" value=AdminArticle.description class="fullwidth"}}{{{AdminArticle.description}}}{{/textarea}}
+                </div>
+            </div>
+        </div>
+
+        <div class="menu-bar">
+            {{#button $="disableSaveArticle" click="saveArticle" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Artikel speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="savingArticle" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+        </div>
+    </form>
+        
+    <form class="bg-grey fullwidth">
+        <h4 class="form-title">Allgemeine Einstellungen</h4>
+
+        <div class="form-group fullwidth">
+            <label class="small normal pull-left">Neu?</label>
+            <div class="switch pull-right">
+                {{{input $="setIsNew" init=true click="toggleIsNew" id="article-toggle-1" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                <label for="article-toggle-1"></label>
+            </div>
+        </div>
+
+        <div class="form-group fullwidth">
+            <label class="small normal pull-left">Im Shop sichtbar?</label>
+            <div class="switch pull-right">
+                {{{input $="setEnabled" init=true click="toggleEnabled" id="article-toggle-2" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                <label for="article-toggle-2"></label>
+            </div>
+        </div>
+        <div class="form-group fullwidth">
+            <label class="small normal pull-left">Lieferbar?</label>
+            <div class="switch pull-right">
+                {{{input $="setDeliverable" init=true click="toggleDeliverable" id="article-toggle-3" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                <label for="article-toggle-3"></label>
+            </div>
+        </div>
+        <div class="form-group fullwidth">
+            <label class="small normal pull-left">Top Angebot?</label>
+            <div class="switch pull-right">
+                {{{input $="setTopOffer" init=true click="toggleTopOffer" id="article-toggle-4" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                <label for="article-toggle-4"></label>
+            </div>
+        </div>
+        <div class="form-group fullwidth">
+            <label class="small normal pull-left">Überverkauf?</label>
+            <div class="switch pull-right">
+                {{{input $="setOversaleable" init=true click="toggleOversaleable" id="article-toggle-5" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                <label for="article-toggle-5"></label>
+            </div>
+        </div>
+
+        <div class="menu-bar">
+            {{#button type="button" $="disableSaveArticleGlobalSettings" click="saveArticleGlobalSettings" class="btn btn-simple small pull-right"}}
+                <span class="text">Speichern</span>
+                <span class="sr-only">Änderungen speichern</span>
+                {{#span $="savingArticleGlobalSettings" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+        </div>                
+    </form>  
+
+        <form class="bg-grey sidemenu fullwidth">
+            <h4 class="form-title">Artikel Einstellungen</h4>
+
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Kategorie</label>
+                {{#select $="setCategoryID" change="setCategoryID" init=true notifiy=false bindAttr="c_id" id="admin-article-category" class="pull-right"}}
+                    <option value="0">(keine Auswahl)</option>                    
+                    {{#each AdminArticle.categories}}
+                        <option value="{{KeyKategorie}}">{{{KeyBeschreibung}}}</option>
+                    {{/each}}
+                {{/select}}
+            </div>
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Artikeleinheit</label>
+                {{#select $="setUnitID" change="setUnitID" init=true notifiy=false bindAttr="u_id" id="admin-article-unit" class="pull-right"}}
+                    <option value="0">(keine Auswahl)</option>
+                    {{#each AdminArticle.units}}
+                        <option value="{{unit_id}}">{{{name}}}</option>
+                    {{/each}}
+                {{/select}}
+            </div>
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Gewicht</label>
+
+                <div class="select-container pull-right">
+                    {{#select $="setWeightUnit" change="setWeightUnit" init=true notifiy=false bindAttr="w_unit" id="admin-article-weight-unit" class="pull-right"}}
+                        <option value="mg">mg</option>
+                        <option value="gr">gr</option>
+                        <option value="kg">kg</option>
+                        <option value="t">t</option>
+                    {{/select}}
+                </div>
+
+                {{{input id="article-weight" change="setWeight" bindAttr="weight" type="number" class="pull-right iconable" value=AdminArticle.weight}}}
+            </div>
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Packeinheit</label>
+                {{{input change="setPackUnit" bindAttr="pack_unit" type="text" class="pull-right" value=AdminArticle.pack_unit}}}
+            </div>
+
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">MwSt.:</label>
+                {{#select $="setTax" change="setTax" init=true notifiy=false bindAttr="article_tax" id="admin-article-tax" class="pull-right"}}
+                    {{#each AdminArticle.taxes}}
+                        <option value="{{tax}}">{{{tax}}} %</option>
+                    {{/each}}
+                {{/select}}
+            </div>                
+
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Preis (netto):</label>
+                {{{input change="setPriceNetto" bindAttr="price" type="text" class="pull-right" value=AdminArticle.price}}}
+            </div>                
+
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Preis (brutto):</label>
+                {{{input change="setPriceBrutto" bindAttr="price_brutto" type="text" class="pull-right" value=AdminArticle.price_brutto}}}
+            </div>
+
+            <div class="menu-bar">
+                {{#button type="button" $="disableSaveArticleSettings" click="saveArticleSettings" class="btn btn-simple small pull-right"}}
+                    <span class="text">Speichern</span>
+                    <span class="sr-only">Änderungen speichern</span>
+                    {{#span $="savingArticleSettings" class="cssload-container"}}
+                        <span class="cssload-speeding-wheel"></span>
+                    {{/span}}
+                {{/button}}
+            </div>                
+        </form>  
+            
+        <form class="bg-grey sidemenu fullwidth">
+            <h4 class="form-title">Artikel Zahlungsarten</h4>
+
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">PayPal?</label>
+                <div class="switch pull-right">
+                    {{{input $="setPaypal" init=true click="togglePaypal" id="article-pg-toggle-1" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                    <label for="article-pg-toggle-1"></label>
+                </div>
+            </div>
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Lastschrift?</label>
+                <div class="switch pull-right">
+                    {{{input $="setDebit" init=true click="toggleDebit" id="article-pg-toggle-2" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                    <label for="article-pg-toggle-2"></label>
+                </div>
+            </div>
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Überweisung?</label>
+                <div class="switch pull-right">
+                    {{{input $="setBanktransfer" init=true click="toggleBanktransfer" id="article-pg-toggle-3" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                    <label for="article-pg-toggle-3"></label>
+                </div>
+            </div>
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Nachnahme?</label>
+                <div class="switch pull-right">
+                    {{{input $="setCod" init=true click="toggleCod" id="article-pg-toggle-4" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                    <label for="article-pg-toggle-4"></label>
+                </div>
+            </div>
+
+            <div class="menu-bar">
+                {{#button type="button" $="disableSaveArticlePayment" click="saveArticlePayments" class="btn btn-simple small pull-right"}}
+                    <span class="text">Speichern</span>
+                    <span class="sr-only">Änderungen speichern</span>
+                    {{#span $="savingArticlePayments" class="cssload-container"}}
+                        <span class="cssload-speeding-wheel"></span>
+                    {{/span}}
+                {{/button}}
+            </div>                
+        </form>  
+            
+        <form class="bg-grey sidemenu fulwidth">
+            <h4 class="form-title">Hersteller</h4>
+
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Hersteller?</label>
+                {{#select $="setManufacturerID" change="setManufacturerID" init=true notifiy=false bindAttr="man_id" id="admin-article-manufacturer" class="pull-right"}}
+                    <option value="0">(keine Auswahl)</option>
+                    {{#each AdminArticle.manufacturers}}
+                        <option value="{{manufacturer_id}}">{{{name}}}</option>
+                    {{/each}}
+                {{/select}}
+            </div>                
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">HAN</label>
+                {{{input change="setHAN" bindAttr="han" type="text" class="pull-right" value=AdminArticle.han}}}
+            </div>     
+
+            <div class="menu-bar">
+                {{#a click="saveManufacturerSettings" href="#" class="btn btn-simple small pull-right"}}
+                    <span class="text">Speichern</span>
+                    <span class="sr-only">Änderungen speichern</span>
+                    {{#span $="savingManufacturerSettings" class="cssload-container"}}
+                        <span class="cssload-speeding-wheel"></span>
+                    {{/span}}
+                {{/a}}
+            </div>                
+        </form>            
+            
+        <form class="bg-grey sidemenu fullwidth">
+            <h4 class="form-title">Lieferant</h4>
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Lieferant?</label>
+                {{#select $="setSupplierID" change="setSupplierID" init=true notifiy=false bindAttr="sup_id" id="admin-article-supplier" class="pull-right"}}
+                    <option value="0">(keine Auswahl)</option>
+                    {{#each AdminArticle.suppliers}}
+                        <option value="{{supplier_id}}">{{{name}}}</option>
+                    {{/each}}
+                {{/select}}
+            </div>                
+
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">EK Steuer</label>
+                {{#select $="setSupplierTax" change="setSupplierTax" init=true notifiy=false bindAttr="sup_tax" id="admin-article-sup-tax" class="pull-right"}}
+                    {{#each AdminArticle.taxes}}
+                        <option value="{{tax}}">{{{tax}}} %</option>
+                    {{/each}}
+                {{/select}}
+            </div>   
+
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">EK Netto</label>
+                {{{input change="setEKNetto" bindAttr="supplier_ek" type="text" class="pull-right" value=AdminArticle.supplier_ek}}}
+            </div>   
+
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">EK Brutto</label>
+                {{{input change="setEKBrutto" bindAttr="supplier_ek_brutto" type="text" class="pull-right" value=AdminArticle.supplier_ek_brutto}}}
+            </div>           
+
+            <div class="menu-bar">
+                {{#button type="button" $="disableSaveSupplierSettings" click="saveSupplierSettings" class="btn btn-simple small pull-right"}}
+                    <span class="text">Speichern</span>
+                    <span class="sr-only">Änderungen speichern</span>
+                    {{#span $="savingSupplierSettings" class="cssload-container"}}
+                        <span class="cssload-speeding-wheel"></span>
+                    {{/span}}
+                {{/button}}
+            </div>                
+        </form>
+            
+        <form class="bg-grey sidemenu fullwidth">
+            <h4 class="form-title">Lager</h4>
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Lager?</label>
+                {{#select $="setWarehouseID" change="setWarehouseID" init=true notifiy=false bindAttr="ware_id" id="admin-article-warehouse" class="pull-right"}}
+                    <option value="0">(keine Auswahl)</option>
+                    {{#each AdminArticle.warehouses}}
+                        <option value="{{warehouse_id}}">{{{name}}}</option>
+                    {{/each}}
+                {{/select}}
+            </div>                
+            <div class="form-group fullwidth">
+                <label class="small normal pull-left">Bestand</label>
+                {{{input change="setStock" bindAttr="stock" type="text" class="pull-right" value=AdminArticle.stock}}}
+            </div>                
+
+            <div class="menu-bar">
+                {{#button $="disableSaveWarehouseSettings" type="button" click="saveWarehouseSettings" class="btn btn-simple small pull-right"}}
+                    <span class="text">Speichern</span>
+                    <span class="sr-only">Änderungen speichern</span>
+                    {{#span $="savingWarehouseSettings" class="cssload-container"}}
+                        <span class="cssload-speeding-wheel"></span>
+                    {{/span}}
+                {{/button}}
+            </div>                
+        </form>
+    </div>
+{{/view}}
+
+{{#partial mediathek}}

@@ -1,0 +1,17 @@
+{{#view "CartTotalView"}}
+    <div id="cart-total">
+        <div class="info">
+            <label>Gesamtbetrag </label>
+            {{#span class="price" $="setTotal" init=true}}{{Products.total}}{{/span}}
+            <span class="tax">(inkl. 19% Mwst.)</span>
+        </div>    
+        
+        {{#a click="routeToCheckout" init=true href="#"}}
+            {{#view "CheckoutButtonView"}}
+                <div class="btn btn-secondary btn-chevron big">
+                    <span class="text">Zur Kasse</span>
+                </div>
+            {{/view}}
+        {{/a}}
+    </div>
+{{/view}}

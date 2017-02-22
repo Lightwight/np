@@ -1,0 +1,186 @@
+{{#need model User_orders}}
+
+{{#view "AdminShopOrderView" id="admin-order-view"}}
+    <div class="flexbox">
+        <div class="flexrow flexrow-4">
+            <form id="admin-order-form" class="bg-grey">
+                <div class="head-info">
+                    <div class="order-id"><label>Bestellnummer:</label>{{{AdminShopOrder.id}}}</div>
+                    <div class="order-status"><label>Status:</label><span class="{{AdminShopOrder.order_status.css}}">{{{AdminShopOrder.order_status.state}}}</span></div>
+                </div>
+
+                <div class="form-group fullwidth">
+                    <label>Kunden Bestelldatum</label><br>
+                    <span>{{{date AdminShopOrder.confirmed_at "d.m.Y h:i"}}}</span>
+                </div>
+
+                <div class="form-group fullwidth">
+                    <label>Kunden E-Mail-Addresse</label><br>
+                    <span>{{AdminShopOrder.email}}</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Kunden Zahlungsaddresse</label><br><br>
+                    <span>
+                        {{#equals AdminShopOrder.gender "male"}}
+                            Herr
+                        {{else}}
+                            Frau
+                        {{/equals}}
+                    </span>
+                    <span>{{AdminShopOrder.prename}}</span>
+                    <span>{{AdminShopOrder.name}}</span><br><br>
+                    <span>{{AdminShopOrder.billing_street}}</span><br>
+                    <span>{{AdminShopOrder.billing_postal}} {{AdminShopOrder.billing_city}}</span><br>
+                    <span>{{AdminShopOrder.billing_country}}</span><br>
+                </div>
+
+                <div class="form-group">
+                    <label>Kunden Lieferaddresse</label><br><br>
+                    <span>
+                        {{#equals AdminShopOrder.shipping_gender "male"}}
+                            Herr
+                        {{else}}
+                            Frau
+                        {{/equals}}
+                    </span>
+                    <span>{{AdminShopOrder.shipping_prename}}</span>
+                    <span>{{AdminShopOrder.shipping_name}}</span><br><br>
+                    <span>{{AdminShopOrder.shipping_street}}</span><br>
+                    <span>{{AdminShopOrder.shipping_postal}} {{AdminShopOrder.shipping_city}}</span><br>
+                    <span>{{AdminShopOrder.shipping_country}}</span><br>
+                </div>
+                <div class="form-group">
+                    <label>Kunden Firmendaten</label><br><br>
+                    <span>
+                        {{#equals AdminShopOrder.company ""}}
+                            keine Angaben
+                        {{else}}
+                            {{AdminShopOrder.company}}<br>
+                            Ust.Id.: {{AdminShopOrder.ustid}}
+                        {{/equals}}
+                    </span>
+                </div>
+                <div class="form-group fullwidth order-price">
+                    <label>Preis</label><br><br>
+                    <span>
+                        <label>Warenkorbpreis</label> {{AdminShopOrder.total}} &euro;
+                    </span><br>
+                    <span>
+                        <label>Versandkosten</label> {{AdminShopOrder.delivery_costs}} &euro;
+                    </span><br>
+                    <span>
+                        <label>Gesamtkosten</label> {{AdminShopOrder.price_total}} &euro;
+                    </span>
+                </div>
+                <div class="form-group fullwidth">
+                    {{#div $="showArticles" class="articles-Container"}}
+                        {{#each AdminShopOrder.articles}}
+                            {{#view "AdminShopOrderArticleView" class="product-container product product-details"}}
+                                <div class="product-wrapper">
+                                    <div class="product-left">
+                                        <div class="bg-image" style="background-image: url({{AdminShopOrderArticle.image}})"></div>
+                                        <a class="product-price-container" href="/">
+                                            <span>{{AdminShopOrderArticle.price}} &euro;</span>
+                                            <span class="small">(inkl. {{AdminShopOrderArticle.tax}}% MwSt.)</span>
+                                        </a>
+                                    </div>
+
+                                    <div class="product-content">
+                                        <div class="product-head fullwidth">
+                                            <h2>{{AdminShopOrderArticle.name}}</h2>
+
+                                            {{#if AdminShopOrderArticle.title}}
+                                                <div class="product-title fullwidth">
+                                                    {{AdminShopOrderArticle.title}}
+                                                </div>
+                                            {{/if}}
+
+                                            <div class="product-technical">
+                                                <b class="small">Technische Daten:</b>
+                                                <ul>
+                                                    <li>
+                                                        <label class="small">Artikelnummer:</label>
+                                                        <span class="small">{{AdminShopOrderArticle.article_id}}</span>
+                                                    </li>
+                                                    <li>
+                                                        <label class="small">Hersteller:</label>
+                                                        <span class="small">{{AdminShopOrderArticle.manufacturer}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            <div class="product-technical">
+                                                <b class="small">Kundenangaben:</b>
+                                                <ul>
+                                                    <li>
+                                                        <label class="small">Anzahl:</label>
+                                                        <span class="small">{{AdminShopOrderArticle.amount}}</span>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                            
+                                            {{#div $="hasIgnored" init=true class="note-container"}}
+                                                {{{div $="setIgnoredText" init=true class="note alert"}}}
+                                            {{/div}}
+                                        </div>
+                                    </div>                                                
+                                </div>
+                            {{/view}}
+                        {{/each}}
+                    {{/div}}
+                </div>
+            </form>
+        </div>
+        <div class="flexrow flexrow-2">
+            <form class="bg-grey">
+                <h4 class="form-title">Bestellstatus</h4>
+
+                <div class="form-group fullwidth">
+                    <label class="small normal pull-left">Kundenbestätigung?</label>
+                    <div class="switch pull-right">
+                        {{{input $="setConfirmed" init=true id="article-toggle-1" class="cmn-toggle cmn-toggle-round small disabled" type="checkbox"}}}
+                        <label for="article-toggle-1"></label>
+                    </div>
+                </div>
+                <div class="form-group fullwidth">
+                    <label class="small normal pull-left">In Bearbeitung?</label>
+                    <div class="switch pull-right">
+                        {{{input $="setProcessing" init=true click="toggleProcessing" id="article-toggle-2" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                        <label for="article-toggle-2"></label>
+                    </div>
+                </div>
+                <div class="form-group fullwidth">
+                    <label class="small normal pull-left">Versendet?</label>
+                    <div class="switch pull-right">
+                        {{{input $="setDelivered" init=true click="toggleDelivered" id="article-toggle-3" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                        <label for="article-toggle-3"></label>
+                    </div>
+                </div>
+                <div class="form-group fullwidth">
+                    <label class="small normal pull-left">Bezahlt?</label>
+                    <div class="switch pull-right">
+                        {{{input $="setPaid" init=true click="togglePaid" id="article-toggle-4" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                        <label for="article-toggle-4"></label>
+                    </div>
+                </div>
+                <div class="form-group fullwidth">
+                    <label class="small normal pull-left">Erledigt?</label>
+                    <div class="switch pull-right">
+                        {{{input $="setDone" init=true click="toggleDone" id="article-toggle-5" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                        <label for="article-toggle-5"></label>
+                    </div>
+                </div>
+
+                <div class="menu-bar">
+                    {{#button type="button" $="disableSaveOrderState" click="saveOrderState" class="btn btn-simple small pull-right"}}
+                        <span class="text">Speichern</span>
+                        <span class="sr-only">Änderungen speichern</span>
+                        {{#span $="savingAdminOrderStates" class="cssload-container"}}
+                            <span class="cssload-speeding-wheel"></span>
+                        {{/span}}
+                    {{/button}}
+                </div>                
+            </form>             
+        </div>
+    </div>
+{{/view}}

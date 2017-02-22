@@ -1,0 +1,16 @@
+{{#view "CheckoutBreadcrumbView" id="checkout-breadcrumb" class="hiddex-xs"}}
+    <ul>
+        {{#li $="statusStep1" init=true}}
+            <div>Anmelden</div>
+        {{/li}}
+        {{#li $="statusStep2" init=true}}
+            <div>Addressdaten</div>
+        {{/li}}
+        {{#li $="statusStep3" init=true}}
+            <div>Zahlungsart</div>
+        {{/li}}
+        {{#li $="statusStep4" init=true}}
+            <div>Bestätigung</div>
+        {{/li}}
+    </ul>
+{{/view}}

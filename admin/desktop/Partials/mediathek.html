@@ -1,0 +1,41 @@
+{{#view "MediathekView"}}
+    {{#div $="hideMediathek" id="mediathek" class="fullwidth"}}
+        <div class="mediathek-container col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <div class="mediathek-title-bar">
+                <div class="mediathek-label">
+                    Mediathek
+                </div>
+                <div class="mediathek-close-panel">
+                    {{{span click="hideMediathek" class="glyphicon glyphicon-remove"}}}
+                </div>
+            </div>
+
+            <div class="mediathek-panel">
+                <div class="fullwidth">
+                    {{#button type="button" click="showMediaContainer" $="showMediaActive" init=true class="btn btn-white"}}Medien anzeigen{{/button}}
+                </div>
+                <div class="fullwidth">
+                    {{#button type="button" click="showImageContainer" $="imageMediaActive" init=true class="btn btn-white"}}Bilder hinzuf&uuml;gen{{/button}}
+                </div>
+                <div class="fullwidth">
+                    {{#button type="button" click="showVideoContainer" $="showVideoActive" init=true class="btn btn-white"}}Videos hinzuf&uuml;gen{{/button}}
+                </div>
+                <div class="fullwidth">
+                    {{#button type="button" click="showFolderContainer" $="showFolderActive" init=true class="btn btn-white"}}Ordner bearbeiten{{/button}}
+                </div>
+            </div>
+            
+            <div class="mediathek-content">
+                {{#partial mediathek-media-container}}
+                {{#partial mediathek-image-container}}
+                {{#partial mediathek-media-edit-container}}
+                {{#partial mediathek-video-container}}
+                {{#partial mediathek-folder-container}}
+            </div>
+
+            <div class="mediathek-image-view-container">
+
+            </div>
+        </div>
+    {{/div}}
+{{/view}}

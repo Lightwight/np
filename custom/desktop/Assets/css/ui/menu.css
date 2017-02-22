@@ -1,0 +1,73 @@
+header {
+    box-shadow: 0px 0px 8px rgba(127,127,127,0.84),0px 0px 8px rgba(127,127,127,0.84);
+    background-color: #000000;
+    position: fixed;
+}
+
+#logo {
+    position: relative;
+    float: left;
+    height: 100%;
+}
+
+#logo a {
+    position: relative;
+    float: left;
+    height: 100%;
+}
+
+#logo a img {
+    position: relative;
+    float: left;
+    clear: left;
+}
+
+#logo a img:first-child {
+    margin-left: -10px;
+}
+
+#menu {
+    width: 100%;
+    max-width: 990px;
+    margin: 0px auto;
+    height: auto;
+}
+
+#menu .menu-area {
+    position: relative;
+    float: left;
+    height: 124px;
+}
+
+#menu .menu-area .menu-list {
+    list-style: none;
+    position: relative;
+    float: left;
+    line-height: 124px;
+}
+
+#menu .menu-area .menu-list li {
+    position: relative;
+    float: left;
+    margin-right: 30px;
+}
+
+#menu .menu-area .menu-list li:last-child {
+    margin-right: 0px;
+}
+
+#menu .menu-area .menu-list li a .menu-text {
+    font-family: 'Alfa Slab One', serif;
+    font-size: 16px;
+    font-weight: 400;
+    text-transform: uppercase;
+    color: #FFF;
+    
+}
+
+#menu .menu-area .menu-list li:hover a .menu-text,
+#menu .menu-area .menu-list li:active a .menu-text,
+#menu .menu-area .menu-list li.active a .menu-text,
+#menu .menu-area .menu-list li:focus a .menu-text {
+    color: #F7931E;
+}

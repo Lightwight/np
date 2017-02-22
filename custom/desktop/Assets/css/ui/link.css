@@ -1,0 +1,11 @@
+a {
+    color: #FFF;
+    font-size: 14px;
+}
+
+a:hover,
+a:focus {
+    color: #F7931E;
+    text-decoration: none;
+    font-weight: normal;
+}

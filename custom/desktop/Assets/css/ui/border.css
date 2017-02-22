@@ -1,0 +1,23 @@
+.b-rose {
+    border: 1px #651822 solid;
+}
+
+.b-right-rose {
+    border-right: 1px #651822 solid;
+}
+
+.b-top-rose {
+    border-top: 1px #651822 solid;
+}
+
+.b-bottom-rose {
+    border-bottom: 1px #651822 solid;
+}
+
+.b-white {
+    border: 1px #fff solid;
+}
+
+.b-right-white {
+    border-right: 1px #fff solid;
+}

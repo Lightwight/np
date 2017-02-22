@@ -1,0 +1,14 @@
+{{#view "AdminTablePaginationView" class="admin-table-pagination"}}
+    <ul>
+        {{#each Pagination.pages}}
+            <li>
+                {{#view "AdminTablePaginationPageView"}}
+                    {{#a click="flush" href=page.route class=page.class}}
+                        <span class="text">{{page.num}}</span>
+                        <span class="{{page.icon}}"></span>
+                    {{/a}}
+                {{/view}}
+            </li>
+        {{/each}}
+    </ul>
+{{/view}}

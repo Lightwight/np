@@ -1,0 +1,61 @@
+{{#need model Products}}
+
+{{#view "CartProductView" data-cart-id=this.id}}
+    <div class="cart-product-image">
+        {{#a click="closeCart" href=CartProduct.bookmark}}
+            <div class="product-image" style="background-image: url('{{CartProduct.image}}');"></div>
+        {{/a}}
+    </div>
+    
+    <div class="cart-product-info">
+        <div class="product-name">
+            {{#a click="closeCart" href=CartProduct.bookmark}}{{CartProduct.name}}{{/a}}
+        </div>
+        
+        <div class="manufact-container">
+            {{#a $="setManufactLink" init=true click="closeCart" href="#"}}<span class="manufact">{{CartProduct.manufacturer}}</span>{{/a}}
+        </div>
+        
+        <div class="gross">
+            {{#span $="setGross" init=true}}{{CartProduct.gross}} &euro;/St&uuml;ck{{/span}}
+            <span class="tax">(inkl. {{CartProduct.tax}}% Mwst.)</span>                                            
+        </div>
+    </div>
+    
+    {{#div click="removeFromCart" notify=false class="remove btn-remove"}}
+        <span class="fa fa-2x fa-trash"></span>
+    {{/div}}
+
+    <div class="cart-product-ui">
+        <div class="amount">
+            {{{span click="decrementAmount" notify=false class="minus fa fa-minus noselect"}}}
+            {{{input bindAttr="amount" change="changeAmount" type="number" value=CartProduct.amount}}}
+            {{{span click="incrementAmount" notify=false class="plus fa fa-plus noselect"}}}
+        </div>
+
+        <div class="gross-sum col-lg-3 col-md-3 col-sm-3 col-xs-3">
+            <label>Gesamtpreis</label>
+            {{#span $="setTotal" init=true class="total"}}{{CartProduct.gross}} &euro;{{/span}}
+            <span class="tax">(inkl. {{CartProduct.tax}}% Mwst.)</span>
+        </div>
+        
+        {{#span $="refresh" class="cssload-container"}}
+            <span class="cssload-speeding-wheel"></span>
+        {{/span}}
+    </div>
+
+    {{#div $="hasChanged" class="cart-changes-container"}}
+        <span class="text">Soll die neue Anzahl &uuml;bernommen werden?</span>
+        
+        <div class="btn-container">
+            {{#button $="disableApply" type="button" click="applyChanges" class="btn first btn-primary"}}
+                <span class="text">Ja</span>
+                <span class="sr-only">Änderungen übernehmen</span>
+            {{/button}}
+            {{#button $="disableReset" type="button" click="resetChanges" class="btn btn-primary"}}
+                <span class="text">Nein</span>
+                <span class="sr-only">abbrechen</span>
+            {{/button}}
+        </div>
+    {{/div}}
+{{/view}}

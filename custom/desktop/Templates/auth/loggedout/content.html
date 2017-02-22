@@ -1,0 +1,54 @@
+<h2 class="hoz-title">Abmeldung</h2>
+
+<div class="main-content padding">
+    <div class="centered">
+        <div class="flexbox bg-grey">
+            {{#auth loggedIn=false}}
+                <form>
+                    <h4 class="form-title">Abmeldung</h4>
+                    <div class="info-box">
+                        Ihre Abmeldung war erfolgreich
+                    </div>
+
+                    <div class="menu-bar">
+                        <a class="btn btn-primary" href="/" role="button">
+                            <span class="text">Startseite</span>
+                            <span class="sr-only">Startseite</span>
+                            <span class="icon fa fa-home"></span>                        
+                        </a>
+                    </div>
+                </form>
+            {{else}}
+                <form>
+                    <h4 class="form-title">Abmeldung</h4>
+                    <div class="info-box">
+                        M&ouml;chten Sie sich abmelden?
+                    </div>
+                    
+                    {{#view "AuthLoginView"}}
+                        <div class="menu-bar">
+                            {{#a click="logout" href="#" class="btn btn-secondary" role="button"}}
+                                <span class="text">abmelden</span>
+                                <span class="sr-only">abmelden</span>
+                                {{{span $="notSending" class="icon fa fa-caret-right"}}}
+                                {{#span $="sending" class="cssload-container"}}
+                                    <div class="cssload-speeding-wheel"></div>
+                                {{/span}}
+                            {{/a}}
+
+                            <a class="btn btn-primary" href="/" role="button">
+                                <span class="text">Startseite</span>
+                                <span class="sr-only">Startseite</span>
+                                <span class="icon fa fa-home"></span>
+                            </a>
+                        </div>
+                    {{/view}}
+                </form>
+            {{/auth}}
+        </div>
+    </div>
+
+    <div class="marg-top">
+        {{#partial popular-products}}    
+    </div>
+</div>

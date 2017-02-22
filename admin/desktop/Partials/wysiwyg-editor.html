@@ -1,0 +1,106 @@
+<!--
+Copyright (C) 2015 cross
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+-->
+<div id="alerts"></div>
+<div id=:toolbarID class="btn-toolbar" data-role="editor-toolbar" data-target=:editorID>
+    <div class="btn-group fontFamilyGroup">
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Font"><i class="fa fa-font"></i><b class="fa fa-caret-down"></b></a>
+        <ul class="dropdown-menu">
+            <li><a class="fontFamily" data-fontfamily="Arial, Helvetica Neue, Helvetica, sans-serif"><div style="font-size: 18px;">Standardschrift</div></a></li>
+            <li><a class="fontFamily" data-fontfamily="'Alfa Slab One', serif"><div style="font-size: 18px;">Alfa Slab One, serif</div></a></li>
+            <li><a class="fontFamily" data-fontfamily="Arial,Helvetica,sans-serif"><div style="font-family: Arial,Helvetica,sans-serif; font-size: 18px;">Arial</div></a></li>
+            <li><a class="fontFamily" data-fontfamily="'Courier New',Courier,monospace"><div style="font-family: 'Courier New',Courier,monospace; font-size: 18px;">Courier New</div></a></li>                    
+            <li><a class="fontFamily" data-fontfamily="Georgia,Serif"><div style="font-family: Georgia,Serif; font-size: 18px;">Georgia</div></a></li>                    
+            <li><a class="fontFamily" data-fontfamily="Impact,Charcoal,sans-serif"><div style="font-family: Impact, Charcoal, sans-serif; font-size: 18px;">Impact</div></a></li>
+            <li><a class="fontFamily" data-fontfamily="'Lucida Console',Monaco,monospace"><div style="font-family: 'Lucida Console',Monaco,monospace; font-size: 18px;">Lucida Console</div></a></li>                    
+            <li><a class="fontFamily" data-fontfamily="'Lucida Sans Unicode','Lucida Grande', sans-serif"><div style="font-family: 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; font-size: 18px;">Lucida Sans Unicode</div></a></li>
+            <li><a class="fontFamily" data-fontfamily="'Palatino Linotype','Book Antiqua',Palatino,serif"><div style="font-family: 'Palatino Linotype','Book Antiqua',Palatino,serif; font-size: 18px;">Palatino Linotype</div></a></li>
+            <li><a class="fontFamily" data-fontfamily="Tahoma,Geneva,sans-serif"><div style="font-family: Tahoma, Geneva, sans-serif; font-size: 18px;">Tahoma</div></a></li>
+            <li><a class="fontFamily" data-fontfamily="'Times New Roman',Times,serif"><div style="font-family: 'Times New Roman', Times, serif; font-size: 18px;">Times New Roman</div></a></li>
+            <li><a class="fontFamily" data-fontfamily="'Trebuchet MS',Helvetica,sans-serif"><div style="font-family: 'Trebuchet MS',Helvetica,sans-serif; font-size: 18px;">Trebuchet MS</div></a></li>
+            <li><a class="fontFamily" data-fontfamily="Verdana,Geneva,sans-serif"><div style="font-family: Verdana, Geneva, sans-serif; font-size: 18px;">Verdana</div></a></li>
+        </ul>
+    </div>
+
+    <div class="btn-group fontSizeGroup">
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Font Size"><i class="fa fa-text-height"></i>&nbsp;<b class="fa fa-caret-down"></b></a>
+        <ul class="dropdown-menu">
+            <li><a class="fontSize" data-fontsize="12px"><span class="f-size12">12px</span></a></li>
+            <li><a class="fontSize" data-fontsize="13px"><span class="f-size13">13px</span></a></li>
+            <li><a class="fontSize" data-fontsize="14px"><span class="f-size14">14px</span></a></li>
+            <li><a class="fontSize" data-fontsize="15px"><span class="f-size15">15px</span></a></li>
+            <li><a class="fontSize" data-fontsize="16px"><span class="f-size16">16px</span></a></li>
+            <li><a class="fontSize" data-fontsize="17px"><span class="f-size17">17px</span></a></li>
+            <li><a class="fontSize" data-fontsize="18px"><span class="f-size18">18px</span></a></li>
+            <li><a class="fontSize" data-fontsize="19px"><span class="f-size19">19px</span></a></li>
+            <li><a class="fontSize" data-fontsize="20px"><span class="f-size20">20px</span></a></li>
+            <li><a class="fontSize" data-fontsize="21px"><span class="f-size21">21px</span></a></li>
+            <li><a class="fontSize" data-fontsize="22px"><span class="f-size22">22px</span></a></li>
+            <li><a class="fontSize" data-fontsize="23px"><span class="f-size23">23px</span></a></li>
+            <li><a class="fontSize" data-fontsize="24px"><span class="f-size24">24px</span></a></li>
+            <li><a class="fontSize" data-fontsize="25px"><span class="f-size25">25px</span></a></li>
+            <li><a class="fontSize" data-fontsize="26px"><span class="f-size26">26px</span></a></li>
+            <li><a class="fontSize" data-fontsize="27px"><span class="f-size27">27px</span></a></li>
+            <li><a class="fontSize" data-fontsize="28px"><span class="f-size28">28px</span></a></li>
+            <li><a class="fontSize" data-fontsize="29px"><span class="f-size29">29px</span></a></li>
+            <li><a class="fontSize" data-fontsize="30px"><span class="f-size30">30px</span></a></li>
+            <li><a class="fontSize" data-fontsize="31px"><span class="f-size31">31px</span></a></li>
+            <li><a class="fontSize" data-fontsize="32px"><span class="f-size32">32px</span></a></li>
+        </ul>
+    </div>
+    <div class="btn-group">
+        <div class="input-group wysiwyg-colorpicker">
+            <div>&nbsp;</div>
+        </div>
+    </div>    
+    <div class="btn-group">
+        <a class="btn btn-primary textBold" title="Bold (Ctrl/Cmd+B)"><i class="fa fa-bold"></i></a>
+        <a class="btn btn-primary textItalic" title="Italic (Ctrl/Cmd+I)"><i class="fa fa-italic"></i></a>
+        <a class="btn btn-primary textStrikethrough" title="Strikethrough"><i class="fa fa-strikethrough"></i></a>
+        <a class="btn btn-primary textUnderline" title="Underline (Ctrl/Cmd+U)"><i class="fa fa-underline"></i></a>
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-primary" data-edit="insertunorderedlist" title="Bullet list"><i class="fa fa-list-ul"></i></a>
+        <a class="btn btn-primary" data-edit="insertorderedlist" title="Number list"><i class="fa fa-list-ol"></i></a>
+        <a class="btn btn-primary" data-edit="outdent" title="Reduce indent (Shift+Tab)"><i class="fa fa-outdent"></i></a>
+        <a class="btn btn-primary" data-edit="indent" title="Indent (Tab)"><i class="fa fa-indent"></i></a>
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-primary" data-edit="justifyleft" title="Align Left (Ctrl/Cmd+L)"><i class="fa fa-align-left"></i></a>
+        <a class="btn btn-primary" data-edit="justifycenter" title="Center (Ctrl/Cmd+E)"><i class="fa fa-align-center"></i></a>
+        <a class="btn btn-primary" data-edit="justifyright" title="Align Right (Ctrl/Cmd+R)"><i class="fa fa-align-right"></i></a>
+        <a class="btn btn-primary" data-edit="justifyfull" title="Justify (Ctrl/Cmd+J)"><i class="fa fa-align-justify"></i></a>
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" title="Hyperlink"><i class="fa fa-link"></i></a>
+        <div class="dropdown-menu input-append">
+            <input class="span2" placeholder="URL" type="text" data-edit="createLink"/>
+            <button type="button" class="btn btn-primary">Add</button>
+        </div>
+        <a class="btn btn-primary" data-edit="unlink" title="Remove Hyperlink"><i class="fa fa-unlink"></i></a>
+    </div>
+
+    <div class="btn-group">
+        <a class="btn btn-primary" title="Insert picture (or just drag & drop)" id="pictureBtn"><i class="fa fa-image"></i></a>
+        <input type="file" class="magic-overlay" data-role="magic-overlay" data-target="#pictureBtn" data-edit="insertImage" />
+    </div>
+    <div class="btn-group">
+        <a class="btn btn-primary" data-edit="undo" title="Undo (Ctrl/Cmd+Z)"><i class="fa fa-rotate-left"></i></a>
+        <a class="btn btn-primary" data-edit="redo" title="Redo (Ctrl/Cmd+Y)"><i class="fa fa-rotate-right"></i></a>
+    </div>
+</div>    
+
+{{#div type="text" change=:change tabindex="-1" $=:change init=true bindAttr=:bindAttr data-toolbar=:toolbarID id=:editorRealID class="wysiwyg-editor"}}{{/div}}

@@ -1,0 +1,72 @@
+{{#need model Routes}}
+{{#need model Route_scopes}}
+
+{{#view "AdminRoutesOverviewView" class="admin-overview"}}
+    <div class="flexbox">
+        {{#view "AdminRoutesOverviewSortableView" class="flexrow flexrow-6"}}
+            <div class="flexbox">
+                {{#div $="setOrderID" init=true click="sortByID" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Seiten ID{{/div}}
+                {{#div $="setOrderTitle" init=true click="sortByTitle" class="flexrow flexrow-2 t-bold f-s16 sortable"}}Seitentitel{{/div}}
+                {{#div $="setOrderRoute" init=true click="sortByRoute" class="flexrow flexrow-2 t-bold f-s16 sortable"}}Seitenpfad{{/div}}
+                {{#div $="setOrderScope" init=true click="sortByScope" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Bereich{{/div}}
+            </div>
+        {{/view}}
+
+        
+        <div class="flexrow flexrow-1 flex-end">
+            {{#view "AdminRoutesOverviewSearchView" class="input-search-container"}}
+                <div class="input-group">
+                    {{{input change="setSearch" enter="search" bindAttr="search" type="text" class="iconable" placeholder="Suchen"}}}
+                    {{#div click="search" class="fa-container"}}
+                        <span class="fa fa-search"></span>
+                        <span class="sr-only">Seite Suchen</span>
+                    {{/div}}
+                </div>
+
+                {{#div $="toggleVisibility" init=true class="search-key-container"}}
+                    {{#button click="clearSearch" type="button" class="btn btn-primary"}}
+                        <span class="text">{{AdminRoutesSearch.sentSearch}}</span>
+                        <span class="fa fa-remove"></span>
+                        <span class="sr-only">Suchbegriff löschen</span>
+                    {{/button}}
+                {{/div}}
+            {{/view}}             
+        </div>
+        
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+        
+        <div class="admin-table">
+            {{#if this}}            
+                {{#each Routes}}
+                    {{#view "AdminRouteOverviewView" class="admin-overview-row"}}
+                        <div class="flexbox">
+                            <div class="flexrow flexrow-1">{{Route.id}}</div>
+                            <div class="flexrow flexrow-2">{{Route.title}}</div>
+                            <div class="flexrow flexrow-2">{{Route.route}}</div>
+                            <div class="flexrow flexrow-1">{{Route.scope}}</div>
+                            <div class="flexrow flexrow-1 flex-end">
+                                <a href="/admin/routesmanagement/route/{{Route.id}}" class="btn btn-primary">
+                                    <span class="text">Bearbeiten</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Benutzer Bearbeiten</span>
+                                </a>
+                            </div>
+                        </div>
+                    {{/view}}
+                {{/each}}
+            {{else}}
+                <div class="admin-overview-row">
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">Der eingegebene Suchbegriff konnte nicht gefunden werden.</div>
+                    </div>
+                <div>
+            {{/if}}
+        </div>
+        
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+    </div>
+{{/view}}

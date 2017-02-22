@@ -1,0 +1,85 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+#breadcrumb {
+    position: fixed;
+    top: 148px;
+    left: 0px;
+    right: 0px;
+    background-color: #CCC;
+    width: 100%;
+    z-index: 9000;
+    box-shadow: 0px 0px 4px -1px #000;
+}
+
+#breadcrumb ul {
+    list-style: none;
+    margin: 0px;
+    padding: 0px 0px 0px 24px;
+    display: block;
+    float: left;
+    position: relative;
+    overflow: hidden;
+}
+
+#breadcrumb ul li {
+    position: relative;
+    float: left;
+    padding-right: 33px;
+    margin-right: 28px;
+    line-height: 36px;
+}
+
+#breadcrumb ul li:before,
+#breadcrumb ul li:after {
+    content: '';
+    position: absolute;
+    display: inline-block;
+    border-left: 1px #000 solid;
+    width: 1px;
+    height: 22px;
+    right: 0px;
+    top: 0px;
+}
+
+#breadcrumb ul li:before {
+    transform: rotateZ(-45deg);
+}
+
+#breadcrumb ul li:after {
+    transform: rotateZ(45deg);
+    top: 16px;
+}
+
+#breadcrumb ul li a {
+    color: #555;
+    font-size: 12px;
+}
+
+.media-s-md #breadcrumb {
+    top: 110px;
+}
+
+.media-s-sm #breadcrumb,
+.media-s-xs #breadcrumb {
+    display: none;
+}

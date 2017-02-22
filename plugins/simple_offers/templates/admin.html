@@ -1,0 +1,112 @@
+{{#view "AdminPluginSimpleOffersOverviewView" id="admin-plugin-simple-offers-view"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Angebote bearbeiten</h4>
+
+        {{#view "AdminPluginSimpleOffersView" id="admin-plugin-simple-offers-sortarea" class="fullwidth"}}
+            {{#isObject AdminPluginSimpleOffers}}
+                {{#each AdminPluginSimpleOffers}}
+                    {{#view "AdminPluginSimpleOfferView" class="admin-plugin-simple-offers-edit bg-grey"}}
+                        {{#sortable list="#admin-plugin-simple-offers-sortarea" sort="sort" containment="#admin-plugin-simple-offers-sortarea"}}
+                            <div class="image-container">
+                                {{#div $="setMediaSrc" init=true class="image-preview no-line pull-left"}}{{/div}}
+
+                                {{#button type="button" click="showMediathek" class="btn btn-primary pull-left"}}
+                                    <span class="text">Mediathek</span>
+                                    <span class="fa fa-film"></span>
+                                {{/button}}
+                            </div>
+                            <div class="simple-offers-data">
+                                <div class="form-group fullwidth small">
+                                    {{{input change="setTitle" bindAttr="title" type="text" class="iconable" placeholder="Slide Titel" value=AdminPluginSimpleOffer.title}}}
+
+                                    <div class="fa-container">
+                                        {{{span $="validTitle" init=true class="fa fa-check"}}}
+                                    </div>
+                                </div>
+                                <div class="form-group textarea fullwidth small">
+                                    {{{textarea change="setContent" $="setContent" init=true bindAttr="content" placeholder="Inhalt" class="fullwidth"}}}
+                                </div>
+                            </div>
+                            <div class="simple-offers-actions pull-right">
+                                <div class="form-group small">
+                                    {{#button click="removeOffer" type="button" class="btn btn-simple small pull-right"}}
+                                        <span class="text">Entfernen</span>
+                                    {{/button}}
+                                </div>
+                            </div>                        
+                            <div class="simple-offers-actions simple-offers-order pull-right">
+                                <div class="form-group fullwidth small">
+                                    {{{span $="enableOfferUp" init=true click="moveOfferPositionUp" class="fa fa-2x fa-angle-up"}}}
+                                </div>
+
+                                <div class="form-group text-order fullwidth small">
+                                    {{#div bindAttr="order"}}{{AdminPluginSimpleOffer.order}}{{/div}}
+                                </div>
+
+                                <div class="form-group fullwidth small">
+                                    {{{span $="enableOfferDown" init=true click="moveOfferPositionDown" class="fa fa-2x fa-angle-down"}}}
+                                </div>                                
+                            </div>
+                        {{/sortable}}
+                    {{/view}}
+                {{/each}}
+            {{/isObject}}
+        {{/view}}
+
+        {{#div $="showAddOffer" class="admin-plugin-simple-offers-edit add-offer"}}
+            <div class="image-container">
+                {{#div $="setMediaSrc" init=true class="image-preview pull-left"}}
+                    Bildvorschau
+                {{/div}}
+                
+                {{#button type="button" click="showMediathek" class="btn btn-primary pull-left"}}
+                    <span class="text">Mediathek</span>
+                    <span class="fa fa-film"></span>
+                {{/button}}
+            </div>
+            <div class="simple-offers-data">
+                <div class="form-group fullwidth small">
+                    {{{input change="setTitle" bindAttr="new_title" type="text" class="iconable" placeholder="Slide Titel"}}}
+
+                    <div class="fa-container">
+                        {{{span $="validTitle" init=true class="fa fa-check"}}}
+                    </div>
+                </div>
+                <div class="form-group textarea fullwidth small">
+                    {{{textarea class="fullwidth" change="setContent" bindAttr="new_content" placeholder="Inhalt"}}}
+                </div>
+            </div>
+            <div class="simple-offers-actions pull-left">
+                <div class="form-group small">
+                    {{#button $="disableSaveNewOffer" click="saveNewOffer" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Speichern</span>
+                        <span class="sr-only">Neues Angebot speichern</span>
+                        {{#span $="saving" class="cssload-container"}}
+                            <span class="cssload-speeding-wheel"></span>
+                        {{/span}}    
+                    {{/button}}
+                </div>
+                <div class="form-group small">
+                    {{#button click="cancelNewOffer" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Abbrechen</span>
+                    {{/button}}
+                </div>
+            </div>
+        {{/div}}
+        <div class="menu-bar">
+            {{#button $="disableSaveOffers" click="saveOffers" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Angebote speichern</span>
+                <span class="sr-only">Angebote speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="saving" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}    
+            {{/button}}
+            
+            {{#button $="showAddButton" click="addOffer" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Angebot hinzufügen</span>
+                <span class="fa fa-plus"></span>
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

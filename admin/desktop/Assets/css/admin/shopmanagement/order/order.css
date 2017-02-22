@@ -1,0 +1,368 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+.np-scope-admin {
+  /* Very small screen */ }
+  .np-scope-admin #admin-order-view form {
+    padding-top: 60px; }
+    .np-scope-admin #admin-order-view form .head-info {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      right: 0px;
+      height: 40px;
+      background-color: #000;
+      -moz-box-shadow: 0px 2px 3px -2px #000;
+      -webkit-box-shadow: 0px 2px 3px -2px #000;
+      box-shadow: 0px 2px 3px -2px #000; }
+    .np-scope-admin #admin-order-view form#admin-order-form .form-group {
+      margin-top: 54px; }
+      .np-scope-admin #admin-order-view form#admin-order-form .form-group:not(.fullwidth) {
+        margin-right: 80px; }
+      .np-scope-admin #admin-order-view form#admin-order-form .form-group:last-of-type {
+        margin-right: 0px; }
+      .np-scope-admin #admin-order-view form#admin-order-form .form-group.order-price {
+        border-top: 1px #CCC solid;
+        padding-top: 24px; }
+        .np-scope-admin #admin-order-view form#admin-order-form .form-group.order-price span label {
+          width: 136px; }
+      .np-scope-admin #admin-order-view form#admin-order-form .form-group span {
+        float: left;
+        clear: left; }
+    .np-scope-admin #admin-order-view form#admin-order-form .order-id label,
+    .np-scope-admin #admin-order-view form#admin-order-form .order-status label {
+      font-weight: bold;
+      line-height: 40px;
+      margin-right: 12px;
+      margin-bottom: 0px; }
+    .np-scope-admin #admin-order-view form#admin-order-form .order-id {
+      position: absolute;
+      color: #FFF;
+      left: 0px;
+      top: 0px; }
+      .np-scope-admin #admin-order-view form#admin-order-form .order-id label {
+        margin-left: 12px; }
+    .np-scope-admin #admin-order-view form#admin-order-form .order-status {
+      position: absolute;
+      color: #FFF;
+      right: 0px;
+      top: 0px; }
+      .np-scope-admin #admin-order-view form#admin-order-form .order-status span {
+        padding: 6px;
+        display: inline-block;
+        color: #333;
+        margin-right: 4px; }
+      .np-scope-admin #admin-order-view form#admin-order-form .order-status .green {
+        background-color: #dff0d8; }
+      .np-scope-admin #admin-order-view form#admin-order-form .order-status .yellow {
+        background-color: #fcf8e3; }
+  .np-scope-admin #admin-order-view .articles-Container {
+    height: auto;
+    position: relative;
+    float: left;
+    width: 100%;
+    overflow: hidden;
+    border-top: 1px #333 solid;
+    margin-top: 20px;
+    -webkit-transition: all 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -moz-transition: all 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -o-transition: all 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .np-scope-admin #admin-order-view .articles-Container .product-container {
+      padding: 0px;
+      width: 100%;
+      float: none;
+      display: inline-block;
+      margin-top: 24px; }
+      .np-scope-admin #admin-order-view .articles-Container .product-container .product-wrapper {
+        padding: 8px; }
+        .np-scope-admin #admin-order-view .articles-Container .product-container .product-wrapper .product-left {
+          position: relative;
+          float: left;
+          width: 200px; }
+          .np-scope-admin #admin-order-view .articles-Container .product-container .product-wrapper .product-left .bg-image {
+            margin: 0px;
+            width: 200px;
+            height: 250px; }
+          .np-scope-admin #admin-order-view .articles-Container .product-container .product-wrapper .product-left .product-price-container {
+            margin-left: 0px;
+            margin-right: 0px;
+            width: 100%;
+            text-align: center;
+            padding-top: 4px;
+            padding-bottom: 8px;
+            height: auto; }
+            .np-scope-admin #admin-order-view .articles-Container .product-container .product-wrapper .product-left .product-price-container span {
+              position: relative;
+              float: left;
+              width: 100%;
+              color: #FFF;
+              text-align: center; }
+              .np-scope-admin #admin-order-view .articles-Container .product-container .product-wrapper .product-left .product-price-container span:first-child {
+                line-height: 36px; }
+  .np-scope-admin #admin-order-view .product-container {
+    position: relative;
+    max-width: 100%;
+    padding: 24px;
+    margin: 0px auto;
+    margin-top: 64px;
+    left: auto;
+    right: auto;
+    float: none;
+    width: 1084px;
+    background-color: transparent; }
+    .np-scope-admin #admin-order-view .product-container .product-wrapper {
+      position: relative;
+      float: left;
+      width: 100%;
+      height: auto;
+      background-color: rgba(255, 255, 255, 0.65);
+      padding: 20px;
+      -moz-box-shadow: 0px 0px 3px -2px #000;
+      -webkit-box-shadow: 0px 0px 3px -2px #000;
+      box-shadow: 0px 0px 3px -2px #000; }
+    .np-scope-admin #admin-order-view .product-container .product-left {
+      position: relative;
+      float: left; }
+      .np-scope-admin #admin-order-view .product-container .product-left .bg-image {
+        position: relative;
+        width: 316px;
+        height: 450px;
+        display: block;
+        margin: 8px;
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+        border: 1px #FFF solid;
+        -moz-box-shadow: 0px 0px 8px rgba(127, 127, 127, 0.5), 0px 0px 8px rgba(127, 127, 127, 0.5);
+        -webkit-box-shadow: 0px 0px 8px rgba(127, 127, 127, 0.5), 0px 0px 8px rgba(127, 127, 127, 0.5);
+        box-shadow: 0px 0px 8px rgba(127, 127, 127, 0.5), 0px 0px 8px rgba(127, 127, 127, 0.5); }
+      .np-scope-admin #admin-order-view .product-container .product-left .product-price-container {
+        position: relative;
+        float: left;
+        clear: left;
+        width: 316px;
+        height: 60px;
+        display: block;
+        background-color: #000;
+        margin: 8px;
+        font-size: 28px;
+        font-family: "Roboto";
+        line-height: 60px;
+        -moz-box-shadow: 0px 0px 8px rgba(127, 127, 127, 0.5), 0px 0px 8px rgba(127, 127, 127, 0.5);
+        -webkit-box-shadow: 0px 0px 8px rgba(127, 127, 127, 0.5), 0px 0px 8px rgba(127, 127, 127, 0.5);
+        box-shadow: 0px 0px 8px rgba(127, 127, 127, 0.5), 0px 0px 8px rgba(127, 127, 127, 0.5); }
+    .np-scope-admin #admin-order-view .product-container .product-content {
+      position: relative;
+      float: left;
+      width: calc(100% - 216px);
+      min-width: 348px;
+      text-align: left;
+      margin-left: 16px;
+      height: 100%; }
+    .np-scope-admin #admin-order-view .product-container .product-head {
+      background-color: #FFF;
+      padding: 24px;
+      height: auto;
+      width: 100%;
+      position: relative;
+      float: left; }
+      .np-scope-admin #admin-order-view .product-container .product-head:before {
+        position: absolute;
+        content: "";
+        width: 95%;
+        height: 80%;
+        bottom: 30px;
+        right: 3px;
+        top: auto;
+        background-color: #FFF;
+        z-index: -1;
+        -moz-box-shadow: 0 23px 17px 0 #000;
+        -webkit-box-shadow: 0 23px 17px 0 #000;
+        box-shadow: 0 23px 17px 0 #000;
+        -webkit-transform: rotate(1deg);
+        -moz-transform: rotate(1deg);
+        -o-transform: rotate(1deg);
+        transform: rotate(1deg); }
+      .np-scope-admin #admin-order-view .product-container .product-head > * {
+        position: relative;
+        float: left; }
+      .np-scope-admin #admin-order-view .product-container .product-head h2 {
+        margin-top: 0px; }
+      .np-scope-admin #admin-order-view .product-container .product-head .note-container {
+        margin: 12px 0px 0px 0px;
+        display: none;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+        filter: alpha(opacity=0);
+        -moz-opacity: 0;
+        -khtml-opacity: 0;
+        opacity: 0;
+        -webkit-transition: opacity 250ms ease-out;
+        -moz-transition: opacity 250ms ease-out;
+        -o-transition: opacity 250ms ease-out;
+        transition: opacity 250ms ease-out;
+        -webkit-border-radius: 0px;
+        -moz-border-radius: 0px;
+        border-radius: 0px; }
+        .np-scope-admin #admin-order-view .product-container .product-head .note-container.show {
+          display: block;
+          -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+          filter: alpha(opacity=100);
+          -moz-opacity: 1;
+          -khtml-opacity: 1;
+          opacity: 1;
+          -webkit-transition: opacity 250ms ease-out;
+          -moz-transition: opacity 250ms ease-out;
+          -o-transition: opacity 250ms ease-out;
+          transition: opacity 250ms ease-out; }
+        .np-scope-admin #admin-order-view .product-container .product-head .note-container .note {
+          margin: 0px;
+          -webkit-border-radius: 0px;
+          -moz-border-radius: 0px;
+          border-radius: 0px; }
+    .np-scope-admin #admin-order-view .product-container .product-description {
+      background-color: transparent; }
+    .np-scope-admin #admin-order-view .product-container .product-title,
+    .np-scope-admin #admin-order-view .product-container .product-description,
+    .np-scope-admin #admin-order-view .product-container .product-technical,
+    .np-scope-admin #admin-order-view .product-container .product-availability {
+      height: auto;
+      padding: 0px;
+      font-size: 15px;
+      font-family: "Roboto Thin";
+      margin-bottom: 26px; }
+    .np-scope-admin #admin-order-view .product-container .product-technical > *,
+    .np-scope-admin #admin-order-view .product-container .product-availability > * {
+      position: relative;
+      float: left;
+      list-style: none;
+      line-height: 16px;
+      clear: left; }
+    .np-scope-admin #admin-order-view .product-container .product-technical {
+      width: 100%; }
+      .np-scope-admin #admin-order-view .product-container .product-technical ul {
+        position: relative;
+        float: left;
+        list-style: none;
+        line-height: 16px;
+        margin-top: 12px;
+        padding: 0px; }
+      .np-scope-admin #admin-order-view .product-container .product-technical label {
+        float: left;
+        width: 120px;
+        font-weight: normal;
+        clear: left; }
+        .np-scope-admin #admin-order-view .product-container .product-technical label.small + span {
+          clear: none !important; }
+      .np-scope-admin #admin-order-view .product-container .product-technical span {
+        clear: none; }
+    .np-scope-admin #admin-order-view .product-container .product-title {
+      font-weight: bold;
+      margin-bottom: 12px; }
+    .np-scope-admin #admin-order-view .product-container .product-availability {
+      position: relative;
+      float: left;
+      clear: left;
+      width: 238px; }
+      .np-scope-admin #admin-order-view .product-container .product-availability b {
+        width: 120px; }
+      .np-scope-admin #admin-order-view .product-container .product-availability span {
+        clear: none; }
+    .np-scope-admin #admin-order-view .product-container .hint-in-cart {
+      position: relative;
+      float: left;
+      clear: left;
+      font-size: 16px;
+      font-style: italic; }
+    .np-scope-admin #admin-order-view .product-container .promo-tag {
+      float: right;
+      position: relative;
+      margin-top: 12px; }
+    .np-scope-admin #admin-order-view .product-container .add-to-cart-container {
+      width: auto;
+      float: left;
+      clear: left;
+      background-color: #FFF;
+      padding: 12px;
+      -moz-box-shadow: 0px 0px 3px -2px #000;
+      -webkit-box-shadow: 0px 0px 3px -2px #000;
+      box-shadow: 0px 0px 3px -2px #000; }
+      .np-scope-admin #admin-order-view .product-container .add-to-cart-container > * {
+        float: left; }
+      .np-scope-admin #admin-order-view .product-container .add-to-cart-container input {
+        width: 40px;
+        height: 24px;
+        line-height: 24px;
+        font-size: 12px;
+        text-indent: 0px;
+        text-align: center; }
+      .np-scope-admin #admin-order-view .product-container .add-to-cart-container .amount {
+        margin-right: 12px;
+        height: 100%; }
+        .np-scope-admin #admin-order-view .product-container .add-to-cart-container .amount span {
+          line-height: 34px;
+          cursor: pointer; }
+          .np-scope-admin #admin-order-view .product-container .add-to-cart-container .amount span.plus, .np-scope-admin #admin-order-view .product-container .add-to-cart-container .amount span.minus {
+            line-height: 34px;
+            cursor: pointer; }
+          .np-scope-admin #admin-order-view .product-container .add-to-cart-container .amount span.plus {
+            margin-left: 6px; }
+          .np-scope-admin #admin-order-view .product-container .add-to-cart-container .amount span.minus {
+            margin-right: 6px; }
+      .np-scope-admin #admin-order-view .product-container .add-to-cart-container .highlight {
+        top: -40px;
+        width: 100%;
+        float: none;
+        left: 0px; }
+  .np-scope-admin.media-s-xs #admin-order-view .product-container {
+    margin-top: 0px;
+    padding: 6px; }
+    .np-scope-admin.media-s-xs #admin-order-view .product-container .product-wrapper {
+      padding: 20px 20px 5px 20px; }
+    .np-scope-admin.media-s-xs #admin-order-view .product-container .product-left {
+      width: 100%; }
+      .np-scope-admin.media-s-xs #admin-order-view .product-container .product-left .bg-image {
+        width: 100%;
+        height: 250px;
+        margin: 0px; }
+      .np-scope-admin.media-s-xs #admin-order-view .product-container .product-left .product-price-container {
+        width: 100%;
+        margin: 12px 0px 12px 0px; }
+    .np-scope-admin.media-s-xs #admin-order-view .product-container .product-content {
+      width: 100%;
+      min-width: 0px;
+      margin: 0px; }
+    .np-scope-admin.media-s-xs #admin-order-view .product-container .product-head {
+      margin-left: -14px;
+      width: calc(100% + 28px); }
+    .np-scope-admin.media-s-xs #admin-order-view .product-container .add-to-cart-container {
+      width: 100%; }
+    .np-scope-admin.media-s-xs #admin-order-view .product-container .promo-tag {
+      position: relative;
+      float: left;
+      margin: 6px 0px 0px 0px;
+      bottom: auto;
+      width: calc(100% + 28px);
+      right: 0px;
+      left: -14px; }
+    .np-scope-admin.media-s-xs #admin-order-view .product-container .add-to-cart-container > * {
+      float: none;
+      display: inline-block; }

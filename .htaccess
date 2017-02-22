@@ -1,0 +1,116 @@
+#
+#   This software called - np - is a lightwight MVP Framework for building web applications and
+#   was developed by Christian Peters
+#
+#   Copyright (C) 2016 Christian Peters
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+#   Contact: Christian Peters <c.peters.eshop@gmail.com>
+#
+
+# Set Font-Types
+AddType application/vnd.ms-fontobject  eot
+AddType application/x-font-ttf         ttf ttc
+AddType font/opentype                  otf
+AddType application/x-font-woff        woff
+
+<IfModule mod_expires.c>
+    ExpiresActive on
+    ExpiresByType text/css "access plus 10 years"
+
+    ExpiresByType text/javascript "access plus 10 years"
+    ExpiresByType application/javascript "access plus 10 years"
+
+    ExpiresByType image/jpg "access plus 10 years"
+    ExpiresByType image/gif "access plus 10 years"
+    ExpiresByType image/jpeg "access plus 10 years"
+    ExpiresByType image/png "access plus 10 years"
+</IfModule>
+
+<IfModule mod_headers.c>
+    # Disallow your page to be embedded within a <frame>, <iframe> or <object>.
+    # Header set X-Content-Type-Options nosniff
+
+    # Disable MIME type sniffing, which can e.g. make IE execute an innocent looking .img URL as a javascript.
+    # Header set X-Frame-Options DENY
+</IfModule>
+
+RewriteEngine on
+
+# Check for POST Submission
+RewriteCond %{REQUEST_METHOD} !^POST$
+
+# Forcing HTTPS
+RewriteCond %{HTTPS} !=on [OR]
+RewriteCond %{SERVER_PORT} 80
+
+RewriteRule .* https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
+
+# if svg is not an image:
+RewriteCond %{REQUEST_FILENAME} !^.*(?=\/assets\/images).*\.svg.*$
+
+# then redirect all font types to the assets/fonts folder:
+RewriteRule ^(.*)(\/)(?!.*\/)(.*)(\.woff|\.ttf|\.svg|\.eof|\.otf)(.*)$ assets/fonts/$3$4
+
+# Condition for redirecting requests to the index.php:
+
+# For all files in the root directory:
+RewriteCond %{REQUEST_FILENAME} .*$
+
+# but not index.php
+RewriteCond %{REQUEST_FILENAME} !index\.php
+
+# and not the robots.txt
+RewriteCond %{REQUEST_FILENAME} !robots\.txt
+
+# and not the sitemap.xml
+RewriteCond %{REQUEST_FILENAME} !sitemap\.xml
+
+# and no PNG, JPG and GIF file:
+RewriteCond %{REQUEST_FILENAME} !(.*)\.png(.*)
+RewriteCond %{REQUEST_FILENAME} !(.*)\.jpg(.*)
+RewriteCond %{REQUEST_FILENAME} !(.*)\.gif(.*)
+
+# and no font file:
+RewriteCond %{REQUEST_FILENAME} !(.*)\.woff(.*)
+RewriteCond %{REQUEST_FILENAME} !(.*)\.ttf(.*)
+RewriteCond %{REQUEST_FILENAME} !(.*)\.svg(.*)
+RewriteCond %{REQUEST_FILENAME} !(.*)\.eof(.*)
+RewriteCond %{REQUEST_FILENAME} !(.*)\.otf(.*)
+
+# and not the info.php file:
+RewriteCond %{REQUEST_FILENAME} !info\.php 
+
+# and no CSS, JS and MAP file:
+RewriteCond %{REQUEST_FILENAME} !\.css
+RewriteCond %{REQUEST_FILENAME} !\.js
+RewriteCond %{REQUEST_FILENAME} !\.map
+
+# and no PDF file:
+RewriteCond %{REQUEST_FILENAME} !\.pdf
+
+# and not the favicon
+RewriteCond %{REQUEST_URI} 	!^/favicon\.ico
+
+# redirect to the index.php with its query params
+RewriteRule ^(.*)$ index.php?type=route&route=$0 [NC,QSA,L]                                   
+
+# Condition for denying access for HTM, HTML, TXT files:
+
+# if not favicon file
+RewriteCond %{REQUEST_URI} 	!^/favicon.ico
+
+# but htm, html or txt file then redirect to the index.php:
+RewriteRule (\.htm|\.html) index.php [L]

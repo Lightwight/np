@@ -1,0 +1,24 @@
+.np-scope-custom h1,
+.np-scope-custom h2,
+.np-scope-custom h3,
+.np-scope-custom h4,
+.np-scope-custom h5,
+.np-scope-custom h6,
+.np-scope-custom h7 {
+    font-family: 'Alfa Slab One', serif;
+}
+
+.np-scope-custom h1,
+.np-scope-custom h2,
+.np-scope-custom h3 {
+    font-size: 18px;
+    /*font-weight: bold;*/
+}
+
+.np-scope-custom h1 {
+    color: #FBB03B;
+}
+
+.np-scope-custom h3 {
+    color: #F7921D;
+}

@@ -1,0 +1,14 @@
+{{#view "AdminUserManagementTabbarView"}}
+    <ul class="admin-tabbar">
+        {{#each AdminUserManagementTabbar.menus}}
+            <li>
+                {{#view "AdminUserManagementTabView"}}
+                    {{#a $="setActive" init=true href=AdminUserManagementTab.route}}
+                        <div class="menu-text">{{AdminUserManagementTab.menu}}</div>
+                        <div class="menu-line"></div>
+                    {{/a}}
+                {{/view}}
+            </li>
+        {{/each}}
+    </ul>
+{{/view}}

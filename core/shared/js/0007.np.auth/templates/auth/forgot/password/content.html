@@ -1,0 +1,37 @@
+<div class="content-divider text-center col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+    <h3>Passwort vergessen</h3>
+</div>
+
+<div class="container">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+        {{#view "AuthForgotPasswordView"}}
+            <div id="forgot-password" class="dialog">
+                <div class="header"><h3>Reset-Code zusenden</h3></div>
+                <div class="body">
+                    <span>
+                        Du hast Dein Passwort vergessen? Kein Problem!<br><br>
+                        Gib einfach Deine E-Mail-Adresse in das folgende Eingabefeld und klicke anschlie&szlig;end auf den Button "Link zusenden".<br><br>
+                        Dir wird dann eine E-Mail mit den weiteren Anweisungen zur Vergabe eines neuen Passworts zugesendet.
+                    </span>
+                    
+                    <div class="btn-container col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                        {{{input $="sendSuccess" change="setMail" bindAttr="reset_email" class="form-control" value=AuthForgot.reset_email type="mail" placeholder="Deine Zugangs-E-Mail"}}}
+                        {{#a $="validMail" init=true click="sendLink" href="#" class="btn btn-primary disabled"}}
+                            {{{span $="notSending" class="icon glyphicon glyphicon-check"}}}
+                            {{{span $="sending" class="icon glyphicon glyphicon-refresh hidden"}}}
+                            <span class="sr-only">Link zusenden</span>
+                            <span class="text">Link zusenden</span>
+                        {{/a}}
+                    </div>
+                </div>
+                <div class="footer">
+                    <a href="/" class="btn btn-primary">
+                        <span class="icon glyphicon glyphicon-home"></span>
+                        <span class="sr-only">Zur&uuml;ck zur Startseite</span>
+                        <span class="text">Startseite</span>
+                    </a>
+                </div>
+            </div>
+        {{/view}}    
+    </div>
+</div>

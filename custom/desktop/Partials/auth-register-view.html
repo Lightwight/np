@@ -1,0 +1,52 @@
+{{#view "AuthRegistrationView"}}
+    <form>
+        <h4 class="form-title">Neukunde?</h4>
+
+        <div class="form-group fullwidth">
+            {{{input enter="register" change="setMail" bindAttr="email" type="mail" class="iconable" value=Register.email placeholder="E-Mail-Adresse"}}}
+
+            <div class="fa-container">
+                {{{span init=true $="invalidMail" class="fa fa-flash"}}}
+                {{{span init=true $="validMail" class="fa fa-check"}}}
+            </div>
+        </div>
+        <div class="form-group fullwidth">
+            {{{input enter="register" change="setMailConfirmation" bindAttr="email_confirmation" class="iconable" type="mail" value=Register.email_confirmation placeholder="E-Mail best&auml;tigen"}}}
+
+            <div class="fa fa-container">
+                {{{span init=true $="invalidMailConfirmation" class="fa fa-flash"}}}
+                {{{span init=true $="validMailConfirmation" class="fa fa-check"}}}
+            </div>
+        </div>
+        <div class="form-group fullwidth">
+            {{{input enter="register" change="setPassword" bindAttr="password" type="password" class="iconable" value=Register.password placeholder="Passwort (4-12 Zeichen)"}}}
+
+            <div class="fa fa-container">
+                {{{span init=true $="badPassword" class="fa fa-flash"}}}
+                {{{span init=true $="goodPassword" class="fa fa-check"}}}
+            </div>
+        </div>
+        <div class="form-group fullwidth">
+            {{{input enter="register" change="setPasswordConfirmation" bindAttr="password_confirmation" class="iconable" type="password" value=Register.password_confirmation placeholder="Passwort best&auml;tigen"}}}
+
+            <div class="fa fa-container">
+                {{{span init=true $="invalidPasswordConfirmation" class="fa fa-flash"}}}
+                {{{span init=true $="validPasswordConfirmation" class="fa fa-check"}}}
+            </div>
+        </div>
+
+        <div class="menu-bar">
+            <a class="pull-left additional" href="/datenschutz">Datenschutzerkl&auml;rung</a>
+            <a class="pull-left additional" href="/agb">AGB</a>
+
+            {{#a $="validRegistration" init=true click="register" href="#" class="btn btn-secondary pull-right disabled"}}
+                <span class="text">registrieren</span>
+                <span class="sr-only">registrieren</span>
+                {{{span $="notSending" class="icon fa fa-caret-right"}}}
+                {{#span $="sending" class="cssload-container"}}
+                    <div class="cssload-speeding-wheel"></div>
+                {{/span}}
+            {{/a}}
+        </div>
+    </form>
+{{/view}}

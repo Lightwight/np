@@ -1,0 +1,97 @@
+{{#need model User_orders}}
+
+{{#view "AdminOrdersNavigationView" data-plugin="Divider"}}
+    <div class="container">
+        <h3>Auftagsübersicht</h3>
+        {{#partial product-search-view}}        
+    </div>
+{{/view}}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    {{#view "AdminOrdersOverviewView"}}
+        {{#view "AdminOrdersPaginationView"}}
+            <nav>
+                {{#ul click="setPage" $="isActive" init=true class="pagination"}}
+                    {{#li $="nextEnabled" init=true}}
+                        {{#a click="prevPage" $="setPrev" href="#" aria-label="Previous"}}
+                            <span aria-hidden="true">&laquo;</span>
+                        {{/a}}
+                    {{/li}}
+
+                    {{#each AdminOrders.data.pagination.pages}}
+                        {{#li}}
+                            {{#a init=true click="setItem" href="#"}}
+                                {{{page.num}}}
+                            {{/a}}
+                        {{/li}}
+                    {{/each}}
+
+                    {{#li $="prevEnabled" init=true}}
+                        {{#a click="nextPage" $="setNext" href="#" aria-label="Next"}}
+                            <span aria-hidden="true">&raquo;</span>
+                        {{/a}}
+                    {{/li}}
+                {{/ul}}
+            </nav>
+        {{/view}}
+        
+        <div class="fullwidth pull-left">
+            <div class="table-responsive">
+                {{#view "AdminOrdersTableView"}}
+                    {{#table $="visibleRows" init=true class="table"}}
+                        <thead>
+                            <tr>
+                                <th>
+                                    #ID
+                                    {{{input change="setFilterID" bindAttr="filterID" type="text"}}}
+                                </th>
+                                <th>
+                                    Name, Prename
+                                    {{{input change="setFilterName" bindAttr="filterName" type="text"}}}
+                                </th>
+                                <th>
+                                    E-Mail
+                                    {{{input change="setFilterMail" bindAttr="filterMail" type="text"}}}
+                                </th>
+                                <th>
+                                    Zahlart
+                                    {{{input change="setFilterPayment" bindAttr="filterPayment" type="text"}}}
+                                </th>
+                                <th>
+                                    Versandart
+                                    {{{input change="setFilterDelivery" bindAttr="filterDelivery" type="text"}}}
+                                </th>
+                                <th>
+                                    IBAN
+                                    {{{input change="setFilterIBAN" bindAttr="filterIBAN" type="text"}}}
+                                </th>
+                                <th>
+                                    BIC
+                                    {{{input change="setFilterBIC" bindAttr="filterBIC" type="text"}}}
+                                </th>
+                                <th>
+                                    Eigentümer
+                                    {{{input change="setFilterOwner" bindAttr="filterOwner" type="text"}}}
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each AdminOrders.data.rows}}
+                                <tr class="hidden">
+                                    <th>{{{id}}}</th>
+                                    <td>{{{name}}}, {{{prename}}}</td>
+                                    <td>{{{email}}}</td>
+                                    <td>{{{gateway}}}</td>
+                                    <td>{{{delivery}}}</td>
+                                    <td>{{{iban}}}</td>
+                                    <td>{{{bic}}}</td>
+                                    <td>{{{owner}}}</td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    {{/table}}
+                {{/view}}
+            </div>
+        </div>
+    {{/view}}
+</div>

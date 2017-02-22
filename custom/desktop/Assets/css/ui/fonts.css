@@ -1,0 +1,40 @@
+.font-alfa-slab-one {
+    font-family: 'Alfa Slab One', serif;
+    font-weight: 400;
+}
+
+.font-normal {
+    font-weight: 400;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+#fontLoader {
+    position: fixed;
+
+    left: 0px;
+    top: 0px;
+    
+    width: 1px;
+    height: 1px;
+    line-height: 0px;
+    
+    overflow: hidden;
+    color: transparent;
+    
+    pointer-events: none;
+}
+
+.np-scope-custom .font-alfa-slab-one {
+    font-family: 'Alfa Slab One', serif;
+}
+
+.np-scope-custom .t-center {
+    text-align: center;
+}
+
+.np-scope-custom .fullwidth {
+    width: 100%;
+}

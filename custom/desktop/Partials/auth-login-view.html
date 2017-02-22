@@ -1,0 +1,35 @@
+{{#view "AuthLoginView"}}
+    <form id="authLogin">
+        <h4 class="form-title">Ich bin bereits Kunde</h4>
+        
+        <div class="form-group fullwidth">
+            {{{input type="email" enter="submit" change="setMail" bindAttr="email" class="iconable" value=Login.email placeholder="Ihre E-Mail-Adresse"}}}
+            
+            <div class="fa-container">
+                {{#span init=true $="invalidMail" class="fa fa-flash"}}{{/span}}
+                {{{span init=true $="validMail" class="fa fa-check"}}}
+            </div>
+        </div>
+        <div class="form-group fullwidth">
+            {{{input type="password" enter="submit" change="setPassword" bindAttr="password" class="iconable" placeholder="Ihr Passwort"}}}
+
+            <div class="fa-container">
+                {{{span init=true $="givenPassword" class="fa fa-check"}}}
+            </div>
+        </div>
+
+        <div class="menu-bar">
+            <a class="pull-right" href="/auth/forgot/password">Passwort vergessen?</a>
+
+            {{#a $="validUser" init=true click="submit" href="#" class="btn btn-secondary pull-right disabled"}}
+                <span class="text">anmelden</span>
+                <span class="sr-only">anmelden</span>
+                
+                {{{span $="notSending" class="icon fa fa-caret-right"}}}
+                {{#span $="sending" class="cssload-container"}}
+                    <div class="cssload-speeding-wheel"></div>
+                {{/span}}
+            {{/a}}
+        </div>
+    </form>                
+{{/view}}

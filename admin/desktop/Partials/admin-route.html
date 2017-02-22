@@ -1,0 +1,229 @@
+{{#need plugin mediathek}}
+{{#need model Plugins}}
+{{#need model Routes}}
+
+{{#view "AdminRouteEditView" id="admin-route-edit"}}
+    {{#equals Route.id -1}}
+        <form class="bg-grey">
+            <h4 class="form-title">Seite nicht gefunden</h4>
+            <div class="info-box">
+                Die Seite konnte nicht gefunden werden. Möglicherweise haben Sie einen falschen Link aufgerufen.
+            </div>
+        </form>
+    {{else}}
+        <div class="flexbox">
+            <div class="flexrow flexrow-5">
+                <form class="bg-grey">
+                    <h4 class="form-title">Seite bearbeiten</h4>
+
+                    <div class="form-group fullwidth">
+                        {{{input change="setTitle" bindAttr="title" type="text" class="iconable" placeholder="Seitentitel hier eingeben" value=Route.title}}}
+
+                        <div class="fa-container">
+                            {{{span $="validTitle" init=true class="fa fa-check"}}}
+                        </div>
+                    </div>
+
+                    <div class="form-group fullwidth route">
+                        <div>
+                            <label>Url: {{#span $="notEditRoute" bindAttr="routeLabel"}}{{{Route.route}}}{{/span}}</label>
+
+                            {{#div $="editRoute" class="form-group no-display"}}
+                                {{{input change="setRoute" bindAttr="route" type="text" class="iconable" placeholder="Seitenurl hier eingeben" value=Route.route}}}
+
+                                <div class="fa-container">
+                                    {{{span $="validRoute" init=true class="fa fa-check"}}}
+                                    {{{span $="invalidRoute" init=true class="fa fa-flash"}}}
+                                </div>
+
+                                {{#button click="applyRoute" type="button" class="btn btn-simple small pull-left"}}
+                                    <span class="text">übernehmen</span>
+                                    <span class="sr-only">übernehmen</span>
+                                {{/button}}
+
+                                {{#button click="cancelEditRoute" type="button" class="btn btn-simple small pull-left"}}
+                                    <span class="text">abbrechen</span>
+                                    <span class="sr-only">abbrechen</span>
+                                {{/button}}
+                            {{/div}}
+
+                            {{#button $="notEditRoute" click="editRoute" type="button" class="btn btn-simple small pull-left"}}
+                                <span class="text">bearbeiten</span>
+                                <span class="sr-only">Url bearbeiten</span>
+                            {{/button}}
+
+                            {{#a $="notEditRoute" id="routeAnchor" href=Route.route class="external btn btn-simple small pull-left"}}
+                                <span class="text">seite ansehen</span>
+                                <span class="sr-only">seiten ansehen</span>
+                            {{/a}}
+                        </div>
+                    </div>
+
+                    {{#div $="isContentEnabled" init=true class="form-group fullwidth no-display"}}
+                        <label>Seiteninhalt</label>
+                        {{#partial wysiwyg-editor :change="setContent" :editorID="#inpRouteContent" :editorRealID="inpRouteContent" :bindAttr="content" :toolbarID="tbRouteContent"}}
+                    {{/div}}
+
+                    <div class="menu-bar">
+                        {{#a $="disableSavePageContent" click="savePageContent" href="#" class="btn btn-primary pull-right"}}
+                            <span class="text">Speichern</span>
+                            <span class="sr-only">Änderungen speichern</span>
+                            <span class="icon fa fa-caret-right"></span>
+                            {{#span $="savingPageContent" class="cssload-container"}}
+                                <span class="cssload-speeding-wheel"></span>
+                            {{/span}}
+                        {{/a}}
+                    </div>                
+                </form>
+                
+                {{#partial route-plugins}}
+                
+                <form id="route-seo-optimization" class="bg-grey">
+                    <h4 class="form-title">Suchmaschinen Optimierung</h4>
+                    
+                    <div class="btn-radio-group">
+                        {{#label $="initCrawlable" init=true click="setCrawlable"class="radio"}}
+                            <input type="radio" name="crawlable" value="1">
+                            Ja
+                        {{/label}}
+                        {{#label $="initNotCrawlable" init=true click="setNotCrawlable" class="radio"}}
+                            <input type="radio" name="crawlable" value="0">
+                            Nein
+                        {{/label}}
+                    </div>
+                    
+                    {{#div $="showOnCrawlable" init=true class="fullwitdh np-display"}}
+                        <div class="form-group fullwidth">
+                            <label>SEO Beschreibung</label>
+                            {{{input change="setSeoDescription" bindAttr="seo_description" type="text" class="iconable" placeholder="SEO Beschreibung hier eingeben" value=Route.seo_description}}}
+
+                            <div class="fa-container">
+                                {{{span $="validSeoDescription" init=true class="fa fa-check"}}}
+                            </div>
+                        </div>
+
+                        <div class="form-group fullwidth">
+                            <label>SEO Stichwörter</label>
+                            {{{input change="setSeoKeywords" bindAttr="seo_keywords" type="text" class="iconable" placeholder="SEO Stichwörter hier eingeben (mit leerzeichen getrennt)" value=Route.seo_keywords}}}
+
+                            <div class="fa-container">
+                                {{{span $="validSeoKeywords" init=true class="fa fa-check"}}}
+                            </div>
+                        </div>
+
+                        <div class="form-group fullwidth">
+                            <label>SEO Frequenz</label>
+                            {{#select $="setSeoFrequency" init=true notify=false change="setSeoFrequency" bindAttr="seo_frequency" id="route_frequency"}}
+                                <option value="0">immer</option>
+                                <option value="1">stündlich</option>
+                                <option value="2">täglich</option>
+                                <option value="3">wöchentlich</option>
+                                <option value="4">monatlich</option>
+                                <option value="5">jährlich</option>
+                                <option value="6">nie</option>
+                            {{/select}}
+                        </div>
+
+                        <div class="form-group fullwidth">
+                            <label>SEO Priorität</label>
+
+                            {{#select $="setSeoPriority" init=true notify=false change="setSeoPriority" bindAttr="seo_priority" id="route_priority"}}
+                                <option value="0">0 - sehr niedrig</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10 - sehr hoch</option>
+                            {{/select}}
+                        </div>
+                   {{/div}}
+                    
+                    <div class="menu-bar">
+                        {{#a $="disableSavingPageSeo" click="savePageSeo" href="#" class="btn btn-primary pull-right"}}
+                            <span class="text">Speichern</span>
+                            <span class="sr-only">Änderungen speichern</span>
+                            <span class="icon fa fa-caret-right"></span>
+                            {{#span $="savingSeoSettings" class="cssload-container"}}
+                                <span class="cssload-speeding-wheel"></span>
+                            {{/span}}
+                        {{/a}}
+                    </div>                
+                </form>                
+            </div>
+            <div class="flexrow flexrow-1">
+                <form class="bg-grey">
+                    <h4 class="form-title">Einstellungen</h4>
+                    
+                    <div class="form-group fullwidth">
+                        <label class="small normal pull-left">Aktiv</label>
+                        <div class="switch pull-right">
+                            {{{input $="setEnabled" init=true click="toggleEnabled" id="route-toggle-1" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                            <label for="route-toggle-1"></label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group fullwidth">
+                        <label class="small normal pull-left">Cache</label>
+                        <div class="switch pull-right">
+                            {{{input $="setForce" init=true click="toggleForce" id="route-toggle-2" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                            <label for="route-toggle-2"></label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group fullwidth">
+                        <label class="small normal pull-left">Inhalt</label>
+                        <div class="switch pull-right">
+                            {{{input $="setContentEnabled" init=true click="toggleContentEnabled" id="route-toggle-3" class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                            <label for="route-toggle-3"></label>
+                        </div>
+                    </div>
+                    
+                    <div class="menu-bar">
+                        {{#a $="disableSaveRouteSettings" click="saveRouteSettings" href="#" class="btn btn-simple small pull-right"}}
+                            <span class="text">Speichern</span>
+                            <span class="sr-only">Änderungen speichern</span>
+                            {{#span $="savingRouteSettings" class="cssload-container"}}
+                                <span class="cssload-speeding-wheel"></span>
+                            {{/span}}
+                        {{/a}}
+                    </div>                
+                </form>
+                
+                <form class="bg-grey">
+                    <h4 class="form-title">Plugins</h4>
+                    
+                    {{#view "AdminRoutePluginsView"}}
+                        {{#each AdminPluginsSettings.plugins}}
+                            {{#view "AdminRoutePluginView" class="fullwidth pull-left"}}
+                                {{#div click="toggleEnabled" class="form-group fullwidth cursor-pointer"}}
+                                    <label class="small normal pull-left cursor-pointer">{{AdminPluginSettings.plugin_name}}</label>
+                                    <div class="switch pull-right">
+                                        {{{input $="setEnabled" init=true click="toggleEnabled" id=AdminPluginSettings.labelID class="cmn-toggle cmn-toggle-round small" type="checkbox"}}}
+                                        <label for="{{AdminPluginSettings.labelID}}"></label>
+                                    </div>
+                                {{/div}}
+                            {{/view}}
+                        {{/each}}
+                    {{/view}}
+
+                    <div class="menu-bar">
+                        {{#a $="disableSavePluginSettings" click="savePluginsSettings" href="#" class="btn btn-simple small pull-right"}}
+                            <span class="text">Speichern</span>
+                            <span class="sr-only">Änderungen speichern</span>
+                            {{#span $="savingPluginsSettings" class="cssload-container"}}
+                                <span class="cssload-speeding-wheel"></span>
+                            {{/span}}
+                        {{/a}}
+                    </div>                          
+                </form>
+            </div>
+        </div>
+    {{/equals}}
+{{/view}}
+
+{{#partial mediathek}}

@@ -1,0 +1,86 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+.np-scope-admin #admin-menu-left {
+  position: fixed;
+  left: 0px;
+  top: 0px;
+  width: 250px;
+  height: 100%;
+  background-color: #474747; }
+  .np-scope-admin #admin-menu-left > h3,
+  .np-scope-admin #admin-menu-left ul,
+  .np-scope-admin #admin-menu-left ul li,
+  .np-scope-admin #admin-menu-left ul li a {
+    position: relative;
+    float: left;
+    width: 100%; }
+  .np-scope-admin #admin-menu-left ul li,
+  .np-scope-admin #admin-menu-left ul li a {
+    color: #FFF; }
+  .np-scope-admin #admin-menu-left > h3 {
+    color: #FFF;
+    padding-left: 12px;
+    padding-right: 12px; }
+  .np-scope-admin #admin-menu-left ul {
+    list-style: none;
+    padding: 0px;
+    margin: 0px; }
+    .np-scope-admin #admin-menu-left ul li a {
+      padding-left: 12px;
+      padding-right: 12px;
+      width: calc(100% - 18px); }
+      .np-scope-admin #admin-menu-left ul li a > span {
+        line-height: 32px; }
+      .np-scope-admin #admin-menu-left ul li a .icon {
+        width: 18px;
+        height: 32px;
+        float: right; }
+  .np-scope-admin #admin-menu-left > ul li ul {
+    background-color: #FFF;
+    display: none; }
+    .np-scope-admin #admin-menu-left > ul li ul li,
+    .np-scope-admin #admin-menu-left > ul li ul li a {
+      color: #000; }
+    .np-scope-admin #admin-menu-left > ul li ul li a {
+      padding-left: 24px;
+      font-weight: normal;
+      -webkit-transition: all 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      -moz-transition: all 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      -o-transition: all 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      transition: all 350ms cubic-bezier(0.25, 0.46, 0.45, 0.94); }
+    .np-scope-admin #admin-menu-left > ul li ul li .active a,
+    .np-scope-admin #admin-menu-left > ul li ul li a.active {
+      font-weight: bold; }
+  .np-scope-admin #admin-menu-left > ul li.active ul {
+    display: block; }
+  .np-scope-admin #admin-menu-left .admin-child-menu .icon {
+    -webkit-backface-visibility: visible;
+    backface-visibility: visible; }
+  .np-scope-admin #admin-menu-left .admin-child-menu.active .icon {
+    -webkit-transform: rotateX(180deg);
+    -moz-transform: rotateX(180deg);
+    -o-transform: rotateX(180deg);
+    transform: rotateX(180deg);
+    -webkit-transition: all 1050ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -moz-transition: all 1050ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    -o-transition: all 1050ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition: all 1050ms cubic-bezier(0.25, 0.46, 0.45, 0.94); }

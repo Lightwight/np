@@ -1,0 +1,255 @@
+{{#need plugin Geo}}
+
+{{#ifCheckout}}
+    {{#view "CheckoutView"}}
+        <div class="container-center">
+            <div class="wrapper">
+                {{#view "CheckoutUserView"}}
+                    <form id="checkout-form-user">
+                        <label>Ihre pers&ouml;nlichen Daten</label>
+
+                        <div class="form-group fullwidth">
+                            <div class="btn-radio-group">
+                                <label>Anrede</label>
+                                {{#label $="isMale" init=true click="setMale" class="radio"}}
+                                    <input type="radio" name="gender" value="male"/> Herr
+                                {{/label}}
+                                {{#label $="isFemale" init=true click="setFemale" class="radio"}}
+                                    <input type="radio" name="gender" value="female"/> Frau
+                                {{/label}}
+                            </div>
+                        </div>
+                        <div class="form-group fullwidth iconable required">
+                            {{{input change="setPrename" bindAttr="user.prename" type="text" value=Checkout.user.prename placeholder="Vorname"}}}
+
+                            <div class="fa-form-group"> 
+                                {{{span init=true $="givenPrename" class="fa fa-check hideable input"}}}
+                                {{{span init=true $="emptyPrename" class="require fa fa-asterisk hideable input"}}}
+                            </div>
+                        </div>
+                        <div class="form-group fullwidth iconable required">
+                            {{{input change="setName" bindAttr="user.name" type="text" value=Checkout.user.name placeholder="Nachname"}}}
+
+                            <div class="fa-form-group">
+                                {{{span init=true $="givenName" class="fa fa-check hideable input"}}}
+                                {{{span init=true $="emptyName" class="require fa fa-asterisk hideable input"}}}
+                            </div>
+                        </div>
+
+                        <div class="form-group fullwidth iconable required">
+                            {{{input change="setMail" bindAttr="user.email" type="mail" value=Checkout.user.email placeholder="E-Mail-Adresse"}}}
+
+                            {{#div $="invalidMail" init=true class="tooltip"}}Bitte tragen Sie eine gültige E-Mail Adresse ein.{{/div}}
+
+                            <div class="fa-form-group">
+                                {{{span init=true $="invalidMail" class="fa fa-flash hideable input"}}}
+                                {{{span init=true $="validMail" class="fa fa-check hideable input"}}}
+                                {{{span init=true $="givenMail" class="require fa fa-asterisk hideable input"}}}
+                            </div>
+                        </div>
+
+                        <div class="form-group fullwidth iconable required">
+                            {{{input change="setMailConfirmation" bindAttr="user.email_confirmation" type="mail" value=Checkout.user.email_confirmation placeholder="E-Mail best&auml;tigen"}}}
+
+                            {{#div $="invalidMailConfirmation" init=true class="tooltip"}}Die E-Mail Adresse stimmt nicht überein.{{/div}}
+
+                            <div class="fa-form-group">
+                                {{{span init=true $="invalidMailConfirmation" class="fa fa-flash hideable input"}}}
+                                {{{span init=true $="validMailConfirmation" class="fa fa-check hideable input"}}}
+                                {{{span init=true $="givenMailConfirmation" class="require fa fa-asterisk hideable input"}}}
+                            </div>
+                        </div>
+                        
+                        {{#div $="toggleBtnUserSettings" init=true class="menu-bar no-display"}}
+                            <div class="note-footer">
+                                <div class="note">
+                                    <div class="pull-left">HINWEIS: Ihre Profildaten weichen von Ihrer aktuellen Bestellung ab. Möchten Sie Ihre Profildaten auf Ihre Bestellung anwenden?</div>
+                                    {{#button type="button" click="applyUser" class="btn btn-primary btn-chevron pull-right"}}
+                                        <span class="text">Profildaten &uuml;bernehmen</span>
+                                        <span class="sr-only">Profildaten &uuml;bernehmen</span>
+                                    {{/button}}
+                                </div>
+                            </div>                         
+                        {{/div}}                        
+                    </form>
+                {{/view}}
+                {{#view "CheckoutCompanyView"}}
+                    <form id="checkout-form-company">
+                        <label>Firmendaten</label>
+
+                        <div class="form-group fullwidth">
+                            {{{input change="setCompany" bindAttr="company.company" value=Checkout.company.company type="text" placeholder="Firmenname"}}}
+                        </div>
+                        <div class="form-group fullwidth">
+                            {{{input change="setUstID" bindAttr="company.ustid" value=Checkout.company.ustid type="text" placeholder="USt-IdNr."}}}
+                        </div>
+
+                        {{#div $="toggleBtnCompanySettings" init=true class="menu-bar no-display"}}
+                            <div class="note-footer">
+                                <div class="note">
+                                    <div class="pull-left">HINWEIS: Ihre Profildaten weichen von Ihrer aktuellen Bestellung ab. Möchten Sie Ihre Profildaten auf Ihre Bestellung anwenden?</div>
+                                    {{#button type="button" class="btn btn-primary btn-chevron pull-right" click="applyCompany"}}
+                                        <span class="text">Profildaten &uuml;bernehmen</span>
+                                        <span class="sr-only">Profildaten &uuml;bernehmen</span>
+                                    {{/button}}
+                                </div>
+                            </div>
+                        {{/div}}
+                    </form>
+                {{/view}}
+            </div>
+            
+            <div class="wrapper margin-top">
+                {{#view "CheckoutBillingView"}}
+                    <form id="checkout-form-billing">
+                        <label>Ihre Zahlungsadresse</label>
+
+                        <div class="form-group fullwidth required">
+                            {{{plugin "Geo" change="setCountry" bindAttr="billing.country" value=Checkout.billing.country}}}
+                        </div>
+                        <div class="form-group fullwidth iconable required">
+                            {{{input change="setStreet" bindAttr="billing.street" type="text" value=Checkout.billing.street placeholder="Stra&szlig;e/Nr."}}}
+
+                            <div class="fa-form-group">
+                                {{{span init=true $="givenStreet" class="fa fa-check hideable input"}}}
+                                {{{span init=true $="emptyStreet" class="require fa fa-asterisk hideable input"}}}
+                            </div>
+                        </div>
+
+                        <div class="form-group fullwidth iconable required">
+                            {{{input change="setPostal" bindAttr="billing.postal" type="text" value=Checkout.billing.postal placeholder="PLZ"}}}
+
+                            <div class="fa-form-group">
+                                {{{span init=true $="givenPostal" class="fa fa-check hideable input"}}}
+                                {{{span init=true $="emptyPostal" class="require fa fa-asterisk hideable input"}}}
+                            </div>
+                        </div>
+
+                        <div class="form-group fullwidth iconable required">
+                            {{{input change="setCity" bindAttr="billing.city" type="text" value=Checkout.billing.city placeholder="Ort"}}}
+
+                            <div class="fa-form-group">
+                                {{{span init=true $="givenCity" class="fa fa-check hideable input"}}}
+                                {{{span init=true $="emptyCity" class="require fa fa-asterisk hideable input"}}}
+                            </div>
+                        </div>
+
+                        {{#div $="toggleBtnBillingSettings" init=true class="menu-bar no-display"}}
+                            <div class="note-footer">
+                                <div class="note">
+                                    <div class="pull-left">HINWEIS: Ihre Profildaten weichen von Ihrer aktuellen Bestellung ab. Möchten Sie Ihre Profildaten auf Ihre Bestellung anwenden?</div>
+                                    {{#button type="button" class="btn btn-primary btn-chevron pull-right" click="applyBilling" }}
+                                        <span class="text">Profildaten &uuml;bernehmen</span>
+                                        <span class="sr-only">Profildaten &uuml;bernehmen</span>
+                                    {{/button}}
+                                </div>
+                            </div>                        
+                        {{/div}}
+                    </form>
+                {{/view}}
+
+                {{#view "CheckoutShippingView"}}
+                    <form id="checkout-form-shipping">
+                        <label>Ihre Lieferadresse</label>
+
+                        <div class="form-group fullwidth">
+                            <div class="btn-radio-group">
+                                <label>Abweichende Lieferadresse</label>
+                                {{#label $="customShipping" init=true click="setCustomShipping" class="radio"}}
+                                    <input type="radio" name="sameAsBilling" value="false"/> Ja
+                                {{/label}}
+                                {{#label $="sameBilling" init=true click="setSameAsBilling" class="radio"}}
+                                    <input type="radio" name="sameAsBilling" value="true"/> Nein
+                                {{/label}}
+                            </div>                        
+                        </div>
+
+                        {{#div $="showShippingInputs" init=true id="chkCustomShipping" class="hidden"}}
+                            <div class="form-group fullwidth">
+                                <div class="btn-radio-group">
+                                    <label>Anrede</label>
+                                    {{#label $="isMale" init=true click="setMale" class="radio"}}
+                                        <input type="radio" name="gender" value="male"/> Herr
+                                    {{/label}}
+                                    {{#label $="isFemale" init=true click="setFemale" class="radio"}}
+                                        <input type="radio" name="gender" value="female"/> Frau
+                                    {{/label}}
+                                </div>
+                            </div>
+                            <div class="form-group fullwidth iconable required">
+                                {{{input change="setPrename" bindAttr="shipping.prename" type="text" value=Checkout.shipping.prename placeholder="Vorname"}}}
+
+                                <div class="fa-form-group"> 
+                                    {{{span init=true $="givenPrename" class="fa fa-check hideable input"}}}
+                                    {{{span init=true $="emptyPrename" class="require fa fa-asterisk hideable input"}}}
+                                </div>
+                            </div>
+                            <div class="form-group fullwidth iconable required">
+                                {{{input change="setName" bindAttr="shipping.name" type="text" value=Checkout.shipping.name placeholder="Nachname"}}}
+
+                                <div class="fa-form-group">
+                                    {{{span init=true $="givenName" class="fa fa-check hideable input"}}}
+                                    {{{span init=true $="emptyName" class="require fa fa-asterisk hideable input"}}}
+                                </div>
+                            </div>                        
+                            <div class="form-group fullwidth required">
+                                {{{plugin "Geo" bindAttr="shipping.country" change="setCountry" value=Checkout.shipping.country}}}
+                            </div>
+                            <div class="form-group fullwidth iconable required">
+                                {{{input change="setStreet" bindAttr="shipping.street" type="text" value=Checkout.shipping.street placeholder="Stra&szlig;e/Nr."}}}
+
+                                <div class="fa-form-group">
+                                    {{{span init=true $="givenStreet" class="fa fa-check hideable input"}}}
+                                    {{{span init=true $="emptyStreet" class="require fa fa-asterisk hideable input"}}}
+                                </div>
+                            </div>
+                            <div class="form-group fullwidth iconable required">
+                                {{{input change="setPostal" bindAttr="shipping.postal" type="text" value=Checkout.shipping.postal placeholder="PLZ"}}}
+
+                                <div class="fa-form-group">
+                                    {{{span init=true $="givenPostal" class="fa fa-check hideable input"}}}
+                                    {{{span init=true $="emptyPostal" class="require fa fa-asterisk hideable input"}}}
+                                </div>
+                            </div>
+
+                            <div class="form-group fullwidth iconable required">
+                                {{{input change="setCity" bindAttr="shipping.city" type="text" value=Checkout.shipping.city placeholder="Ort"}}}
+
+                                <div class="fa-form-group">
+                                    {{{span init=true $="givenCity" class="fa fa-check hideable input"}}}
+                                    {{{span init=true $="emptyCity" class="require fa fa-asterisk hideable input"}}}
+                                </div>
+                            </div>
+                        {{/div}}
+
+                        {{#div $="toggleBtnShippingSettings" init=true class="menu-bar no-display"}}
+                            <div class="note-footer">
+                                <div class="note">
+                                    <div class="pull-left">HINWEIS: Ihre Profildaten weichen von Ihrer aktuellen Bestellung ab. Möchten Sie Ihre Profildaten auf Ihre Bestellung anwenden?</div>
+                                    {{#button type="button" click="applyShipping" class="btn btn-primary btn-chevron pull-right"}}
+                                        <span class="text">Profildaten &uuml;bernehmen</span>
+                                        <span class="sr-only">Profildaten &uuml;bernehmen</span>
+                                    {{/button}}
+                                </div>
+                            </div>                         
+                        {{/div}}
+                    </form>
+                {{/view}}  
+            </div>
+
+            {{#a $="enableCheckoutNextStep" id="checkoutStep2" click="nextStep" init=true href="#" class="btn btn-primary btn-chevron checkout-next-step disabled"}}
+                <span class="text">Zahlungsart ausw&auml;hlen</span>
+                <span class="sr-only">Zahlungsart ausw&auml;hlen</span>
+                
+                {{#span $="isSending" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/a}}
+        </div>
+    {{/view}}
+{{else}}
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        {{#partial checkout-empty-cart}}
+    </div>
+{{/ifCheckout}}
+

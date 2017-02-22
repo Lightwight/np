@@ -1,0 +1,45 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+.np-scope-admin .admin-table-pagination {
+  width: 100%;
+  background-color: #FFF;
+  margin-top: 12px;
+  margin-bottom: 0px; }
+  .np-scope-admin .admin-table-pagination ul {
+    list-style: none;
+    float: right;
+    height: 46px;
+    margin: 0px; }
+    .np-scope-admin .admin-table-pagination ul li {
+      position: relative;
+      float: left;
+      padding-left: 12px;
+      height: 46px;
+      padding-right: 12px;
+      line-height: 46px; }
+      .np-scope-admin .admin-table-pagination ul li a:hover, .np-scope-admin .admin-table-pagination ul li a:focus, .np-scope-admin .admin-table-pagination ul li a:active, .np-scope-admin .admin-table-pagination ul li a.active {
+        font-weight: normal;
+        color: #A6505C;
+        text-decoration: underline; }
+      .np-scope-admin .admin-table-pagination ul li a.disabled {
+        pointer-events: none;
+        color: #CCC; }

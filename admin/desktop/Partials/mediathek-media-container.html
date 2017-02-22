@@ -1,0 +1,70 @@
+{{#div $="showMediaContainer" init=true class="mediathek-media-container"}}
+    {{#view "MediathekMediaView"}}
+        <form>
+            <div class="form-group fullwidth">
+                <label>Ordner:</label>
+                {{#select $="setFolderID" change="setFolderID" init=true notifiy=false bindAttr="f_id" id="mediathek-folder-selection"}}
+                    <option value="0">Alle</option>                    
+                    {{#each MediathekMedia.folders}}
+                        <option value="{{MediaItem.folder_id}}">{{{MediaItem.folder}}}</option>
+                    {{/each}}
+                {{/select}}  
+                <div class="input-search-container">
+                    <div class="input-group">
+                        {{{input type="text" change="setFilter" bindAttr="m_filter" class="iconable" placeholder="Suche"}}}
+                        <span class="fa-container">
+                            <span class="fa fa-search"></span>
+                            <span class="sr-only">Bild/Video suchen</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    
+        <div class="mediathek-media-container">
+            {{#each MediathekMedia.files}}
+                {{#view "MediathekMediumView"}}
+                    {{#equals MediaItem.type "image"}}
+                        {{#div $="setSrc" init=true class="image-container"}}
+                            {{#button type="button" click="applyImage" class="media-select btn btn-black iconable"}}
+                                <span class="text">Ausw&auml;hlen</span>
+                                <span class="fa fa-caret-right"></span>
+                            {{/button}}
+                            {{#button type="button" click="editImage" class="media-edit btn btn-black iconable"}}
+                                <span class="text">Bearbeiten</span>
+                                <span class="fa fa-caret-right"></span>
+                            {{/button}}
+                            {{#button type="button" click="removeItem" class="media-select btn remove btn-black iconable" alt="Entfernen"}}
+                                <span class="fa fa-trash"></span>
+                                {{#span $="removingItem" class="cssload-container"}}
+                                    <span class="cssload-speeding-wheel"></span>
+                                {{/span}}
+                            {{/button}}
+                            <span class="media-title">{{MediaItem.name}}</span>
+                        {{/div}}
+                    {{/equals}}
+
+                    {{#equals MediaItem.type "youtube"}}
+                        {{#div $="setYoutubeSrc" init=true class="youtube-container"}}
+                            {{#button type="button" click="applyYoutubeVideo" $="showApplyButton" class="media-select btn btn-black"}}
+                                <span class="text">Ausw&auml;hlen</span>
+                                <span class="fa fa-caret-right"></span>                            
+                            {{/button}}
+                            {{#button type="button" click="editYoutubeVideo" class="media-edit btn btn-black iconable"}}
+                                <span class="text">Bearbeiten</span>
+                                <span class="fa fa-caret-right"></span>
+                            {{/button}}
+                            {{#button type="button" click="removeItem" class="media-select remove btn btn-black"}}
+                                <span class="text">Entfernen</span>
+                                <span class="fa fa-remove"></span>                            
+                                {{#span $="removingItem" class="cssload-container"}}
+                                    <span class="cssload-speeding-wheel"></span>
+                                {{/span}}
+                            {{/button}}
+                        {{/div}}
+                    {{/equals}}
+                {{/view}}
+            {{/each}}
+        </div>
+    {{/view}}
+{{/div}}

@@ -1,0 +1,99 @@
+{{#need model Article_suppliers}}
+
+{{#view "AdminArticleSuppliersOverviewView" class="admin-overview"}}
+    <div class="flexbox">
+        {{#view "AdminArticleSuppliersOverviewSortableView" class="flexrow flexrow-6"}}
+            <div class="flexbox">
+                {{#div $="setSupplierID" init=true click="sortBySuppliersD" class="flexrow flexrow-1 t-bold f-s16 sortable"}}ID{{/div}}
+                {{#div $="setName" init=true click="sortByName" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Name{{/div}}
+                {{#div $="setCity" init=true click="sortByCity" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Stadt{{/div}}
+            </div>
+        {{/view}}
+
+        <div class="flexrow flexrow flexrow-1 flex-end">
+            {{#view "AdminArticleSuppliersOverviewSearchView" class="input-search-container"}}
+                <div class="input-group">
+                    {{{input change="setSearch" enter="search" bindAttr="search" type="text" class="iconable" placeholder="Suchen"}}}
+                    {{#div click="search" class="fa-container"}}
+                        <span class="fa fa-search"></span>
+                        <span class="sr-only">Lieferant Suchen</span>
+                    {{/div}}
+                </div>
+
+                {{#div $="toggleVisibility" init=true class="search-key-container"}}
+                    {{#button click="clearSearch" type="button" class="btn btn-primary"}}
+                        <span class="text">{{AdminArticleSuppliersSearch.sentSearch}}</span>
+                        <span class="fa fa-remove"></span>
+                        <span class="sr-only">Suchbegriff löschen</span>
+                    {{/button}}
+                {{/div}}
+            {{/view}}            
+        </div>
+
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+        
+        <div class="admin-table">
+            {{#if this}}
+                {{#each Article_suppliers}}
+                    {{#view "AdminArticleSupplierOverviewView" class="admin-overview-row"}}
+                        <div class="flexbox">
+                            <div class="flexrow flexrow-1">SUP{{AdminArticleSupplier.supplier_id}}</div>
+                            <div class="flexrow flexrow-1">{{AdminArticleSupplier.name}}</div>
+                            <div class="flexrow flexrow-1">{{AdminArticleSupplier.city}}</div>
+                            <div class="flexrow flexrow-1 flex-end">
+                                <a href="/admin/shopmanagement/supplier/{{AdminArticleSupplier.supplier_id}}" class="btn btn-primary">
+                                    <span class="text">Bearbeiten</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Lieferant bearbeiten</span>
+                                    
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                </a>
+                                {{#button $="disableRemoveRow" click="removeRow" type="button" class="btn btn-primary"}}
+                                    <span class="text">Entfernen</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Lieferant entfernen</span>
+
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                {{/button}}
+                            </div>
+                        </div>
+                    {{/view}}
+                {{/each}}
+            {{else}}
+                <div class="admin-overview-row">
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">Der eingegebene Suchbegriff konnte nicht gefunden werden.</div>
+                    </div>
+                <div>
+            {{/if}}                
+            
+            {{#view "AdminArticleSupplierAddView" id="admin-article-supplier-add" class="admin-overview-row"}}
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">(auto)</div>
+                        <div class="flexrow flexrow-1">
+                            {{{input change="setName" bindAttr="name" type="text" placeholder="Firma"}}}
+                        </div>
+                        <div class="flexrow flexrow-1 flex-end">
+                            {{#button $="disableSaveRow" click="saveRow" type="button" class="btn btn-primary"}}
+                                <span class="text">Speichern</span>
+                                <span class="fa fa-caret-right"></span>
+                                {{#span $="sending" class="cssload-container"}}
+                                    <div class="cssload-speeding-wheel"></div>
+                                {{/span}}
+                            {{/button}}
+                        </div>
+                    </div>
+            {{/view}}
+        </div>
+
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+    </div>
+{{/view}}

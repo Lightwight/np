@@ -1,0 +1,193 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+.np-scope-admin form {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: auto;
+  padding: 24px;
+  margin-bottom: 26px; }
+  .np-scope-admin form.sidemenu .form-group label {
+    float: left; }
+  .np-scope-admin form.sidemenu .form-group input,
+  .np-scope-admin form.sidemenu .form-group .nice-select,
+  .np-scope-admin form.sidemenu .form-group select {
+    float: right;
+    width: 130px; }
+  .np-scope-admin form.sidemenu .form-group input .iconable {
+    width: 80px;
+    height: 30px; }
+  .np-scope-admin form.sidemenu .form-group .select-container {
+    width: 50px; }
+    .np-scope-admin form.sidemenu .form-group .select-container select {
+      width: 50px; }
+    .np-scope-admin form.sidemenu .form-group .select-container .nice-select {
+      width: 50px;
+      min-width: 50px;
+      padding-left: 0px;
+      border-left: none; }
+  .np-scope-admin form * {
+    text-align: left; }
+  .np-scope-admin form input[type=text],
+  .np-scope-admin form input[type=number],
+  .np-scope-admin form input[type=email],
+  .np-scope-admin form input[type=password],
+  .np-scope-admin form input[type=datetime],
+  .np-scope-admin form input[type=dateonly],
+  .np-scope-admin form select,
+  .np-scope-admin form .nice-select {
+    position: relative;
+    float: left;
+    border: 1px #d3d3d3 solid;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    border-radius: 0px; }
+  .np-scope-admin form input[type=text],
+  .np-scope-admin form input[type=number],
+  .np-scope-admin form input[type=email],
+  .np-scope-admin form input[type=password] {
+    width: 100%; }
+    .np-scope-admin form input[type=text].small,
+    .np-scope-admin form input[type=number].small,
+    .np-scope-admin form input[type=email].small,
+    .np-scope-admin form input[type=password].small {
+      height: 26px;
+      line-height: 26px;
+      font-size: 12px; }
+    .np-scope-admin form input[type=text].iconable,
+    .np-scope-admin form input[type=number].iconable,
+    .np-scope-admin form input[type=email].iconable,
+    .np-scope-admin form input[type=password].iconable {
+      width: calc(100% - 36px);
+      border: 1px #d3d3d3 solid;
+      border-right: none; }
+  .np-scope-admin form .form-group > label {
+    float: left;
+    line-height: 36px;
+    font-size: 14px;
+    margin: 0px;
+    min-width: 130px;
+    color: #777; }
+    .np-scope-admin form .form-group > label.small {
+      font-size: 14px;
+      min-width: 0px; }
+    .np-scope-admin form .form-group > label.normal {
+      font-weight: normal; }
+    .np-scope-admin form .form-group > label:nth-child(n) {
+      margin-left: 42px; }
+    .np-scope-admin form .form-group > label:nth-child(1) {
+      margin: 0px; }
+  .np-scope-admin form .form-group .bootstrap-select {
+    margin: 0px; }
+  .np-scope-admin form .form-group .fa-container {
+    position: relative;
+    float: left;
+    width: 36px;
+    height: 36px;
+    border: 1px #d3d3d3 solid;
+    border-left: none;
+    background-color: #FFF; }
+    .np-scope-admin form .form-group .fa-container .fa {
+      position: absolute;
+      width: 35px;
+      height: 34px;
+      top: 0px;
+      bottom: 0px;
+      left: 0px;
+      right: 0px;
+      line-height: 36px;
+      text-align: center;
+      background-color: #FFF;
+      visibility: hidden;
+      -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+      filter: alpha(opacity=0);
+      -moz-opacity: 0;
+      -khtml-opacity: 0;
+      opacity: 0; }
+  .np-scope-admin form .form-title {
+    font-weight: bold;
+    float: left; }
+.np-scope-admin .form-group {
+  position: relative;
+  float: left;
+  margin-bottom: 12px; }
+  .np-scope-admin .form-group.fullwidth {
+    width: 100%; }
+  .np-scope-admin .form-group.small {
+    font-size: 12px;
+    height: 27px;
+    margin-bottom: 6px; }
+    .np-scope-admin .form-group.small input[type=text],
+    .np-scope-admin .form-group.small input[type=number],
+    .np-scope-admin .form-group.small input[type=email],
+    .np-scope-admin .form-group.small input[type=datetime],
+    .np-scope-admin .form-group.small input[type=dateonly],
+    .np-scope-admin .form-group.small input[type=password],
+    .np-scope-admin .form-group.small select,
+    .np-scope-admin .form-group.small .nice-select {
+      height: 27px;
+      font-size: 12px;
+      line-height: 27px; }
+    .np-scope-admin .form-group.small input[type=text].iconable,
+    .np-scope-admin .form-group.small input[type=number].iconable,
+    .np-scope-admin .form-group.small input[type=email].iconable,
+    .np-scope-admin .form-group.small input[type=password].iconable {
+      float: left;
+      width: calc(100% - 27px); }
+    .np-scope-admin .form-group.small .fa-container {
+      height: 27px;
+      width: 27px; }
+      .np-scope-admin .form-group.small .fa-container .fa {
+        width: 26px;
+        height: 25px;
+        line-height: 27px; }
+  .np-scope-admin .form-group.textarea {
+    height: auto; }
+    .np-scope-admin .form-group.textarea .fa-container {
+      position: absolute;
+      right: 1px;
+      top: 1px;
+      border: none; }
+  .np-scope-admin .form-group textarea {
+    padding: 12px;
+    border: 1px #d3d3d3 solid; }
+    .np-scope-admin .form-group textarea:focus {
+      border: 1px #d3d3d3 solid;
+      outline: none; }
+  .np-scope-admin .form-group .contenteditable {
+    padding: 12px;
+    cursor: text;
+    background-color: #FFF;
+    border: 1px #d3d3d3 solid;
+    outline: none; }
+.np-scope-admin .menu-bar {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: auto; }
+  .np-scope-admin .menu-bar > a .btn {
+    float: right;
+    margin-left: 12px; }
+.np-scope-admin .flexrow-1:first-of-type form {
+  padding-right: 24px; }
+.np-scope-admin .flexrow-1:last-of-type form {
+  padding-left: 24px; }

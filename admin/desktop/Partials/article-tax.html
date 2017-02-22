@@ -1,0 +1,21 @@
+{{#need model Taxes}}
+
+{{#view "AdminArticleTaxView"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Steuersatz bearbeiten</h4>
+
+        <div class="form-group fullwidth">
+            {{{input change="setTax" bindAttr="tax" type="text" placeholder="Steuersatz" value=AdminArticleTax.tax}}}
+        </div>
+
+        <div class="menu-bar">
+            {{#button $="disableSaveTax" click="saveTax" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Steuersatz speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="sending" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

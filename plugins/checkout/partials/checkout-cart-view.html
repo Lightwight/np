@@ -1,0 +1,18 @@
+{{#view "CheckoutCartView"}}
+    {{#div click="closeCart" class="cart-outer"}}{{/div}}
+    <div id="checkout-cart">
+        {{#div $="showCart" class="cart-outer-container" init=true}}
+            {{#each CartData.categories}}
+                <div class="cart-category-container" data-category-id="{{id}}">
+                    {{#each rows}}
+                        {{#partial cart-product-view}}
+                    {{/each}}
+                </div>
+            {{/each}}
+        {{/div}}
+
+        {{#div $="showEmptyCart" init=true class="empty-cart info alert alert-warning"}}
+            <h2>Sie haben im Moment keinen Artikel im Warenkorb</h2>
+        {{/div}}
+    </div>
+{{/view}}

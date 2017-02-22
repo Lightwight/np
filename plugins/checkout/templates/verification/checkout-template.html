@@ -1,0 +1,419 @@
+{{#view "CheckoutView" id="checkoutVerification"}}
+    {{#div $="validCart" init=true}}
+        <div class="container-center">
+            {{#div $="notConfirmed" init=true class="no-display"}}
+                <div class="wrapper">
+                    <form id="user-address-verification">
+                        <label>&Uuml;berpr&uuml;fen Sie Ihre Empfangsdaten</label>
+
+                        <div class="form-group">
+                            <div class="fullwidth">                            
+                                <label>Zahlungsadresse</label>
+                                <span>
+                                    {{#equals Checkout.user.gender "male"}}
+                                        Herr 
+                                    {{else}}
+                                        Frau 
+                                    {{/equals}}
+                                    {{{Checkout.user.prename}}} {{{Checkout.user.name}}}<br><br>
+                                    {{{Checkout.billing.street}}}<br>
+                                    {{{Checkout.billing.postal}}} {{{Checkout.billing.city}}}<br>
+                                    {{{Checkout.billing.country}}}
+                                </span>
+                            </div>
+
+                            <div class="fullwidth">                            
+                                <label>Lieferadresse</label>
+                                <span>
+                                    {{#equals Checkout.shipping.gender "male"}}
+                                        Herr 
+                                    {{else}}
+                                        Frau 
+                                    {{/equals}}
+                                    {{{Checkout.shipping.prename}}} {{{Checkout.shipping.name}}}<br><br>
+
+                                    {{{Checkout.shipping.street}}}<br>
+                                    {{{Checkout.shipping.postal}}} {{{Checkout.shipping.city}}}<br>
+                                    {{{Checkout.shipping.country}}}
+                                </span>                                
+                            </div>
+
+                            <div class="fullwidth">                            
+                                <label>Firmendaten</label>
+                                <span>
+                                    {{#if Checkout.company.company}}
+                                        {{{Checkout.company.company}}}<br>
+                                        {{{Checkout.company.ustid}}}
+                                    {{else}}
+                                        Keine Angaben
+                                    {{/if}}
+                                </span>
+                            </div>
+
+                            <div class="fullwidth last">                            
+                                <label>E-Mail Adresse</label>
+                                <span>
+                                    {{{Checkout.user.email}}}
+                                </span>                                
+                            </div>
+                        </div>
+
+                        <div class="menu-bar">
+                            <a href="/checkout/address" class="btn btn-primary btn-chevron pull-right">
+                                <span class="text">&auml;ndern</span>
+                                <span class="sr-only">&auml;ndern</span>
+                            </a>
+                        </div>
+
+                    </form>
+                </div>
+
+                <div class="wrapper margin-top">
+                    <form id="verification-payment">
+                        <label>&Uuml;berpr&uuml;fen Sie Ihre Zahlungsart</label>
+
+                        <div class="form-group payment fullwidth">
+                            <label>Ihre ausgew&auml;hlte Zahlungsart</label>
+                            {{#equals Checkout.payment.gateway "paypal_express"}}
+                                <div class="payment-gateway">
+                                    <span class="gateway-logo logo-paypal"></span>
+                                    <span class="sr-only">mit paypal bezahlen</span>
+                                </div>
+                            {{/equals}}
+
+                            {{#equals Checkout.payment.gateway "bank_transfer"}}
+                                <div class="info bank-transfer">
+                                    <div class="icon-container">
+                                        <span class="gateway-logo fa fa-2x fa-university"></span>
+                                        <div class="logo-text">SEPA Bank&uuml;berweisung</div>
+                                        <span class="sr-only">per Bank&uuml;berweisung bezahlen</span>
+                                    </div>
+
+                                    <div class="bank-transfer-data fullwidth">
+                                        Bitte &uuml;berweisen Sie den Gesamtbetrag an die unten angegebene Kontonummer.<br>
+                                        Wir werden Ihnen Ihre Ware zusenden, sobald der Betrag auf unserem Konto eingegangen ist:<br><br>
+
+                                        Zahlungsempfänger: FIRMA<br>
+                                        IBAN: DEXXX<br>
+                                        BIC: HXXX
+                                        Verwendungszweck: {{Checkout.orderID}}
+                                    </div>
+                                </div>                                
+                            {{/equals}}
+
+                            {{#equals Checkout.payment.gateway "cod"}}
+                                <div class="payment-gateway">
+                                    <div class="icon-container">
+                                        <div class="gateway-logo fa fa-2x fa-briefcase"></div>
+                                        <div class="logo-text">Nachnahme</div>
+                                        <span class="sr-only">per Nachnahme bezahlen</span>
+                                    </div>
+
+
+
+                                    <div class="text fullwidth no-margin">
+                                        Sie haben sich für die Bezahlung per Nachnahme entschieden und bezahlen Ihre Ware erst, sobald diese bei Ihnen angekommen ist.
+                                    </div>
+                                </div>                            
+                            {{/equals}}
+
+                            {{#equals Checkout.payment.gateway "debit"}}
+                                <div class="payment-gateway">
+                                    <div class="icon-container">
+                                        <span class="gateway-logo fa fa-2x fa-credit-card"></span>
+                                        <div class="logo-text">SEPA Lastschrift</div>
+                                    </div>
+
+                                    <div class="debit-data">
+                                        <div class="form-group fullwidth text-container">
+                                            <label>Zahlungsempfänger:</label><span>FIRMA</span>
+                                            <label>Gläubiger-Identifikationsnummer:</label><span>DEXXX</span>
+                                            <label>Mandatsreferenz:</label><span>Die Mandatsreferenz wird Ihnen in einer separaten E-Mail zugesendet, nachdem der Auftrag durchgeführt wurde.</span>
+                                        </div>
+
+                                        <div class="form-group fullwidth text-container">
+                                            <h3 class="pull-left">SEPA-Lastschrift-Mandat</h3>
+                                            <div>Ich ermächtige die XY, Straße 5, 52066 Aachen (Gläubiger Identifikationsnummer DEXXX), im Rahmen eines Dauermandats, (wiederkehrend) Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der FIRMA auf mein Konto gezogenen Lastschriften einzulösen.</div>
+                                            <div class="divide"></div>
+                                            <div>Ich bin damit einverstanden, dass die Frist, mit der mir der SEPA-Lastschrifteinzug spätestens vorab angekündigt wird, auf 5 Tage verkürzt wird.</div>
+                                            <div class="divide"></div>
+                                            <div>HINWEIS: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrags verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.</div>
+                                            <div class="divide"></div>
+                                        </div>                                    
+
+                                        <div class="form-group user-info fullwidth">
+                                            <label>Vorname und Name (Kontoinhaber):</label>
+                                            <div class="sepa-owner">{{Checkout.user.name}}, {{Checkout.user.prename}}</div>
+                                            <label>Strasse und Hausnummer:</label>
+                                            <div class="sepa-street">{{Checkout.billing.street}}</div>
+                                            <label>PLZ und Ort:</label>
+                                            <div class="sepa-city">{{Checkout.billing.postal}} {{Checkout.billing.city}}</div>
+                                            <label>Land:</label>
+                                            <div class="sepa-country">{{Checkout.billing.country}}</div>
+                                        </div>   
+
+                                        <div class="form-group user-info fullwidth">
+                                            <label>IBAN:</label> 
+                                            <div>{{Checkout.payment.iban}}</div>
+                                            <label>SWIFT/BIC:</label> 
+                                            <div>
+                                                {{#if Checkout.payment.bic}}
+                                                    {{Checkout.payment.bic}}                                            
+                                                {{else}}
+                                                    keine Angabe
+                                                {{/if}}
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group user-sign fullwidth">
+                                            <div class="group">
+                                                <div class="sign-city">{{Checkout.billing.city}}</div>
+                                                <label>Ort</label>
+                                            </div>
+                                            <div class="group">
+                                                <div class="sign-date">{{Checkout.payment.mandat_ref_date}}</div>
+                                                <label>Datum / Uhrzeit</label>
+                                            </div>
+
+                                            <div class="group clear">
+                                                <div class="sign-signature">{{Checkout.user.prename}} {{Checkout.user.name}}</div>
+                                                <label>Unterschrift</label>
+                                            </div>
+                                        </div>                                    
+                                    </div>
+                                </div>                            
+                            {{/equals}}
+                        </div>
+
+                        <div class="menu-bar">
+                            <a href="/checkout/payment" class="btn btn-primary btn-chevron pull-right">
+                                <span class="text">&auml;ndern</span>
+                                <span class="sr-only">&auml;ndern</span>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="wrapper margin-top">
+                    <form id="checkoutProducts">
+                        <label>&Uuml;berpr&uuml;fen Sie Ihren Warenkorb</label>
+
+                        <div class="form-group fullwidth">
+                            <div class="cart-container">
+                                {{#partial checkout-cart-view}}
+                            </div>
+                        </div>
+                        <div id="CheckoutVerificationTotal" class="form-group fullwidth">
+                            <div class="fullwidth">
+                                <div class="info pull-left">
+                                    <label>Warenkorbpreis </label> <span>(inkl. 19% Mwst.)</span>
+                                </div>    
+                                <div class="pull-right">
+                                    {{#span class="total"}}
+                                        {{#partial checkout-total-view}}
+                                    {{/span}}
+                                </div>
+                            </div>
+
+                            <div class="fullwidth">
+                                <div class="info pull-left">
+                                    <label>Versandkosten </label> <span>(inkl. 19% Mwst.)</span>
+                                </div>    
+                                <div class="pull-right">
+                                    {{{span id="totalDelivery" $="setDeliveryCosts" init=true class="total"}}}
+                                </div>
+                            </div>
+
+                            {{#div $="hasCODCosts" init=true class="fullwidth"}}
+                                <div class="info pull-left">
+                                    <label>Nachnahmegeb&uuml;hren </label> <span>(inkl. 19% Mwst.)</span>
+                                </div>    
+                                <div class="pull-right">
+                                    {{{span id="totalCOD" $="setCODCosts" init=true class="total"}}}
+                                </div>
+                            {{/div}}
+
+                            <div id="totalCostsContainer" class="fullwidth">
+                                <div class="info pull-left">
+                                    <label>Gesamt </label> <span>(inkl. 19% Mwst.)</span>
+                                </div>    
+                                <div class="pull-right">
+                                    {{{span id="totalCosts" $="setTotalCosts" init=true class="total"}}}
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                {{#view "CheckoutVerificationView"}}
+                    <div class="wrapper margin-top">
+                        <form>
+                            <span class="info fa fa-5x fa-info-circle"></span>
+
+                            <div class="form-group fullwidth margin-bottom">
+                                <div class="note-text pull-left">Es gelten unsere Allgemeinen Geschäftsbedingungen:</div>
+                                <div class="note-link"><a class="btn btn-primary btn-chevron pull-right" href="/agb"><span class="text">zu den AGBs</span></a></div>
+                            </div>
+                            <div class="form-group fullwidth">
+                                <div class="note-text pull-left">Es gelten unsere Datenschutzbestimmungen:</div>
+                                <div class="note-link"><a class="btn btn-primary btn-chevron pull-right" href="/datenschutz"><span class="text">zu den Datenschutzbestimmungen</span></a></div>
+                            </div>
+                        </form>
+                    </div>
+
+                    {{#div $="showLinkToPayment" init=true id="checkoutProductsChangeInfo" class="pull-left fullwidth alert alert-warning hidden" role="alert"}}
+                        {{#span $="hideOnSending" class="text content"}}
+                            Der Gesamtpreis hat sich ge&auml;ndert und muss Ihrem Zahlungsanbieter mitgeteilt werden.<br>
+                            Klicken Sie hierf&uuml;r auf den Button - Gesamtpreis best&auml;tigen - damit Ihre &Auml;nderungen wirksam werden.
+                        {{/span}}
+
+                        {{#div $="failedElse" class="form-info alert alert-danger"}}
+                            <div class="form-label">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                                Best&auml;stigung fehlgeschlagen.
+                            </div>
+                            <div class="form-info">
+                                Die Best&auml;tigung des Gesamtpreises ist im Moment nicht m&ouml;glich.<br><br>
+                                Das kann folgende Gr&uuml;nde haben:<br><br>
+                                1) Es finden gerade Wartungsarbeiten statt.<br><br>
+                                Versuchen Sie es in einer Stunde erneut. Bis dahin sollte die
+                                Best&auml;tigung wieder m&ouml;glich sein.<br><br>
+                                2) Sie haben gerade keine Internetverbindung.<br><br>
+                                Warten Sie ca. 5 bis 10 Minuten, bis Ihr Internetprovider die Verbindung wiedergergestellt hat.
+                                Sollten Sie dann immer noch keine Verbindung haben, dann kontaktieren Sie Ihren Internetprovider.
+                            </div>
+                        {{/div}}
+
+                        {{#div id="verifyPayPal" $="showPaypal" class="no-display"}}
+                            <div class="form-label">PayPal wird kontaktiert</div>
+                            {{#div $="preparePayPal" class="form-info prepare no-border"}}Bitte haben Sie einen Augenblick Geduld. PayPal wird für die Zahlung vorbereitet ... {{{span $="isSendingPayPal" class="icon refresh glyphicon glyphicon-refresh hidden"}}}{{/div}}
+
+                            {{#div $="contactedPayPal" class="form-info prepare no-display"}}PayPal konnte kontaktiert werden. <span class="icon glyphicon glyphicon-ok"></span>{{/div}}
+                            {{#div $="contactedPayPal" class="form-info contacted no-display"}}
+                                Klicken Sie nun auf den Button - Weiterleiten - um auf die PayPal-Seite
+                                zu gelangen und folgen Sie den dortigen Anweisungen.
+                                Danach werden Sie wieder auf unsere Homepage zurückgeleitet
+                                und Sie haben dann die Möglichkeit, Ihre Bestellung zu
+                                überprüfen und ggfs. zu ändern.<br><br>
+                                HINWEIS: Die Zahlung wird erst wirksam, sobald Sie Ihre 
+                                Bestellung auf "homepage.de" bestätigt haben.
+                            {{/div}}
+
+                            {{#div $="failedPayPal" class="form-info prepare no-display"}}PayPal konnte nicht kontaktiert werden. <span class="icon glyphicon glyphicon-ban-circle"></span>{{/div}}
+                            {{#div $="failedPayPal" class="form-info contacted no-display"}}
+                                Das kann folgende Gr&uuml;nde haben:<br><br>
+                                1) PayPal ist derzeitig offline.<br><br>
+                                Versuchen Sie es in ein paar Minuten erneut. M&ouml;glicherweise
+                                ist PayPal dann wieder online.<br><br>
+                                2) Sie haben gerade keine Internetverbindung.<br><br>
+                                Warten Sie ca. 5 bis 10 Minuten, bis Ihr Internetprovider die Verbindung wiedergergestellt hat.
+                                Sollten Sie dann immer noch keine Verbindung haben, dann kontaktieren Sie Ihren Internetprovider.
+                                3) Es finden gerade Wartungsarbeiten statt.<br><br>
+                                Versuchen Sie es in einer Stunde erneut. Bis dahin sollte die
+                                Bezahlung per PayPal wieder m&ouml;glich sein.<br><br>                        
+                            {{/div}}
+
+                            <div class="menu-bar">
+                                <a class="link" href="/datenschutz">
+                                    <span class="small">Datenschutzbestimmungen</span>
+                                </a>
+
+                                {{#a click="redirect" $="payPalEnabled" class="disabled btn btn-secondary no-display" href="#"}}
+                                    <span class="icon glyphicon glyphicon-chevron-right"></span>
+                                    <span class="text">Weiterleiten</span>
+                                    <span class="sr-only">Weiterleiten</span>
+                                {{/a}}
+                            </div>
+                        {{/div}}
+
+                        {{#button type="button" $="enableCheckoutCartVerify" click="verifyPayment" id="checkoutLinkToPayment" class="btn btn-secondary btn-chevron pull-right"}}
+                            <span class="text">Gesamtpreis best&auml;tigen</span>
+                            <span class="sr-only">Gesamtpreis best&auml;tigen</span>
+                            {{#span $="isSendingVerify" class="cssload-container"}}
+                                <span class="cssload-speeding-wheel"></span>
+                            {{/span}}
+                        {{/button}}
+                    {{/div}}
+
+                    {{#a $="enableCheckoutNextStep" init=true id="checkoutStep4" click="confirmOrder" init=true href="#" class="btn btn-primary btn-chevron checkout-next-step disabled"}}
+                        <span class="text">Zahlungspflichtig bestellen</span>
+                        <span class="sr-only">Zahlungspflichtig bestellen</span>
+
+                        {{#span $="isSending" class="cssload-container"}}
+                            <span class="cssload-speeding-wheel"></span>
+                        {{/span}}
+                    {{/a}}
+
+                    {{#div id="confirm-sending" $="isConfirming" class="refresh-container no-display"}}
+                        <div class="alert alert-warning">
+                            <div class="header"><span class="fa fa-exclamation"></span><h4>Bestellung</h4></div>
+                            {{#div $="isSendingConfirmation" class="body"}}Die Bestellung wird durchgeführt.<br>Bitte haben Sie einen Augenblick Geduld...{{/div}}
+                            {{#span $="isSendingConfirmation" class="cssload-container black"}}
+                                <span class="cssload-speeding-wheel"></span>
+                            {{/span}}
+
+                            {{#span $="isSendingConfirmation" class="glyphicon glyphicon-refresh no-display"}}{{/span}}
+
+                            {{#div $="isSuccess" class="body"}}
+                                <div class="title">
+                                    Bestellung erfolgreich durchgef&uuml;hrt
+                                    <span class="glyphicon glyphicon-ok"></span>
+                                </div>
+                                <div class="text">
+                                    Wir haben Ihre Bestellung aufgenommen und Ihnen eine Bestell&uuml;bersicht an Ihre
+                                    angegebene E-Mail Addresse versendet.<br><br>
+                                    Innerhalb der nächsten 3 Werktage wird Ihnen Ihre Ware zugesendet.<br><br>
+
+                                    Wir w&uuml;nschen Ihnen viel Spa&szlig; mit Ihren neuen Produkten.                                
+                                </div>
+                            {{/div}}
+                            {{#div $="isFail" class="body alert alert-danger"}}
+                                <div class="title">
+                                    Die Bestellung konnte nicht durchgef&uuml;hrt werden
+                                    <span class="glyphicon glyphicon-ban-circle"></span>
+                                </div>
+                                <div class="text">
+                                    Das kann folgende Gr&uuml;nde haben:<br><br>
+                                    1) Ihre Sitzung ist abgelaufen.<br><br>
+                                    Laden Sie die Seite neu und versuchen Sie es erneut.<br><br>
+                                    2) Der Server ist nicht erreichbar.<br><br>
+                                    Versuchen Sie es in ein paar Minuten erneut.<br>
+                                    Sollte Der Fehler dann immer noch auftreten, dann k&ouml;nnen
+                                    Sie sich gerne mit uns in Verbindung setzen.<br>
+                                    Wir helfen Ihnen gerne bei der L&ouml;sung Ihres Problems.
+                                </div>
+                            {{/div}}
+
+                            {{#div $="afterConfirmation" class="footer"}}
+                                {{#button click="afterConfirmation" type="button" class="btn btn-primary btn-chevron"}}
+                                    <span class="text">Schlie&szlig;en</span>
+                                    <span class="sr-only">Schliessen</span>
+                                {{/button}}
+                            {{/div}}
+                        </div>
+                    {{/div}}
+                {{/view}}
+            {{/div}}
+        </div>
+    {{/div}}
+
+    {{#div $="confirmed" init=true class="container-center no-display"}}
+        <div class="wrapper">
+            <form>
+                <h2>Ihre Bestellung wurde erfasst.</h2>
+                <div class="form-group fullwidth">
+                    <span>Vielen Dank für Ihren Einkauf. Sie können gerne weiter in unserem Shop stöbern. Vielleicht finden Sie ja noch was passendes zu Ihrer Bestellung.</span>
+                </div>
+            </form>
+        </div>
+    {{/div}}        
+
+    {{#div $="confirmed" init=true class="no-display"}}
+        {{#partial popular-products}}
+    {{/div}}
+
+    {{#div $="emptyCart" init=true}}
+        {{#partial checkout-empty-cart}}
+        {{#partial popular-products}}
+    {{/div}}
+{{/view}}

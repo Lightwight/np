@@ -1,0 +1,136 @@
+{{#view "AdminPluginSliderView" id="admin-plugin-slider-view"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Gallerie Slider bearbeiten</h4>
+
+        {{#view "AdminPluginSlidesView" id="admin-plugin-slider-sortarea"}}
+            {{#isObject AdminPluginSlides}}
+                {{#each AdminPluginSlides}}
+                    {{#view "AdminPluginSlideView" class="admin-plugin-slider-edit bg-grey"}}
+                        {{#sortable list="#admin-plugin-slider-sortarea" sort="sort" containment="#admin-plugin-slider-sortarea"}}
+                            <div class="image-container">
+                                {{#div $="setMediaSrc" init=true class="image-preview no-line pull-left"}}
+                                    <span class="media-src">{{AdminPluginSlide.src}}</span>
+                                {{/div}}
+
+                                {{#button type="button" click="showMediathek" class="btn btn-primary pull-left"}}
+                                    <span class="text">Mediathek</span>
+                                    <span class="fa fa-film"></span>
+                                {{/button}}
+                            </div>
+                            <div class="slide-data">
+                                <div class="form-group fullwidth small">
+                                    {{{input change="setTitle" bindAttr="title" type="text" class="iconable" placeholder="Slide Titel" value=AdminPluginSlide.title}}}
+
+                                    <div class="fa-container">
+                                        {{{span $="validTitle" init=true class="fa fa-check"}}}
+                                    </div>
+                                </div>
+                                <div class="form-group fullwidth small">
+                                    {{{input change="setSeoTitle" bindAttr="seo_title" type="text" class="iconable" placeholder="Seo Titel" value=AdminPluginSlide.seo_title}}}
+
+                                    <div class="fa-container">
+                                        {{{span $="validSeoTitle" init=true class="fa fa-check"}}}
+                                    </div>
+                                </div>
+                                <div class="form-group fullwidth small">
+                                    {{{input change="setSeoAlt" bindAttr="seo_alt" type="text" class="iconable" placeholder="Seo Alternativtext" value=AdminPluginSlide.seo_alt}}}
+
+                                    <div class="fa-container">
+                                        {{{span $="validSeoAlt" init=true class="fa fa-check"}}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="slide-actions pull-right">
+                                <div class="form-group small">
+                                    {{#button click="removeSlide" type="button" class="btn btn-simple small pull-right"}}
+                                        <span class="text">Entfernen</span>
+                                    {{/button}}
+                                </div>
+                            </div>                        
+                            <div class="slide-actions slide-order pull-right">
+                                <div class="form-group fullwidth small">
+                                    {{{span $="enableSlideUp" init=true click="moveSlidePositionUp" class="fa fa-2x fa-angle-up"}}}
+                                </div>
+
+                                <div class="form-group text-order fullwidth small">
+                                    {{#div bindAttr="order"}}{{AdminPluginSlide.order}}{{/div}}
+                                </div>
+
+                                <div class="form-group fullwidth small">
+                                    {{{span $="enableSlideDown" init=true click="moveSlidePositionDown" class="fa fa-2x fa-angle-down"}}}
+                                </div>                                
+                            </div>
+                        {{/sortable}}
+                    {{/view}}
+                {{/each}}
+            {{/isObject}}
+        {{/view}}
+
+        {{#div $="showAddSlide" class="admin-plugin-slider-edit add-slide"}}
+            <div class="image-container">
+                {{#div $="setMediaSrc" init=true class="image-preview pull-left"}}
+                    Bildvorschau
+                {{/div}}
+                
+                {{#button type="button" click="showMediathek" class="btn btn-primary pull-left"}}
+                    <span class="text">Mediathek</span>
+                    <span class="fa fa-film"></span>
+                {{/button}}
+            </div>
+            <div class="slide-data">
+                <div class="form-group fullwidth small">
+                    {{{input change="setTitle" bindAttr="new_title" type="text" class="iconable" placeholder="Slide Titel"}}}
+
+                    <div class="fa-container">
+                        {{{span $="validTitle" init=true class="fa fa-check"}}}
+                    </div>
+                </div>
+                <div class="form-group fullwidth small">
+                    {{{input change="setSeoTitle" bindAttr="new_seo_title" type="text" class="iconable" placeholder="Seo Titel"}}}
+
+                    <div class="fa-container">
+                        {{{span $="validSeoTitle" init=true class="fa fa-check"}}}
+                    </div>
+                </div>
+                <div class="form-group fullwidth small">
+                    {{{input change="setSeoAlt" bindAttr="new_seo_alt" type="text" class="iconable" placeholder="Seo Alternativtext"}}}
+
+                    <div class="fa-container">
+                        {{{span $="validSeoAlt" init=true class="fa fa-check"}}}
+                    </div>
+                </div>
+            </div>
+            <div class="slide-actions pull-left">
+                <div class="form-group small">
+                    {{#button $="disableSaveNewSlide" click="saveNewSlide" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Speichern</span>
+                        <span class="sr-only">Neuen Slide speichern</span>
+                        {{#span $="saving" class="cssload-container"}}
+                            <span class="cssload-speeding-wheel"></span>
+                        {{/span}}    
+                    {{/button}}
+                </div>
+                <div class="form-group small">
+                    {{#button click="cancelNewSlide" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Abbrechen</span>
+                    {{/button}}
+                </div>
+            </div>
+        {{/div}}
+        <div class="menu-bar">
+            {{#button $="disableSaveSlides" click="saveSlides" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Galerie speichern</span>
+                <span class="sr-only">Galerie speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="saving" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+            
+            {{#button $="showAddButton" click="addSlide" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Bild hinzufügen</span>
+                <span class="fa fa-plus"></span>
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

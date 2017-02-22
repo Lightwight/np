@@ -1,0 +1,28 @@
+.vex.vex-theme-top .vex-content {
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;    
+    padding: 0px;
+}
+
+.vex.vex-theme-top .vex-close:before,
+.vex.vex-theme-top .vex-close {
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px;   
+}
+
+.vex.vex-theme-top .vex-dialog-form {
+    background-color: #f0f0f0;
+    padding: 1em;
+}
+
+.vex.vex-theme-top .vex-dialog-button {
+    -moz-border-radius: 0px;
+    -webkit-border-radius: 0px;
+    border-radius: 0px; 
+}
+
+.vex.vex-theme-top .vex-dialog-button.vex-dialog-button-primary {
+    background-color: #651822;
+}

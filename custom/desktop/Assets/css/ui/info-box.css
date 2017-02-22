@@ -1,0 +1,9 @@
+.info-box {
+    height: auto;
+    background-color: #FFF;
+    width: 800px;
+    max-width: 100%;
+    margin: 0px auto 24px auto;
+    padding: 24px;
+    text-align: left;
+}

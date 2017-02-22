@@ -1,0 +1,21 @@
+{{#need model Article_units}}
+
+{{#view "AdminArticleUnitView"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Artikeleinheit bearbeiten</h4>
+
+        <div class="form-group fullwidth">
+            {{{input change="setName" bindAttr="name" type="text" placeholder="Name" value=AdminArticleUnit.name}}}
+        </div>
+
+        <div class="menu-bar">
+            {{#button $="disableSaveUnit" click="saveUnit" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Artikeleinheit speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="sending" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

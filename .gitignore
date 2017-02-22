@@ -1,0 +1,9 @@
+config.php
+sitemap.xml
+robots.txt
+nbproject/
+cache/
+vendor/
+assets/images/articles/*
+assets/images/categories/*
+assets/images/mediathek/*

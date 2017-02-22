@@ -1,0 +1,21 @@
+{{#need model Article_warehouses}}
+
+{{#view "AdminArticleWarehouseView"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Lager bearbeiten</h4>
+
+        <div class="form-group fullwidth">
+            {{{input change="setName" bindAttr="name" type="text" placeholder="Name" value=AdminArticleWarehouse.name}}}
+        </div>
+
+        <div class="menu-bar">
+            {{#button $="disableSaveWarehouse" click="saveWarehouse" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Lager speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="sending" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

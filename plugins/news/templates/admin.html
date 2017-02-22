@@ -1,0 +1,113 @@
+{{#view "AdminPluginNewsOverviewView" id="admin-plugin-news-view"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Neuigkeiten bearbeiten</h4>
+
+        {{#view "AdminPluginNewsView" id="admin-plugin-news-sortarea"}}
+            {{#isObject AdminPluginNews}}
+                {{#each AdminPluginNews}}
+                    {{#view "AdminPluginNewsItemView" class="admin-plugin-news-edit bg-grey"}}
+                        {{#sortable list="#admin-plugin-news-sortarea" sort="sort" containment="#admin-plugin-news-sortarea" cancel=".contenteditable"}}
+                            <div class="image-container">
+                                {{#div $="setMediaSrc" init=true class="image-preview no-line pull-left"}}{{/div}}
+
+                                {{#button type="button" click="showMediathek" class="btn btn-primary pull-left"}}
+                                    <span class="text">Mediathek</span>
+                                    <span class="fa fa-film"></span>
+                                {{/button}}
+                            </div>                        
+                            <div class="news-data">
+                                <div class="form-group fullwidth small">
+                                    {{{input change="setTitle" bindAttr="title" type="text" class="iconable" placeholder="News Titel" value=AdminPluginNewsItem.title}}}
+
+                                    <div class="fa-container">
+                                        {{{span $="validTitle" init=true class="fa fa-check"}}}
+                                    </div>
+                                </div>
+                                <div class="form-group fullwidth textarea small">
+                                    {{{textarea change="setContent" $="setContent" init=true bindAttr="content" placeholder="Inhalt" class="fullwidth"}}}
+                                </div>
+                            </div>
+                            <div class="news-actions pull-right">
+                                <div class="form-group small">
+                                    {{#button click="removeNews" type="button" class="btn btn-simple small pull-right"}}
+                                        <span class="text">Entfernen</span>
+                                    {{/button}}
+                                </div>
+                            </div>                        
+                            <div class="news-actions news-order pull-right">
+                                <div class="form-group fullwidth small">
+                                    {{{span $="enableNewsUp" init=true click="moveNewsPositionUp" class="fa fa-2x fa-angle-up"}}}
+                                </div>
+
+                                <div class="form-group text-order fullwidth small">
+                                    {{#div bindAttr="order"}}{{AdminPluginNewsItem.order}}{{/div}}
+                                </div>
+
+                                <div class="form-group fullwidth small">
+                                    {{{span $="enableNewsDown" init=true click="moveNewsPositionDown" class="fa fa-2x fa-angle-down"}}}
+                                </div>                                
+                            </div>
+                        {{/sortable}}
+                    {{/view}}
+                {{/each}}
+            {{/isObject}}
+        {{/view}}
+
+        {{#div $="showAddNews" class="admin-plugin-news-edit add-news"}}
+            <div class="image-container">
+                {{#div $="setMediaSrc" init=true class="image-preview pull-left"}}
+                    Vorschau
+                {{/div}}
+                
+                {{#button type="button" click="showMediathek" class="btn btn-primary pull-left"}}
+                    <span class="text">Mediathek</span>
+                    <span class="fa fa-film"></span>
+                {{/button}}
+            </div>
+        
+            <div class="news-data">
+                <div class="form-group fullwidth small">
+                    {{{input change="setTitle" bindAttr="new_title" type="text" class="iconable" placeholder="News Titel" value=""}}}
+
+                    <div class="fa-container">
+                        {{{span $="validTitle" init=true class="fa fa-check"}}}
+                    </div>
+                </div>
+                <div class="form-group textarea fullwidth small">
+                    {{{textarea change="setContent" bindAttr="new_content" placeholder="Inhalt" class="fullwidth"}}}
+                </div>
+            </div>
+            <div class="news-actions pull-right">
+                <div class="form-group small">
+                    {{#button $="disableSaveNewNews" click="saveNewNews" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Speichern</span>
+                        <span class="sr-only">Neue Neuigkeit speichern</span>
+                        {{#span $="saving" class="cssload-container"}}
+                            <span class="cssload-speeding-wheel"></span>
+                        {{/span}}    
+                    {{/button}}
+                </div>
+                <div class="form-group small">
+                    {{#button click="cancelNewNews" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Abbrechen</span>
+                        <span class="sr-only">Neue Neuigkeit abbrechen</span>
+                    {{/button}}
+                </div>
+            </div>
+        {{/div}}
+        <div class="menu-bar">
+            {{#button $="disableSaveNews" click="saveNews" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Neuigkeiten speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="saving" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}    
+            {{/button}}
+            
+            {{#button $="showAddButton" click="addNews" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Neuigkeiten hinzufügen</span>
+                <span class="fa fa-plus"></span>
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

@@ -1,0 +1,219 @@
+{{#need model Routes}}
+{{#need plugin Seo}}
+
+{{#view "NavigationDividerView" data-plugin="Divider"}}
+    <div class="container">
+        <h3>Seo Optimierung - bearbeiten</h3>
+        {{#partial product-search-view}}
+    </div>
+{{/view}}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    {{#view "AdminSeoEditView"}}
+        {{#if this.Seo.customizable}}
+            <form>
+                <div class="form-label">
+                    <span class="text">Route bearbeiten - {{{Seo.route}}}</span>
+                </div>                
+                
+                <div class="form-group fullwidth required">
+                    <label>Route:</label>
+                    {{{input type="text" change="setRoute" bindAttr="route" value=Seo.route class="form-control" placeholder="Route"}}}
+                </div>
+
+                <div class="form-group fullwidth required">
+                    <label>Layout:</label>
+                    {{{input type="text" change="setLayout" bindAttr="layout" value=Seo.layout class="form-control" placeholder="Layout"}}}
+                </div>
+
+                <div class="form-group fullwidth required">
+                    <label>Seiten Titel (max. 55 Zeichen):</label>
+                    {{#span $="remainingTitle" init=true class="badge"}}0{{/span}}
+                    {{{input type="text" change="setTitle" bindAttr="title" value=Seo.title class="form-control" placeholder="Seiten Titel" data-max="55"}}}
+                </div>            
+
+                <div class="form-group fullwidth">
+                    <label>Seo Beschreibung (max. 156 Zeichen):</label>
+                    {{#span $="remainingSeoDescr" init=true class="badge"}}0{{/span}}
+                    {{{input type="text" change="setSeoDescription" bindAttr="seo_description" value=Seo.seo_description class="form-control" placeholder="Seo Beschreibung" data-max="156"}}}
+                </div>
+
+                <div class="form-group fullwidth">
+                    <label>Seo Schlagwörter (max. 10 Schlagwörter, max. 255 Zeichen):</label>
+                    {{#span $="remainingSeoKeywords" init=true class="badge"}}0 W&ouml;rter{{/span}}
+                    {{#span $="remainingSeoKeywordsChars" init=true class="badge"}}0 Zeichen{{/span}}
+                    {{{input type="text" change="setSeoKeywords" bindAttr="seo_keywords" value=Seo.seo_keywords class="form-control" placeholder="Seo Schlagwörter" data-max="255"}}}
+                </div>
+                
+                <div class="form-group fullwidth">
+                    <label>Seo Frequenz:</label>
+                    {{#select $="setSeoFrequency" init=true id="seoFrequencyPicker" change="setSeoFrequency" class="selectpicker model fullwidth" data-live-search="true"}}
+                        <option data-hidden="true">Frequenz</option>
+                        <option value="0">immer</option>
+                        <option value="1">st&uuml;ndlich</option>
+                        <option value="2">t&auml;glich</option>
+                        <option value="3">w&ouml;chentlich</option>
+                        <option value="4">monatlich</option>
+                        <option value="5">j&auml;hrlich</option>
+                        <option value="6">nie</option>
+                    {{/select}}
+                </div>
+                
+                <div class="form-group fullwidth">
+                    <label>Seo Priorit&auml;t:</label>
+                    {{#select $="setSeoPriority" init=true id="seoPriorityPicker" change="setSeoPriority" class="selectpicker model fullwidth" data-live-search="true"}}
+                        <option data-hidden="true">Priorit&auml;t</option>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    {{/select}}
+                </div>
+
+                {{#div $="isDynamic" init=true class="form-group fullwidth required no-display"}}
+                    <label for="seoModel">Model für die Route:</label>
+                    {{#select $="setSeoModel" init=true id="seoModelPicker" change="setModel" class="selectpicker model fullwidth" data-live-search="true"}}
+                        <option data-hidden="true">Model</option>
+                        {{#each this.Seo.models}}
+                            <option value="{{name}}">{{name}}</option>
+                        {{/each}}
+                    {{/select}}
+                {{/div}}
+                
+                {{#div $="isDynamic" init=true class="form-group fullwidth required no-display"}}
+                    <label for="seoColumn">Spalte für die Route:</label>
+                    {{#select $="setSeoColumn" init=true  id="seoColumnPicker" change="setColumn" class="selectpicker column fullwidth" data-live-search="true"}}
+                    {{/select}}
+                {{/div}}
+
+                <div class="form-group fullwidth required">
+                    <label for="seoForce">Route immer vom Server laden?</label>
+                    {{#div $="setForce" init=true class="btn-group" data-toggle="buttons"}}
+                        {{#label click="forced" class="btn btn-default active"}}
+                            <input type="radio" value="true" name="force">
+                            Ja
+                        {{/label}}
+                        {{#label click="cached" class="btn btn-default"}}
+                            <input type="radio" value="false" name="force">
+                            Nein
+                        {{/label}}
+                    {{/div}}
+                </div>
+                
+                <div class="form-group fullwidth required">
+                    <label for="seoEnabled">Route aktiviert?</label>
+                    {{#div $="setEnabled" init=true class="btn-group" data-toggle="buttons"}}
+                        {{#label click="enabled" class="btn btn-default active"}}
+                            <input type="radio" value="true" name="enabled">
+                            Ja
+                        {{/label}}
+                        {{#label click="disabled" class="btn btn-default"}}
+                            <input type="radio" value="false" name="enabled">
+                            Nein
+                        {{/label}}
+                    {{/div}}
+                </div>
+                <div class="form-group fullwidth required">
+                    <label for="seoDeleted">Route gelöscht?</label>
+                    {{#div $="setDeleted" init=true class="btn-group" data-toggle="buttons"}}
+                        {{#label click="deleted" class="btn btn-default"}}
+                            <input type="radio" value="true" name="deleted">
+                            Ja
+                        {{/label}}
+                        {{#label click="recovered" class="btn btn-default active"}}
+                            <input type="radio" value="false" name="deleted">
+                            Nein
+                        {{/label}}
+                    {{/div}}
+                </div>
+                <div class="form-group fullwidth required">
+                    <label for="seoCrawlable">Route für Suchmaschinenen sichtbar?</label>
+                    {{#div $="setCrawlable" init=true class="btn-group" data-toggle="buttons"}}
+                        {{#label click="crawlable" class="btn btn-default"}}
+                            <input type="radio" value="true" name="crawlable">
+                            Ja
+                        {{/label}}
+                        {{#label click="notCrawlable" class="btn btn-default active"}}
+                            <input type="radio" value="false" name="crawlable">
+                            Nein
+                        {{/label}}
+                    {{/div}}
+                </div>
+            </form>
+
+            {{#a click="saveRoute" $="saveEnabled" init=true class="btn btn-primary fullwidth" href="#"}}
+                <span class="icon glyphicon glyphicon-chevron-right"></span>
+                <span class="text">Speichern</span>
+                <span class="sr-only">Speichern</span>
+            {{/a}}
+            
+            {{#div id="route-sending" $="isSending" class="modal-refresh-container no-display"}}
+                <div class="alert alert-warning">
+                    <div class="header"><span class="glyphicon glyphicon-info-sign"></span><h4>Die Route wird gespeichert</h4></div>
+                    {{#div $="isSending" class="body no-display"}}Bitte haben Sie einen Augenblick Geduld...{{/div}}
+                    {{#span $="isSending" class="glyphicon glyphicon-refresh no-display"}}{{/span}}
+
+                    {{#div $="isSuccess" class="body no-display"}}
+                        <div class="title">
+                            Route gespeichert
+                            <span class="glyphicon glyphicon-ok"></span>
+                        </div>
+                        <div class="text">
+                            Die Route wurde erfolgreich gespeichert!
+                        </div>
+                    {{/div}}
+                    {{#div $="isFail" class="body alert alert-danger no-display"}}
+                        <div class="title">
+                            Die Route konnte nicht gespeichert werden
+                            <span class="glyphicon glyphicon-ban-circle"></span>
+                        </div>
+                        <div class="text">
+                            Das kann folgende Gr&uuml;nde haben:<br><br>
+                            1) Ihre Sitzung ist abgelaufen.<br><br>
+                            Laden Sie die Seite neu und versuchen Sie es erneut.<br><br>
+                            2) Der Server ist nicht erreichbar.<br><br>
+                            Versuchen Sie es in ein paar Minuten erneut.<br>
+                            Sollte Der Fehler dann immer noch auftreten, dann k&ouml;nnen
+                            Sie sich gerne mit uns in Verbindung setzen.<br>
+                            Wir helfen Ihnen gerne bei der L&ouml;sung Ihres Problems.
+                        </div>
+                    {{/div}}
+
+                    {{#div $="afterSaving" class="footer"}}
+                        {{#button click="closeWindow" type="button" class="btn btn-primary"}}
+                            <span class="glyphicon glyphicon-home"></span>
+                            OK
+                        {{/button}}
+                    {{/div}}
+                </div>
+            {{/div}}            
+        {{else}}
+            <div class="jumbotron">
+                <div class="header">
+                    <span class="icon glyphicon glyphicon-info-sign"></span>
+                    <h1>Route nicht gefunden</h1>
+                </div>
+                
+                <div class="body">
+                    Die Route existiert nicht oder darf nicht bearbeitet werden!
+                    <br><br>
+                </div>
+                
+                <div class="footer">
+                    <a class="btn btn-primary btn-lg">
+                        <span class="icon glyphicon glyphicon-home"></span>
+                        <span class="text">Startseite</span>
+                        <span class="sr-only">Startseite</span>
+                    </a>
+                </div>
+            </div>
+        {{/if}}
+    {{/view}}
+</div>

@@ -1,0 +1,93 @@
+<div class="content-divider text-center col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+    <h3>Neues Passwort vergeben</h3>
+</div>
+
+<div class="container">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+        {{#view "AuthResetPasswordView"}}
+            {{#if AuthReset.pw_reset}}
+                {{#if success}}
+                    <div class="dialog success">
+                        <div class="header"><h3>Information</h3></div>
+
+                        <div class="body">
+                            Sie k&ouml;nnen sich nun mit Ihre neuen Zugangsdaten anmelden.
+                        </div>
+
+                        <div class="footer">
+                            <a href="/" class="btn btn-success">
+                                <span class="icon glyphicon glyphicon-home"></span>
+                                <span class="sr-only">Zur&uuml;ck zur Startseite</span>
+                                <span class="text">Startseite</span>
+                            </a>
+                        </div>
+                    </div>
+                {{else}}
+                    <div class="dialog">
+                        <div class="header"><h3>Passwort vergeben</h3></div>
+
+                        <div class="body">
+                            <div class="control">
+                                {{{input change="setResetCode" bindAttr="pw_temp" type="text" class="form-control" placeholder="Ihr Reset Code"}}}
+
+                                {{{span init=true $="emptyCode" class="glyphicon glyphicon-info-sign"}}}
+                                {{{span init=true $="givenCode" class="glyphicon glyphicon-ok"}}}
+                            </div>
+
+
+                            <div class="control">
+                                {{{input change="setPassword" bindAttr="password" type="password" class="form-control" placeholder="Ihr neues Passwort"}}}
+
+                                {{{span init=true $="badPassword" class="glyphicon glyphicon-info-sign"}}}
+                                {{{span init=true $="goodPassword" class="glyphicon glyphicon-ok"}}}
+                            </div>
+
+                            <div class="control">
+                                {{{input change="setPasswordConfirmation" bindAttr="password_confirmation" type="password" class="form-control" placeholder="Passwort wiederholen"}}}
+
+                                {{{span init=true $="badPasswordConfirmation" class="glyphicon glyphicon-info-sign"}}}
+                                {{{span init=true $="goodPasswordConfirmation" class="glyphicon glyphicon-ok"}}}
+                            </div>
+                        </div>
+
+                        <div class="footer">
+                            {{#a click="submit" $="enableSubmit" href="#" class="btn btn-primary disabled"}}
+                                <span class="icon glyphicon glyphicon-check"></span>
+                                <span class="sr-only">OK</span>
+                                <span class="text">OK</span>
+                            {{/a}}
+
+                            <a href="/" class="btn btn-primary">
+                                <span class="icon glyphicon glyphicon-home"></span>
+                                <span class="sr-only">Zur&uuml;ck zur Startseite</span>
+                                <span class="text">Startseite</span>
+                            </a>
+                        </div>
+                    </div>
+                {{/if}}
+            {{else}}
+                <div class="dialog danger">
+                    <div class="header"><h3>Passwort zur&uuml;cksetzen fehlgeschlagen</h3></div>
+                    <div class="body">
+                        <span>
+                            Dieser Link ist ung&uuml;ltig oder abgelaufen.<br><br>
+                            Sollte hier ein Fehler vorliegen, dann w&uuml;rden wir uns &uuml;ber einen pers&ouml;nlichen Kontakt mit Ihnen freuen und den Fehler mit Ihnen so schnell wie möglich beheben.<br>
+                        </span>
+                    </div>
+                    <div class="footer">
+                        <a href="/" class="btn btn-danger">
+                            <span class="icon glyphicon glyphicon-home"></span>
+                            <span class="sr-only">Zur&uuml;ck zur Startseite</span>
+                            <span class="text">Startseite</span>
+                        </a>
+                        <a href="/contact" class="btn btn-danger">
+                            <span class="icon glyphicon glyphicon glyphicon-phone-alt"></span>
+                            <span class="sr-only">Zum Kontakt</span>
+                            <span class="text">Kontakt</span>
+                        </a>
+                    </div>
+                </div>
+            {{/if}}
+        {{/view}}    
+    </div>
+</div>

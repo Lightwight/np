@@ -1,0 +1,14 @@
+{{#view "AdminArticleManagementTabbarView"}}
+    <ul class="admin-tabbar">
+        {{#each AdminArticleManagementTabbar.menus}}
+            <li>
+                {{#view "AdminArticleManagementTabView"}}
+                    {{#a $="setActive" init=true href=AdminArticleManagementTab.route}}
+                        <div class="menu-text">{{AdminArticleManagementTab.menu}}</div>
+                        <div class="menu-line"></div>
+                    {{/a}}
+                {{/view}}
+            </li>
+        {{/each}}
+    </ul>
+{{/view}}

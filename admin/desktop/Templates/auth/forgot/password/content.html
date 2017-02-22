@@ -1,0 +1,46 @@
+<h2 class="hoz-title">Passwort vergessen</h2>
+
+<div class="main-content padding">
+    <div class="centered">
+        <div class="content-padding flexbox bg-grey">
+            <div class="info-box">
+                Falls Sie Ihr Passwort vergessen haben, geben Sie bitte unten Ihre E-Mail-Adresse ein.<br>Anschließend erhalten Sie einen Aktivierungslink per E-Mail.
+            </div>
+
+            {{#view "AuthForgotPasswordView" class="fullwidth"}}
+                <form id="forgot-password">
+                    <div class="form-group fullwidth">
+                        <label>Ihre E-Mail Adresse:</label>
+                        {{{input $="sendSuccess" change="setMail" bindAttr="reset_email" class="iconable" value=AuthForgot.reset_email type="mail" placeholder="Ihre E-Mail Adresse"}}}
+
+                        <div class="fa-container">
+                            {{#span init=true $="invalidMailInput" class="fa fa-flash"}}{{/span}}
+                            {{{span init=true $="validMailInput" class="fa fa-check"}}}
+                        </div>
+                    </div>
+
+                    <div class="menu-bar">
+                        {{#a $="validMail" init=true click="sendLink" href="#" class="btn btn-primary disabled"}}
+                            <span class="sr-only">Link zusenden</span>
+                            <span class="text">Link zusenden</span>
+                            {{{span $="notSending" class="icon fa fa-caret-right"}}}
+                            {{#span $="sending" class="cssload-container"}}
+                                <div class="cssload-speeding-wheel"></div>
+                            {{/span}}
+                        {{/a}}
+
+                        <a href="/" class="btn btn-primary">
+                            <span class="sr-only">Zur&uuml;ck zur Startseite</span>
+                            <span class="text">Startseite</span>
+                            <span class="icon fa fa-home"></span>                    
+                        </a>
+                    </div>
+                </form>        
+            {{/view}}
+        </div>
+    </div>
+
+    <div class="marg-top">
+        {{#partial popular-products}}    
+    </div>
+</div>

@@ -1,0 +1,154 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-admin .admin-plugin-simple-offers-edit {
+    position: relative;
+    float: left;
+    width: 100%;
+    height: auto;
+    border: 1px #d3d3d3 solid;
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+.np-scope-admin #admin-plugin-simple-offers-view textarea {
+    height: 164px;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit.add-offer {
+    opacity: 0;
+    display: none;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit.new-offer {
+    opacity: 0;
+    
+    -webkit-animation: ani-fadeIn 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards; /* Safari 4+ */
+    -moz-animation:    ani-fadeIn 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards; /* Fx 5+ */
+    -o-animation:      ani-fadeIn 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards; /* Opera 12+ */
+    -ms-animation:     ani-fadeIn 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards; /* Opera 12+ */
+    animation:         ani-fadeIn 0.8s cubic-bezier(0.250, 0.460, 0.450, 0.940) forwards; /* IE 10+, Fx 29+ */
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .image-container {
+    position: relative;
+    float: left;
+    width: 150px;
+    height: auto;
+    z-index: 2;
+    overflow: hidden;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .image-container .image-preview:not(.no-line):before {
+    content: "";
+    display: inline-block;
+    width: 150px;
+    position: absolute;
+    height: 186px;
+    border-left: 1px rgba(211,211,211,0.35) solid;
+    left: 53px;
+    top: 36px;
+    transform: rotateZ(45deg);
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .image-container .image-preview {
+    width: 100%;
+    height: 150px;
+    border: 1px #d3d3d3 solid;
+    background-color: #FFF;
+    color: rgba(211,211,211,0.35);
+    line-height: 150px;
+    text-align: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding: 3px;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .image-container .btn {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .image-container .btn .fa {
+    right: 8px;
+    position: absolute;
+    top: 8px;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .simple-offers-data {
+    float: left;
+    height: auto;
+    width: calc(100% - 150px);
+    padding-left: 12px;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .simple-offers-actions {
+    margin-top: 10px;
+    margin-left: 12px;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .simple-offers-actions .form-group:last-child {
+    margin-left: 12px;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .simple-offers-actions.simple-offers-order {
+    width: 80px;
+    text-align: center;
+    -moz-text-align-last: center;
+    text-align-last: center;
+    margin-top: 6px;
+    clear: right;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .simple-offers-actions.simple-offers-order .fa {
+    cursor: pointer;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .simple-offers-actions.simple-offers-order .fa.disabled {
+    cursor: default;
+    pointer-events: none;
+    color: #d3d3d3;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .simple-offers-actions.simple-offers-order .form-group:last-child {
+    margin-bottom: 0px;
+    margin-left: 0px;
+} 
+.np-scope-admin .admin-plugin-simple-offers-edit .simple-offers-actions.simple-offers-order .text-order {
+    line-height: 27px;
+    font-size: 13px;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .simple-offers-actions .btn {
+    width: 80px;
+    text-align: center;
+    line-height: 9px;
+}
+
+.np-scope-admin .admin-plugin-simple-offers-edit .simple-offers-actions .btn span {
+    float: none;
+}
+
+.np-scope-admin #admin-plugin-simple-offers-view .menu-bar button {
+    margin-left: 6px;
+}

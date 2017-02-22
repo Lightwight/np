@@ -1,0 +1,15 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 08.08.2015, 11:00:19
+    Author     : cross
+*/
+
+[data-handle="AuthRegistrationView"] .menu-bar .additional {
+    text-align: right;
+    width: 100%;
+    margin-bottom: 6px;
+}

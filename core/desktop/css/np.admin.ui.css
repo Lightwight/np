@@ -1,0 +1,227 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04.10.2014, 16:52:42
+    Author     : cross
+*/
+
+/* LAYOUT MANAGER */
+
+/*body {
+    overflow: hidden;
+}
+
+body.admin .np-page-wrapper {
+    position: absolute;
+    
+    top: 65px;
+    
+    width: 100%;
+    height: 100%;
+    
+    overflow: auto;
+}*/
+
+.np-page-wrapper .ui-sortable-helper {
+    position: fixed !important;
+}
+
+.np-draggable-placeholder {
+    background-color: #d9ebfa;
+    width: 100%;
+    min-height: 80px;
+    border: 1px dotted #adadad;
+    margin: 10px auto;
+}
+
+.np-layout-wrapper {
+    cursor: default !important;
+}
+
+.np-layout-wrapper .row-handle {
+    font-weight: bold;
+    padding: 5px;
+    width: 70px;
+    height: 33px;
+    cursor: move;
+    
+    position: absolute;
+    
+    margin-left: -20px;
+    margin-top: -20px;
+    
+    border-right: 1px #dddddd solid;
+    border-bottom: 1px #dddddd solid;
+    
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.np-layout-wrapper .col-handle {
+    display: table;
+    font-weight: bold;
+    padding: 6px;
+    width: 70px;
+    cursor: default;
+    
+    position: absolute;
+    
+    background-color: #f5f5f5;
+    
+    border-right: 1px #dddddd solid;
+    border-bottom: 1px #dddddd solid;
+
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-bottom-right-radius: 4px;
+    
+    margin-left: -20px;
+    margin-top: -20px;    
+    margin-bottom: 10px;
+}
+
+.np-layout-wrapper .row {
+    padding: 20px;
+    cursor: default;
+    background-color: #f5f5f5;
+    border: 1px #adadad dotted !important;
+    min-height: 80px;
+    min-width: 160px;
+    margin: 10px auto;
+}
+
+.np-layout-wrapper .col {
+    cursor: copy;
+    min-height: 120px;
+    border: 1px dotted #adadad;
+    background-color: #FFFFFF;
+    
+    padding: 20px;    
+    margin-top:20px;
+}
+
+.np-layout-wrapper .col-header,
+.np-layout-wrapper .row-header {
+    float:left;
+    width: 100%;
+    height: 13px;
+}
+
+.np-layout-wrapper .row .row-delete,
+.np-layout-wrapper .col .col-delete {
+    background-color: #f5f5f5;
+        
+    margin-top: -20px;
+    margin-right: -20px;
+
+    padding-bottom: 5px;
+    
+    border-left: 1px solid #dddddd;
+    border-bottom: 1px solid #dddddd;
+    
+    -webkit-border-top-left-radius: 0px;
+    -moz-border-radius-topleft: 0px;
+    border-top-left-radius: 0px;
+    
+    -webkit-border-bottom-right-radius: 0px;
+    -moz-border-radius-bottomright: 0px;
+    border-bottom-right-radius: 0px;
+    
+    -webkit-border-top-right-radius: 0px;
+    -moz-border-radius-topright: 0px;
+    border-top-right-radius: 0px;
+}
+
+.np-layout-wrapper .np-layout-top {
+    cursor: default;
+    position: fixed;
+    top: 36px;
+    left:0px;
+    width: 100%;
+    min-height: 10%;
+}
+
+.np-layout-wrapper .np-layout-left {
+    cursor: default;
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    min-width: 10%;
+    overflow: auto;
+}
+
+.np-layout-wrapper .np-layout-center {
+    cursor: default;
+    position: fixed;
+    left: 10%;
+    top: 10%;
+    
+    width: 80%;
+    height: 100%;
+}
+
+.np-layout-wrapper .np-layout-right {
+    cursor: default;
+    position: fixed;
+    right: 0;
+    top: 0;
+    height: 100%;
+    min-width: 10%;
+    overflow: auto;
+}
+
+.np-layout-wrapper .np-layout-bottom {
+    cursor: default;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    min-height: 10%;
+}
+
+.np-layout-wrapper .np-layout-top,
+.np-layout-wrapper .np-layout-left,
+.np-layout-wrapper .np-layout-center,
+.np-layout-wrapper .np-layout-right,
+.np-layout-wrapper .np-layout-bottom {
+    border: none;
+    padding: 10px 20px;
+}
+
+.np-layout-wrapper .np-layout-left,
+.np-layout-wrapper .np-layout-right {
+    border: 2px #faebcc dotted;
+}
+
+.np-layout-wrapper .np-layout-top,
+.np-layout-wrapper .np-layout-bottom {
+    border: 2px #d6e9c6 dotted;
+}
+
+.np-layout-wrapper .np-layout-center {
+    overflow: auto;
+    border: 2px #bce8f1 dotted;
+}
+
+/*TODO: Move this away! Is admin stuff!!!*/
+#inpLayout, 
+#admin_layout_designer_layouts .inpRename {
+    width: 180px;
+}
+    
+#admin_layout_designer_layouts .list-group-item:first-child {
+    min-width: 300px;
+}
+
+#admin_layout_designer_layouts .list-group-item .btn-md {
+    width: 53px;
+}
+
+#admin_layout_designer_layouts .list-group-item button {
+    margin-left: 5px;
+}

@@ -1,0 +1,59 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+.np-scope-admin #admin-route-edit .form-title {
+  margin-right: 16px; }
+.np-scope-admin #admin-route-edit .form-group.route div:first-child {
+  float: left;
+  width: 100%; }
+.np-scope-admin #admin-route-edit .form-group.route div label {
+  line-height: 25px;
+  margin: 0px;
+  float: left;
+  width: auto;
+  margin-right: 12px; }
+  .np-scope-admin #admin-route-edit .form-group.route div label > span {
+    margin-left: 22px; }
+.np-scope-admin #admin-route-edit .form-group.route div .form-group {
+  margin: 0px;
+  width: auto; }
+  .np-scope-admin #admin-route-edit .form-group.route div .form-group input {
+    height: 25px;
+    float: left;
+    width: auto; }
+  .np-scope-admin #admin-route-edit .form-group.route div .form-group .fa-container {
+    height: 25px; }
+    .np-scope-admin #admin-route-edit .form-group.route div .form-group .fa-container .fa {
+      height: 23px;
+      line-height: 23px; }
+  .np-scope-admin #admin-route-edit .form-group.route div .form-group .btn {
+    margin-left: 16px; }
+.np-scope-admin #admin-route-edit .form-group.route div > .btn {
+  margin-left: 16px; }
+.np-scope-admin #inpRouteContent {
+  min-height: 500px;
+  margin-bottom: 0px; }
+.np-scope-admin [data-handle="AdminRoutePluginsContentView"] [contenteditable] {
+  height: 116px;
+  overflow-y: auto; }
+.np-scope-admin #route-seo-optimization .btn-radio-group {
+  margin-top: 10px;
+  margin-bottom: 10px; }

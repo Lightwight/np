@@ -1,0 +1,50 @@
+<div class="content-divider text-center col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+    <h3>Kontoaktivierung</h3>
+</div>
+
+<div class="container">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+        {{#view "AuthRegistrationConfirmationView"}}
+            {{#if AuthConfirmation.confirmation}}
+                <div class="dialog success">
+                    <div class="header"><h3>Kontobest&auml;tigung erfolgreich</h3></div>
+                    <div class="body">
+                        <span>
+                            Ihr Konto wurde erfolgreich aktiviert.<br><br>
+                            Sie k&ouml;nnen sich nun jederzeit mit Ihren Zugangsdaten an unseren Shop anmelden.
+                        </span>
+                    </div>
+                    <div class="footer">
+                        <a href="/" class="btn btn-success">
+                            <span class="icon glyphicon glyphicon-home"></span>
+                            <span class="sr-only">Zur&uuml;ck zur Startseite</span>
+                            <span class="text">Startseite</span>
+                        </a>
+                    </div>
+                </div>
+            {{else}}
+                <div class="dialog danger">
+                    <div class="header"><h3>Kontobest&auml;tigung fehlgeschlagen</h3></div>
+                    <div class="body">
+                        <span>
+                            Dieser Link ist ung&uuml;ltig oder abgelaufen.<br><br>
+                            Sollte hier ein Fehler vorliegen, dann w&uuml;rden wir uns &uuml;ber einen pers&ouml;nlichen Kontakt mit Ihnen freuen und den Fehler mit Ihnen so schnell wie möglich beheben.<br>
+                        </span>
+                    </div>
+                    <div class="footer">
+                        <a href="/" class="btn btn-danger">
+                            <span class="icon glyphicon glyphicon-home"></span>
+                            <span class="sr-only">Zur&uuml;ck zur Startseite</span>
+                            <span class="text">Startseite</span>
+                        </a>
+                        <a href="/kontakt" class="btn btn-danger">
+                            <span class="icon glyphicon glyphicon glyphicon-phone-alt"></span>
+                            <span class="sr-only">Zum Kontakt</span>
+                            <span class="text">Kontakt</span>
+                        </a>
+                    </div>
+                </div>
+            {{/if}}
+        {{/view}}    
+    </div>
+</div>

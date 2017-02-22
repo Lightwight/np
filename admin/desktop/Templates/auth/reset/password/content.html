@@ -1,0 +1,89 @@
+<h2 class="hoz-title">Ein neues Passwort vergeben</h2>
+
+<div class="main-content padding">
+    <div class="centered">
+        <div class="flexbox bg-grey">
+            {{#view "AuthResetPasswordView" class="fullwidth"}}
+                {{#if AuthReset.pw_reset}}
+                    <form>
+                        <h4 class="form-title">Neues Passwort vergeben</h4>
+
+                        <div class="info-box">
+                            Geben Sie in den nachfolgenden Feldern den Reset-Code aus Ihrer E-Mail sowie das neue Passwort ein.
+                        </div>
+
+                        <div class="form-group fullwidth">
+                            {{{input change="setResetCode" data-pasteable="true" bindAttr="pw_temp" type="text" class="iconable pw-temp" placeholder="Ihr Reset-Code"}}}
+
+                            <div class="fa-container">
+                                {{{span init=true $="emptyCode" class="fa fa-flash"}}}
+                                {{{span init=true $="givenCode" class="fa fa-check"}}}
+                            </div>                                
+                        </div>
+
+                        <div class="form-group fullwidth">
+                            {{{input change="setPassword" data-pasteable="true" bindAttr="password" type="password" class="iconable" placeholder="Ihr neues Passwort"}}}
+
+                            <div class="fa-container">
+                                {{{span init=true $="badPassword" class="fa fa-flash"}}}
+                                {{{span init=true $="goodPassword" class="fa fa-check"}}}
+                            </div>                                  
+                        </div>
+                        <div class="form-group fullwidth">
+                            {{{input change="setPasswordConfirmation" data-pasteable="true" bindAttr="password_confirmation" type="password" class="iconable" placeholder="Passwort wiederholen"}}}
+
+                            <div class="fa-container">
+                                {{{span init=true $="badPasswordConfirmation" class="fa fa-flash"}}}
+                                {{{span init=true $="goodPasswordConfirmation" class="fa fa-check"}}}
+                            </div>                                  
+                        </div>
+
+                        <div class="menu-bar">
+                            {{#a click="submit" $="enableSubmit" href="#" class="btn btn-primary disabled"}}
+                                <span class="sr-only">Neues Passwort &uuml;bernehmen</span>
+                                <span class="text">Passwort &uuml;bernehmen</span>
+
+                                {{{span $="notSending" class="icon fa fa-caret-right"}}}
+                                {{#span $="sending" class="cssload-container"}}
+                                    <div class="cssload-speeding-wheel"></div>
+                                {{/span}}                                    
+                            {{/a}}
+
+                            <a href="/" class="btn btn-primary">
+                                <span class="sr-only">Zur&uuml;ck zur Startseite</span>
+                                <span class="text">Startseite</span>
+                                <span class="icon fa fa-home"></span>                                    
+                            </a>
+                        </div>
+                    </form>
+                {{else}}
+                    <form>
+                        <h4 class="form-title">Ung&uuml;ltiger Link</h4>
+
+                        <div class="info-box">
+                            Entweder ist dieser Link ung&uuml;ltig bzw. abgelaufen oder das Passwort wurde bereits ge&auml;ndert.<br><br>
+                            Wenn hier ein Fehler vorliegen sollte, dann setzten Sie sich bitte mit uns in Verbindung und wir finden zusammen eine L&ouml;sung.
+                        </div>
+
+                        <div class="menu-bar">
+                            <a href="/contact" class="btn btn-primary">
+                                <span class="sr-only">Zum Kontakt</span>
+                                <span class="text">Kontakt</span>
+                                <span class="icon fa fa-phone"></span>
+                            </a>
+                            <a href="/" class="btn btn-primary">
+                                <span class="sr-only">Zur&uuml;ck zur Startseite</span>
+                                <span class="text">Startseite</span>
+                                <span class="icon fa fa-home"></span>                                
+                            </a>
+                        </div>
+                    </form>              
+                {{/if}}
+            {{/view}}            
+        </div>
+    </div>
+    
+    <div class="marg-top">
+        {{#partial popular-products}}    
+    </div>    
+</div>

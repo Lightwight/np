@@ -1,0 +1,75 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+.np-scope-custom.np-theme-ms {
+  /* Very small screen */ }
+  .np-scope-custom.np-theme-ms .form-group.iconable input[type=text],
+  .np-scope-custom.np-theme-ms .form-group.iconable input[type=email],
+  .np-scope-custom.np-theme-ms .form-group.iconable input[type=number],
+  .np-scope-custom.np-theme-ms .form-group.iconable input[type=password] {
+    width: calc(100% - 24px);
+    border-right: none;
+    float: left; }
+  .np-scope-custom.np-theme-ms .form-group.iconable input:focus ~ .fa-form-group {
+    border-top: solid 1px #d3d3d3;
+    border-right: solid 1px #d3d3d3;
+    border-bottom: solid 1px #d3d3d3; }
+  .np-scope-custom.np-theme-ms .form-group.iconable .fa-form-group {
+    position: relative;
+    float: left;
+    width: 24px;
+    height: 28px;
+    line-height: 28px;
+    border-top: 1px #d3d3d3 solid;
+    border-right: 1px #d3d3d3 solid;
+    border-bottom: 1px #d3d3d3 solid; }
+    .np-scope-custom.np-theme-ms .form-group.iconable .fa-form-group .fa {
+      line-height: 26px;
+      text-align: center;
+      display: inline-block;
+      width: 24px;
+      height: 28px;
+      position: absolute;
+      top: 0px;
+      right: 0px; }
+  .np-scope-custom.np-theme-ms .form-group.no-margin {
+    margin-bottom: 0px; }
+  .np-scope-custom.np-theme-ms form.half {
+    width: 48%; }
+    .np-scope-custom.np-theme-ms form.half.margin {
+      margin-right: 4%; }
+  .np-scope-custom.np-theme-ms form > label {
+    color: #000;
+    font-family: "Roboto Light";
+    margin-bottom: 12px;
+    float: left; }
+  .np-scope-custom.np-theme-ms form > a.link {
+    color: #333;
+    font-family: "Roboto Light";
+    font-size: 12px;
+    margin-top: 6px;
+    margin-left: 18px; }
+  .np-scope-custom.np-theme-ms.media-s-xs form.half {
+    width: 100%; }
+    .np-scope-custom.np-theme-ms.media-s-xs form.half.margin {
+      margin-right: 0px; }
+    .np-scope-custom.np-theme-ms.media-s-xs form.half:not(.last) {
+      margin-bottom: 24px; }

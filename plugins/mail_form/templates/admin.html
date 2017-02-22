@@ -1,0 +1,197 @@
+{{#view "AdminPluginMailOverviewView" id="admin-plugin-mail-view"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Kontaktformular bearbeiten</h4>
+
+        <div class="mail-main-container">
+            <div class="image-container">
+                {{#div $="setMediaSrc" init=true class="image-preview pull-left"}}
+                    Bildvorschau
+                {{/div}}
+
+                {{#button type="button" click="showMediathek" class="btn btn-primary pull-left"}}
+                    <span class="text">Mediathek</span>
+                    <span class="fa fa-film"></span>
+                {{/button}}
+            </div>
+            <div class="content-container">
+                <div class="form-group fullwidth small">
+                    {{{input change="setTitle" bindAttr="main_title" type="text" placeholder="Ihr Kontakt Titel" value=AdminPluginMailForm.main_title}}}
+                </div>
+                <div class="form-group fullwidth small">
+                    {{{textarea change="setContent" $="setContent" init=true bindAttr="main_content" placeholder="Inhalt" class="fullwidth"}}}
+                </div>
+            </div>
+        </div>
+
+        <div class="mail-settings-container">
+            <div class="form-group fullwidth small">
+                {{{input change="setSubject" bindAttr="main_subject" type="text" placeholder="E-Mail Betreff" value=AdminPluginMailForm.main_subject}}}
+            </div>
+            <div class="form-group fullwidth small">
+                {{{input change="setReceiver" bindAttr="main_receiver" type="text" placeholder="E-Mail Empfänger" value=AdminPluginMailForm.main_receiver}}}
+            </div>
+        </div>
+
+        {{#view "AdminPluginMailItemsView" id="admin-plugin-mail-sortarea" class="fullwidth"}}
+            {{#isObject AdminPluginMailItems}}
+                {{#each AdminPluginMailItems}}
+                    {{#view "AdminPluginMailItemView" class="admin-plugin-mail-edit bg-grey"}}
+                        {{#sortable list="#admin-plugin-mail-sortarea" sort="sort" containment="#admin-plugin-mail-sortarea" cancel=".value-editor" class="fullwidth"}}
+                            <div class="field-data">
+                                <div class="form-group group">
+                                    <label class="small">Typ</label>
+                                    {{#select $="setInitialType" init=true change="setType" bindAttr="selected_type" class="admin-plugin-mail-type-select"}}
+                                        <option value="0">Einzeiliges Textfeld</option>
+                                        <option value="1">Mehrzeiliges Textfeld</option>
+                                        <option value="2">Auswahlfeld - Dropdown</option>
+                                        <option value="3">Auswahlfeld - Option</option>
+                                    {{/select}}
+                                </div>
+
+                                <div class="form-group group">
+                                    <label class="small">Bezeichnung</label>
+                                    {{{input change="setLabel" bindAttr="label" type="text" placeholder="Bezeichnung" value=AdminPluginMailItem.label}}}
+                                </div>
+
+                                <div class="form-group group">
+                                    <label class="small">Platzhalter Text</label>
+                                    {{{input change="setPlaceholder" bindAttr="placeholder" type="text" placeholder="Platzhalter" value=AdminPluginMailItem.placeholder}}}
+                                </div>
+                                <div class="mail-actions pull-right">
+                                    <div class="form-group small">
+                                        {{#button click="removeField" type="button" class="btn btn-simple small pull-right"}}
+                                            <span class="text">Entfernen</span>
+                                            {{#span $="deleting" class="cssload-container"}}
+                                                <span class="cssload-speeding-wheel"></span>
+                                            {{/span}}                                            
+                                        {{/button}}
+                                    </div>
+                                </div>                    
+                                <div class="mail-actions mail-order pull-right">
+                                    <div class="form-group fullwidth small">
+                                        {{{span $="enableFieldUp" init=true click="moveFieldPositionUp" class="fa fa-2x fa-angle-up"}}}
+                                    </div>
+
+                                    <div class="form-group text-order fullwidth small">
+                                        {{#div bindAttr="order"}}{{AdminPluginMailItem.order}}{{/div}}
+                                    </div>
+
+                                    <div class="form-group fullwidth small">
+                                        {{{span $="enableFieldDown" init=true click="moveFieldPositionDown" class="fa fa-2x fa-angle-down"}}}
+                                    </div>                                
+                                </div>
+                                {{#div $="showValueEditor" init=true class="form-group value-editor no-display"}}
+                                    {{#isObject AdminPluginMailItem.values}}
+                                        {{#view "AdminPluginMailValuesView" id=AdminPluginMailItem.item_sort_id class="value-container"}}
+                                            {{#each AdminPluginMailValues}}
+                                                {{#view "AdminPluginMailValueView" class="new-value-view"}}
+                                                    {{#sortable sort="sort" list=AdminPluginMailValue.containment containment=AdminPluginMailValue.containment class="sort"}}
+                                                        {{#div $="initOrder" init=true class="pull-left clear-left"}}
+                                                            {{{input type="text" change="setValue" bindAttr="value" value=AdminPluginMailValue.value placeholder="Wert" class="small"}}}
+                                                            {{#button click="removeNewValue" type="button" class="btn btn-primary small minus"}}
+                                                                <span class="fa fa-minus"></span>
+                                                                <span class="sr-only">Wert entfernen</span>
+                                                            {{/button}}
+                                                        {{/div}}
+                                                    {{/sortable}}
+                                                {{/view}}
+                                            {{/each}}
+                                        {{/view}}
+
+                                        {{#button click="addValue" type="button" class="btn btn-primary plus"}}
+                                            <span class="text">Wert hinzufügen</span>
+                                            <span class="fa fa-plus"></span>
+                                            <span class="sr-only">Wert hinzufügen</span>
+                                        {{/button}}
+                                    {{/isObject}}
+                                {{/div}}
+                            </div>                            
+                        {{/sortable}}
+                    {{/view}}
+                {{/each}}
+            {{/isObject}}
+        {{/view}}
+
+        
+        {{#div $="showAddField" class="admin-plugin-mail-edit add-field no-display"}}
+            <div class="field-data">
+                <div class="form-group group">
+                    <label class="small">Typ</label>
+                    {{#select $="setInitialNewType" change="setNewType" bindAttr="selected_new_type" id="admin-plugin-mail-new-type-select"}}
+                        <option value="0">Einzeiliges Textfeld</option>
+                        <option value="1">Mehrzeiliges Textfeld</option>
+                        <option value="2">Auswahlfeld - Dropdown</option>
+                        <option value="3">Auswahlfeld - Option</option>
+                    {{/select}}
+                </div>
+                
+                <div class="form-group group">
+                    <label class="small">Bezeichnung</label>
+                    {{{input change="setNewLabel" bindAttr="new_label" type="text" placeholder="Bezeichnung"}}}
+                </div>
+                
+                <div class="form-group group">
+                    <label class="small">Platzhalter Text</label>
+                    {{{input change="setNewPlaceholder" bindAttr="new_placeholder" type="text" placeholder="Platzhalter"}}}
+                </div>
+                
+                {{#div $="showNewValueEditor" init=true class="form-group fullwidth value-editor no-display"}}
+                    <div class="value-container" id="admin-plugin-mail-new-value-sortarea">
+                        {{#isObject AdminPluginMailValues}}
+                            {{#each AdminPluginMailvalues}}
+                                {{#view "AdminPluginMailNewValueView" class="new-value-view"}}
+                                    {{#sortable list="#admin-plugin-mail-new-value-sortarea" sort="sort" containment="#admin-plugin-mail-new-value-sortarea"}}
+                                        {{{input type="text" change="setNewValue" bindAttr="new_value" placeholder="Wert" class="small"}}}
+                                        {{#button click="removeNewValue" type="button" class="btn btn-primary small minus"}}
+                                            <span class="fa fa-minus"></span>
+                                            <span class="sr-only">Wert entfernen</span>
+                                        {{/button}}
+                                    {{/sortable}}
+                                {{/view}}
+                            {{/each}}
+                        {{/isObject}}
+                    </div>
+                
+                    {{#button click="addValue" type="button" class="btn btn-primary plus"}}
+                        <span class="text">Wert hinzufügen</span>
+                        <span class="fa fa-plus"></span>
+                        <span class="sr-only">Wert hinzufügen</span>
+                    {{/button}}
+                {{/div}}
+            </div>
+
+            <div class="mail-actions pull-right">
+                <div class="form-group small">
+                    {{#button $="disableSaveNewField" click="saveNewField" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Speichern</span>
+                        <span class="sr-only">Neues Feld speichern</span>
+                        {{#span $="saving" class="cssload-container"}}
+                            <span class="cssload-speeding-wheel"></span>
+                        {{/span}}                 
+                    {{/button}}
+                </div>
+                <div class="form-group small">
+                    {{#button click="cancelNewField" type="button" class="btn btn-simple small pull-right"}}
+                        <span class="text">Abbrechen</span>
+                        <span class="sr-only">Neues Feld abbrechen</span>
+                    {{/button}}
+                </div>
+            </div>
+        {{/div}}        
+
+        <div class="menu-bar">
+            {{#button $="disableSaveMailForm" click="saveMailForm" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Mailformular speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="saving" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+            
+            {{#button $="showAddButton" click="addField" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Feld hinzufügen</span>
+                <span class="fa fa-plus"></span>
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

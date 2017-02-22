@@ -1,0 +1,50 @@
+{{#need model Admin_menus}}
+
+{{#auth loggedIn=true}} 
+    {{#inGroup "Administrator|Redakteur"}}
+        {{#view "AdminMenusView" id="admin-menu-left"}}
+            <h3>Admin Panel</h3>
+            <ul>
+                {{#each AdminMenus.menus}}
+                    {{#view "AdminMenuView"}}
+                        {{#li $="openMenu" click="openMenu" init=true}}
+                            {{#isObject AdminMenu.children}}
+                                {{#a click="openMenu"}}
+                                    <span class="text">{{{AdminMenu.menu}}}</span>
+                                    <span class="icon fa {{{AdminMenu.icon}}}"></span>
+                                {{/a}}
+
+                                <ul>
+                                    {{#each AdminMenu.children}}
+                                        <li>
+                                            {{#view "AdminMenuChildView" class="admin-child-menu"}}
+                                                {{#a click="openLink" href=AdminMenuChild.route}}
+                                                    <span class="text">{{{AdminMenuChild.menu}}}</span>
+                                                    <span class="icon fa {{{AdminMenuChild.icon}}}"></span>
+                                                {{/a}}
+                                            {{/view}}
+                                        </li>
+                                    {{/each}}
+                                </ul>
+                            {{else}}
+                                {{#a click="openMenu" href=AdminMenu.route}}
+                                    <span class="text">{{{AdminMenu.menu}}}</span>
+                                    <span class="icon fa {{{AdminMenu.icon}}}"></span>
+                                {{/a}}
+                            {{/isObject}}
+                        {{/li}}
+                    {{/view}}
+                {{/each}}
+            </ul>
+        {{/view}}
+        {{#view "AdminUpdateView" id="admin-update-view"}}
+            {{#button onload="checkForUpdate" type="button" click="update" $="showUpdateButton" class="no-display btn btn-primary"}}
+                {{{span class="text" $="setButtonText"}}}
+                <span class="icon fa fa-caret-right"></span>
+                {{#span $="sending" class="cssload-container"}}
+                    <div class="cssload-speeding-wheel"></div>
+                {{/span}}
+            {{/button}}
+        {{/view}}
+    {{/inGroup}}
+{{/auth}}

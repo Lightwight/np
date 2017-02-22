@@ -1,0 +1,26 @@
+{{#view "AuthMiniLoginView" id="mini-login"}}
+    <form class="login mini">
+        <div class="form-group fullwidth">
+            {{{input type="email" enter="submit" change="setMail" bindAttr="email" value=Login.email class="form-control" placeholder="E-Mail-Adresse"}}}
+        </div>
+        <div class="form-group fullwidth">
+            {{{input type="password" enter="submit" change="setPassword" bindAttr="password" class="form-control" placeholder="Passwort"}}}
+        </div>
+
+        <div class="menu-bar">
+            <div class="stay-login-container">
+                {{{input $="stayLoggedIn" click="stayLoggedIn" id="mini-stay-login" type="checkbox"}}}
+                <label for="mini-stay-login">angemeldet bleiben</label>
+            </div>
+            <a class="pull-left" href="/auth/forgot/password">Passwort vergessen?</a>
+            <a class="pull-left" href="/auth/register/user">Registrieren</a>
+
+            {{#a $="validUser" init=true click="submit" href="#" class="btn btn-secondary pull-right disabled"}}
+                {{{span $="notSending" class="icon glyphicon glyphicon-log-in"}}}
+                {{{span $="sending" class="icon glyphicon glyphicon-refresh hidden"}}}
+                <span class="text">anmelden</span>
+                <span class="sr-only">anmelden</span>
+            {{/a}}
+        </div>
+    </form>                
+{{/view}}

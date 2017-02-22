@@ -1,0 +1,31 @@
+{{#need model Menus}}
+
+{{#view "MenusView" id="menu"}}
+    <div class="menu-area head">
+        <div id="logo">
+            <a href="/">
+                <img src="/assets/images/logo/logo.png">
+            </a>
+        </div>
+    </div>
+    <div class="menu-area">
+        <ul class="menu-list menu-center no-border">
+            <li class="placeholder">
+                <div class="menu-content">
+                    <div class="center-block"></div>
+                </div>
+            </li>
+
+            {{#each Menus}}
+                <li>
+                    {{#view "MenuLiView"}}
+                        {{#a href=Menu.route}}
+                            <div class="menu-text">{{{Menu.menu}}}</div>
+                            <div class="menu-line"></div>
+                        {{/a}}
+                    {{/view}}
+                </li>
+            {{/each}}
+        </ul>
+    </div>
+{{/view}}

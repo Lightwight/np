@@ -1,0 +1,245 @@
+{{#need model Routes}}
+
+{{#view "NavigationDividerView" data-plugin="Divider"}}
+    <div class="container">
+        <h3>Seo Optimierung</h3>
+        {{#partial product-search-view}}        
+    </div>
+{{/view}}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    {{#view "AdminSeoView"}}
+        {{#view "AdminSeoPaginationView"}}
+            <nav>
+                {{#ul click="setPage" $="isActive" init=true class="pagination"}}
+                    {{#li $="nextEnabled" init=true}}
+                        {{#a click="prevPage" $="setPrev" href="#" aria-label="Previous"}}
+                            <span aria-hidden="true">&laquo;</span>
+                        {{/a}}
+                    {{/li}}
+
+                    {{#each AdminSeo.data.pagination.pages}}
+                        {{#li}}
+                            {{#a init=true click="setItem" href="#"}}
+                                {{{page.num}}}
+                            {{/a}}
+                        {{/li}}
+                    {{/each}}
+
+                    {{#li $="prevEnabled" init=true}}
+                        {{#a click="nextPage" $="setNext" href="#" aria-label="Next"}}
+                            <span aria-hidden="true">&raquo;</span>
+                        {{/a}}
+                    {{/li}}
+                {{/ul}}
+            </nav>        
+        {{/view}}
+        
+        {{#button click="exportRobots" id="seoExportRobots" type="button" class="btn btn-secondary"}}
+            <span class="glyphicon glyphicon-export"></span>
+            <span class="sr-only">in robots.txt exportieren</span>
+            <span class="text">Export robots.txt</span>
+        {{/button}}
+        
+        {{#button click="exportSitemap" id="seoExportSitemap" type="button" class="btn btn-secondary"}}
+            <span class="glyphicon glyphicon-export"></span>
+            <span class="sr-only">in sitemap.xml exportieren</span>
+            <span class="text">Export sitemap.xml</span>
+        {{/button}}
+        
+        {{#div id="robots-sending" $="isSendingRobots" class="modal-refresh-container no-display"}}
+            <div class="alert alert-warning">
+                <div class="header"><span class="glyphicon glyphicon-info-sign"></span><h4>Die Daten werden exportiert</h4></div>
+                {{#div $="isSendingRobots" class="body no-display"}}Bitte haben Sie einen Augenblick Geduld...{{/div}}
+                {{#span $="isSendingRobots" class="glyphicon glyphicon-refresh no-display"}}{{/span}}
+
+                {{#div $="isSuccessRobots" class="body no-display"}}
+                    <div class="title">
+                        Daten erfolgreich exportiert
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </div>
+                    <div class="text">
+                        Die Daten wurden in die robots.txt erfolgreich exportiert!
+                    </div>
+                {{/div}}
+                {{#div $="isFailRobots" class="body alert alert-danger no-display"}}
+                    <div class="title">
+                        Die Daten konnten nicht in die robots.txt gespeichert werden
+                        <span class="glyphicon glyphicon-ban-circle"></span>
+                    </div>
+                    <div class="text">
+                        Das kann folgende Gr&uuml;nde haben:<br><br>
+                        1) Ihre Sitzung ist abgelaufen.<br><br>
+                        Laden Sie die Seite neu und versuchen Sie es erneut.<br><br>
+                        2) Der Server ist nicht erreichbar.<br><br>
+                        Versuchen Sie es in ein paar Minuten erneut.<br>
+                        Sollte Der Fehler dann immer noch auftreten, dann k&ouml;nnen
+                        Sie sich gerne mit uns in Verbindung setzen.<br>
+                        Wir helfen Ihnen gerne bei der L&ouml;sung Ihres Problems.<br><br>
+                        3) Der Webserver hat keinen schreibenden Zugriff auf die robots.txt<br><br>
+                        Vergewissern Sie sich, dass der Webserver auf die Datei "robots.txt" in Ihrem Wurzelverzeichnis
+                        schreibenden Zugriff hat. Sollten Sie nicht der Webseitenbetreiber sein, dann
+                        setzen Sie sich bitte mit diesem in Verbindung, um das Problem zu ls&ouml;sen.
+                    </div>
+                {{/div}}
+
+                {{#div $="afterSavingRobots" class="footer"}}
+                    {{#button click="hideRobotsModal" type="button" class="btn btn-secondary"}}
+                        <span class="glyphicon glyphicon-home"></span>
+                        OK
+                    {{/button}}
+                {{/div}}
+            </div>
+        {{/div}}   
+        
+        {{#div id="sitemap-sending" $="isSendingSitemap" class="modal-refresh-container no-display"}}
+            <div class="alert alert-warning">
+                <div class="header"><span class="glyphicon glyphicon-info-sign"></span><h4>Die Daten werden exportiert</h4></div>
+                {{#div $="isSendingSitemap" class="body no-display"}}Bitte haben Sie einen Augenblick Geduld...{{/div}}
+                {{#span $="isSendingSitemap" class="glyphicon glyphicon-refresh no-display"}}{{/span}}
+
+                {{#div $="isSuccessSitemap" class="body no-display"}}
+                    <div class="title">
+                        Daten erfolgreich exportiert
+                        <span class="glyphicon glyphicon-ok"></span>
+                    </div>
+                    <div class="text">
+                        Die Daten wurden in die sitemap.xml erfolgreich exportiert!
+                    </div>
+                {{/div}}
+                {{#div $="isFailSitemap" class="body alert alert-danger no-display"}}
+                    <div class="title">
+                        Die Daten konnten nicht in die sitemap.xml gespeichert werden
+                        <span class="glyphicon glyphicon-ban-circle"></span>
+                    </div>
+                    <div class="text">
+                        Das kann folgende Gr&uuml;nde haben:<br><br>
+                        1) Ihre Sitzung ist abgelaufen.<br><br>
+                        Laden Sie die Seite neu und versuchen Sie es erneut.<br><br>
+                        2) Der Server ist nicht erreichbar.<br><br>
+                        Versuchen Sie es in ein paar Minuten erneut.<br>
+                        Sollte Der Fehler dann immer noch auftreten, dann k&ouml;nnen
+                        Sie sich gerne mit uns in Verbindung setzen.<br>
+                        Wir helfen Ihnen gerne bei der L&ouml;sung Ihres Problems.<br><br>
+                        3) Der Webserver hat keinen schreibenden Zugriff auf die sitemap.xml.<br><br>
+                        Vergewissern Sie sich, dass der Webserver auf die Datei "sitemap.xml" in Ihrem Wurzelverzeichnis
+                        schreibenden Zugriff hat. Sollten Sie nicht der Webseitenbetreiber sein, dann
+                        setzen Sie sich bitte mit diesem in Verbindung, um das Problem zu ls&ouml;sen.
+                    </div>
+                {{/div}}
+
+                {{#div $="afterSavingSitemap" class="footer"}}
+                    {{#button click="hideSitemapModal" type="button" class="btn btn-secondary"}}
+                        <span class="glyphicon glyphicon-home"></span>
+                        OK
+                    {{/button}}
+                {{/div}}
+            </div>
+        {{/div}}         
+        
+        <div class="fullwidth pull-left">
+            <div class="table-responsive">
+                {{#view "AdminSeoTableView"}}
+                    {{#table $="visibleRows" init=true class="table"}}
+                        <thead>
+                            <tr>
+                                <th>
+                                    #ID
+                                    {{{input change="setFilterID" bindAttr="filterID" type="text"}}}
+                                </th>
+                                <th>
+                                    Route
+                                    {{{input change="setFilterRoute" bindAttr="filterRoute" type="text"}}}
+                                </th>
+                                <th>
+                                    Layout
+                                    {{{input change="setFilterLayout" bindAttr="filterLayout" type="text"}}}
+                                </th>
+                                <th>
+                                    Seiten Titel
+                                    {{{input change="setFilterTitle" bindAttr="filterTitle" type="text"}}}
+                                </th>
+                                <th>
+                                    Seo Beschreibung
+                                    {{{input change="setFilterSeoDescription" bindAttr="filterSeoDescription" type="text"}}}
+                                </th>
+                                <th>
+                                    Seo Schlagw&ouml;rter
+                                    {{{input change="setFilterSeoKeywords" bindAttr="filterSeoKeywords" type="text"}}}
+                                </th>
+                                <th>
+                                    Route immer vom Server laden?
+                                    {{{input change="setFilterForce" bindAttr="filterForce" type="text"}}}
+                                </th>
+                                <th>
+                                    Route aktiviert?
+                                    {{{input change="setFilterEnabled" bindAttr="filterEnabled" type="text"}}}
+                                </th>
+                                <th>
+                                    Route gelöscht?
+                                    {{{input change="setFilterDeleted" bindAttr="filterDeleted" type="text"}}}
+                                </th>
+                                <th>
+                                    Route für Suchmaschinen sichtbar?
+                                    {{{input change="setFilterCrawlable" bindAttr="filterCrawlable" type="text"}}}
+                                </th>
+                                <th>
+                                    Bearbeiten
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {{#each AdminSeo.data.rows}}
+                                <tr class="hidden">
+                                    <th>{{{id}}}</th>
+                                    <td>{{{route}}}</td>
+                                    <td>{{{layout}}}</td>
+                                    <td>{{{title}}}</td>
+                                    <td>{{{seo_description}}}</td>
+                                    <td>{{{seo_keywords}}}</td>
+                                    <td>
+                                        {{#if force}}
+                                            ja
+                                        {{else}}
+                                            nein
+                                        {{/if}}
+                                    </td>
+                                    <td>
+                                        {{#if enabled}}
+                                            ja
+                                        {{else}}
+                                            nein
+                                        {{/if}}
+                                    </td>
+                                    <td>
+                                        {{#if deleted}}
+                                            ja
+                                        {{else}}
+                                            nein
+                                        {{/if}}
+                                    </td>
+                                    <td>
+                                        {{#if crawlable}}
+                                            ja
+                                        {{else}}
+                                            nein
+                                        {{/if}}
+                                    </td>
+                                    <td>
+                                        {{#view "AdminSeoTableLinkView"}}
+                                            {{#a $="setLink" init=true href="" class="btn btn-secondary small"}}
+                                                <span class="icon glyphicon glyphicon-edit"></span>
+                                                <span class="text">bearbeiten</span>
+                                                <span class="sr-only">bearbeiten</span>
+                                            {{/a}}
+                                        {{/view}}
+                                    </td>
+                                </tr>
+                            {{/each}}
+                        </tbody>
+                    {{/table}}
+                {{/view}}
+            </div>        
+        </div>        
+    {{/view}}
+</div>

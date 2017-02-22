@@ -1,0 +1,201 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+.np-scope-admin .btn {
+  cursor: pointer;
+  border: 1px transparent solid;
+  position: relative;
+  color: #FFF;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px;
+  -webkit-transition: all 200ms ease-out;
+  -moz-transition: all 200ms ease-out;
+  -o-transition: all 200ms ease-out;
+  transition: all 200ms ease-out; }
+  .np-scope-admin .btn:hover, .np-scope-admin .btn:focus, .np-scope-admin .btn.focus {
+    color: #FFF;
+    outline: none;
+    -webkit-transition: all 200ms ease-out;
+    -moz-transition: all 200ms ease-out;
+    -o-transition: all 200ms ease-out;
+    transition: all 200ms ease-out; }
+  .np-scope-admin .btn.small .text {
+    font-size: 8px; }
+  .np-scope-admin .btn.disabled {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=75)";
+    filter: alpha(opacity=75);
+    -moz-opacity: 0.75;
+    -khtml-opacity: 0.75;
+    opacity: 0.75; }
+  .np-scope-admin .btn.btn-default {
+    background-image: none; }
+  .np-scope-admin .btn.btn-simple {
+    background-color: #e0e0e0;
+    background-image: none;
+    border: 1px solid transparent; }
+    .np-scope-admin .btn.btn-simple:focus, .np-scope-admin .btn.btn-simple:hover {
+      background-color: #D7D6D6; }
+    .np-scope-admin .btn.btn-simple.disabled {
+      background-color: #337ab7; }
+    .np-scope-admin .btn.btn-simple .text {
+      padding: 0px;
+      color: #777; }
+  .np-scope-admin .btn.btn-primary {
+    background-color: #e0e0e0;
+    background-image: none;
+    border: 1px solid transparent; }
+    .np-scope-admin .btn.btn-primary:focus {
+      background-color: #e0e0e0; }
+    .np-scope-admin .btn.btn-primary:hover {
+      background-color: #efefef; }
+    .np-scope-admin .btn.btn-primary:active {
+      -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
+    .np-scope-admin .btn.btn-primary.disabled {
+      background-color: #aeaeae; }
+    .np-scope-admin .btn.btn-primary .icon,
+    .np-scope-admin .btn.btn-primary .text,
+    .np-scope-admin .btn.btn-primary .fa {
+      color: #777; }
+  .np-scope-admin .btn.btn-secondary {
+    background-color: #e0e0e0;
+    background-image: none;
+    border: 1px solid transparent; }
+    .np-scope-admin .btn.btn-secondary:focus, .np-scope-admin .btn.btn-secondary:hover {
+      background-color: #D7D6D6; }
+    .np-scope-admin .btn.btn-secondary:active {
+      -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
+    .np-scope-admin .btn.btn-secondary.disabled {
+      background-color: #337ab7; }
+    .np-scope-admin .btn.btn-secondary .icon,
+    .np-scope-admin .btn.btn-secondary .text,
+    .np-scope-admin .btn.btn-secondary .fa {
+      color: #777; }
+  .np-scope-admin .btn.btn-black {
+    background-color: #444;
+    background-image: none;
+    color: #FFF;
+    border: 1px solid transparent; }
+    .np-scope-admin .btn.btn-black:focus, .np-scope-admin .btn.btn-black:hover {
+      background-color: #474747;
+      color: #FFF; }
+    .np-scope-admin .btn.btn-black:active {
+      -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
+    .np-scope-admin .btn.btn-black.disabled {
+      background-color: #aeaeae; }
+    .np-scope-admin .btn.btn-black .icon,
+    .np-scope-admin .btn.btn-black .text,
+    .np-scope-admin .btn.btn-black .fa {
+      color: #FFF; }
+  .np-scope-admin .btn.btn-white {
+    background-color: #FFF;
+    background-image: none;
+    color: #444;
+    border: 1px solid transparent; }
+    .np-scope-admin .btn.btn-white:focus, .np-scope-admin .btn.btn-white:hover {
+      background-color: #474747;
+      color: #FFF; }
+    .np-scope-admin .btn.btn-white:active {
+      -moz-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+      box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125); }
+    .np-scope-admin .btn.btn-white.disabled {
+      background-color: #aeaeae; }
+    .np-scope-admin .btn.btn-white .icon,
+    .np-scope-admin .btn.btn-white .text,
+    .np-scope-admin .btn.btn-white .fa {
+      color: #444; }
+  .np-scope-admin .btn.btn-success {
+    background-color: #1abb9c; }
+  .np-scope-admin .btn.dropdown-toggle {
+    color: #333;
+    border: 1px #d3d3d3 solid; }
+  .np-scope-admin .btn .btn-default,
+  .np-scope-admin .btn .btn-primary,
+  .np-scope-admin .btn .btn-success,
+  .np-scope-admin .btn .btn-info,
+  .np-scope-admin .btn .btn-warning,
+  .np-scope-admin .btn .btn-danger {
+    text-shadow: none;
+    -moz-box-shadow: none;
+    -webkit-box-shadow: none;
+    box-shadow: none; }
+  .np-scope-admin .btn .icon,
+  .np-scope-admin .btn .text {
+    color: #fff;
+    float: left;
+    position: relative; }
+  .np-scope-admin .btn .icon {
+    font-size: 20px;
+    margin: 0;
+    line-height: 20px; }
+  .np-scope-admin .btn .text {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: normal;
+    padding-right: 12px; }
+.np-scope-admin .btn-toolbar {
+  margin: 0px;
+  -webkit-border-top-left-radius: 4px;
+  -moz-border-radius-topleft: 4px;
+  border-top-left-radius: 4px;
+  -webkit-border-top-right-radius: 4px;
+  -moz-border-radius-topright: 4px;
+  border-top-right-radius: 4px; }
+.np-scope-admin .btn-group {
+  margin-bottom: 8px; }
+  .np-scope-admin .btn-group .btn {
+    margin-right: 5px; }
+  .np-scope-admin .btn-group .magic-overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #7a7a7a;
+    background-color: #7a7a7a;
+    border: none;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0; }
+.np-scope-admin .bootstrap-select .dropdown-toggle:focus {
+  outline: 0 !important; }
+.np-scope-admin .bootstrap-select .dropdown-menu {
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  border-radius: 0px; }
+  .np-scope-admin .bootstrap-select .dropdown-menu li {
+    outline: 0 !important; }
+  .np-scope-admin .bootstrap-select .dropdown-menu > li > a:hover {
+    background-image: none; }
+.np-scope-admin .bootstrap-select.pull-right {
+  margin-right: 0px; }
+.np-scope-admin .bootstrap-select:focus {
+  outline: 0 !important; }

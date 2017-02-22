@@ -1,0 +1,194 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-admin #admin-plugin-mail-sortarea {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+.np-scope-admin #admin-plugin-mail-view .mail-main-container,
+.np-scope-admin #admin-plugin-mail-view .mail-settings-container {
+    position: relative;
+    float: left;
+    width: 100%;
+    border: 1px #d3d3d3 solid;
+    padding: 12px;
+    margin-bottom: 20px;
+}
+
+.np-scope-admin #admin-plugin-mail-view .mail-main-container .image-container {
+    position: relative;
+    float: left;
+    width: 200px;
+    height: auto;
+}
+
+.np-scope-admin #admin-plugin-mail-view .mail-main-container .content-container {
+    float: left;
+    height: auto;
+    width: calc(100% - 200px);
+    padding-left: 12px;
+}
+
+.np-scope-admin #admin-plugin-mail-view .mail-main-container .content-container .contenteditable {
+    height: 167px;
+}
+
+
+.np-scope-admin #admin-plugin-mail-view .mail-main-container .image-container .image-preview {
+    width: 100%;    
+    height: 200px;
+    border: 1px #d3d3d3 solid;
+    background-color: #FFF;
+    color: #474747;
+    line-height: 200px;
+    text-align: center;
+    text-shadow: 1px 0px 3px #FFF;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center center;
+    padding: 3px;
+}
+
+.np-scope-admin #admin-plugin-mail-view .mail-main-container .image-container .btn {
+    width: 100%;
+    margin-top: 12px;
+}
+
+.np-scope-admin #admin-plugin-mail-view .mail-main-container .image-container .btn .fa {
+    right: 8px;
+    position: absolute;
+    top: 8px;
+}
+
+.np-scope-admin #admin-plugin-mail-view .menu-bar button {
+    margin-left: 6px;
+}
+
+.np-scope-admin #admin-plugin-mail-view .admin-plugin-mail-edit {
+    position: relative;
+    float: left;
+    border: 1px #d3d3d3 solid;
+    padding: 12px;
+    width: 100%;
+    padding-bottom: 0px;
+    margin-bottom: 20px;
+}
+
+.np-scope-admin #admin-plugin-mail-view .field-data {
+    position: relative;
+    float: left;
+    width: 100%;
+}
+
+.np-scope-admin #admin-plugin-mail-view .field-data .form-group {
+    position: relative;
+    float: left;
+    height: auto;
+}
+
+.np-scope-admin #admin-plugin-mail-view .field-data .form-group:not(.date) > *:not(button) {
+    position: relative;
+    float: left;
+    width: 100%;
+    clear: left;
+}
+
+.np-scope-admin #admin-plugin-mail-view .mail-actions .form-group {
+    margin-left: 6px;
+}
+
+.np-scope-admin #admin-plugin-mail-view .admin-plugin-mail-edit .field-order {
+    clear: right;
+    text-align: center;
+}
+
+.np-scope-admin #admin-plugin-mail-view .admin-plugin-mail-edit .mail-order .form-group,
+.np-scope-admin #admin-plugin-mail-view .admin-plugin-mail-edit .mail-order .form-group * {
+    text-align: center;
+    line-height: 22px;
+}
+
+.np-scope-admin .admin-plugin-mail-edit .mail-order .fa.disabled {
+    cursor: default;
+    pointer-events: none;
+    color: #d3d3d3;    
+}
+
+.np-scope-admin .admin-plugin-mail-edit .form-group.group {
+    width: 183px;
+    margin-right: 18px;
+}
+
+.np-scope-admin .admin-plugin-mail-edit .form-group.group .nice-select {
+    height: 36px;
+    line-height: 36px;
+}
+
+.np-scope-admin .admin-plugin-mail-edit .form-group.group .nice-select.open .list {
+    position: absolute !important;
+}
+
+.np-scope-admin .admin-plugin-mail-edit .value-editor {
+    border: 1px #d3d3d3 solid;
+    padding: 12px;
+    clear: left;
+    width: 585px;
+    max-width: 100%;
+}
+
+.np-scope-admin .admin-plugin-mail-edit .value-editor input {
+    width: 150px !important;
+}
+
+.np-scope-admin .admin-plugin-mail-edit .value-editor button.minus {
+    position: relative;
+    float: left;
+    width: 24px !important;
+    padding: 0px;
+    margin-left: 12px;
+    text-align: center;
+    height: 26px;
+}
+
+.np-scope-admin .admin-plugin-mail-edit .value-editor button.plus {
+    width: 187px;
+    float: left;
+    margin-top: 12px;
+}
+
+.np-scope-admin .admin-plugin-mail-edit .value-editor button.plus .text {
+    padding-right: 16px;
+}
+
+.np-scope-admin .admin-plugin-mail-edit .new-value-view {
+    margin-bottom: 12px;
+    float: left;
+    position: relative;
+    clear: left;
+}
+
+.np-scope-admin .admin-plugin-mail-edit .mail-actions.mail-order {
+    clear: right;
+    margin-right: 15px;
+}

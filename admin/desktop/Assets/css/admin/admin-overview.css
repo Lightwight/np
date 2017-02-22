@@ -1,0 +1,64 @@
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+.np-scope-admin .admin-overview > .flexbox {
+  line-height: 45px; }
+  .np-scope-admin .admin-overview > .flexbox:first-of-type {
+    background-color: rgba(211, 211, 211, 0.25);
+    border: none;
+    width: 100%;
+    padding: 12px; }
+.np-scope-admin .admin-overview .admin-table {
+  width: 100%; }
+  .np-scope-admin .admin-overview .admin-table .admin-overview-row:first-child {
+    border: none;
+    margin-top: 12px; }
+.np-scope-admin .admin-overview .flexbox > .flexrow > .input-group {
+  top: 6px;
+  position: relative; }
+.np-scope-admin .admin-overview .flexrow.sortable {
+  cursor: pointer; }
+  .np-scope-admin .admin-overview .flexrow.sortable:before {
+    font: normal normal normal 14px/1 FontAwesome;
+    display: inline-block;
+    content: "\f0dc";
+    padding-right: 6px; }
+  .np-scope-admin .admin-overview .flexrow.sortable.sort-asc:before {
+    content: "\f0de"; }
+  .np-scope-admin .admin-overview .flexrow.sortable.sort-desc:before {
+    content: "\f0dd"; }
+.np-scope-admin .admin-overview .admin-overview-row {
+  background-color: #FFF;
+  width: 100%;
+  border-top: 12px rgba(211, 211, 211, 0.25) solid;
+  padding: 12px; }
+.np-scope-admin .admin-overview .input-search-container {
+  position: relative;
+  top: 4px;
+  max-width: 250px;
+  float: right;
+  width: 100%; }
+  .np-scope-admin .admin-overview .input-search-container .input-group {
+    position: relative;
+    float: right;
+    width: 100%; }
+.np-scope-admin .admin-overview .menu-bar {
+  padding-right: 0px; }

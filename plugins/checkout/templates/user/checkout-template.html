@@ -1,0 +1,161 @@
+{{#view "CheckoutView"}}
+    {{#auth loggedIn=false}}
+        {{#ifCheckout}}
+            <div class="container-center">
+                <div class="wrapper">
+                    {{#view "CheckoutLoginView"}}
+                        <form id="checkout-login">
+                            <label>Bereits registriert?</label>
+
+                            <div class="form-group iconable fullwidth email">
+                                {{{input type="email" enter="submit" change="setMail" bindAttr="email" value=CheckoutLogin.email placeholder="E-Mail-Adresse"}}}
+                                
+                                {{#div $="invalidMail" init=true class="tooltip"}}Bitte tragen Sie eine gültige E-Mail Adresse ein.{{/div}}
+
+                                <div class="fa-form-group">        
+                                    {{{span init=true $="invalidMail" class="fa fa-exclamation hideable input"}}}
+                                    {{{span init=true $="validMail" class="fa fa-check hideable input"}}}
+                                </div>
+                            </div>
+                            <div class="form-group iconable fullwidth no-margin">
+                                {{{input type="password" enter="submit" change="setPassword" bindAttr="password" placeholder="Passwort"}}}
+
+                                <div class="fa-form-group">
+                                    {{{span init=true $="givenPassword" class="fa hideable fa-check"}}}
+                                </div>
+                            </div>
+                            <a class="pull-right forgot-password" href="/auth/forgot/password">Passwort vergessen?</a>
+                            
+                            <div class="menu-bar">
+                                {{#a $="validUser" init=true click="submit" href="#" class="btn btn-primary btn-chevron pull-right login disabled"}}
+                                    <span class="text">Anmelden</span>
+                                    <span class="sr-only">Anmelden</span>
+                                    {{#span $="sending" class="cssload-container black"}}
+                                        <span class="cssload-speeding-wheel"></span>
+                                    {{/span}}
+                                {{/a}}
+                                
+                                {{#button  type="button" click="nextStep" class="btn btn-secondary guest btn-chevron pull-right"}}
+                                    <span class="text">Als Gast fortfahren</span>
+                                    <span class="sr-only">Als Gast fortfahren</span>
+                                {{/button}}
+                            </div>
+                        </form>
+                    {{/view}}
+
+                    {{#view "CheckoutRegistrationView"}}
+                        <form id="checkout-registration">
+                            <label>Neu registrieren?</label>
+
+                            <div class="form-group iconable fullwidth">
+                                {{{input enter="register" change="setMail" bindAttr="email" type="mail" value=Register.email  placeholder="E-Mail-Adresse"}}}
+
+                                {{#div $="invalidMail" init=true class="tooltip"}}Bitte geben Sie eine gültige E-Mail Adresse ein.{{/div}}
+                                
+                                <div class="fa-form-group">        
+                                    {{{span init=true $="invalidMail" class="fa fa-exclamation hideable input"}}}
+                                    {{{span init=true $="validMail" class="fa fa-check hideable input"}}}
+                                </div>                                
+                            </div>
+                            <div class="form-group iconable fullwidth">
+                                {{{input enter="register" change="setMailConfirmation" bindAttr="email_confirmation" type="mail" value=Register.email_confirmation placeholder="E-Mail best&auml;tigen"}}}
+                                
+                                {{#div $="invalidMailConfirmation" init=true class="tooltip"}}Die E-Mail Adresse stimmt nicht überein.{{/div}}
+                                
+                                <div class="fa-form-group">        
+                                    {{{span init=true $="invalidMailConfirmation" class="fa fa-exclamation hideable input"}}}
+                                    {{{span init=true $="validMailConfirmation" class="fa fa-check hideable input"}}}
+                                </div>                                 
+                            </div>
+                            <div class="form-group iconable fullwidth">
+                                {{{input enter="register" change="setPassword" bindAttr="password" type="password" value=Register.password placeholder="Passwort (4-12 Zeichen)"}}}
+
+                                {{#div $="badPassword" init=true class="tooltip"}}{{/div}}
+                                
+                                <div class="fa-form-group">        
+                                    {{{span init=true $="badPassword" class="fa fa-exclamation hideable input"}}}
+                                    {{{span init=true $="goodPassword" class="fa fa-check hideable input"}}}
+                                </div>                                 
+                            </div>
+                            <div class="form-group iconable fullwidth no-margin">
+                                {{{input enter="register" change="setPasswordConfirmation" bindAttr="password_confirmation" type="password" value=Register.password_confirmation placeholder="Passwort best&auml;tigen"}}}
+                                
+                                {{#div $="invalidPasswordConfirmation" init=true class="tooltip"}}Das Passwort stimmt nicht überein.{{/div}}
+                                
+                                <div class="fa-form-group">        
+                                    {{{span init=true $="invalidPasswordConfirmation" class="fa fa-exclamation hideable input"}}}
+                                    {{{span init=true $="validPasswordConfirmation" class="fa fa-check hideable input"}}}
+                                </div>                                 
+                            </div>
+
+                            <a class="pull-right datenschutz" href="datenschutz">Datenschutzerkl&auml;ung</a>
+                            
+                            <div class="menu-bar">
+                                {{#a $="validRegistration" init=true click="register" href="#" class="btn btn-primary btn-chevron register pull-right disabled"}}
+                                    <span class="text">Registrieren</span>
+                                    <span class="sr-only">Registrieren</span>
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <span class="cssload-speeding-wheel"></span>
+                                    {{/span}}                                    
+                                {{/a}}
+                            </div>
+                        </form>
+                    {{/view}}
+                </div>
+            </div>
+        {{else}}
+            {{#partial checkout-empty-cart}}
+        {{/ifCheckout}}
+    {{else}}
+        {{#ifCheckout}}
+            <div class="container-center">
+                <div class="wrapper">
+                    {{#view "CheckoutOverviewView"}}
+                        <form>
+                            {{#label $="setWelcome" init=true}}Herzlich Willkommen{{/label}}
+
+                            {{#if CheckoutOverview.valid.all}}
+                                <div class="form-group fullwidth">
+                                    <span>Sie k&ouml;nnen jetzt Ihre Bestellung pr&uuml;fen.</span>
+                                </div>
+
+                                <div class="menu-bar">
+                                    <a class="btn btn-secondary btn-chevron" href="/checkout/verification" role="button">
+                                        <span class="text">Bestellung pr&uuml;fen</span>
+                                        <span class="sr-only">Bestellung pr&uuml;fen</span>
+                                    </a>
+                                </div>
+                            {{else}}
+                                <div class="form-group fullwidth">
+                                    <span>Jetzt m&uuml;ssen Sie nur noch Ihre Daten vervollst&auml;ndigen.</span>
+                                </div>          
+
+                                <div class="menu-bar">
+                                    {{#ifNot CheckoutOverview.valid.adress}}
+                                        <a class="btn btn-secondary btn-chevron" href="/checkout/address" role="button">
+                                            <span class="icon glyphicon glyphicon-chevron-right"></span>
+                                            <span class="text">Empf&auml;ngerdaten eingeben</span>
+                                            <span class="sr-only">Empf&auml;ngerdaten eingeben</span>
+                                        </a>
+                                    {{/ifNot}} 
+
+                                    {{#if CheckoutOverview.valid.adress}}
+                                        {{#ifNot CheckoutOverview.valid.payment}}
+                                            <a class="btn btn-secondary btn-chevron" href="/checkout/payment" role="button">
+                                                <span class="icon glyphicon glyphicon-chevron-right"></span>
+                                                <span class="text">Zahlungsart eingeben</span>
+                                                <span class="sr-only">Zahlungsart eingeben</span>
+                                            </a>
+                                        {{/ifNot}} 
+                                    {{/if}}
+                                </div>
+                            {{/if}}                    
+                        </form>
+                    {{/view}}
+                </div>
+            </div>
+        {{else}}
+            {{#partial checkout-empty-cart}}
+        {{/ifCheckout}}
+    {{/auth}}
+{{/view}}

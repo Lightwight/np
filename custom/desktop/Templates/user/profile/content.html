@@ -1,0 +1,193 @@
+{{#view "NavigationDividerView" data-plugin="Divider"}}
+    <div class="container">
+        <h3>Meine Einstellungen</h3>
+        {{#partial product-search-view}}        
+    </div>
+{{/view}}
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    {{#view "UserDataView" id="userDataView" class="fadeIn"}}
+        <form>
+            <div class="form-label">Meine pers&ouml;nlichen Daten</div>
+
+            <div class="form-group fullwidth required">
+                <label>Anrede</label>
+
+                <div class="btn-group" data-toggle="buttons">
+                    {{#label $="isMale" init=true click="setMale" class="btn btn-default"}}
+                        <input type="radio" name="gender" value="male"/> Herr
+                    {{/label}}
+                    {{#label $="isFemale" init=true click="setFemale" class="btn btn-default"}}
+                        <input type="radio" name="gender" value="female"/> Frau
+                    {{/label}}
+                 </div>
+                {{{span init=true $="givenGender" class="glyphicon glyphicon-ok"}}}
+                {{{span init=true $="emptyGender" class="require glyphicon glyphicon-asterisk"}}}
+            </div>
+            <div class="form-group fullwidth required">
+                {{{input change="setPrename" bindAttr="prename" type="text" value=UserData.prename class="form-control" placeholder="Vorname"}}}
+
+                {{{span init=true $="givenPrename" class="glyphicon glyphicon-ok"}}}
+                {{{span init=true $="emptyPrename" class="require glyphicon glyphicon-asterisk"}}}
+            </div>
+            <div class="form-group fullwidth required">
+                {{{input change="setName" bindAttr="name" type="text" value=UserData.name class="form-control" placeholder="Nachname"}}}
+
+                {{{span init=true $="givenName" class="glyphicon glyphicon-ok"}}}
+                {{{span init=true $="emptyName" class="require glyphicon glyphicon-asterisk"}}}
+            </div>
+            
+            <div class="menu-bar">
+                {{#partial response-info-box}}
+
+                {{#a $="validUser" init=true click="saveUser" class="btn btn-secondary pull-right"}}
+                    {{{span $="notSending" class="icon glyphicon glyphicon-check"}}}
+                    {{{span $="sending" class="icon glyphicon glyphicon-refresh hidden"}}}
+                    
+                    <span class="text">speichern</span>
+                    <span class="sr-only">Speichern</span>
+                {{/a}}
+                
+                <div class="pull-right">
+                    {{#checkbox $="isUserDifferent" init=true click="orderOverwrite" class="checkbox checkbox-warning no-display"}}auf aktuellen Warenkorb anwenden{{/checkbox}}
+                </div>
+            </div>
+        </form>
+    {{/view}}
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    {{#view "UserCompanyView" id="userCompanyView" class="hidden fadeOut"}}
+        <form>
+            <div class="form-label">Meine Firmendaten</div>
+
+            <div class="form-group fullwidth">
+                {{{input change="setCompany" bindAttr="company" value=UserCompany.company type="text" class="form-control" placeholder="Firmenname"}}}
+            </div>
+            <div class="form-group fullwidth">
+                {{{input change="setUstID" bindAttr="ustid" value=UserCompany.ustid type="text" class="form-control" placeholder="USt-IdNr."}}}
+            </div>
+
+            <div class="menu-bar">
+                {{#partial response-info-box}}
+                
+                {{#a $="validCompany" init=true click="saveCompany" class="btn btn-secondary"}}
+                    {{{span $="notSending" class="icon glyphicon glyphicon-check"}}}
+                    {{{span $="sending" class="icon glyphicon glyphicon-refresh hidden"}}}
+                    
+                    <span class="text">speichern</span>
+                    <span class="sr-only">Speichern</span>
+                {{/a}}
+                
+                <div class="pull-right">
+                    {{#checkbox $="isCompanyDifferent" init=true click="orderOverwrite" class="checkbox checkbox-warning no-display"}}auf aktuellen Warenkorb anwenden{{/checkbox}}
+                </div>
+            </div>
+        </form>
+    {{/view}}
+</div>
+
+<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div id="userAddressView" class="hidden fadeOut">
+        {{#view "UserAddressView"}}
+            <form>
+                <div class="form-label">Meine Zahlungsadresse</div>
+
+                <div class="form-group fullwidth required">
+                    {{{plugin "Geo" change="setBillingCountry" value=UserAddress.billing.country}}}
+
+                    {{{span $="givenBillingCountry" init=true class="require glyphicon glyphicon-asterisk"}}}
+                </div>
+                <div class="form-group fullwidth required">
+                    {{{input change="setBillingStreet" bindAttr="billing.street" type="text" value=UserAddress.billing.street class="form-control" placeholder="Stra&szlig;e/Nr."}}}
+
+                    {{{span init=true $="givenBillingStreet" class="glyphicon glyphicon-ok"}}}
+                    {{{span init=true $="emptyBillingStreet" class="require glyphicon glyphicon-asterisk"}}}
+                </div>
+                <div class="form-group fullwidth required">
+                    {{{input change="setBillingPostal" bindAttr="billing.postal" type="text" value=UserAddress.billing.postal class="form-control" placeholder="PLZ"}}}
+                    {{{input change="setBillingCity" bindAttr="billing.city" type="text" value=UserAddress.billing.city class="form-control" placeholder="Ort"}}}
+
+                    {{{span init=true $="givenBillingPostalCity" class="glyphicon glyphicon-ok"}}}
+                    {{{span init=true $="emptyBillingPostalCity" class="require glyphicon glyphicon-asterisk"}}}
+                </div>
+                
+                <div class="form-divider"></div>
+            </form>
+            <form>
+                <div class="form-label">Meine Lieferadresse</div>
+                
+                <div class="form-group fullwidth required">
+                    <label>Entspricht meiner Zahlungsadresse</label>
+
+                    <div class="btn-group" data-toggle="buttons">
+                        {{#label $="sameBilling" init=true click="setSameAsBilling" class="btn btn-default"}}
+                            <input type="radio" name="sameAsBilling" value="true"/> Ja
+                        {{/label}}
+                        {{#label $="customShipping" init=true click="setCustomShipping" class="btn btn-default"}}
+                            <input type="radio" name="sameAsBilling" value="false"/> Nein
+                        {{/label}}
+                     </div>
+                </div>         
+                
+                {{#div $="switchShipping" init=true id="sameAsBilling" class="hidden"}}
+                    <div class="form-group fullwidth required">
+                        {{{input bindAttr="billing.country" value=UserAddress.billing.country class="form-control disabled"}}}
+
+                        {{{span $="givenShippingCountry" init=true class="require glyphicon glyphicon-asterisk"}}}
+                    </div>
+                    <div class="form-group fullwidth required">
+                        {{{input change="setShippingStreet" bindAttr="billing.street" type="text" value=UserAddress.billing.street class="form-control disabled" placeholder="Stra&szlig;e/Nr."}}}
+
+                        {{{span init=true $="givenShippingStreet" class="glyphicon glyphicon-ok"}}}
+                        {{{span init=true $="emptyShippingStreet" class="require glyphicon glyphicon-asterisk"}}}
+                    </div>
+                    <div class="form-group fullwidth required">
+                        {{{input change="setShippingPostal" bindAttr="billing.postal" type="text" value=UserAddress.billing.postal class="form-control disabled" placeholder="PLZ"}}}
+                        {{{input change="setShippingCity" bindAttr="billing.city" type="text" value=UserAddress.billing.city class="form-control disabled" placeholder="Ort"}}}
+
+                        {{{span init=true $="givenShippingPostalCity" class="glyphicon glyphicon-ok"}}}
+                        {{{span init=true $="emptyShippingPostalCity" class="require glyphicon glyphicon-asterisk"}}}
+                    </div>
+                {{/div}}
+                
+                <div id="customShipping" class="hidden">
+                    <div class="form-group fullwidth required">
+                        {{{plugin "Geo" bindAttr="shipping.country" change="setShippingCountry" value=UserAddress.shipping.country}}}
+
+                        {{{span $="givenShippingCountry" init=true class="require glyphicon glyphicon-asterisk"}}}
+                    </div>
+                    <div class="form-group fullwidth required">
+                        {{{input change="setShippingStreet" bindAttr="shipping.street" type="text" value=UserAddress.shipping.street class="form-control" placeholder="Stra&szlig;e/Nr."}}}
+
+                        {{{span init=true $="givenShippingStreet" class="glyphicon glyphicon-ok"}}}
+                        {{{span init=true $="emptyShippingStreet" class="require glyphicon glyphicon-asterisk"}}}
+                    </div>
+                    <div class="form-group fullwidth required">
+                        {{{input change="setShippingPostal" bindAttr="shipping.postal" type="text" value=UserAddress.shipping.postal class="form-control" placeholder="PLZ"}}}
+                        {{{input change="setShippingCity" bindAttr="shipping.city" type="text" value=UserAddress.shipping.city class="form-control" placeholder="Ort"}}}
+
+                        {{{span init=true $="givenShippingPostalCity" class="glyphicon glyphicon-ok"}}}
+                        {{{span init=true $="emptyShippingPostalCity" class="require glyphicon glyphicon-asterisk"}}}
+                    </div>
+                </div>                
+
+                <div class="menu-bar">
+                    {{#partial response-info-box}}                    
+
+                    {{#a $="validAddress" init=true click="saveAddress" class="btn btn-secondary"}}
+                        {{{span $="notSending" class="icon glyphicon glyphicon-check"}}}
+                        {{{span $="sending" class="icon glyphicon glyphicon-refresh hidden"}}}
+
+                        <span class="text">speichern</span>
+                        <span class="sr-only">Speichern</span>
+                    {{/a}}
+
+                    <div class="pull-right">
+                        {{#checkbox $="isAddressDifferent" init=true click="orderOverwrite" class="checkbox checkbox-warning no-display"}}auf aktuellen Warenkorb anwenden{{/checkbox}}
+                    </div>
+                </div>
+            </form>    
+        {{/view}}
+    </div>
+</div>

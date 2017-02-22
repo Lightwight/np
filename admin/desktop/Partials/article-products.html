@@ -1,0 +1,122 @@
+{{#need model Products}}
+
+{{#view "AdminProductsOverviewView" class="admin-overview" id="admin-products-overview-view"}}
+    <div class="flexbox">
+        {{#view "AdminProductsOverviewSortableView" class="flexrow flexrow-6"}}
+            <div class="flexbox">
+                <div class="flexrow flexrow-1" id="admin-product-overview-filter">
+                    <label class="small normal pull-left">Zeige</label>
+                    {{#select $="setFilter" change="setFilter" init=true notifiy=false bindAttr="pr_filter" class="pull-left"}}
+                        <option value="0">alle Artikel</option>                    
+                        <option value="1">nicht gelöschte Artikel</option>                    
+                        <option value="2">gelöschte Artikel</option>                    
+                    {{/select}}
+                </div>
+                {{#div $="setOrderProductID" init=true click="sortByProductID" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Artikel ID{{/div}}
+                {{#div $="setOrderName" init=true click="sortByName" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Name{{/div}}                
+                {{#div $="setOrderCategory" init=true click="sortByCategory" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Kategorie{{/div}}
+            </div>
+        {{/view}}
+
+        <div class="flexrow flexrow flexrow-1 flex-end">
+            {{#view "AdminProductsOverviewSearchView" class="input-search-container"}}
+                <div class="input-group">
+                    {{{input change="setSearch" enter="search" bindAttr="search" type="text" class="iconable" placeholder="Suchen"}}}
+                    {{#div click="search" class="fa-container"}}
+                        <span class="fa fa-search"></span>
+                        <span class="sr-only">Artikel Suchen</span>
+                    {{/div}}
+                </div>
+
+                {{#div $="toggleVisibility" init=true class="search-key-container"}}
+                    {{#button click="clearSearch" type="button" class="btn btn-primary"}}
+                        <span class="text">{{AdminArticlesSearch.sentSearch}}</span>
+                        <span class="fa fa-remove"></span>
+                        <span class="sr-only">Suchbegriff löschen</span>
+                    {{/button}}
+                {{/div}}
+            {{/view}}            
+        </div>
+
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+        
+        <div class="admin-table">
+            {{#if this}}
+                {{#each Products}}
+                    {{#view "AdminProductOverviewView" class="admin-overview-row" id="admin-product-overview-view"}}
+                        <div class="flexbox">
+                            <div class="flexrow flexrow-1">
+                                <div class="image-container" style="background-image: url({{AdminProduct.image}})"></div>  
+                            </div>
+                            <div class="flexrow flexrow-1">{{AdminProduct.article_id}}</div>
+                            <div class="flexrow flexrow-1">{{AdminProduct.name}}</div>
+                            <div class="flexrow flexrow-1">{{AdminProduct.category}}</div>
+                            <div class="flexrow flexrow-1 flex-end">
+                                <a href="/admin/shopmanagement/article/{{AdminProduct.id}}" class="btn btn-primary pull-right">
+                                    <span class="text">Bearbeiten</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Artikel bearbeiten</span>
+                                    
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                </a>
+                                {{#button $="disableRemoveProduct" init=true click="removeProduct" type="button" class="btn btn-primary no-display pull-right clear-right"}}
+                                    <span class="text">Entfernen</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Artikel entfernen</span>
+
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                {{/button}}
+                                {{#button $="disableUndeleteProduct" init=true click="undeleteProduct" type="button" class="btn btn-primary no-display pull-right"}}
+                                    <span class="text">Wiederherstellen</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Artikel wiederherstellen</span>
+
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                {{/button}}
+                                {{#span $="isDeleted" init=true class="no-display alert-deleted alert alert-danger pull-right clear-right"}}gelöscht{{/span}}                                    
+                            </div>
+                        </div>
+                    {{/view}}
+                {{/each}}
+            {{else}}
+                <div class="admin-overview-row">
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">Der eingegebene Suchbegriff konnte nicht gefunden werden.</div>
+                    </div>
+                <div>
+            {{/if}}                
+            
+            {{#view "AdminProductAddView" id="admin-article-add" class="admin-overview-row"}}
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">(auto)</div>
+                        <div class="flexrow flexrow-1">
+                            {{{input change="setName" bindAttr="name" type="text" placeholder="Name"}}}
+                        </div>
+
+                        <div class="flexrow flexrow-1">(auto)</div>
+                        <div class="flexrow flexrow-1 flex-end">
+                            {{#button $="disableSaveArticle" click="saveArticle" type="button" class="btn btn-primary"}}
+                                <span class="text">Speichern</span>
+                                <span class="fa fa-caret-right"></span>
+                                {{#span $="sending" class="cssload-container"}}
+                                    <div class="cssload-speeding-wheel"></div>
+                                {{/span}}
+                            {{/button}}
+                        </div>
+                    </div>
+            {{/view}}
+        </div>
+
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+    </div>
+{{/view}}

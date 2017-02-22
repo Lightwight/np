@@ -1,0 +1,17 @@
+<header>
+    {{#partial admin-menu}}
+</header>
+
+<main>
+    {{#auth loggedIn=true}} 
+        {{#inGroup "Administrator|Redakteur"}}
+            {{#yield admin-home}}
+        {{else}}
+            {{#partial admin-no-privileges}}
+        {{/inGroup}}
+    {{else}}
+        {{#partial admin-login}}
+    {{/auth}}
+</main>
+
+<footer></footer>

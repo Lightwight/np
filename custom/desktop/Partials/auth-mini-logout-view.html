@@ -1,0 +1,8 @@
+{{#view "AuthMiniLoginView" id="mini-logout"}}
+    {{#button type="button" click="logout" class="btn btn-secondary pull-right"}}
+        {{{span $="notSending" class="icon glyphicon glyphicon-off"}}}
+        {{{span $="sending" class="icon glyphicon glyphicon-refresh hidden"}}}
+        <span class="text">abmelden</span>
+        <span class="sr-only">abmelden</span>
+    {{/button}}
+{{/view}}

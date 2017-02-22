@@ -1,0 +1,66 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 12.12.2014, 16:20:29
+    Author     : cross
+*/
+
+#np_layouter_controls {
+    float: left;
+    padding: 10px;
+}
+    #np_layouter_controls .btn-group:first-child {
+        float: left;
+    }
+
+        #np_layouter_selector {
+            min-width: 100px;
+            text-align: left;
+        }
+
+        #np_layouter_selector_menu .list-group-item:first-child {
+            min-width: 300px;
+        }
+            #layouter_name {
+                width: 180px;
+                float: left;
+            }
+
+            #addLayout {
+                width: 53px;
+                float: right;
+            }
+            
+    #np_layouter_dragger {
+        float: left;
+    }
+    
+        #np_layouter_dragger .btn-group.first {
+            float: right;
+        }
+        
+        #np_layouter_dragger .btn-group.last {
+            float: right;
+            margin-right: 0;            
+        }
+        
+            #np_layouter_dragger .btn-group.first #np_layouter_add_col {
+                border-bottom-left-radius: 0;
+                border-top-left-radius: 0;
+                
+                cursor: move;
+            }
+            
+            #np_layouter_dragger .btn-group.last #np_layouter_add_row {
+                cursor: move;
+            }
+            
+            #np_layouter_dragger .btn-group.last .dropdown-toggle {
+                border-bottom-right-radius: 0;
+                border-right: medium none;
+                border-top-right-radius: 0;
+            }
+        
