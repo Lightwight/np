@@ -25,7 +25,7 @@
         @include opacity(0);
 
         &.active {
-            @include opacity(0);
+            @include opacity(1);
         }
 
         &.routeFadeIn {
