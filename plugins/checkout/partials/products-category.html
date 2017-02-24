@@ -1,0 +1,11 @@
+{{#need model Products}}
+
+{{#view "ProductsView" class="products-overview category-view"}}
+    {{#partial products-pagination}}
+    <div class="products-container">
+        {{#each Products}}
+            {{#partial product-overview}}
+        {{/each}}
+    </div>
+    
+{{/view}}

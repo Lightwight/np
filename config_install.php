@@ -185,6 +185,130 @@ $config['auth'] = array
     'registration_group'    => 'Customer'
 );
 
+/*
+ * set up your shop payment configuration
+ * 
+ * TODO: Merge with $config['shop']
+ */
+$config['payment']  = array
+(
+    /*
+     * type in a security code (will encrypt customer shop data)
+     */
+    'secure_code'   => 'eRsgp!sef[', 
+    
+    /*
+     * type in a shop order title. 
+     * Will be used for the confirmation link send 
+     * via e-mail after customer order confirmation
+     */
+    'orderTitle'    => '[YOUT SHOP ORDER TITLE]',
+    
+    /*
+     * type in the email-address auf the sender.
+     * This is usually the shop owners e-mail address
+     * and will be used as the sender of the confirmed customer order send
+     * via e-mail
+     */
+    'email'         => 'it@medienhaus-schaefer.de',
+    
+    /*
+     * set up your stock
+     * 
+     * if you set ignoreStock to true, then all products stock will be ignored
+     * when displayed to each customer. This means a customer can order 
+     * products which are out of stock.
+     * 
+     * if you set ignoreStock to false then the customer gets all products
+     * which aren't out of stock.
+     * 
+     * You can also set a default maximum like 10. If you do that, then
+     * the customer can order a maximum of 10 items of each product.
+     */
+    'ignoreStock'   => false,
+
+    /*
+     * type in your paypal-credentials
+     */
+    'paypal'    => array
+    (
+        /*
+         * Used while developing (Testmode)
+         * 
+         * type in your paypal sandbox credentials 
+         */
+        'test'  => array
+        (
+            'user'          => '[PAYPAL_SANDBOX_USER]',
+            'pass'          => '[PAYPAL_SANDBOX_PASSWORD]',
+            'signature'     => '[PAYPAL_SANSBOX_SIGNATURE]',
+            
+            /*
+             * type in your return url. This url will be used after the customer
+             * succeeded the payment on the paypal site.
+             */
+            'returnUrl'     => 'https://www.yourdomain.com/checkout/payment',
+            
+            /*
+             * type in your cancel url. This url will be used if the customer
+             * cancelled the payment or something went wrong
+             * on the paypal site (usually the same as the returnUrl param).
+             */
+            'cancelUrl'     => 'https://www.yourdomain.com/checkout/payment',
+        ),
+
+        /*
+         * Used in live mode (site deployed on live server)
+         * 
+         * type in your paypal real credentials 
+         */
+        'live'  => array
+        (
+            'user'          => '[PAYPAL_REAL_USER]',
+            'pass'          => '[PAYPAL_REAL_PASSWORD]',
+            'signature'     => '[PAYPAL_REAL_SIGNATURE]',
+
+            /*
+             * type in your return url. This url will be used after the customer
+             * succeeded the payment on the paypal site.
+             */
+            'returnUrl'     => 'https://www.yourdomain.com/checkout/payment',
+
+            /*
+             * type in your cancel url. This url will be used if the customer
+             * cancelled the payment or something went wrong
+             * on the paypal site (usually the same as the returnUrl param).
+             */
+            'cancelUrl'     => 'https://www.yourdomain.com/checkout/payment',
+        ),
+    )
+);
+
+
+/*
+ * set up your shop configuration
+ */
+$config['shop']  = array
+(
+    /*
+     * if set to true then the visitor will get all products if templates are
+     * implemented.
+     * 
+     * if set to false then the system will fetch all products by category
+     * 
+     * NOTE: Only if affected templates are implemented.
+     */
+    'singlePage'        => true,
+    
+    /*
+     * if set to true then the visitor will get all popular products on homepage
+     * 
+     * if set to false then the visitor doesn't get all popular products showed on homepage.
+     * 
+     * NOTE: Only if affected templates are implemented.
+     */
+    'popularProducts'   => false
+);
 
 /* TODO: Deprecated - remove */
 $config['css']      = array

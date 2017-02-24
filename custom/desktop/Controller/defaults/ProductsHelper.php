@@ -90,6 +90,17 @@ class ProductsHelper extends ControllerHelper
                 ->result ();
     }
     
+    protected function getAllProducts (Model $model)
+    {
+        return $model
+                ->leftJoin ('article_manufacturers', 'manufacturer_id', 'products', 'manufacturer_id', 'article_manufacturers', 'name', 'manufacturer')
+                ->innerJoin ('article_categories', 'KeyKategorie', 'products', 'category_id', 'article_categories', 'KeyName', 'category')
+                ->innerJoin ('article_categories', 'KeyKategorie', 'products', 'category_id', 'article_categories', 'KeyName', 'category_slug')
+                ->findBy ('enabled', 1)
+                ->excludeDeleted ()
+                ->result ();
+    }
+
     protected function getProducts (Model $model, $routeCategory, $page = 1, $limit = 10, $searchValues = false, $sortBy = false, $sortOrder = 'asc')
     {
         $query          =   $model->paginate ($limit, $page)
@@ -301,7 +312,7 @@ class ProductsHelper extends ControllerHelper
         $mostOrdered    = $this->getMostOrdered ($productToIgnore);
         $mostViewed     = $this->getMostViewed ($productToIgnore);
         $mostSearched   = $this->getMostSearched ($productToIgnore);
-
+        
         return $this->rankProducts ($this->mergeProducts (array ($mostOrdered, $mostViewed, $mostSearched)));
     }
     
@@ -786,30 +797,35 @@ class ProductsHelper extends ControllerHelper
      */
     private function rankProducts ($products)
     {
-        $resProducts    = new Model ('Products');
+        $result = false;
 
-        foreach ($products as $key => $product)
+        if (is_array ($products) && count ($products) > 0)
         {
-            $hasOrdered     = isset ($product['ordered']);
-            $hasViewed      = isset ($product['viewed']);
-            $hasSearched    = isset ($product['searched']);
-                    
-            $ordered        = $hasOrdered ? $product['ordered'] : 0;
-            $viewed         = $hasViewed ? $product['viewed'] : 0;
-            $searched       = $hasSearched ? $product['searched'] : 0;
-            
-            $rank           = ($ordered * 10000 + $viewed * 0.5 + $searched) / 100;
+            $resProducts    = new Model ('Products');
 
-            $products[$key]['rank'] = $rank;
+            foreach ($products as $key => $product)
+            {
+                $hasOrdered     = isset ($product['ordered']);
+                $hasViewed      = isset ($product['viewed']);
+                $hasSearched    = isset ($product['searched']);
+
+                $ordered        = $hasOrdered ? $product['ordered'] : 0;
+                $viewed         = $hasViewed ? $product['viewed'] : 0;
+                $searched       = $hasSearched ? $product['searched'] : 0;
+
+                $rank           = ($ordered * 10000 + $viewed * 0.5 + $searched) / 100;
+
+                $products[$key]['rank'] = $rank;
+
+                if ($hasOrdered)    { unset ($products[$key]['ordered']);   }
+                if ($hasViewed)     { unset ($products[$key]['viewed']);    }
+                if ($hasSearched)   { unset ($products[$key]['searched']);  }
+
+                $resProducts->add ($products[$key]);
+            }
             
-            if ($hasOrdered)    { unset ($products[$key]['ordered']);   }
-            if ($hasViewed)     { unset ($products[$key]['viewed']);    }
-            if ($hasSearched)   { unset ($products[$key]['searched']);  }
-            
-            $resProducts->add ($products[$key]);
+            $result = $resProducts->result ();
         }
-        
-        $result = $resProducts->result ();
 
         return $result ? $result : array ();
     }

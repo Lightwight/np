@@ -1,6 +1,34 @@
 {{#need model Products}}
 
 {{#view "CartProductView" data-cart-id=this.id}}
+    {{#div $="isDeleted" init=true class="product-state-info no-display"}}
+        <span>Dieser Artikel befindet sich leider nicht mehr in unserem Sortiment und wird in Ihrer Bestellung nicht mitberücksichtigt.</span>
+        {{#button click="removeFromCart" notify=false type="button" class="btn btn-secondary btn-chevron"}}
+            <span class="text">Ok</span>
+        {{/button}}
+    {{/div}}
+    
+    {{#div $="isDisabled" init=true class="product-state-info no-display"}}
+        <span>Dieser Artikel wird zurzeit überarbeitet und wird in Ihrer Bestellung nicht mitberücksichtigt.</span>
+        {{#button click="removeFromCart" notify=false type="button" class="btn btn-secondary btn-chevron"}}
+            <span class="text">Ok</span>
+        {{/button}}
+    {{/div}}
+    
+    {{#div $="isNotDeliverable" init=true class="product-state-info no-display"}}
+        <span>Dieser Artikel ist zurzeit nicht lieferbar und wird in Ihrer Bestellung nicht mitberücksichtigt.</span>
+        {{#button click="removeFromCart" notify=false type="button" class="btn btn-secondary btn-chevron"}}
+            <span class="text">Ok</span>
+        {{/button}}
+    {{/div}}
+    
+    {{#div $="isNotAvailable" init=true class="product-state-info no-display"}}
+        <span>Dieser Artikel ist zurzeit nicht verfügbar und wird in Ihrer Bestellung nicht mitberücksichtigt.</span>
+        {{#button click="removeFromCart" notify=false type="button" class="btn btn-secondary btn-chevron"}}
+            <span class="text">Ok</span>
+        {{/button}}
+    {{/div}}
+    
     <div class="cart-product-image">
         {{#a click="closeCart" href=CartProduct.bookmark}}
             <div class="product-image" style="background-image: url('{{CartProduct.image}}');"></div>
@@ -27,6 +55,10 @@
     {{/div}}
 
     <div class="cart-product-ui">
+        {{#div $="maxAmount" class="highlight left"}}
+            <div class="text">Die maximale Anzahl wurde erreicht.</div>
+        {{/div}}
+        
         <div class="amount">
             {{{span click="decrementAmount" notify=false class="minus fa fa-minus noselect"}}}
             {{{input bindAttr="amount" change="changeAmount" type="number" value=CartProduct.amount}}}

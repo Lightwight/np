@@ -1,0 +1,139 @@
+{{#need model Products}}
+
+{{#view "ProductSingleView"}}
+    {{#if this}}
+        <div class="product-container product product-details">
+            <div class="product-wrapper">
+                <div class="product-left">
+                    <div class="bg-image" data-zoom-image="{{Product.image}}" style="background-image: url('{{Product.image}}');"></div>
+                    <a class="product-price-container" href="/">
+                        {{#span $="setGross" init=true class="gross"}}{{Product.gross}} &euro;{{/span}}
+                    </a>
+                </div>
+
+                <div class="product-content">
+                    <div class="product-head">
+                        {{#h2 $="setArtikelName" init=true}}{{Product.name}}{{/h2}}
+
+                        {{#if Product.title}}
+                            {{#div $="setTitle" init=true class="product-title"}}
+                                {{Product.title}}
+                            {{/div}}
+                        {{/if}}
+
+                        {{#if Product.description}}
+                            {{#div $="setDescription" init=true class="product-description"}}
+                                {{Product.description}}
+                            {{/div}}
+                        {{/if}}
+
+                        <div class="product-technical">
+                            <b class="small">Technische Daten:</b>
+                            <ul>
+                                <li>
+                                    <label class="small">Artikelnummer:</label>
+                                    {{#span $="setArtikelNr" init=true class="small"}}{{Product.article_id}}{{/span}}
+                                </li>
+                                <li>
+                                    <label class="small">Hersteller:</label>
+                                    <span class="small">{{Product.manufacturer}}</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="product-availability">
+                            <b class="small">Verfügbarkeit:</b>
+                            {{#span $="isAvailable" init=true class="small c-green no-display"}}
+                                sofort lieferbar
+                            {{/span}}
+                            {{#span $="isNotAvailable" init=true class="small c-red no-display"}}
+                                zurzeit nicht lieferbar
+                            {{/span}}
+                        </div>
+                        <div class="hint-in-cart">
+                            {{#span $="isInCart" init=true notifiy="false" class="small c-green no-display"}}Dieser Artikel befindet sich in Ihrem Warenkorb{{/span}}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="promo-tag">
+                    {{#if Product.variations}}
+                        {{#view "ProductSingleVariationsView" class="variations-container"}}
+                            {{#div $="resetVariation"}}
+                                {{#each Product.variations}}
+                                    {{#partial product-variation-view}}
+                                {{/each}}
+                            {{/div}}
+                        {{/view}}
+                    {{/if}}
+
+                    <div class="cart cart-single bg-trans">
+                        {{#div $="isAvailable" init=true class="no-display add-to-cart-container"}}
+                            {{#div $="maxAmount" class="highlight right"}}
+                                <div class="text">Die maximale Anzahl wurde erreicht.</div>
+                            {{/div}}
+
+                            <div class="amount">
+                                {{{span click="decrementAmount" class="minus fa fa-minus noselect"}}}
+                                {{{input bindAttr="amount" change="changeAmount" type="number" value=Product.amount}}}
+                                {{{span click="incrementAmount" class="plus fa fa-plus noselect"}}}
+                            </div>
+
+                            {{#button click="addToCart" $="disable" class="btn btn-add-to-cart btn-primary"}}
+                                {{#span $="refresh" class="cssload-container black"}}
+                                    <span class="cssload-speeding-wheel"></span>
+                                {{/span}}
+
+                                <span class="text">in den Warenkorb</span>
+                                <span class="fa fa-shopping-cart"></span>
+                            {{/button}}
+                        {{/div}}
+
+                        {{#div $="isNotAvailable" init=true class="add-to-cart-container no-display"}}
+                            Artikel nicht verfügbar
+                        {{/div}}
+                    </div>
+                </div>
+            </div>
+
+            {{#view "ProductTotalView"}}
+                {{#if this}}
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 no-padding">
+                        <div class="table">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 no-padding">
+                                <span class="label">Einzelbetrag<span class="mwst">(inkl. 19% Mwst.)</span></span>
+                                {{#span $="setGross" init=true class="product-single"}}{{/span}}
+                            </div>
+
+                            <div class="col-lg-2 col-md-2 col-sm-2 col-xs-4 no-padding">
+                                <span class="label">Anzahl</span>
+                                {{#span $="setAmount" class="product-single product-amount"}}
+                                    x {{Product.amount}}
+                                {{/span}}
+                            </div>
+
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-4 no-padding">
+                                <span class="label">Gesamt<span class="mwst">(inkl. 19% Mwst.)</span></span>
+                                {{#span $="setTotal" init=true class="product-single product-total"}}{{/span}}
+                            </div>
+
+                            <div class="checkout col-lg-4 col-md-4 col-sm-4 col-xs-12 no-padding">
+                                <a id="product-details-checkout" class="btn btn-secondary pull-left col-lg-12 col-md-12 col-sm-12 col-xs-12" href="/checkout/user">
+                                    <span class="icon glyphicon glyphicon-chevron-right"></span>
+                                    <span class="text">Zur Kasse</span>
+                                    <span class="sr-only">Zur Kasse</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {{/if}}
+            {{/view}}
+
+            {{#if Product.dependencies}}
+                {{#partial product-dependencies}}
+            {{/if}} 
+        </div>
+    {{else}}
+        {{#partial product-not-found}}
+    {{/if}}
+{{/view}}

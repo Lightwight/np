@@ -1,0 +1,13 @@
+{{#need plugin "Geo"}}
+
+<header>
+    {{#partial menu}}
+    {{#partial cart-view}}    
+</header>
+
+<main>
+    {{#partial checkout-breadcrumb}}
+    {{#yield checkout-template}}
+</main>
+
+<footer>{{#partial footer}}</footer>

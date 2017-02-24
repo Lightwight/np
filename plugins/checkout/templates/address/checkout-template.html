@@ -80,8 +80,15 @@
                         <div class="form-group fullwidth">
                             {{{input change="setCompany" bindAttr="company.company" value=Checkout.company.company type="text" placeholder="Firmenname"}}}
                         </div>
-                        <div class="form-group fullwidth">
+                        <div class="form-group fullwidth iconable">
+                            {{#div $="invalidUstID" init=true class="tooltip"}}
+                                Bitte geben Sie Ihre UstId ein.
+                            {{/div}}
                             {{{input change="setUstID" bindAttr="company.ustid" value=Checkout.company.ustid type="text" placeholder="USt-IdNr."}}}
+                            <div class="fa-form-group">
+                                {{{span init=true $="validUstID" class="fa fa-check hideable input"}}}
+                                {{{span init=true $="requiredUstID" class="require fa fa-asterisk hideable input"}}}
+                            </div>
                         </div>
 
                         {{#div $="toggleBtnCompanySettings" init=true class="menu-bar no-display"}}
@@ -237,7 +244,7 @@
                 {{/view}}  
             </div>
 
-            {{#a $="enableCheckoutNextStep" id="checkoutStep2" click="nextStep" init=true href="#" class="btn btn-primary btn-chevron checkout-next-step disabled"}}
+            {{#a $="enableCheckoutNextStep" id="checkoutStep2" click="nextStep" init=true href="#" class="btn btn-primary btn-chevron checkout-next-step disabled pull-right"}}
                 <span class="text">Zahlungsart ausw&auml;hlen</span>
                 <span class="sr-only">Zahlungsart ausw&auml;hlen</span>
                 

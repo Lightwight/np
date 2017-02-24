@@ -1,0 +1,10 @@
+{{#view "ProductOverviewView" class="popular-product-outer-container"}}
+    {{#a $="initImage" init=true click="optimizeSearchResult" class="product-container" href=Product.bookmark}}
+        <span class="product-name">{{{Product.name}}}</span>                    
+        <span class="product-producer">{{{Product.manufacturer}}}</span>
+    {{/a}}
+
+    {{#a click="optimizeSearchResult" class="product-price-container" href=Product.bookmark}}
+        {{#span $="setGross" init=true class="gross"}}{{Product.gross}} &euro;{{/span}}
+    {{/a}}
+{{/view}}

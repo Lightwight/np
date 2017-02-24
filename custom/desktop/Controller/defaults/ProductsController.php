@@ -3,18 +3,19 @@ class ProductsController extends ProductsHelper implements ControllerInterface
 {
     public function getModel (\Model $model, $params) 
     {
-        $route      = str_replace ('/*', '', $this->getRoute ());
-        $isCategory = $this->findCategoryByRoute ($route) !== false;
-        $isSearch   = $route === '/search';
-        $isProduct  = !$isCategory && !$isSearch && $route === '/product';
-
-        $products   = array ();
+        $config             = Config::getInstance ();
+        $settings           = $config->getSettings ();
+        $allProducts        = isset ($settings['shop']['singlePage']) && $settings['shop']['singlePage'] === true ? true : false;
+        $route              = str_replace ('/*', '', $this->getRoute ());
+        $isCategory         = $this->findCategoryByRoute ($route) !== false;
+        $isSearch           = $route === '/search';
+        $isProduct          = !$isCategory && !$isSearch && $route === '/product';
+        
+        $products           = array ();
 
         if ($isCategory)
         {
-            $products   = $this->getProductsOfCategory ($model, $route, $params);
-            
-            return $products;
+            return $this->getProductsOfCategory ($model, $route, $params);
         }
         else if ($isSearch)
         {
@@ -22,9 +23,11 @@ class ProductsController extends ProductsHelper implements ControllerInterface
         }
         else if ($isProduct)
         {
-            $products   = $this->getProduct ($model, $params);
-            
-            return $products;
+            return $this->getProduct ($model, $params);
+        }
+        else if ($allProducts)
+        {
+            return $this->getAllProducts ($model);
         }
         
         if ($products && !is_array ($products)) 
@@ -43,14 +46,22 @@ class ProductsController extends ProductsHelper implements ControllerInterface
     
     private function getPopularProducts (\Model $model)
     {
-        $newProducts        = $this->getNewProducts (date ('Y-m-01'), '<=', 4); 
-        $popularProducts    = $this->getMostWanted ();
+        $config                 = Config::getInstance ();
+        $settings               = $config->getSettings ();
+        $popularProductsEnabled = isset ($settings['shop']['popularProducts']) && $settings['shop']['popularProducts'] === false ? false : true;
         
-        if ($newProducts && !is_array ($newProducts))           { $newProducts = array ($newProducts);          }
-        if ($popularProducts && !is_array ($popularProducts))   { $popularProducts = array ($popularProducts);  }
+        if ($popularProductsEnabled)
+        {
+            $newProducts        = $this->getNewProducts (date ('Y-m-01'), '<=', 4); 
+            $popularProducts    = $this->getMostWanted ();
+
+            if ($newProducts && !is_array ($newProducts))           { $newProducts = array ($newProducts);          }
+            if ($popularProducts && !is_array ($popularProducts))   { $popularProducts = array ($popularProducts);  }
+
+            return array_merge (is_array ($newProducts) ? $newProducts : array (), is_array ($popularProducts) ? $popularProducts : array ());
+        }
         
-        
-        return array_merge (is_array ($newProducts) ? $newProducts : array (), is_array ($popularProducts) ? $popularProducts : array ());
+        return array ();
     }
     
     private function getProductsOfCategory (\Model $model, $route, $params)
@@ -88,7 +99,6 @@ class ProductsController extends ProductsHelper implements ControllerInterface
         $page       = isset ($params[1]) && (int)$params[1] > 0 ? (int)$params[1] : 1;
         $sortBy     = isset ($params[2]) ? $this->escape_string ($params[2]) : false;
         $orderBy    = $sortBy ? (isset ($params[3]) ? ($params[3] === 'asc' ? 'asc' : 'desc') : 'asc') : false;
-        
 
         return $this->searchByKeyword ($model, $search, $page, 2, $sortBy, $orderBy);
     }

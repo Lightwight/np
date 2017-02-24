@@ -1,0 +1,10 @@
+{{#need model Products}}
+{{#need model Article_categories}}
+
+{{#view "PopularProductsView" class="products-overview"}}
+    <div class="products-container">
+        {{#each PopularProducts.products}}
+            {{#partial product-overview}}
+        {{/each}}
+    </div>
+{{/view}}

@@ -1,0 +1,25 @@
+{{#view "ProductsPaginationView" class="products-pagination"}}
+    <ul>
+        {{#each Pagination.pages}}
+            <li>
+                {{#view "ProductsPaginationPageView"}}
+                    {{#a click="flush" href=page.route class=page.class}}
+                        <span class="text">{{page.num}}</span>
+                        <span class="{{page.icon}}"></span>
+                    {{/a}}
+                {{/view}}
+            </li>
+        {{/each}}
+    </ul>
+    <ul class="products-sortarea">
+        {{#each Pagination.sortables}}
+            <li>
+                {{#view "ProductsSortableView"}}
+                    {{#a click="flush" href=ProductsSortable.route class=ProductsSortable.sortClass}}
+                        {{{ProductsSortable.label}}}
+                    {{/a}}
+                {{/view}}
+            </li>
+        {{/each}}
+    </ul>
+{{/view}}
