@@ -77,12 +77,24 @@ class Article_categoriesController extends ControllerHelper implements Controlle
         
         $breadcrumb->addBreadcrumb ($slug, $name);
         
-        return $model->add (array (
+        $postID     = $model->add (array (
+            'KeyOberkategorie'  => 0,
             'KeyBeschreibung'   => $row->get ('KeyBeschreibung'),
             'Sort'              => $row->get ('Sort'),
             'bookmark'          => $bookmark,
             'KeyName'           => $keyName
         ))->result ()->post ();
+        
+        if ($postID)
+        {
+            $mCategories    = new Model ('Article_categories');
+            
+            $category       = $mCategories->findBy ('ID', $postID)->result ();
+            $category->set ('KeyKategorie', $postID);
+            $category->update ();
+        }
+        
+        return $postID;
     }
 
     public function updateModel (\Model $model)         {}

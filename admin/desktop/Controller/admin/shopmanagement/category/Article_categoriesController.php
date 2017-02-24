@@ -26,23 +26,21 @@ class Article_categoriesController extends ControllerHelper implements Controlle
 {
     public function getModel (\Model $model, $params) 
     {
-        $params     = explode ('/', $params);
-        $id         = (int)$params[0] > 0 ? (int)$params[0] : 0;
-        
-        return $id > 0 ? $model->findBy ('ID', $id)->excludeDeleted ()->result () : $this->error ($this->REQ_ERR_INVALID_ARGS);
+        return $model->excludeDeleted ()->result ();
     }
 
     public function postModel (\Model $model)           {}
     public function updateModel(\Model $model)          
     {
-        $breadcrumb = new BreadcrumbController ();
-        $slugify    = new \Cocur\Slugify\Slugify ();
+        $breadcrumb     = new BreadcrumbController ();
+        $slugify        = new \Cocur\Slugify\Slugify ();
         
-        $category   = $model->result ();
+        $category       = $model->result ();
 
-        $name       = $category->get ('KeyBeschreibung');
-        $slug       = $slugify->slugify ($name, '-');
+        $name           = $category->get ('KeyBeschreibung');
+        $slug           = $slugify->slugify ($name, '-');
         
+        $category->set ('KeyOberkategorie', $category->get ('KeyOberkategorie'));
         $category->set ('KeyBeschreibung', $category->get ('KeyBeschreibung'));
         $category->set ('Sort', $category->get ('Sort'));
         

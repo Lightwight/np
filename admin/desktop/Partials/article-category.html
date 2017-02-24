@@ -7,6 +7,17 @@
         <div class="form-group fullwidth">
             {{{input change="setKeyBeschreibung" bindAttr="KeyBeschreibung" type="text" placeholder="Kategorie Name" value=AdminArticleCategory.KeyBeschreibung}}}
         </div>
+        
+        <div class="form-group fullwidth">
+            <label>Oberkategorie</label>
+            {{#select $="setMainCategory" init=true notify=false change="setMainCategory" bindAttr="main_category" id="nice_main_category"}}
+                <option value="0">&lt; keine Oberkategorie &gt;</option>
+                {{#each AdminArticleCategory.categories}}
+                    <option value="{{this.id}}">{{{this.KeyBeschreibung}}}</option>
+                {{/each}}
+            {{/select}}
+        </div>
+        
         <div class="form-group fullwidth">
             {{{input change="setSort" bindAttr="Sort" type="number" placeholder="Reihenfolge" value=AdminArticleCategory.Sort}}}
         </div>

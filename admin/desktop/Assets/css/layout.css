@@ -28,7 +28,7 @@ html.np-scope-admin {
     font-family: 'Quicksand', sans-serif;
     background-color: #FFF;
     overflow: auto;
-    background-image: url(/assets/images/backgrounds/white.jpg);
+    background-image: url(/assets/images/ui/admin/background.png);
     background-size: cover;
     background-attachment: fixed;
     background-position: center bottom; }
@@ -56,8 +56,6 @@ html.np-scope-admin {
     padding-top: 25px;
     padding-right: 25px;
     padding-bottom: 25px;
-    overflow: hidden;
-    z-index: auto;
     text-align: center; }
     html.np-scope-admin main .centered {
       padding: 0px;

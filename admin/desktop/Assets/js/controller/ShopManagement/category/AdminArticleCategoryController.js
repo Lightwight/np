@@ -9,15 +9,24 @@ np.controller.extend ('AdminArticleCategoryController', (function () {
     return {
         view:   'AdminArticleCategoryView',
         model:  function () {
-            var category;
+            var category, categories;
+            
+            categories  = new Array ();
             
             np.model.Article_categories.findByID (getPage ()).each (function (row) {
                 currentCategory = row;
                 category        = row.getAll ();
             });
             
+            np.model.Article_categories.findAll ().each (function (row) {
+                if (row.getID () !== currentCategory.getID ()) {
+                    categories.push (row.getAll ());
+                }
+            });
+            
             category.sending    = false;
             category.success    = false;
+            category.categories = categories;
             
             return {AdminArticleCategory: category};
         },
@@ -31,11 +40,16 @@ np.controller.extend ('AdminArticleCategoryController', (function () {
                 this.set ('Sort', view.get ('Sort'));
             },
             
+            setMainCategory: function (view) {
+                this.set ('KeyOberkategorie', view.get ('main_category'));
+            },
+            
             saveCategory: function () {
                 var _t;
                 
                 _t  = this;
-               
+
+                currentCategory.setKeyOberkategorie (_t.get ('KeyOberkategorie'));
                 currentCategory.setKeyBeschreibung (_t.get ('KeyBeschreibung'));
                 currentCategory.setSort (_t.get ('Sort'));
                 
