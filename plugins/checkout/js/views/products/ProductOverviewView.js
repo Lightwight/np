@@ -31,7 +31,6 @@ np.view.extend ('ProductOverviewView', (function () {
     
     return {
         initImage: function (model) {
-//            console.log (model.getAll ());
             this.css ('background-image', 'url('+model.get ('image')+')');
         },
         
@@ -285,7 +284,7 @@ np.view.extend ('ProductOverviewView', (function () {
             name        = model.get ('name');
             variations  = model.get ('variations');
             selected    = model.get ('selectedVariations');
-            container   = this.parents ('.product-name:first');
+            container   = this.find ('.product-name');
 
             l           = selected.length;
             n           = variations.length;
@@ -302,7 +301,7 @@ np.view.extend ('ProductOverviewView', (function () {
                             && variations[m][o].ArtikelNr.length > 0
                             && (variations[m][o].KeyEigenschaft+'-'+variations[m][o].KeyEigenschaftWert) === current
                         ) {
-                            this.html (name + ' ' +variations[m][o].Name);
+                            container.html (name + ' ' +variations[m][o].Name);
 
                             found   = true;
                         }    
@@ -316,7 +315,7 @@ np.view.extend ('ProductOverviewView', (function () {
                 if (found)  { break;    }
             }
             
-            if (!found) { this.html (name); }
+            if (!found) { container.html (name); }
         }.observes ('selectedVariations').on ('change'),
         
         setProducer: function (model) {
@@ -386,30 +385,36 @@ np.view.extend ('ProductOverviewView', (function () {
             }
         }.observes ('available'). on ('change'),
         
+        /*
+         * Highlights the cart state of an article
+         * 
+         */
         isInCart: function (model) {
             var first, second;
 
             first   = this.find ('.first');
             second  = this.find ('.second');
+            
+            if (first.length > 0 && second.length > 0) {
+                if (model.get ('isInCart') === true) {
+                    if (this.hasClass ('add-to-cart'))          { this.removeClass ('add-to-cart');         }
+                    if (!this.hasClass ('remove-from-cart'))    { this.addClass ('remove-from-cart');       }
 
-            if (model.get ('isInCart') === true) {
-                if (this.hasClass ('add-to-cart'))          { this.removeClass ('add-to-cart');         }
-                if (!this.hasClass ('remove-from-cart'))    { this.addClass ('remove-from-cart');       }
+                    if (first.hasClass ('down'))                { first.removeClass ('down');               }
+                    if (!first.hasClass ('no-alpha'))           { first.addClass ('no-alpha');              }
+                    if (!first.hasClass ('up'))                 { first.addClass ('up');                    }
 
-                if (first.hasClass ('down'))                { first.removeClass ('down');               }
-                if (!first.hasClass ('no-alpha'))           { first.addClass ('no-alpha');              }
-                if (!first.hasClass ('up'))                 { first.addClass ('up');                    }
+                    if (second.hasClass ('no-display'))         { second.removeClass ('no-display');        }            
+                } else {
+                    if (this.hasClass ('remove-from-cart'))     { this.removeClass ('remove-from-cart');    }
+                    if (!this.hasClass ('add-to-cart'))         { this.addClass ('add-to-cart');            }
 
-                if (second.hasClass ('no-display'))         { second.removeClass ('no-display');        }            
-            } else {
-                if (this.hasClass ('remove-from-cart'))     { this.removeClass ('remove-from-cart');    }
-                if (!this.hasClass ('add-to-cart'))         { this.addClass ('add-to-cart');            }
+                    if (first.hasClass ('up'))                  { first.removeClass ('up');                 }            
+                    if (first.hasClass ('no-alpha'))            { first.removeClass ('no-alpha');           }
+                    if (!first.hasClass ('down'))               { first.addClass ('down');                  }
 
-                if (first.hasClass ('up'))                  { first.removeClass ('up');                 }            
-                if (first.hasClass ('no-alpha'))            { first.removeClass ('no-alpha');           }
-                if (!first.hasClass ('down'))               { first.addClass ('down');                  }
-
-                if (!second.hasClass ('no-display'))        { second.addClass ('no-display');           }
+                    if (!second.hasClass ('no-display'))        { second.addClass ('no-display');           }
+                }
             }
         }.observes ('isInCart').on ('change')        
     };

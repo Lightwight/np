@@ -128,7 +128,6 @@ np.controller.extend ('ProductOverviewController', (function () {
                     } else {
                         this.set ('maxAmount', true);
                         this.set ('maxSpreadAmount', true);
-                        console.log (np.Product.getMaxOrderable (this, false));
                         this.set ('amount', np.Product.getMaxOrderable (this));
                     }
                 } else {
