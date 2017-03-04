@@ -35,7 +35,7 @@ np.controller.extend ('AdminMenusController', {
     
             menu        = np.jsonClone (row.getAll ());
             parentID    = menu.parent;
-            menu.open   = menu.route === currentMenu;
+            menu.open   = currentMenu.indexOf (menu.route) > -1;
 
             if (parentID === 0) {
                 menus.push (menu);

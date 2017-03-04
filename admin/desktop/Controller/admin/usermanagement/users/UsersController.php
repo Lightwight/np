@@ -38,32 +38,24 @@ class UsersController extends ControllerHelper implements ControllerInterface
 
         if (!$search)
         {
-            $uRows  = $model->paginate (10, $page)->orderBy ($sort, $sortOrder)->result ();
+            $uRows  = $model
+                        ->paginate (10, $page)
+                        ->leftJoin ('auth_groups', 'ID', 'users', 'group', 'auth_groups', 'group', 'group_name')
+                        ->orderBy ($sort, $sortOrder)
+                        ->result ();
         }
         else
         {
-            $uRows  = $model->paginate (10, $page)->orderBy ($sort, $sortOrder)->findLike ('ID', $search)->orFindLike ('gender', $search)->orFindLike ('name', $search)->orFindLike ('prename', $search)->orFindLike ('email', $search)->result ();
-        }
-        
-        $mUsers     = new Model ('Users', true);
-
-        $mGroup     = new Model ('Auth_groups');
-        $authGroups = $mGroup->result ();
-        
-        if (is_array ($uRows) && is_array ($authGroups))
-        {
-            foreach ($uRows as $uRow)
-            {
-                $userGroup  = $uRow->get ('group');
-                
-                foreach ($authGroups as $authGroup)
-                {
-                    if ($authGroup->get ('id') === $userGroup)
-                    {
-                        $uRow->set ('group_name', $authGroup->get ('group'));
-                    }
-                }
-            }
+            $uRows  = $model
+                        ->paginate (10, $page)
+                        ->orderBy ($sort, $sortOrder)
+                        ->leftJoin ('auth_groups', 'ID', 'users', 'group', 'auth_groups', 'group', 'group_name')
+                        ->findLike ('ID', $search)
+                        ->orFindLike ('gender', $search)
+                        ->orFindLike ('name', $search)
+                        ->orFindLike ('prename', $search)
+                        ->orFindLike ('email', $search)
+                        ->result ();
         }
 
         return $uRows;

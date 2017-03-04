@@ -184,7 +184,7 @@ np.controller.extend ('AdminArticleController', (function () {
                 tax             = parseInt (view.get ('article_tax'), 10);
                 price_brutto    = parseFloat (view.get ('price_brutto').replace (/,/g, '.')).toFixed (5);
                 price           = calcPriceNetto (price_brutto, tax);
-                
+
                 this.set ('price', price);
             },
 
@@ -317,10 +317,10 @@ np.controller.extend ('AdminArticleController', (function () {
                 
                 tax     = parseInt (_t.get ('tax'), 10);
                 if (isNaN (tax)) { tax = 0; }
-                
+
                 price           = parseFloat ((''+_t.get ('price')).replace (/,/g, '.')).toFixed (5);
-                price_brutto    = parseFloat ((''+_t.get ('price_brutto')).replace (/,/g, '.')).toFixed (5);
-                
+                price_brutto    = calcPriceBrutto (price, tax);
+
                 currentArticle.setCategoryId (_t.get ('category_id'));
                 currentArticle.setUnitId (_t.get ('unit_id'));
                 currentArticle.setWeight (weight);
@@ -329,8 +329,6 @@ np.controller.extend ('AdminArticleController', (function () {
                 currentArticle.setTax (tax);
                 currentArticle.setPrice (price);
                 
-                _t.set ('price', price);
-                _t.set ('price_brutto', price_brutto);
                 _t.set ('savingArticleSettings', true);
                 
                 currentArticle

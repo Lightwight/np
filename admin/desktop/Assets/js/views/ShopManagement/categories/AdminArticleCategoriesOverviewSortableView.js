@@ -72,10 +72,10 @@ np.view.extend ('AdminArticleCategoriesOverviewSortableView', {
         }
     }.observes ('sortBySort').on ('change'),
 
-    setOrderBookmark: function (model) {
+    setOrderKeyOberkategorie: function (model) {
         var sortOrder;
         
-        sortOrder   = model.get ('sortByBookmark');
+        sortOrder   = model.get ('sortByKeyOberkategorie');
 
         if (sortOrder === 'none') {
             this.removeClass ('sort-asc');
@@ -87,5 +87,5 @@ np.view.extend ('AdminArticleCategoriesOverviewSortableView', {
             this.removeClass ('sort-asc');
             this.addClass ('sort-desc');
         }
-    }.observes ('sortByBookmark').on ('change')
+    }.observes ('sortByKeyOberkategorie').on ('change')
 });

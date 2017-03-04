@@ -33,7 +33,7 @@ html {
             background-color: #FFF;
             overflow: auto;
             
-            background-image: url(/assets/images/backgrounds/white.jpg);
+            background-image: url(/assets/images/ui/admin/background.png);
             background-size: cover;
             background-attachment: fixed;
             background-position: center bottom;
@@ -70,9 +70,6 @@ html {
             padding-right: 25px;
             padding-bottom: 25px;
 
-            overflow: hidden;
-            z-index: auto;
-            
             text-align: center;
             
             .centered {

@@ -6,8 +6,8 @@
             <div class="flexbox">
                 {{#div $="setOrderID" init=true click="sortByID" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Kategorie ID{{/div}}
                 {{#div $="setOrderName" init=true click="sortByName" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Name{{/div}}
-                {{#div $="setOrderSort" init=true click="sortBySort" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Reihenfolge{{/div}}                
-                {{#div $="setOrderBookmark" init=true click="sortByBookmark" class="flexrow flexrow-1 t-bold f-s16 sortable"}}URL{{/div}}
+                {{#div $="setOrderKeyOberkategorie" init=true click="sortByKeyOberkategorie" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Elternkategorie{{/div}}
+                {{#div $="setOrderSort" init=true click="sortBySort" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Reihenfolge{{/div}}
             </div>
         {{/view}}
 
@@ -42,8 +42,8 @@
                         <div class="flexbox">
                             <div class="flexrow flexrow-1">{{AdminArticleCategory.id}}</div>
                             <div class="flexrow flexrow-1">{{AdminArticleCategory.KeyBeschreibung}}</div>
+                            <div class="flexrow flexrow-1">{{AdminArticleCategory.parentCategory}} ({{AdminArticleCategory.parentCategoryID}})</div>
                             <div class="flexrow flexrow-1">{{AdminArticleCategory.Sort}}</div>
-                            <div class="flexrow flexrow-1">{{AdminArticleCategory.parent}}</div>
                             <div class="flexrow flexrow-1 flex-end">
                                 <a href="/admin/shopmanagement/category/{{AdminArticleCategory.id}}" class="btn btn-primary">
                                     <span class="text">Bearbeiten</span>

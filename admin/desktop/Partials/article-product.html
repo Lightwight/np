@@ -106,7 +106,7 @@
                 {{#select $="setCategoryID" change="setCategoryID" init=true notifiy=false bindAttr="c_id" id="admin-article-category" class="pull-right"}}
                     <option value="0">(keine Auswahl)</option>                    
                     {{#each AdminArticle.categories}}
-                        <option value="{{KeyKategorie}}">{{{KeyBeschreibung}}}</option>
+                        <option value="{{KeyKategorie}}">[{{KeyKategorie}}] {{{KeyBeschreibung}}} ({{KeyOberkategorie}})</option>
                     {{/each}}
                 {{/select}}
             </div>
@@ -141,6 +141,7 @@
             <div class="form-group fullwidth">
                 <label class="small normal pull-left">MwSt.:</label>
                 {{#select $="setTax" change="setTax" init=true notifiy=false bindAttr="article_tax" id="admin-article-tax" class="pull-right"}}
+                    <option value="0">(keine Auswahl)</option>
                     {{#each AdminArticle.taxes}}
                         <option value="{{tax}}">{{{tax}}} %</option>
                     {{/each}}

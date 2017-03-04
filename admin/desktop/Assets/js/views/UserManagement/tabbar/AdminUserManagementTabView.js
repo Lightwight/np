@@ -1,7 +1,3 @@
-/* current theme to display */
-/* For the content centering including menu and cart */
-/* For the main scollarea */
-/* for logo centering */
 /*
 *   This software called - np - is a lightwight MVP Framework for building web applications and
 *   was developed by Christian Peters
@@ -23,23 +19,14 @@
 *
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
-.np-scope-admin .font-light {
-  font-weight: 300; }
-.np-scope-admin .font-normal {
-  font-weight: 400; }
-.np-scope-admin .font-bold {
-  font-weight: 700; }
-.np-scope-admin #fontLoader {
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  width: 1px;
-  height: 1px;
-  line-height: 0px;
-  overflow: hidden;
-  color: transparent;
-  pointer-events: none; }
-.np-scope-admin .f-s16 {
-  font-size: 16px; }
-.np-scope-admin .font-alfa-slab-one {
-  font-family: 'Alfa Slab One', serif; }
+
+np.view.extend ('AdminUserManagementTabView', {
+    setActive: function (model) {
+        if (model.get ('active')) {
+            this.addClass ('active');
+        } else {
+            this.removeClass ('active');
+        }
+    }
+    .observes ('active').on ('change')
+});

@@ -36,11 +36,13 @@
         
         .admin-table {
             width: 100%;
+            height: calc(100vh - 342px);
+            overflow: auto;
+            margin-top: 12px;
             
             .admin-overview-row {
                 &:first-child {
                     border: none;
-                    margin-top: 12px;
                 }
             }
         }   

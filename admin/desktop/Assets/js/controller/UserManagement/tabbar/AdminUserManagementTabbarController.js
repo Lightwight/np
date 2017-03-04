@@ -33,7 +33,7 @@ np.controller.extend ('AdminUserManagementTabbarController', {
             var menu;
     
             menu        = row.getAll ();
-            menu.active = menu.route === currentMenu;
+            menu.active = currentMenu.indexOf (menu.route) === 0;
 
             menus.push (menu);
         });

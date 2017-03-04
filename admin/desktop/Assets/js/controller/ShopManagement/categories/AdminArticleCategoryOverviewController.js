@@ -23,8 +23,21 @@
 np.controller.extend ('AdminArticleCategoryOverviewController', {
     view:   'AdminArticleCategoryOverviewView',
     model:  function () {
-        this.sending    = false;
-        this.removed    = false;
+        var _t;
+        
+        _t                      = this;
+        
+        this.sending            = false;
+        this.removed            = false;
+        this.parentCategory     = '';
+        this.parentCategoryID   = '';
+        
+        if (this.KeyOberkategorie > 0) {
+            np.model.Article_categories.findByID (this.KeyOberkategorie).each (function (row) {
+                _t.parentCategory   = row.getKeyBeschreibung ();
+                _t.parentCategoryID = row.getID ();
+            });
+        }
         
         return {
             AdminArticleCategory: this

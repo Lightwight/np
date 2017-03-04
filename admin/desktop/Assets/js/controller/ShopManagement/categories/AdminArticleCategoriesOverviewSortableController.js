@@ -25,11 +25,11 @@ np.controller.extend ('AdminArticleCategoriesOverviewSortableController', {
     model:  function () {
         return {
             AdminArticleCategoriesSortable: {
-                id:             -1,
-                sortByID:       np.pagination.getSortOrder ('id'),
-                sortByName:     np.pagination.getSortOrder ('keybeschreibung'),
-                sortBySort:     np.pagination.getSortOrder ('sort'),
-                sortByBookmark: np.pagination.getSortOrder ('bookmark')
+                id:                     -1,
+                sortByID:               np.pagination.getSortOrder ('id'),
+                sortByName:             np.pagination.getSortOrder ('keybeschreibung'),
+                sortByKeyOberkategorie: np.pagination.getSortOrder ('keybberkategorie'),
+                sortBySort:             np.pagination.getSortOrder ('sort')
             }
         };
     },
@@ -74,17 +74,17 @@ np.controller.extend ('AdminArticleCategoriesOverviewSortableController', {
             np.routeTo ('#/admin/shopmanagement/categories/'+np.pagination.getPage ()+'/sort/'+sortOrder+'/'+search);
         },
 
-        sortByBookmark: function () {
+        sortByKeyOberkategorie: function () {
             var sortOrder, currOrder, search;
 
-            currOrder   = this.get ('sortByBookmark');
+            currOrder   = this.get ('sortByKeyOberkategorie');
             sortOrder   = currOrder === 'none' ? 'asc' : (currOrder === 'desc' ? 'none' : 'desc');
             search      = np.pagination.getSearch ();
 
-            this.set ('sortByBookmark', sortOrder);
+            this.set ('sortByKeyOberkategorie', sortOrder);
 
             np.model.Article_categories.flush ();
-            np.routeTo ('#/admin/shopmanagement/categories/'+np.pagination.getPage ()+'/bookmark/'+sortOrder+'/'+search);
+            np.routeTo ('#/admin/shopmanagement/categories/'+np.pagination.getPage ()+'/keyoberkategorie/'+sortOrder+'/'+search);
         }
     }
 });

@@ -377,7 +377,8 @@ $config['smtp']     = array
     
     // If in development mode, set delay as int for
     // the amount of seconds for the time of email send.
-    'delay'    => 0
+    'delay'     => 0,
+    'debug'     => false
 );
 
 $config['session'] = array 
