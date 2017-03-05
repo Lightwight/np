@@ -1,0 +1,83 @@
+@import "../../../../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-custom {
+    &.#{$current-theme} {
+        .products-pagination {
+            position: fixed;
+            width: 100%;
+            background-color: #FFF;
+            margin-top: 0px;
+            margin-bottom: 0px;
+            z-index: 9000;
+
+            height: 46px;
+
+            @include box-shadow(0px 2px 2px -2px #000);
+            
+            ul {
+                list-style: none;
+                height: 46px;
+                margin: 0px auto;
+                padding: 0px;
+                display: inline-block;
+                
+                li {
+                    position: relative;
+                    float: left;
+                    padding-left: 12px;
+                    height: 46px;
+                    padding-right: 12px;
+                    line-height: 46px;
+                    
+                    a {
+                        color: #555;
+                        
+                        &:hover,
+                        &:focus,
+                        &:active,
+                        &.active {
+                            font-weight: normal;
+                            color: #000;
+                            text-decoration: underline;
+                        }
+                        
+                        &.disabled {
+                            pointer-events: none;
+                            color: #CCC;
+                        }                        
+                    }                    
+                }                
+            }            
+        }
+        
+        &.media-s-xs {
+            .products-pagination {
+                ul {
+                   display: block;
+                   float: left;
+                }           
+            }
+        }
+    }
+}

@@ -253,6 +253,8 @@ Handlebars.registerHelper ('view', function (viewName, options) {
                 options.view.didInsert.call (np.find (selector), options.context[options.modelName]); 
             }
             
+            selector.data ('didinsert', true);
+            
             if (typeof options.context[options.modelName] !== 'undefined' && !$.isArray (options.context[options.modelName]) && typeof options.context[options.modelName].id !== 'undefined') {
                 registerContext (options);
                 
@@ -261,7 +263,6 @@ Handlebars.registerHelper ('view', function (viewName, options) {
                 registerContext (options, true);
                 
                 if (options.view) { registerViewEvents (options);   }
-//                if (options.view) { registerSystemEvents (options);  }
             }
         } else {
             if (options.ticked !== -1)  { options.ticked++; }

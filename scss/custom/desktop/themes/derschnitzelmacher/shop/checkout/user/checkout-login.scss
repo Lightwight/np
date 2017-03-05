@@ -1,0 +1,98 @@
+@import "../../../../../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-custom {
+    &.#{$current-theme} {
+        [data-handle="CheckoutLoginView"] {
+            .stay-login-container {
+                margin-bottom: 0px;
+                
+                > label,
+                > input {
+                    float: right;
+                    cursor: pointer;
+                }      
+                
+                > label {
+                    font-size: 14px;
+                    line-height: 14px;
+
+                    @include transition(all 0.2s ease-in-out);
+                    
+                    &:hover {
+                        color: #1ABB9C;
+                    }
+                }
+
+                > input {
+                    margin-right: 9px;
+                    margin-top: 2px;
+                }
+            }
+        }
+        
+        #checkout-login {
+            padding: 24px;
+            background-color: #FFF;
+            overflow: visible;
+            display: inline-block;
+            width: 48%;
+            height: auto;
+            margin-right: 4%;
+            float: left;
+            
+            > label {
+                color: #000;
+                font-family: "Roboto Light";
+                margin-bottom: 12px;
+                float: left;
+            }  
+            
+            .forgot-password {
+                color: #333;
+                font-family: "Roboto Light";
+                font-size: 12px;
+                margin-top: 6px;
+            } 
+            
+            .menu-bar {
+                .login,
+                .guest {
+                    clear: right;
+                }            
+            }
+            
+            .guest {
+                margin-top: 12px;
+            }
+        }
+        
+        /* Very small device */
+        &.media-s-xs {
+            #checkout-login {
+                width: 100%;
+                margin-right: 0px;
+            }            
+        }
+    }
+}

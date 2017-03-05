@@ -1,0 +1,69 @@
+@import "../../../../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-custom {
+    &.#{$current-theme} {
+        #checkoutLinkToPayment {
+            .icon {
+                font-size: 18px;
+                top: 4px;
+                margin-right: 15px;
+            }
+        }
+        
+        .checkout-next-step {
+            .icon {
+                font-size: 18px;
+                top: 4px;
+                margin-right: 15px;
+            }        
+
+            .text {
+                font-size: 18px;
+                font-weight: bold;
+                margin-top: 0px;
+                padding-left: 0px;
+            }
+        }
+
+        #checkoutStep1 {
+            margin-bottom: 25px;
+        }         
+
+        #checkoutStep2 {
+            margin-bottom: 10px;
+        }
+
+        #checkoutStep4 {
+            margin-bottom: 15px;
+        }
+        
+        [data-handle="CheckoutContainerView"] {
+            .checkout-next-step {
+                float: right;
+                margin-top: 24px;
+                margin-bottom: 24px;    
+            }        
+        }
+    }
+}

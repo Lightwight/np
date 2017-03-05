@@ -220,7 +220,7 @@ class HTMLTreeBuilder
             }
         }
 
-        return $html;
+        return self::parseYields ($html);
     }
     
     private static function fetchLayout ($layout)

@@ -1,4 +1,8 @@
 {{#view "AdminTablePaginationView" class="admin-table-pagination"}}
+    <div class="custom-controls">
+        {{#yield custom-controls}}
+    </div>
+
     <ul>
         {{#each Pagination.pages}}
             <li>

@@ -1,3 +1,7 @@
+/* current theme to display */
+/* For the content centering including menu and cart */
+/* For the main scollarea */
+/* for logo centering */
 /*
 *   This software called - np - is a lightwight MVP Framework for building web applications and
 *   was developed by Christian Peters
@@ -19,20 +23,20 @@
 *
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
-.np-scope-custom.np-theme-ms {
+.np-scope-custom.np-theme-derschnitzelmacher {
   /* Very small screen */ }
-  .np-scope-custom.np-theme-ms .form-group.iconable input[type=text],
-  .np-scope-custom.np-theme-ms .form-group.iconable input[type=email],
-  .np-scope-custom.np-theme-ms .form-group.iconable input[type=number],
-  .np-scope-custom.np-theme-ms .form-group.iconable input[type=password] {
+  .np-scope-custom.np-theme-derschnitzelmacher .form-group.iconable input[type=text],
+  .np-scope-custom.np-theme-derschnitzelmacher .form-group.iconable input[type=email],
+  .np-scope-custom.np-theme-derschnitzelmacher .form-group.iconable input[type=number],
+  .np-scope-custom.np-theme-derschnitzelmacher .form-group.iconable input[type=password] {
     width: calc(100% - 24px);
     border-right: none;
     float: left; }
-  .np-scope-custom.np-theme-ms .form-group.iconable input:focus ~ .fa-form-group {
+  .np-scope-custom.np-theme-derschnitzelmacher .form-group.iconable input:focus ~ .fa-form-group {
     border-top: solid 1px #d3d3d3;
     border-right: solid 1px #d3d3d3;
     border-bottom: solid 1px #d3d3d3; }
-  .np-scope-custom.np-theme-ms .form-group.iconable .fa-form-group {
+  .np-scope-custom.np-theme-derschnitzelmacher .form-group.iconable .fa-form-group {
     position: relative;
     float: left;
     width: 24px;
@@ -41,7 +45,7 @@
     border-top: 1px #d3d3d3 solid;
     border-right: 1px #d3d3d3 solid;
     border-bottom: 1px #d3d3d3 solid; }
-    .np-scope-custom.np-theme-ms .form-group.iconable .fa-form-group .fa {
+    .np-scope-custom.np-theme-derschnitzelmacher .form-group.iconable .fa-form-group .fa {
       line-height: 26px;
       text-align: center;
       display: inline-block;
@@ -50,26 +54,26 @@
       position: absolute;
       top: 0px;
       right: 0px; }
-  .np-scope-custom.np-theme-ms .form-group.no-margin {
+  .np-scope-custom.np-theme-derschnitzelmacher .form-group.no-margin {
     margin-bottom: 0px; }
-  .np-scope-custom.np-theme-ms form.half {
+  .np-scope-custom.np-theme-derschnitzelmacher form.half {
     width: 48%; }
-    .np-scope-custom.np-theme-ms form.half.margin {
+    .np-scope-custom.np-theme-derschnitzelmacher form.half.margin {
       margin-right: 4%; }
-  .np-scope-custom.np-theme-ms form > label {
+  .np-scope-custom.np-theme-derschnitzelmacher form > label {
     color: #000;
     font-family: "Roboto Light";
     margin-bottom: 12px;
     float: left; }
-  .np-scope-custom.np-theme-ms form > a.link {
+  .np-scope-custom.np-theme-derschnitzelmacher form > a.link {
     color: #333;
     font-family: "Roboto Light";
     font-size: 12px;
     margin-top: 6px;
     margin-left: 18px; }
-  .np-scope-custom.np-theme-ms.media-s-xs form.half {
+  .np-scope-custom.np-theme-derschnitzelmacher.media-s-xs form.half {
     width: 100%; }
-    .np-scope-custom.np-theme-ms.media-s-xs form.half.margin {
+    .np-scope-custom.np-theme-derschnitzelmacher.media-s-xs form.half.margin {
       margin-right: 0px; }
-    .np-scope-custom.np-theme-ms.media-s-xs form.half:not(.last) {
+    .np-scope-custom.np-theme-derschnitzelmacher.media-s-xs form.half:not(.last) {
       margin-bottom: 24px; }

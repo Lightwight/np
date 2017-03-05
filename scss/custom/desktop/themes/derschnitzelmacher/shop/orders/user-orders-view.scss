@@ -1,0 +1,191 @@
+@import "../../../../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-custom {
+    &.#{$current-theme} {
+        #user-orders-view {
+            form {
+                padding-top: 60px;
+                
+                .head-info {
+                    position: absolute;
+                    left: 0px;
+                    top: 0px;
+                    right: 0px;
+                    height: 40px;
+                    background-color: #000;
+
+                    @include box-shadow(0px 2px 3px -2px #000);
+                } 
+                
+                .form-group {
+                    margin-top: 54px;
+                    
+                    &:not(.fullwidth) {
+                        margin-right: 80px;
+                    }
+                    
+                    &:last-of-type {
+                        margin-right: 0px;
+                    }
+                    
+                    &.order-price {
+                        border-top: 1px #CCC solid;
+                        padding-top: 24px;
+                        
+                        span {
+                            label {
+                                width: 136px;
+                            }
+                        }
+                    }                    
+                }
+
+                .order-id,
+                .order-status {
+                    label {
+                        font-weight: bold;
+                        line-height: 40px;
+                        margin-right: 12px;
+                        margin-bottom: 0px;
+                    }                    
+                } 
+                
+                .order-id {
+                    position: absolute;
+                    color: #FFF;
+                    left: 0px;
+                    top: 0px;
+                    
+                    label {
+                        margin-left: 12px;
+                    }                    
+                }
+
+                .order-status {
+                    position: absolute;
+                    color: #FFF;
+                    right: 0px;
+                    top: 0px;
+                    
+                    span {
+                        padding: 6px;
+                        display: inline-block;
+                        color: #333;
+                        margin-right: 4px;
+                    }       
+                    
+                    .green {
+                        background-color:  #dff0d8;
+                    }
+                    
+                    .yellow {
+                        background-color: #fcf8e3;
+                    }                    
+                }                 
+            }
+            
+            .articles-Container {
+                height: 0px;
+                position: relative;
+                float: left;
+                width: 100%;
+                overflow: hidden;
+                border-top: 1px #333 solid;
+                margin-top: 20px;
+
+                @include transition(all 350ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+                
+                &.show {
+                    height: auto;
+
+                    @include transition(all 350ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+                }
+                
+                .product-container {
+                    padding: 0px;
+                    width: 100%;
+                    float: none;
+                    display: inline-block;
+                    margin-top: 24px;
+                    
+                    .product-wrapper {
+                        padding: 0px;
+                        
+                        .product-left {
+                            position: relative;
+                            float: left;
+                            width: 200px;
+                            
+                            .bg-image {
+                                margin: 0px;
+                                width: 200px;
+                                height: 250px;
+                            }
+                            
+                            .product-price-container {
+                                margin-left: 0px;
+                                margin-right: 0px;
+                                width: 100%;
+                                text-align: center;
+                                padding-top: 4px;
+                                padding-bottom: 8px;
+                                height: auto;
+                                
+                                span {
+                                    position: relative;
+                                    float: left;
+                                    width: 100%;
+                                    text-align: center;
+                                    
+                                    &::first-child {
+                                        line-height: 36px; 
+                                    }
+                                }                                
+                            }                            
+                        }
+                        
+                        .note-container {
+                            margin: 12px 0px 0px 0px;
+                            
+                            @include opacity(0);
+                            @include border-radius(0px);
+                            @include transition(opacity 250ms ease-out);
+
+                            &.show {
+                                @include opacity(1);
+                                @include transition(opacity 250ms ease-in);
+                            }
+                            
+                            .note {
+                                margin: 0px;
+                                
+                                @include border-radius(0px);
+                            }
+                        }
+                    }                    
+                }                
+            }            
+        }
+    }
+}

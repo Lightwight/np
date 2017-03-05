@@ -1,0 +1,42 @@
+{{#need model Article_manufacturers}}
+{{#need plugin Geo}}
+
+{{#view "AdminArticleManufacturerView"}}
+    <form class="bg-grey">
+        <h4 class="form-title">Hersteller bearbeiten</h4>
+
+        <div class="form-group fullwidth">
+            {{{input change="setName" bindAttr="name" type="text" placeholder="Hersteller Name" value=AdminArticleManufacturer.name}}}
+        </div>
+        
+        <div class="form-group fullwidth">
+            {{{plugin "Geo" change="setCountry" bindAttr="country" value=AdminArticleManufacturer.country}}}
+        </div>
+
+        <div class="form-group fullwidth">
+            {{{input change="setPostal" bindAttr="postal" type="text" placeholder="PLZ" value=AdminArticleManufacturer.postal}}}
+        </div>
+        
+        <div class="form-group fullwidth">
+            {{{input change="setCity" bindAttr="city" type="text" placeholder="Stadt" value=AdminArticleManufacturer.city}}}
+        </div>
+        
+        <div class="form-group fullwidth">
+            {{{input change="setStreet" bindAttr="street" type="text" placeholder="Strasse" value=AdminArticleManufacturer.street}}}
+        </div>
+        
+        <div class="form-group fullwidth">
+            {{{input change="setStreetNumber" bindAttr="street_number" type="text" placeholder="Hausnummer" value=AdminArticleManufacturer.street_number}}}
+        </div>
+
+        <div class="menu-bar">
+            {{#button $="disableSaveManufacturer" click="saveManufacturer" type="button" class="btn btn-primary pull-right"}}
+                <span class="text">Hersteller speichern</span>
+                <span class="fa fa-caret-right"></span>
+                {{#span $="sending" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+        </div>
+    </form>
+{{/view}}

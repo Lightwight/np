@@ -1,0 +1,96 @@
+{{#view "AdminUserProfileView" id="admin-user-profile"}}
+    {{#equals User.id -2}}
+        <form class="bg-grey">
+            <h4 class="form-title">Benutzer nicht gefunden</h4>
+            <div class="info-box">
+                Der Benutzer konnte nicht gefunden werden. Möglicherweise haben Sie einen falschen Link aufgerufen.
+            </div>
+        </form>
+    {{else}}
+        <form class="bg-grey">
+            <h4 class="form-title">Benutzerprofil</h4>
+
+            <div class="form-group fullwidth">
+                <div class="form-group fullwidth">
+                    <label>Anrede: </label>
+
+                    {{#select bindAttr="salutation" $="salutation" change="setSalutation" init=true class="nice-select pull-left" id="admin-user-gender"}}
+                        <option value="male">Herr</option>
+                        <option value="female">Frau</option>
+                    {{/select}}
+
+                    <label>Benutzerrolle: </label>
+
+                    {{#select bindAttr="group" $="group" change="setGroup" init=true class="nice-select" id="admin-user-group"}}
+                        {{#each User.groups}}
+                            <option value="{{id}}">{{group}}</option>
+                        {{/each}}
+                    {{/select}}
+                </div>
+
+                <div class="form-group fullwidth">
+                    {{{input change="setPrename" bindAttr="prename" type="text" class="iconable" placeholder="Vorname" value=User.prename}}}
+
+                    <div class="fa-container">
+                        {{{span $="invalidPrename" init=true class="fa fa-flash"}}}
+                        {{{span $="validPrename" init=true class="fa fa-check"}}}
+                    </div>
+                </div>
+
+                <div class="form-group fullwidth">
+                    {{{input change="setName" bindAttr="name" type="text" class="iconable" placeholder="Nachname" value=User.name}}}
+
+                    <div class="fa-container">
+                        {{{span $="invalidName" init=true class="fa fa-flash"}}}
+                        {{{span $="validName" init=true class="fa fa-check"}}}
+                    </div>
+                </div>
+
+                <div class="form-group fullwidth">
+                    {{#inGroup "Administrator"}}
+                        {{#equals User.id -1}}
+                            {{{input type="email" class="iconable" change="setEmail" placeholder="E-Mail-Adresse" value=""}}}
+                        {{else}}
+                            {{{input type="email" class="iconable" change="setEmail" placeholder="E-Mail-Adresse" value=User.email}}}
+                        {{/equals}}
+                        
+                        <div class="fa-container">
+                            {{{span $="invalidEMail" init=true class="fa fa-flash"}}}
+                            {{{span $="validEMail" init=true class="fa fa-check"}}}
+                        </div>
+                    {{else}}
+                        <input type="email" placeholder="E-Mail-Adresse" value="{{{User.email}}}" disabled>
+                    {{/inGroup}}
+                </div>
+                
+                {{#inGroup "Administrator"}}
+                    <div class="form-group fullwidth">
+                        {{{input type="email" class="iconable" change="setEmailConfirmation" placeholder="E-Mail-Adresse bestätigen" value=""}}}
+
+                        <div class="fa-container">
+                            {{{span $="invalidEMailConfirmation" init=true class="fa fa-flash"}}}
+                            {{{span $="validEMailConfirmation" init=true class="fa fa-check"}}}
+                        </div>
+                    </div>
+                {{/inGroup}}
+
+                <div class="menu-bar">
+                    {{#a $="enableSubmit" click="applyUser" href="#" class="btn btn-primary pull-right disabled"}}
+                        {{#equals User.id -1}}
+                            <span class="text">Speichern</span>
+                            <span class="sr-only">Benutzer speichern</span>
+                        {{else}}
+                            <span class="text">&Uuml;bernehmen</span>
+                            <span class="sr-only">Änderungen übernehmen</span>
+                        {{/equals}}
+
+                        <span class="icon fa fa-caret-right"></span>
+                        <span class="cssload-container">
+                            <span class="cssload-speeding-wheel"></span>
+                        </span>
+                    {{/a}}
+                </div>                
+            </div>            
+        </form>
+    {{/equals}}
+{{/view}}

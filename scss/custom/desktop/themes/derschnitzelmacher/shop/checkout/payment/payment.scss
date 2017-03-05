@@ -1,0 +1,543 @@
+@import "../../../../../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-custom {
+    &.#{$current-theme} {
+        form {
+            .form-group {
+                &.payment {
+                    width: 100%;
+                    
+                    > .btn,
+                    > .glyphicon-ok {
+                        position: relative;
+                        float: left;
+                        text-align: left;
+                        color: #000;
+                    }
+                    
+                    > .btn {
+                        width: 100%;
+                        
+                        &.active,
+                        &.selected {
+                            box-shadow: none;
+                            background-color: #000;
+                            color: #FFF;
+                            
+                            > span {
+                                color: #FFF;
+                            }                            
+                        }                        
+                    }
+
+                    > .glyphicon-ok {
+                        top: 0;
+                        right: 0;
+                        font-size: 45px;
+                        margin-top: 6px;
+                        margin-left: 20px;
+                        
+                        @include opacity(0);
+                    }
+                }                            
+            }
+        }
+        
+        [data-handle="CheckoutContainerView"] {
+            .form-payment {
+                padding: 15px;
+                border: 1px #CCC solid;
+                margin-bottom: 15px;
+            }                    
+        }
+        
+        [data-handle="CheckoutPaymentView"] {
+            .form-payment {
+                margin-bottom: 15px;
+                background-color: rgba(0, 0, 0, 0.05);
+                margin-top: -16px;
+                padding: 24px;
+            }
+            
+            form {
+                .form-group {
+                    &.payment {
+                        .glyphicon-refresh,
+                        .glyphicon-chevron-right {
+                            font-size: 48px !important;                            
+                        }
+
+                        .logo-cod,
+                        .icon-enter {
+                            float: left;
+                            color: #000;
+                        }
+                        
+                        .logo-cod {
+                            font-size: 27px;
+                            margin-top: 0px;
+                        }                        
+                        
+                        .logo-paypal {
+                            width: 113px;
+                            height: 45px;
+                            background: url("/assets/images/payment/paypal.png") no-repeat scroll 18px 10px rgba(0, 0, 0, 0);
+                            display: inline-block;
+                            background-size: 85px auto;
+                            position: relative;
+                            float: left;
+                            margin-top: 5px;
+                        }
+
+                        .logo-bank-transfer {
+                            position: relative;
+                            float: left;
+                            margin: 12px 15px auto;
+                        }
+                        
+                        .fa {
+                            &.payment-logo {
+                                font-size: 24px;
+                                float: left;
+                                color: #000;
+                                margin-left: 12px;
+                                margin-top: 15px;
+                                margin-right: 6px;
+                            }                            
+                        }
+                        
+                        .btn {
+                            &.active,
+                            &.selected {
+                                &:before {
+                                    border-right: 1px #FFF solid;
+                                }
+                                
+                                .fa.payment-logo {
+                                    color: #FFF;
+                                }
+                                
+                                &:after {
+                                    border-right: 1px #FFF solid;
+                                }
+                            }
+                        }
+                        
+                        .text {
+                            font-size: 18px;
+                            color: #000;
+                            line-height: 53px;
+                            display: inline-block;
+                            padding: 0px;
+                        }
+
+                        .icon-enter {
+                            font-size: 34px;
+                        }
+                        
+                        &:hover {
+                            .payment-logo,
+                            .logo-bank-transfer,
+                            .logo-cod,
+                            .logo-debit,
+                            .icon-enter,
+                            .text {
+                                color: #FFF;
+                            }
+                        }
+                    }
+                }
+                
+                .form-debit,
+                .form-paypal,
+                .form-bank-transfer,
+                .form-cod {
+                    display: none;
+                    position: relative;
+
+                    float: left;
+                    height: auto;
+                    width: 100%;
+                    
+                    .show {
+                        display: block;
+                        
+                        @include opacity(1);
+                    }                    
+                }  
+
+                .form-debit,
+                .form-paypal,
+                .form-bank-transfer {
+                    .menu-bar {
+                        position: relative;
+                        float: left;
+                        width: 100%;
+                        height: auto;
+                        margin-top: 0px;
+                        
+                        .btn {
+                            &:first-of-type {
+                                clear: right;
+                            }
+                        }
+                    }                
+                }
+
+                .form-cod {
+                    margin-bottom: 0px;
+                }      
+                
+                .form-debit {
+                    &.alert {
+                        &.alert-danger {
+                            text-align: left;
+                        }
+                    }
+                    
+                    .form-group {
+                        > label {
+                            float: left;
+                        }                    
+                    }
+                    
+                    .text-container {
+                        > h3 {
+                            width: 100%;
+                        }
+                    }
+                    
+                    > .form-info {
+                        margin-bottom: 12px;
+                    }
+
+                    .menu-bar {
+                        .btn {
+                            .text {
+                                padding-left: 10px;
+                            }                            
+                        }
+                    } 
+                    
+                    .iban-wrapper {
+                        position: relative;
+                        float: left;
+                        clear: left;
+
+                        width: auto;
+                        height: auto;
+                        
+                        .iban-placeholder {
+                            position: relative;
+                            float: left;
+                            width: auto;
+                            height: 100%;
+                            color: #474747;
+                            
+                            .iban-input {
+                                text-align: center;
+                                overflow: hidden;
+                                cursor: text;
+                                height: 34px;
+                                float: left;
+                                line-height: 32px;
+                                margin-right: 5px;
+                                background-color: #FFF;
+                                border: 1px #ccc solid;
+                                
+                                @include box-shadow(0px 1px 1px rgba(0,0,0,0.075) inset);
+                                @include border-radius(0px);
+                            }
+                            
+                            .iban0,
+                            .iban1,
+                            .iban2,
+                            .iban3,
+                            .iban4 {
+                                width: 60px;
+                            }
+                            
+                            .iban5 {
+                                width: 40px;
+                            }
+                            
+                            .iban6 {
+                                width: 130px;
+                            }
+                        }
+
+                        input {
+                            position: absolute;
+                            left: 0px;
+                            top: 0px;
+                            width: 100%;
+                            height: 35px;
+
+                            @include opacity(0);
+                        }
+                    }                    
+                }
+                
+                .form-paypal {
+                    > .form-label,
+                    > .form-info,
+                    > .form-group {
+                        position: relative;
+                        float: left;
+                        clear: left;
+                        width: 100%;
+                        height: auto;
+                        margin: 0px;
+                        text-align: left;
+                    }                    
+                    
+                    > .form-info {
+                        &.prepare {
+                            padding-bottom: 15px;
+                            margin-top: 5px;
+                            border-bottom: 1px #ccc solid;
+                            
+                            .fa-check {
+                                font-size: 15px;
+                                margin: 0px;
+                            }
+
+                            .glyphicon-ban-circle {
+                                color: #CF4C45;
+                                font-size: 15px;
+                                margin: 0px;    
+                            }
+                        }                                            
+                    }
+
+                    .form-group {
+                        &.datenschutz {
+                            position: absolute;
+                            bottom: 70px;
+                            left: 0px;
+                            right: 0px;
+                            margin: 0 auto;
+                        }
+                    }
+                    
+                    .form-info {
+                        &.prepare,
+                        &.contacted {
+                            display: none;
+                            
+                            &.show {
+                                display: block;
+
+                                @include opacity(1);
+                            }
+                        }
+                        
+                        &.prepare {
+                            .cssload-container {
+                                width: 39px;
+                                height: 31px;
+                                float: none;
+                                left: auto;
+                                right: auto;
+                                position: relative;
+                                
+                                &.show {
+                                    display: inline-block !important;
+                                    top: 6px;
+                                }
+                                
+                            }                                                    
+                        }
+                        
+                        &.contacted {
+                            padding-top: 10px;
+                            padding-bottom: 10px;
+                        }
+                    }
+                    
+                    .menu-bar {
+                        padding-top: 0px;
+                        
+                        > .link {
+                            font-size: 15px;
+                            float: right;
+                            width: auto;
+                            text-align: center;
+                            margin-top: 10px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        }                        
+                    }
+                    
+                    .glyphicon-refresh {
+                        padding: 3px;
+                        margin: 0px;
+
+                        color: #F27924;
+                        font-size: 24px;
+                        background-color: rgba(0, 0, 0, 0.5);
+
+                        width: 30px;
+                        height: 30px;
+
+                        @include box-shadow(0px 0px 7px 0px rgb(0, 0, 0));
+                        @include border-radius(100%);
+                    }                    
+                }
+                
+                .form-bank-transfer {
+                    overflow: auto;  
+                    
+                    > .form-info {
+                        margin-bottom: 24px;
+                    }
+                    
+                    .form-group {
+                        &.fullwidth {
+                            margin-bottom: 12px;
+                            
+                            > label,
+                            > .form-control { 
+                                float: left;
+                                margin-bottom: 0px;
+                            }
+                            
+                            > label {
+                                clear: left;
+                                width: 168px;
+                            }
+                            
+                            > .form-control {
+                                width: 170px;
+                                text-align: center;
+                                @include box-shadow(none);
+                            }
+                        }
+                    }
+                }
+                
+                .user-info {
+                    label {
+                        float: left; 
+                        clear: left;
+                        color: #474747;
+                        text-align: left;
+                        width: 300px;
+                        margin: 0px;
+                        padding: 0px;                        
+                    }
+                    
+                    div {
+                        float: left;
+                    }                    
+                }
+                
+                .sepa-bic {
+                    clear: left;
+                    width: 366px;
+                }
+                
+                .text-container {
+                    > label {
+                        clear: left !important;
+                        text-align: left;
+                        width: 300px;
+                        color: #474747;
+                        float: left;
+                    } 
+                    
+                    > span {
+                        float: left;
+                    }
+                    
+                    > .divide {
+                        height: 16px;
+                    }                    
+                }
+                
+                .user-sign {
+                    .group {
+                        position: relative;
+                        float: left;
+                        width: 300px;
+                        text-align: left;
+                        
+                        &.clear {
+                            clear: left;
+                        }
+                        
+                        label {
+                            border-top: 1px solid #474747;
+                            color: #474747;
+                            font-weight: bold;
+                            width: 185px;
+                            margin-top: 4px;
+                        }                        
+                    }
+                }
+            }
+            
+            .btn {
+                &.btn-chevron {
+                    &.big {
+                        &:before,
+                        &:after {
+                            height: 27px;
+                        }
+                        
+                        &:before {
+                            top: 11px;
+                        }
+                        
+                        &:hover {
+                            &:before {
+                                top: 30px;
+                            }
+                        }
+
+                        height: 68px;
+                        padding-left: 24px;
+                        
+                        .cssload-container {
+                            position: absolute;
+                            right: 0px;
+                            width: 60px;
+                            left: auto;    
+                        }                        
+                        
+                        &:hover {
+                            :after {
+                                top: 11px;
+                            }
+                        }
+                        
+                        &:after {
+                            top: 30px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

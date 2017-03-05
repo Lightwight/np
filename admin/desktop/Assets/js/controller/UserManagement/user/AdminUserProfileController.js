@@ -23,7 +23,10 @@
 np.controller.extend ('AdminUserProfileController', {
     view:   'AdminUserProfileView',
     model:  function () {
-        var result, user, authGroups, userID;
+        var hiGroup, hiGroupName, result, user, authGroups, userID;
+        
+        hiGroup     = 0;
+        hiGroupName = '';
         
         userID      = parseInt (np.route.getBookmarkItem (), 10);
         authGroups  = (function () {
@@ -32,6 +35,15 @@ np.controller.extend ('AdminUserProfileController', {
             groups  = new Array ();
             
             np.model.Auth_groups.findAll ().each (function (row) {
+                var groupID;
+                
+                groupID = row.getID ();
+
+                if (groupID > hiGroup) { 
+                    hiGroup     = groupID; 
+                    hiGroupName = row.getGroup ();
+                }
+
                 groups.push (row.getAll ());
             });
 
@@ -43,10 +55,20 @@ np.controller.extend ('AdminUserProfileController', {
         if (result.length () === 1)  {
             user        = result.getAll ();
             user.groups = authGroups;
+        } else if (userID !== -1) {
+            user    = {
+                id:         -2,
+                failed_id:  userID
+            };
         } else {
             user    = {
                 id:         -1,
-                failed_id:  userID
+                groups:     authGroups,
+                prename:    '',
+                name:       '',
+                gender:     'male',
+                group:      hiGroup,
+                group_name: hiGroupName
             };
         }
         

@@ -1,1 +1,25 @@
-$current-theme: np-theme-shisha-fame;
+/* current theme to display */
+$current-theme: np-theme-derschnitzelmacher;
+
+/* For the content centering including menu and cart */
+$page-content-width: 800px;
+$cart-view-width: 400px;
+
+$center-width: $page-content-width + $cart-view-width;
+
+$page-content-width-half: 0.5 * $page-content-width;
+$cart-view-width-half: 0.5 * $cart-view-width;
+
+$p-diff-c: $page-content-width-half - $cart-view-width-half;
+
+$main-content-width: calc(50vw + #{$p-diff-c});
+$menu-left: calc(50vw + #{$p-diff-c} - #{$page-content-width});
+
+/* For the main scollarea */
+$header-height: 170px;
+$main-height: calc(100vh - #{$header-height});
+
+/* for logo centering */
+$logo-width: 626px;
+$logo-width-half: 0.5 * $logo-width;
+$logo-left: calc(50vw - #{$logo-width-half});

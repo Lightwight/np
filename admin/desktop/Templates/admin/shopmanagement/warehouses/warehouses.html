@@ -1,0 +1,97 @@
+{{#need model Article_warehouses}}
+
+{{#view "AdminArticleWarehousesOverviewView" class="admin-overview"}}
+    <div class="flexbox">
+        {{#view "AdminArticleWarehousesOverviewSortableView" class="flexrow flexrow-6"}}
+            <div class="flexbox">
+                {{#div $="setWarehouseID" init=true click="sortByWarehouseD" class="flexrow flexrow-1 t-bold f-s16 sortable"}}ID{{/div}}
+                {{#div $="setName" init=true click="sortByName" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Name{{/div}}
+            </div>
+        {{/view}}
+
+        <div class="flexrow flexrow flexrow-1 flex-end">
+            {{#view "AdminArticleWarehousesOverviewSearchView" class="input-search-container"}}
+                <div class="input-group">
+                    {{{input change="setSearch" enter="search" bindAttr="search" type="text" class="iconable" placeholder="Suchen"}}}
+                    {{#div click="search" class="fa-container"}}
+                        <span class="fa fa-search"></span>
+                        <span class="sr-only">Lager Suchen</span>
+                    {{/div}}
+                </div>
+
+                {{#div $="toggleVisibility" init=true class="search-key-container"}}
+                    {{#button click="clearSearch" type="button" class="btn btn-primary"}}
+                        <span class="text">{{AdminArticleWarehousesSearch.sentSearch}}</span>
+                        <span class="fa fa-remove"></span>
+                        <span class="sr-only">Suchbegriff löschen</span>
+                    {{/button}}
+                {{/div}}
+            {{/view}}            
+        </div>
+
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+        
+        <div class="admin-table">
+            {{#if this}}
+                {{#each Article_warehouses}}
+                    {{#view "AdminArticleWarehouseOverviewView" class="admin-overview-row"}}
+                        <div class="flexbox">
+                            <div class="flexrow flexrow-1">WAR{{AdminArticleWarehouse.warehouse_id}}</div>
+                            <div class="flexrow flexrow-1">{{AdminArticleWarehouse.name}}</div>
+                            <div class="flexrow flexrow-1 flex-end">
+                                <a href="/admin/shopmanagement/warehouse/{{AdminArticleWarehouse.warehouse_id}}" class="btn btn-primary">
+                                    <span class="text">Bearbeiten</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Lager bearbeiten</span>
+                                    
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                </a>
+                                {{#button $="disableRemoveRow" click="removeRow" type="button" class="btn btn-primary"}}
+                                    <span class="text">Entfernen</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Lager entfernen</span>
+
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                {{/button}}
+                            </div>
+                        </div>
+                    {{/view}}
+                {{/each}}
+            {{else}}
+                <div class="admin-overview-row">
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">Der eingegebene Suchbegriff konnte nicht gefunden werden.</div>
+                    </div>
+                <div>
+            {{/if}}                
+            
+            {{#view "AdminArticleWarehouseAddView" id="admin-article-warehouse-add" class="admin-overview-row"}}
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">(auto)</div>
+                        <div class="flexrow flexrow-1">
+                            {{{input change="setName" bindAttr="name" type="text" placeholder="Lager"}}}
+                        </div>
+                        <div class="flexrow flexrow-1 flex-end">
+                            {{#button $="disableSaveRow" click="saveRow" type="button" class="btn btn-primary"}}
+                                <span class="text">Speichern</span>
+                                <span class="fa fa-caret-right"></span>
+                                {{#span $="sending" class="cssload-container"}}
+                                    <div class="cssload-speeding-wheel"></div>
+                                {{/span}}
+                            {{/button}}
+                        </div>
+                    </div>
+            {{/view}}
+        </div>
+
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+    </div>
+{{/view}}

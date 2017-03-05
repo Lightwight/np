@@ -24,6 +24,8 @@
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
 .np-scope-admin .info-box {
+  position: relative;
+  float: left;
   height: auto;
   background-color: #FFF;
   width: 100%;

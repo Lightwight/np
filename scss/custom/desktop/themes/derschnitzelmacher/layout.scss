@@ -1,0 +1,185 @@
+@import "../../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+html.np-scope-custom.#{$current-theme}, 
+html.np-scope-custom.#{$current-theme} body {
+    width: 100%;
+    height: auto;
+}
+
+html.np-scope-custom.#{$current-theme} {
+    body {
+        font-family: Arial, Helvetica Neue, Helvetica, sans-serif;
+        
+        background-image: url(/assets/images/backgrounds/wood.jpg);
+        background-size: cover;
+        background-position: top center;
+        
+        height: calc(100vh + 150px);
+        overflow: hidden;        
+        
+        @include transform(translate3d(0px, 0px, 0px));
+        @include transition(all 150ms ease-out);
+        
+        * {
+            box-sizing: border-box;
+        }
+        
+        header {
+            position: fixed;
+            width: 100%;
+            height: $header-height;
+            top: 0px;
+            left: 0px;
+            right: 0px;
+            bottom: auto;
+            background-color: transparent;
+            z-index: 9999;
+        }
+        
+    }
+
+    main {
+        position: fixed;
+        top: $header-height;
+        width: 100%;
+        height: calc(100vh - #{$header-height});
+        padding: 0px;
+        z-index: 1000;
+        
+        text-align: center;
+        overflow: auto;
+
+        .centered {
+            padding: 0px;
+            margin: 0px auto;
+            width: 800px;
+            text-align: center;
+        }
+
+        .main-content {
+            position: relative;
+            float: left;
+            width: $main-content-width;
+            height: calc(100% + 220px);
+            text-align: center;
+            
+            @include transition(all 350ms ease-out);
+                        
+            .page-content {
+                position: relative;
+                float: right;
+                background-color: #FFF;
+                width: $page-content-width;
+                max-width: 100%;
+                height: 100%;
+
+                text-align: left;
+
+                min-height: calc(100vh - 120px);
+                padding: 0px;
+                
+                @include box-shadow(0px 0px 8px 1px #000);
+            }            
+        }
+    }
+    
+    footer {
+        position: absolute;
+        
+        left: $menu-left;
+        right: auto;
+        bottom: 0px;
+        
+        width: $center-width;
+        
+        height: 300px;
+        background-color: #000;
+        z-index: 10000;
+        
+        @include box-shadow(0px 0px 8px 1px #000);
+        @include transition(all 350ms ease-out);
+        @include transform(translate3d(0px, 150px, 0px));
+        
+        &:hover {
+            @include transform(translate3d(0px, 96px, 0px));
+            @include transition(all 350ms ease-out);
+        }
+        
+        &:after {
+            content: "";
+            position: absolute;
+            
+            top: -2px;
+            right: 0px;
+            width: 401px;
+            height: 1px;
+            background-color: #FFF;
+        }
+    }
+
+    .hoz-title {
+        text-align: center;
+        width: 100%;
+        background-color: #44060F;
+        color: #FFF;
+        line-height: 60px;
+        margin: 0px;
+    }
+
+    a {
+        color: #000;
+        cursor: pointer;
+        
+        &:hover,
+        &:focus,
+        &:active {
+            font-weight: 700;
+            color: #000;
+            text-decoration: none;
+        }
+    }
+
+
+    input[type=text],
+    input[type=number],
+    input[type=email],
+    input[type=password] {
+        font-size: 16px;
+        height: 36px;
+        text-indent: 12px;
+        
+        &:focus {
+            border: 1px #d3d3d3 solid;
+            border-right: none;
+            outline: none;
+        }
+    }
+
+    .impressum {
+        position: absolute;
+        bottom: 20px;
+        left: 0px;
+        right: 0px;
+    }    
+}

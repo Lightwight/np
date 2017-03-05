@@ -29,22 +29,22 @@ class Config
     private $path   = '';
     private $scope  = 'custom';
     
-    public static function getInstance()    { return ( self::$instance !== null )? self::$instance : self::$instance = new self;    }    
+    public static function getInstance ()   { return (self::$instance !== null) ? self::$instance : self::$instance = new self;    }    
 
     private function __construct()
     {
-        $path           = str_replace( '\\' ,'/', getcwd() );
-        if( strrpos( $path, '/' ) != strlen( $path ) - 1 )  { $path .= '/'; }
+        $path           = str_replace ('\\' , '/', getcwd ());
+        if (strrpos ($path, '/') != strlen ($path) - 1)  { $path .= '/'; }
 
         $this->path     = $path;
     }
     
     private function __clone () {}    
     
-    public function getSettings() 
+    public function getSettings () 
     {
-	$cFile		    = str_replace( '\\', '/', __FILE__ );
-	$cFile		    = substr( $cFile, 0, strrpos( $cFile, '/core/php/Config.core.php' ) ).'/config.php';
+	$cFile		    = str_replace ('\\', '/', __FILE__);
+	$cFile		    = substr ($cFile, 0, strrpos ($cFile, '/core/php/Config.core.php')).'/config.php';
 	
         require $cFile;
         
@@ -115,4 +115,3 @@ class Config
     
     public function getPath()   { return $this->path;       }
 }
-?>

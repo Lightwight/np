@@ -1,0 +1,77 @@
+{{#need model Taxes}}
+
+{{#view "AdminArticleTaxesOverviewView" class="admin-overview"}}
+    <div class="flexbox">
+        {{#view "AdminArticleTaxesOverviewSortableView" class="flexrow flexrow-6"}}
+            <div class="flexbox">
+                {{#div $="setTaxID" init=true click="sortByTaxID" class="flexrow flexrow-1 t-bold f-s16 sortable"}}ID{{/div}}
+                {{#div $="setTax" init=true click="sortByTax" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Steuersatz (%){{/div}}                
+            </div>
+        {{/view}}
+        
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+
+        <div class="admin-table">
+            {{#if this}}
+                {{#each Taxes}}
+                    {{#view "AdminArticleTaxOverviewView" class="admin-overview-row"}}
+                        <div class="flexbox">
+                            <div class="flexrow flexrow-1">TAX{{AdminArticleTax.tax_id}}</div>
+                            <div class="flexrow flexrow-1">{{AdminArticleTax.tax}}</div>
+                            <div class="flexrow flexrow-1 flex-end">
+                                <a href="/admin/shopmanagement/tax/{{AdminArticleTax.tax_id}}" class="btn btn-primary">
+                                    <span class="text">Bearbeiten</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Steuersatz bearbeiten</span>
+                                    
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                </a>                                
+                                {{#button $="disableRemoveRow" click="removeRow" type="button" class="btn btn-primary"}}
+                                    <span class="text">Entfernen</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Steuersatz entfernen</span>
+
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                {{/button}}
+                            </div>
+                        </div>
+                    {{/view}}
+                {{/each}}
+            {{else}}
+                <div class="admin-overview-row">
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">Es sind keine Daten vorhanden.</div>
+                    </div>
+                <div>
+            {{/if}}                
+            
+            {{#view "AdminArticleTaxAddView" id="admin-article-tax-add" class="admin-overview-row"}}
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">(auto)</div>
+                        <div class="flexrow flexrow-1">
+                            {{{input change="setTax" bindAttr="tax" type="text" placeholder="Steuersatz (%)"}}}
+                        </div>
+                        <div class="flexrow flexrow-1 flex-end">
+                            {{#button $="disableSaveRow" click="saveRow" type="button" class="btn btn-primary"}}
+                                <span class="text">Speichern</span>
+                                <span class="fa fa-caret-right"></span>
+                                {{#span $="sending" class="cssload-container"}}
+                                    <div class="cssload-speeding-wheel"></div>
+                                {{/span}}
+                            {{/button}}
+                        </div>
+                    </div>
+            {{/view}}
+        </div>
+                    
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+    </div>
+{{/view}}

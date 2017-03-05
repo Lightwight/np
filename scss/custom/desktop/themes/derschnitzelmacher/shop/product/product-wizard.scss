@@ -1,0 +1,221 @@
+@import "../../../../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-custom {
+    &.#{$current-theme} {
+        #product-wizard {
+            position: relative;
+            float: left;
+            width: 100%;
+
+            .product-wizard-header {
+                position: relative;
+                float: left;
+                width: 100%;
+                height: 250px;
+
+                .background {
+                    position: absolute;
+                    left: 0px;
+                    right: 0px;
+                    top: 0px;
+                    bottom: 0px;
+                    width: 100%;
+                    height: 100%;
+                    overflow: hidden;
+                    
+                    .img {
+                        position: absolute;
+                        left: 0px;
+                        right: 0px;
+                        top: -110px;
+                        bottom: 0px;
+                        width: 100%;
+                        height: calc(100% + 80px);
+
+                        background-image: url(/assets/images/backgrounds/schnitzel.jpg);
+                        background-size: cover;
+                        background-position: center center;
+                        background-repeat: no-repeat;
+
+                        @include transition(all 250ms linear);
+                    }
+                }
+                
+                .content {
+                    position: absolute;
+                    top: 30px;
+                    left: 0px;
+                    background-color: rgba(0,0,0,0.4);
+                    padding: 12px 12px 12px 20px;
+                    border-top-right-radius: 12px;
+                    border-bottom-right-radius: 12px;
+                    max-width: 440px;
+                    
+                    h1 {
+                        font-family: handwritten;
+                    }
+                    
+                    span {
+                        color: #FFF;
+                        font-size: 16px;
+                    }
+                }
+            }
+            
+            .product-wizard-container {
+                .title-container {
+                    position: relative;
+                    float: left;
+                    
+                    width: 100%;
+                    
+                    border-bottom: 1px #ddd solid;
+                    margin-top: 0px;
+                    
+                    .title-content {
+                        position: relative;
+                        float: left;
+                        margin-bottom: 0px;                    
+                        width: 100%;
+                        background-color: #000;
+                        padding: 16px 20px 16px 20px;
+                        
+                        background-image: url(/assets/images/backgrounds/brown-wood.jpg);
+                        background-repeat: no-repeat;
+                        background-size: cover;
+                        background-position: center -2px;
+
+                        > * {
+                            position: relative;
+                            float: left;
+                            font-size: 20px;
+                            margin: 0px;
+                            
+                            color: #FFF;
+                        }
+                        
+                        > h2 {
+                            font-family: handwritten;
+                            font-size: 36px;
+                            line-height: 36px;
+                            
+                        }
+                        
+                        > .circle {
+                            background-color: #FFF;
+                            font-weight: bold;
+                            color: #000;
+                            
+                            margin-right: 16px;
+                        }
+                    }
+                }
+                
+                .product-outer-container {
+                    position: relative;
+                    float: left;
+                    border-top: 1px #eee solid;
+                    width: 100%;
+                    padding: 40px;
+                    
+                    @include transition(background-color 250ms ease-out);
+                    
+                    &:hover {
+                        background-color: #EEE;
+                        
+                        @include transition(background-color 250ms ease-in);
+                    }
+                    
+                    .product-name {
+                        position: relative;
+                        float: left;
+                        font-size: 20px;
+                        width: auto;
+                        text-align: left;
+                    }
+                    
+                    .highlight {
+                        position: relative;
+                        float: left;
+                        clear: left;
+                    }
+                    
+                    .cart {
+                        position: absolute;
+                        right: 30px;
+                        top: 30px;
+                        height: calc(100% - 60px);
+                        width: 272px;
+                        background-color: #8B7D6B;
+                        padding: 6px;
+
+                        .gross {
+                            position: relative;
+                            float: left;
+                            font-size: 16px;
+                            font-weight: bold;
+                            color: #FFF;
+                            line-height: 44px;
+                            border-right: 1px #fff solid;
+                            padding-right: 16px;
+                            padding-left: 16px;
+                        }
+                        
+                        .amount {
+                            position: relative;
+                            float: left;
+                            line-height: 44px;
+                            border-right: 1px #FFF solid;
+                            padding-right: 16px;
+                            padding-left: 16px;
+
+                            span {
+                                color: #FFF;
+                                cursor: pointer;
+                            }
+                            
+                            input {
+                                width: 40px;
+                                margin-left: 8px;
+                                margin-right: 8px;
+                                text-align: center;
+                                text-indent: 0px;
+                            }
+                        }
+                    }
+                    
+                    .btn-add-to-cart {
+                        position: relative;
+                        float: left;
+                        background-color: #8B7D6B;
+                        font-size: 30px;
+                        line-height: 30px;
+                        padding-left: 16px;
+                        padding-right: 16px;
+                    }
+                }
+            }
+        }
+    }
+}

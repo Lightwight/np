@@ -585,7 +585,7 @@ np.module ('handlebars', (function () {
     }
     
     function registerViewEvents (options) {
-        var nodeID, selector, jQ, context,
+        var nodeID, selector, didInsert, jQ, context,
             viewName, domView, jsView, init,
             fncView,
             observes,
@@ -593,11 +593,12 @@ np.module ('handlebars', (function () {
 
         nodeID      = options.nodeID;
         selector    = $('[data-node="'+nodeID+'"]');
+        didInsert   = $('[data-node="'+nodeID+'"]').parents ('[data-type="view"]:first').data ('didinsert') === true;
         jQ          = options.jQ;
         context     = options.context;
         init        = typeof options.init === 'boolean' ? options.init : false;
-   
-        if (selector.length > 0) { 
+
+        if (selector.length > 0 && didInsert) {
             domView     = selector.parents ('[data-type="view"]:first');
             viewName    = domView.data ('handle');
             jsView      = np.view.get (viewName);
@@ -617,7 +618,7 @@ np.module ('handlebars', (function () {
                     }
                 }
             }
-        } else if (storage.nodes.indexOf(nodeID) > -1) {
+        } else if (storage.nodes.indexOf (nodeID) > -1) {
             np.tick (registerViewEvents, options);
         }
     }    

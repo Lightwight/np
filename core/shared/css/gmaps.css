@@ -1,3 +1,7 @@
+/* current theme to display */
+/* For the content centering including menu and cart */
+/* For the main scollarea */
+/* for logo centering */
 /*
 *   This software called - np - is a lightwight MVP Framework for building web applications and
 *   was developed by Christian Peters
@@ -50,10 +54,6 @@ html {
       top: 12px; }
     html .gmaps-overlay .fa-angle-double-down {
       bottom: 12px; }
-  html .gmaps-area {
-    position: relative !important;
-    float: left !important;
-    width: 100% !important; }
   html .gmaps-outer-panelTop *,
   html .gmaps-outer-panelLeft * {
     white-space: normal;

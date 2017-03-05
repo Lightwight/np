@@ -1,0 +1,150 @@
+@import "../../../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-custom {
+    &.#{$current-theme} {
+        form {
+            .form-group {
+                &.delivery {
+                    width: 100%;
+                    
+                    > .btn,
+                    > .glyphicon-ok {
+                        position: relative;
+                        float: left;
+                    }
+                    
+                    > .btn {
+                       width: 350px;
+                    } 
+
+                    .glyphicon-ok {
+                        opacity: 0;
+                        top: 0;
+                        right: 0;
+                        font-size: 45px;
+                        margin-top: 6px;
+                        margin-left: 20px;
+                    }
+                    
+                    .delivery_price {
+                        float: right;
+                        width: 275px;
+                        height: auto;
+                        margin-bottom: 0px;
+                        padding: 5px;
+
+                        @include opacity(0);
+                        @include transition(all 0.8s ease-in-out);
+                    }
+                    
+                    .glyphicon-refresh,
+                    .glyphicon-chevron-right {
+                        font-size: 48px !important;
+                    }
+                    
+                    .logo-bank-transfer {
+                        font-size: 28px;
+                        color: #3E5B79;
+                        margin-top: 10px;
+                    }
+
+                    .logo-dhl {
+                        position: relative;
+                        float: left;
+                        height: 57px;
+                        width: 125px;
+                        margin-left: 55px;
+                        cursor: pointer;
+
+                        background-image: url("/assets/images/delivery/dhl.png");
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                    }
+                    
+                    .logo-ups {
+                        position: relative;
+                        float: left;
+                        height: 55px;
+                        width: 45px;
+                        margin-left: 95px;
+                        cursor: pointer;
+
+                        background-image: url("/assets/images/delivery/ups.png");
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                    }
+
+                    .logo-hermes {
+                        position: relative;
+                        float: left;
+                        height: 47px;
+                        width: 245px;
+                        margin-left: 15px;
+                        cursor: pointer;
+
+                        background-image: url("/assets/images/delivery/hermes.png");
+                        background-size: cover;
+                        background-repeat: no-repeat;
+                    }                    
+                }
+            }
+        }
+        
+        [data-handle="CheckoutDeliveryView"] {
+            .info {
+                height: 0px;
+
+                padding: 0;
+                margin: 0;
+
+                float: left;
+                width: 100%;
+
+                @include opacity(0);
+                @include transition(all 0.8s ease-in-out);
+                
+                &.fadeIn {
+                    height: 120px;
+
+                    padding: 15px;
+                    margin-bottom: 20px;
+
+                    @include opacity(1);
+                    @include transition(all 0.8s ease-in-out);
+                }
+                
+                .icon {
+                    color: #F27924;
+                    font-size: 30px;
+                } 
+                
+                > span {
+                    .text {
+                        color: #8A6D3B;
+                    }
+                }
+            }        
+        }
+    }
+}

@@ -1,0 +1,140 @@
+@import "../../../../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-custom {
+    &.#{$current-theme} {
+        .products-overview {
+            position: relative;
+            width: 100%;
+            height: auto;
+            text-align: center;
+            z-index: 10;
+            
+            .popular-product-outer-container {
+                display: inline-block;
+            }
+            
+            .products-container {
+                position: relative;
+                width: 100%;
+                padding: 24px;
+                margin: 0px auto;
+                left: auto;
+                right: auto;
+                float: left;
+                
+                .product-container {
+                    position: relative;
+
+                    width: 316px;
+                    height: 450px;
+                    display: block;
+                    margin: 8px;
+                    background-size: cover;
+                    background-position: center center;
+                    background-repeat: no-repeat;
+                    border: 1px #FFF solid;
+                    
+                    @include box-shadow(0px 0px 8px rgba(127,127,127,0.5),0px 0px 8px rgba(127,127,127,0.5));
+                    
+                    span {
+                        position: absolute;
+                        bottom: 0px;
+                        left: 0px;
+                        right: 0px;
+                        width: 100%;
+                        background-color: rgba(255,255,255,0.1);
+                        margin: 0px;
+                        color: #FFF;
+                        
+                        &.product-producer {
+                            line-height: 42px;
+                            height: 42px;
+                            font-family: "Roboto Thin";    
+                        }
+                        
+                        &.product-name {
+                            bottom: 42px;
+                            font-family: "Roboto Medium";
+                            height: 22px;
+                            line-height: 34px;
+                            font-size: 24px;    
+                        }                        
+                    } 
+                    
+                    img {
+                        position: relative;
+                        float: none;
+                        height: 400px;
+                        left: auto;
+                        right: auto;
+                        margin: 0px auto;
+                        margin-bottom: 12px;
+                        width: auto;
+                    }                    
+                }
+                
+                .product-price-container {
+                    position: relative;
+                    float: left;
+                    clear: left;
+                    width: 316px;
+                    height: 60px;
+                    display: block;
+                    background-color: #000;
+                    margin: 8px;
+                    
+                    font-size: 28px;
+                    font-family: "Roboto";
+                    line-height: 60px;
+                    
+                    @include box-shadow(0px 0px 8px rgba(127,127,127,0.5),0px 0px 8px rgba(127,127,127,0.5));
+                }                
+            }            
+        }
+        
+        &.media-s-xs {
+            .products-overview {
+                .popular-product-outer-container {
+                    display: block;
+                    position: relative;
+                    float: left;
+                    width: 100%;
+                }
+                
+                .products-container {
+                    .product-container {
+                        margin: 0px;
+                        width: 100%;
+                        height: 250px;
+                    }                
+                    
+                    .product-price-container {
+                        margin: 10px 0px 32px 0px;
+                        width: 100%;
+                    }                    
+                }
+            }
+        }
+    }
+}

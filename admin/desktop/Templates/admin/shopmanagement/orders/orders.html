@@ -1,0 +1,84 @@
+{{#need model User_orders}}
+
+{{#view "AdminShopOrdersOverviewView" class="admin-overview" id="admin-orders-overview-view"}}
+    <div class="flexbox">
+        {{#view "AdminShopOrdersOverviewSortableView" class="flexrow flexrow-6"}}
+            <div class="flexbox">
+                <div class="flexrow flexrow-1" id="admin-order-overview-filter">
+                    <label class="small normal pull-left">Zeige</label>
+                    {{#select $="setFilter" change="setFilter" init=true notifiy=false bindAttr="ord_filter" class="pull-left"}}
+                        <option value="0">alle</option>                    
+                        <option value="1">neu</option>                    
+                        <option value="2">in Bearbeitung</option>                    
+                        <option value="3">versendet</option>                    
+                        <option value="4">bezahlt</option>                    
+                        <option value="5">nicht bezahlt</option>                    
+                        <option value="6">erledigt</option>                    
+                    {{/select}}
+                </div>
+                {{#div $="setOrderID" init=true click="sortByOrderID" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Order ID{{/div}}
+                {{#div $="setOrderName" init=true click="sortByName" class="flexrow flexrow-1 t-bold f-s16 sortable"}}Name{{/div}}                
+                {{#div $="setOrderMail" init=true click="sortByMail" class="flexrow flexrow-1 t-bold f-s16 sortable"}}E-Mail{{/div}}                
+            </div>
+        {{/view}}
+
+        <div class="flexrow flexrow flexrow-1 flex-end">
+            {{#view "AdminShopOrdersOverviewSearchView" class="input-search-container"}}
+                <div class="input-group">
+                    {{{input change="setSearch" enter="search" bindAttr="search" type="text" class="iconable" placeholder="Suchen"}}}
+                    {{#div click="search" class="fa-container"}}
+                        <span class="fa fa-search"></span>
+                        <span class="sr-only">Bestellung Suchen</span>
+                    {{/div}}
+                </div>
+
+                {{#div $="toggleVisibility" init=true class="search-key-container"}}
+                    {{#button click="clearSearch" type="button" class="btn btn-primary"}}
+                        <span class="text">{{AdminOrdersSearch.sentSearch}}</span>
+                        <span class="fa fa-remove"></span>
+                        <span class="sr-only">Suchbegriff löschen</span>
+                    {{/button}}
+                {{/div}}
+            {{/view}}            
+        </div>
+
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+        
+        <div class="admin-table">
+            {{#if this}}
+                {{#each User_orders}}
+                    {{#view "AdminShopOrderOverviewView" class="admin-overview-row" id="admin-order-overview-view"}}
+                        <div class="flexbox">
+                            <div class="flexrow flexrow-1">{{AdminShopOrder.id}}</div>
+                            <div class="flexrow flexrow-1">{{AdminShopOrder.name}}</div>
+                            <div class="flexrow flexrow-1">{{AdminShopOrder.email}}</div>
+                            <div class="flexrow flexrow-1 flex-end">
+                                <a href="/admin/shopmanagement/order/{{AdminShopOrder.id}}" class="btn btn-primary pull-right">
+                                    <span class="text">Bearbeiten</span>
+                                    <span class="fa fa-caret-right"></span>
+                                    <span class="sr-only">Bestellung bearbeiten</span>
+                                    
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                </a>
+                            </div>
+                        </div>
+                    {{/view}}
+                {{/each}}
+            {{else}}
+                <div class="admin-overview-row">
+                    <div class="flexbox">
+                        <div class="flexrow flexrow-1">Der eingegebene Suchbegriff konnte nicht gefunden werden.</div>
+                    </div>
+                <div>
+            {{/if}}
+        </div>
+
+        {{#if this}}
+            {{#partial admin-table-pagination}}
+        {{/if}}
+    </div>
+{{/view}}

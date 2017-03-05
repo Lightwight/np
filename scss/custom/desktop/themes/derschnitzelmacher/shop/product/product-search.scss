@@ -1,0 +1,96 @@
+@import "../../../../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-custom {
+    &.#{$current-theme} {
+        #searchField {
+            position: absolute;
+            right: 165px;
+            top: 30px;
+            width: 250px;
+            
+            @include opacity(0);
+        }
+
+        #productSearch {
+            float: left;
+            width: 236px;
+            height: 28px;
+            position: relative;
+            clear: left;
+            margin: 0px 0px 0px 24px;
+            max-width: 100%;
+            
+            input {
+                font-weight: normal;
+                font-size: 14px;
+                height: 100%;
+                width: calc(100% - 28px);
+                float: left;
+                text-align: center;
+                border: 1px #d3d3d3 solid;
+                border-right: none;
+                
+                :focus {
+                    border: 1px #d3d3d3 solid;
+                    border-right: none;
+                    outline: none;
+                }                
+            }
+            
+            .btn {
+                position: absolute;
+                right: 0px;
+                top: 0px;
+                box-shadow: none;
+                background-color: inherit;
+                border: 1px #d3d3d3 solid;
+                border-left: none;
+                color: #d3d3d3;
+                width: 28px;
+                padding: 0px;
+                font-size: 14px;
+                height: 100%;
+                line-height: 26px;
+
+                @include transition(all 350ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+            }
+            
+            &:hover {
+                .btn {
+                    color: rgba(0,0,0,0.46);
+
+                    @include transition(all 350ms cubic-bezier(0.250, 0.460, 0.450, 0.940));
+                    
+                    &:hover {
+                        .glyphicon {
+                            color: rgba(255,255,255,1);    
+
+                            @include transition(all 200ms ease-out);
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

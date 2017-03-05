@@ -20,140 +20,149 @@
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
 
-np.view.extend ('AdminUserProfileView', {
-    didInsert: function () {
-        this ('select').selectpicker ();
-    },
+np.view.extend ('AdminUserProfileView', (function () {
+    var _nsGender, _nsGroup;
     
-    salutation: function (model) {
-        if (model.get ('gender') === 'male') {
-            this.val ('Herr');
-        } else {
-            this.val ('Frau');
-        }
-    }.observes ('gender').on ('change'),
-    
-   group: function (model) {
-       this.val (model.get ('group_name'));
-   }.observes ('group_name').on ('change'),
-   
-    validName: function (model) {
-        if (!model.get ('name').empty ()) {
-            if (!this.hasClass ('fadeIn'))  { this.addClass ('fadeIn');         }
-            if (this.hasClass ('fadeOut'))  { this.removeClass ('fadeOut');     }
-        } else {
-            if (this.hasClass ('fadeOut'))  { this.removeClass ('fadeOut');     }
-            if (this.hasClass ('fadeIn'))   { this.removeClass ('fadeIn');      }
-        }
-    }.observes ('name').on ('change'),
+    _nsGender   = '#admin-user-gender';
+    _nsGroup    = '#admin-user-group';
 
-    invalidName: function (model) {
-        var _t, msg;
-        
-        _t  = this;
-        
-        if (model.get ('name').empty ()) {
-            msg = 'Bitte geben Sie einen Nachnamen ein.';
-                
-            this.qtip ({
-                content:    { text: msg },
-                style: {
-                    classes: 'qtip-dark',
-                    tip: {
-                        corner: 'bottom center'
-                    }
-                },
-                position: {
-                    my: 'bottom center',
-                    at: 'top center',
-                    target: _t
-                }
-            });
-                
-            if (!this.hasClass ('fadeIn'))  { this.addClass ('fadeIn');     }
-            if (this.hasClass ('fadeOut'))  { this.removeClass ('fadeOut'); }
-        } else {
-            if ($(this).qtip ('api')) { 
-                $(this).qtip ('api').hide ();    
-                $(this).qtip ('api').disable ();    
-                $('.qtip').remove ();
+    return {
+        didInsert: function () {
+            _nsGender   = $(_nsGender).niceSelect ();
+            _nsGroup    = $(_nsGroup).niceSelect ();
+        },
+
+        salutation: function (model) {
+            $(_nsGender).val (model.get ('gender')).niceSelect ('update');
+        }.observes ('gender').on ('change'),
+
+        group: function (model) {
+            $(_nsGroup).val (parseInt (model.get ('group'), 10)).niceSelect ('update');
+       }.observes ('group_name').on ('change'),
+
+        validName: function (model) {
+            if (!model.get ('name').empty ()) {
+                if (!this.hasClass ('fadeIn'))  { this.addClass ('fadeIn');         }
+                if (this.hasClass ('fadeOut'))  { this.removeClass ('fadeOut');     }
+            } else {
+                if (this.hasClass ('fadeOut'))  { this.removeClass ('fadeOut');     }
+                if (this.hasClass ('fadeIn'))   { this.removeClass ('fadeIn');      }
             }
-                
-            if (!this.hasClass ('fadeOut')) { this.addClass ('fadeOut');    }
-            if (this.hasClass ('fadeIn'))   { this.removeClass ('fadeIn');  }
-        }
-    }.observes ('name').on ('change'),
-    
-    validPrename: function (model) {
-        if (!model.get ('prename').empty ()) {
-            if (!this.hasClass ('fadeIn'))  { this.addClass ('fadeIn');         }
-            if (this.hasClass ('fadeOut'))  { this.removeClass ('fadeOut');     }
-        } else {
-            if (this.hasClass ('fadeOut'))  { this.removeClass ('fadeOut');     }
-            if (this.hasClass ('fadeIn'))   { this.removeClass ('fadeIn');      }
-        }
-    }.observes ('prename').on ('change'),
+        }.observes ('name').on ('change'),
 
-    invalidPrename: function (model) {
-        var _t, msg;
-        
-        _t  = this;
-        
-        if (model.get ('prename').empty ()) {
-            msg = 'Bitte geben Sie einen Vorname ein.';
-                
-            this.qtip ({
-                content:    { text: msg },
-                style: {
-                    classes: 'qtip-dark',
-                    tip: {
-                        corner: 'bottom center'
+        invalidName: function (model) {
+            var _t, msg;
+
+            _t  = this;
+
+            if (model.get ('name').empty ()) {
+                msg = 'Bitte geben Sie einen Nachnamen ein.';
+
+                this.qtip ({
+                    content:    { text: msg },
+                    style: {
+                        classes: 'qtip-dark',
+                        tip: {
+                            corner: 'bottom center'
+                        }
+                    },
+                    position: {
+                        my: 'bottom center',
+                        at: 'top center',
+                        target: _t
                     }
-                },
-                position: {
-                    my: 'bottom center',
-                    at: 'top center',
-                    target: _t
-                }
-            });
-                
-            if (!this.hasClass ('fadeIn'))   { this.addClass ('fadeIn');  }
-            if (this.hasClass ('fadeOut'))   { this.removeClass ('fadeOut');  }
-        } else {
-            if ($(this).qtip ('api')) { 
-                $(this).qtip ('api').hide ();    
-                $(this).qtip ('api').disable ();    
-                $('.qtip').remove ();
-            }
-                
-            if (!this.hasClass ('fadeOut'))   { this.addClass ('fadeOut');  }
-            if (this.hasClass ('fadeIn'))   { this.removeClass ('fadeIn');  }
-        }       
-    }.observes ('prename').on ('change'),
-   
-    enableSubmit: function (model) {
-       var user, valid, changed,
-           uGender, uGroup, uName, uPrename,
-           mGender, mGroup, mName, mPrename;
-       
-       user     = np.model.Users.findByID (model.get ('id'));
-       
-       uGender  = user.getGender ();
-       uGroup   = user.getGroupName ();
-       uName    = user.getName ();
-       uPrename = user.getPrename ();
-       
-       valid    = mName.length > 0 && mPrename.length > 0;
-       changed  = mGender !== uGender
-                  || mGroup !== uGroup
-                  || mName !== uName
-                  || mPrename !== mPrename;
+                });
 
-       if (valid && changed)    { this.removeClass ('disabled');    }
-       else                     { this.addClass ('disabled');       }
-    }
-    .observes ('gender').on ('change')
-    .observes ('group_name').on ('change')
-    .observes ('prename').on ('change')
-    .observes ('name').on ('change')
-});
+                if (!this.hasClass ('fadeIn'))  { this.addClass ('fadeIn');     }
+                if (this.hasClass ('fadeOut'))  { this.removeClass ('fadeOut'); }
+            } else {
+                if ($(this).qtip ('api')) { 
+                    $(this).qtip ('api').hide ();    
+                    $(this).qtip ('api').disable ();    
+                    $('.qtip').remove ();
+                }
+
+                if (!this.hasClass ('fadeOut')) { this.addClass ('fadeOut');    }
+                if (this.hasClass ('fadeIn'))   { this.removeClass ('fadeIn');  }
+            }
+        }.observes ('name').on ('change'),
+
+        validPrename: function (model) {
+            if (!model.get ('prename').empty ()) {
+                if (!this.hasClass ('fadeIn'))  { this.addClass ('fadeIn');         }
+                if (this.hasClass ('fadeOut'))  { this.removeClass ('fadeOut');     }
+            } else {
+                if (this.hasClass ('fadeOut'))  { this.removeClass ('fadeOut');     }
+                if (this.hasClass ('fadeIn'))   { this.removeClass ('fadeIn');      }
+            }
+        }.observes ('prename').on ('change'),
+
+        invalidPrename: function (model) {
+            var _t, msg;
+
+            _t  = this;
+
+            if (model.get ('prename').empty ()) {
+                msg = 'Bitte geben Sie einen Vorname ein.';
+
+                this.qtip ({
+                    content:    { text: msg },
+                    style: {
+                        classes: 'qtip-dark',
+                        tip: {
+                            corner: 'bottom center'
+                        }
+                    },
+                    position: {
+                        my: 'bottom center',
+                        at: 'top center',
+                        target: _t
+                    }
+                });
+
+                if (!this.hasClass ('fadeIn'))   { this.addClass ('fadeIn');  }
+                if (this.hasClass ('fadeOut'))   { this.removeClass ('fadeOut');  }
+            } else {
+                if ($(this).qtip ('api')) { 
+                    $(this).qtip ('api').hide ();    
+                    $(this).qtip ('api').disable ();    
+                    $('.qtip').remove ();
+                }
+
+                if (!this.hasClass ('fadeOut'))   { this.addClass ('fadeOut');  }
+                if (this.hasClass ('fadeIn'))   { this.removeClass ('fadeIn');  }
+            }       
+        }.observes ('prename').on ('change'),
+
+        enableSubmit: function (model) {
+           var user, valid, changed,
+               uGender, uGroup, uName, uPrename,
+               mGender, mGroup, mName, mPrename;
+
+           user     = np.model.Users.findByID (model.get ('id'));
+
+           uGender  = user.getGender ();
+           uGroup   = user.getGroup ();
+           uName    = user.getName ();
+           uPrename = user.getPrename ();
+
+           mGender  = model.get ('gender');
+           mGroup   = model.get ('group');
+           mName    = model.get ('name');
+           mPrename = model.get ('prename');
+
+           valid    = mName.length > 0 && mPrename.length > 0;
+           changed  = mGender !== uGender
+                      || mGroup !== uGroup
+                      || mName !== uName
+                      || mPrename !== mPrename;
+
+           if (valid && changed)    { this.removeClass ('disabled');    }
+           else                     { this.addClass ('disabled');       }
+        }
+        .observes ('gender').on ('change')
+        .observes ('group_name').on ('change')
+        .observes ('prename').on ('change')
+        .observes ('name').on ('change')
+    };
+})());
