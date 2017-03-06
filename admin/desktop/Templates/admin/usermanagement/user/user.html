@@ -7,6 +7,7 @@
             </div>
         </form>
     {{else}}
+        {{#partial cta-notification}}
         <form class="bg-grey">
             <h4 class="form-title">Benutzerprofil</h4>
 
@@ -21,7 +22,7 @@
 
                     <label>Benutzerrolle: </label>
 
-                    {{#select bindAttr="group" $="group" change="setGroup" init=true class="nice-select" id="admin-user-group"}}
+                    {{#select bindAttr="group" $="group" change="setGroup" notify=false init=true class="nice-select" id="admin-user-group"}}
                         {{#each User.groups}}
                             <option value="{{id}}">{{group}}</option>
                         {{/each}}
@@ -48,15 +49,11 @@
 
                 <div class="form-group fullwidth">
                     {{#inGroup "Administrator"}}
-                        {{#equals User.id -1}}
-                            {{{input type="email" class="iconable" change="setEmail" placeholder="E-Mail-Adresse" value=""}}}
-                        {{else}}
-                            {{{input type="email" class="iconable" change="setEmail" placeholder="E-Mail-Adresse" value=User.email}}}
-                        {{/equals}}
+                        {{{input bindAttr="email" type="email" class="iconable" change="setEmail" placeholder="E-Mail-Adresse" value=User.email}}}
                         
                         <div class="fa-container">
-                            {{{span $="invalidEMail" init=true class="fa fa-flash"}}}
-                            {{{span $="validEMail" init=true class="fa fa-check"}}}
+                            {{{span $="invalidMail" init=true class="fa fa-flash"}}}
+                            {{{span $="validMail" init=true class="fa fa-check"}}}
                         </div>
                     {{else}}
                         <input type="email" placeholder="E-Mail-Adresse" value="{{{User.email}}}" disabled>
@@ -64,14 +61,14 @@
                 </div>
                 
                 {{#inGroup "Administrator"}}
-                    <div class="form-group fullwidth">
-                        {{{input type="email" class="iconable" change="setEmailConfirmation" placeholder="E-Mail-Adresse bestätigen" value=""}}}
+                    {{#div $="enableMailConfirmation" init=true class="form-group fullwidth hide"}}
+                        {{{input bindAttr="email_confirmation" notify=true type="email" class="iconable" change="setEmailConfirmation" placeholder="E-Mail-Adresse bestätigen" value=""}}}
 
                         <div class="fa-container">
-                            {{{span $="invalidEMailConfirmation" init=true class="fa fa-flash"}}}
-                            {{{span $="validEMailConfirmation" init=true class="fa fa-check"}}}
+                            {{{span $="invalidMailConfirmation" init=true class="fa fa-flash"}}}
+                            {{{span $="validMailConfirmation" init=true class="fa fa-check"}}}
                         </div>
-                    </div>
+                    {{/div}}
                 {{/inGroup}}
 
                 <div class="menu-bar">
@@ -85,9 +82,9 @@
                         {{/equals}}
 
                         <span class="icon fa fa-caret-right"></span>
-                        <span class="cssload-container">
+                        {{#span $="applying" class="cssload-container"}}
                             <span class="cssload-speeding-wheel"></span>
-                        </span>
+                        {{/span}}
                     {{/a}}
                 </div>                
             </div>            

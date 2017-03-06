@@ -119,6 +119,69 @@ class Auth
         }        
     }
     
+    public static function adminRegister ($registerModel, $userModel, $sendMail = true)
+    {
+        $code       = CryptoLib::randomString (128);
+        $hashedCode = CryptoLib::hash ($code, CryptoLib::generateSalt ());
+        
+        $user       = new Model ('Users');
+        $reg        = new Model ('Register');
+
+        $userRows   = $user->findBy ('email', $userModel->get ('email'))->result ();
+        $regRows    = $reg->findBy ('email', $registerModel->get ('email'))->result ();
+
+        if (!$userRows)
+        {
+            if ($regRows)
+            {
+                $registeredModel    = $regRows;
+
+                $registeredModel->set ('confirmation_code', $hashedCode);
+            }
+            else
+            {
+                $registerModel->set ('confirmation_code', $hashedCode);
+            }
+
+            // Add or update user in regitration table:
+            $registered = !$regRows ? $registerModel->post () : $registeredModel->update ();
+
+            if ($registered)
+            {
+                $gender     = $userModel->get ('gender');
+                $prename    = $userModel->get ('prename');
+                $name       = $userModel->get ('name');
+                $groupID    = $userModel->get ('group');
+                $email      = $userModel->get ('email');
+                
+                // Add user in users table:
+                $userID     = self::registerConfirmation ($code, true);
+                $changed    = $userID > 0 ? self::changeUser ($prename, $name, $gender, '', '', $userID) : false;
+                $changed    = $changed ? self::setUserGroup ($userID, $groupID) : false;
+                
+                if ($changed)
+                {
+                    if ($sendMail)
+                    {
+                        return self::sendSetPasswortLink ($email) ? $userID : new ErrorHandler (560);
+                    }
+                    
+                    return $userID;
+                }
+                
+                return new ErrorHandler (580);
+            }
+            else 
+            {
+                return $registered->getError ();
+            }
+        }
+        else
+        {
+            return new ErrorHandler (1062);
+        }        
+    }
+    
     public static function registerConfirmation ($code, $returnID = false)
     {
         if ($code && trim ($code) !== '')
@@ -227,6 +290,37 @@ class Auth
         return new ErrorHandler (600);
     }
     
+    public static function sendSetPasswortLink ($email)
+    {
+        $resetData  = self::setResetPasswordLink ($email);
+        
+        if ($resetData)
+        {
+            $reset_code         = $resetData['reset_code'];
+            $tmp_pass           = $resetData['reset_pass'];
+            
+            $subject            = 'np.dev - Vergeben Sie sich Ihr Passwort.';
+
+            $body               = 'Sie können sich nun Ihr eigenes Passwort vergeben!<br><br>';
+            $body              .= 'Bitte klicken Sie auf den nachfolgenden Link, um Ihr Passwort zu vergeben und<br>';
+            $body              .= 'geben Sie in der darauf folgenden Seite in das Feld "Code" den unten angegebenen Code ein.<br><br>';
+            $body              .= 'Link: <a href="'.self::setting ('auth', 'pw_reset_link').$reset_code.'">'.self::setting ('auth', 'pw_reset_link').$reset_code.'</a><br>';
+            $body              .= 'Bestätigungs-Code: '.$tmp_pass;
+
+            $altBody            = 'Sie können sich nun Ihr eigenes Passwort vergeben!'."\r\n\r\n";
+            $altBody           .= 'Bitte rufen Sie den nachfolgenden Link auf, um Ihr Passwort zu vergeben und'."\r\n";
+            $altBody           .= 'geben Sie in der darauf folgenden Seite in das Feld "Code" den unten angegebenen Reset-Code ein.'."\r\n\r\n";
+            $altBody           .= 'Link: '.self::setting ('auth', 'pw_reset_link').$reset_code."\r\n";
+            $altBody           .= 'Bestätigungs-Code: '.$tmp_pass;
+
+            $mailed             = self::mail ($email, $subject, $body, $altBody);
+
+            return $mailed ? 1 : null;
+        }
+        
+        return new ErrorHandler (600);
+    }
+    
     public static function validateResetPasswordLink ($pw_reset)
     {
         if ($pw_reset && $pw_reset !== '')
@@ -288,60 +382,53 @@ class Auth
         return new ErrorHandler (581);
     }
     
-    public static function changeUser ($prename, $name, $gender, $company, $ustid, $_userID = false)
+    public static function changeUser ($prename, $name, $gender, $company = '', $ustid = '', $_userID = false)
     {
         $loggedIn   = self::loggedIn ();
         $userID     = !$_userID ? self::userID () : $_userID;
 
         $prename    = trim ($prename);
-
         $name       = trim ($name);
+        $gender     = $gender === 'female' ? 'female' : 'male';
 
-        $gender     = trim ($gender);
-        $gender     = $gender !== '' ? $gender : false;
-        $gender     = $gender === 'male' || $gender === 'female' ? $gender : 'male';
-
-        if ($loggedIn) 
+        if ($loggedIn && $userID) 
         {
-            if ($userID) 
+            $sql            = Sql::getInstance ();
+
+            $query          = 'UPDATE ';
+            $query         .=   '`users` ';
+            $query         .= 'SET ';
+            $query         .= '`prename`="'.$sql->real_escape_string ($prename).'",';
+            $query         .= '`name`="'.$sql->real_escape_string ($name).'",';
+            $query         .= '`gender`="'.$sql->real_escape_string ($gender).'" ';
+            $query         .= 'WHERE ';
+            $query         .=   '`ID`="'.$userID.'";';
+
+            $result         = $sql->query ($query);
+
+            if ($result && $userID === self::userID ())
             {
-                $sql            = Sql::getInstance ();
+                $cookie     = NPCookie::getCookie ('auth', array ());
 
-                $query          = 'UPDATE ';
-                $query         .=   '`users` ';
-                $query         .= 'SET ';
-                $query         .= '`prename`="'.$sql->real_escape_string ($prename).'",';
-                $query         .= '`name`="'.$sql->real_escape_string ($name).'",';
-                $query         .= '`gender`="'.$sql->real_escape_string ($gender).'" ';
-                $query         .= 'WHERE ';
-                $query         .=   '`ID`="'.$userID.'";';
-
-                $result         = $sql->query ($query);
-
-                if ($result && $userID === self::userID ())
-                {
-                    $cookie     = NPCookie::getCookie ('auth', array ());
-
-                    if ($prename)   
-                    { 
-                        $cookie['prename'] = $_SESSION['auth']['prename'] = $prename;    
-                    }
-
-                    if ($name)      
-                    { 
-                        $cookie['name'] = $_SESSION['auth']['name'] = $name;          
-                    }
-
-                    if ($gender)    
-                    { 
-                        $cookie['gender'] = $_SESSION['auth']['gender'] = $gender;      
-                    }
-
-                    NPCookie::setCookie ('auth', $cookie);
+                if ($prename)   
+                { 
+                    $cookie['prename'] = $_SESSION['auth']['prename'] = $prename;    
                 }
+
+                if ($name)      
+                { 
+                    $cookie['name'] = $_SESSION['auth']['name'] = $name;          
+                }
+
+                if ($gender)    
+                { 
+                    $cookie['gender'] = $_SESSION['auth']['gender'] = $gender;      
+                }
+
+                NPCookie::setCookie ('auth', $cookie);
             }
 
-            if ($userID && ($company || $ustid))
+            if ($company || $ustid)
             {
                 
                 $mCompanies = new Model ('User_companies');
@@ -370,6 +457,73 @@ class Auth
                     return $mCompanies->add ($newRow)->result ()->post () ? 1 : 0;
                 }
             }
+            
+            return $result === 1;
+        }
+        else
+        {
+            return new ErrorHandler (520);
+        }        
+    }
+    
+    public static function adminChangeUser ($prename, $name, $gender, $email, $group, $_userID = false)
+    {
+        $loggedIn   = self::loggedIn ();
+        $userID     = !$_userID ? self::userID () : $_userID;
+
+        if ($loggedIn && $userID) 
+        {
+            $mUser          = new Model ('Users');
+            $resUser        = $mUser
+                                ->findBy ('id', $userID)
+                                ->excludeDeleted ()
+                                ->result ();
+            
+            if ($resUser)
+            {
+                $resUser->set ('prename', $prename);
+                $resUser->set ('name', $name);
+                $resUser->set ('gender', $gender);
+                $resUser->set ('email', $email);
+                $resUser->set ('group', $group);
+                
+                $updated    = $resUser->update ();
+                
+                if ($updated)
+                {
+                    if (self::userID () === $userID)
+                    {
+                        $cookie     = NPCookie::getCookie ('auth', array ());
+
+                        if ($prename)   
+                        { 
+                            $cookie['prename'] = $_SESSION['auth']['prename'] = $prename;    
+                        }
+
+                        if ($name)      
+                        { 
+                            $cookie['name'] = $_SESSION['auth']['name'] = $name;          
+                        }
+
+                        if ($gender)    
+                        { 
+                            $cookie['gender'] = $_SESSION['auth']['gender'] = $gender;      
+                        }
+
+                        NPCookie::setCookie ('auth', $cookie);
+                    }
+                    
+                    return true;
+                }
+                else
+                {
+                    return new ErrorHandler (2001);
+                }
+            }
+            else
+            {
+                return new ErrorHandler (1055);
+            }
         }
         else
         {
@@ -391,7 +545,23 @@ class Auth
     {
         return self::loggedIn () ? (int)$_SESSION['auth']['group'] : self::getDefaultGroup ();
     }
-
+    
+    private static function setUserGroup ($userID, $groupID)
+    {
+        $mUsers     = new Model ('Users');
+        $user       = $mUsers
+                        ->findBy ('id', $userID)
+                        ->excludeDeleted ()
+                        ->result ();
+        
+        if ($user)
+        {
+            return $user->set ('group', $groupID)->update ();
+        }
+        
+        return false;
+    }
+    
     private static function setUser ($user, $stayLoggedIn) 
     { 
         $tmpCModel  = new Model ('User_companies');

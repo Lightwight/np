@@ -210,8 +210,8 @@ np.module ('observable', (function () {
                 if (node.length > 0) {
                     notify      = node.data ('notify');
                     binding     = node.data ('bind');
-
-                    if (notify === true && binding===column) {
+                    
+                    if (notify === true && binding==='v'+column) {
                         if (node[0].nodeName.toLowerCase () === 'input' || node[0].nodeName.toLowerCase () === 'textarea') {
                             if (node.val () !== value) {
                                 node.val (value);

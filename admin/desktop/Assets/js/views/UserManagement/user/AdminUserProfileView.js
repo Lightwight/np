@@ -28,8 +28,8 @@ np.view.extend ('AdminUserProfileView', (function () {
 
     return {
         didInsert: function () {
-            _nsGender   = $(_nsGender).niceSelect ();
-            _nsGroup    = $(_nsGroup).niceSelect ();
+            $(_nsGender).niceSelect ();
+            $(_nsGroup).niceSelect ();
         },
 
         salutation: function (model) {
@@ -37,8 +37,8 @@ np.view.extend ('AdminUserProfileView', (function () {
         }.observes ('gender').on ('change'),
 
         group: function (model) {
-            $(_nsGroup).val (parseInt (model.get ('group'), 10)).niceSelect ('update');
-       }.observes ('group_name').on ('change'),
+            $(_nsGroup).val (model.get ('group')).niceSelect ('update');
+       }.observes ('group').on ('change'),
 
         validName: function (model) {
             if (!model.get ('name').empty ()) {
@@ -134,35 +134,139 @@ np.view.extend ('AdminUserProfileView', (function () {
             }       
         }.observes ('prename').on ('change'),
 
+        invalidMail: function (model) {
+            if (!model.get ('email').empty () && !model.get ('email').complies ('mail')) {
+                this.addClass ('fadeIn');
+            } else {
+                this.removeClass ('fadeIn');
+            }
+        }.observes ('email').on ('change'),
+
+        validMail: function (model) {
+            if (model.get ('email').empty () || !model.get ('email').complies ('mail')) {
+                this.removeClass ('fadeIn');
+            } else if (!model.get ('email').empty ()) {
+                this.addClass ('fadeIn');
+            }
+        }.observes ('email').on ('change'),
+
+        invalidMailConfirmation: function (model) {
+            if (!model.get ('email_confirmation').empty () 
+                && model.get ('email') !== model.get ('email_confirmation')
+            ) {
+                this.addClass ('fadeIn');
+            } else {
+                this.removeClass ('fadeIn');
+            }
+        }.observes ('email_confirmation').on ('change').observes ('email').on ('change'),
+
+        validMailConfirmation: function (model) {
+            if (!model.get ('email_confirmation').empty () && model.get ('email') === model.get ('email_confirmation')) {
+                this.addClass ('fadeIn');
+            } else {
+                this.removeClass ('fadeIn');
+            }
+        }.observes ('email_confirmation').on ('change').observes ('email').on ('change'),
+
+        enableMailConfirmation: function (model) {
+            var user, mMail, uMail;
+            
+            user    = np.model.Users.findByID (model.get ('id'));
+            
+            mMail   = model.get ('email');
+            uMail   = user.getEmail ();
+
+            if (mMail !== uMail) {
+                this.removeClass ('hide');
+            } else {
+                this.addClass ('hide');
+            }
+        }.observes ('email').on ('change'),
+
         enableSubmit: function (model) {
-           var user, valid, changed,
-               uGender, uGroup, uName, uPrename,
-               mGender, mGroup, mName, mPrename;
+            var user, isNewUser, valid, changed,
+               uGender, uGroup, uName, uPrename, uMail,
+               mGender, mGroup, mName, mPrename, mMail, mMailConf;
 
-           user     = np.model.Users.findByID (model.get ('id'));
+            user        = np.model.Users.findByID (model.get ('id'));
+            isNewUser   = parseInt (model.get ('id'), 10) === -1;
 
-           uGender  = user.getGender ();
-           uGroup   = user.getGroup ();
-           uName    = user.getName ();
-           uPrename = user.getPrename ();
+            uGender     = user.getGender ();
+            uGroup      = parseInt (user.getGroup (), 10);
+            uName       = user.getName ();
+            uPrename    = user.getPrename ();
+            uMail       = user.getEmail ();
+            
+            mGender     = model.get ('gender');
+            mGroup      = parseInt (model.get ('group'), 10);
+            mName       = model.get ('name');
+            mPrename    = model.get ('prename');
+            mMail       = model.get ('email');
+            mMailConf   = model.get ('email_confirmation');
 
-           mGender  = model.get ('gender');
-           mGroup   = model.get ('group');
-           mName    = model.get ('name');
-           mPrename = model.get ('prename');
+            valid       = mName.length > 0 && mPrename.length > 0
+                          && mMailConf === mMail;
 
-           valid    = mName.length > 0 && mPrename.length > 0;
-           changed  = mGender !== uGender
-                      || mGroup !== uGroup
-                      || mName !== uName
-                      || mPrename !== mPrename;
+            if (isNewUser) {
+                valid   = valid && !mMail.empty () && mMail.complies ('email') && mMail === mMailConf;
+                changed = true;
+            } else {
+                changed  = mGender !== uGender
+                           || mGroup !== uGroup
+                           || mName !== uName
+                           || mPrename !== uPrename
+                           || mMail !== uMail;
+            }
 
-           if (valid && changed)    { this.removeClass ('disabled');    }
-           else                     { this.addClass ('disabled');       }
+            if (valid && changed)    { this.removeClass ('disabled');    }
+            else                     { this.addClass ('disabled');       }
         }
         .observes ('gender').on ('change')
-        .observes ('group_name').on ('change')
+        .observes ('group').on ('change')
         .observes ('prename').on ('change')
         .observes ('name').on ('change')
+        .observes ('email').on ('change')
+        .observes ('email_confirmation').on ('change'),
+
+        applying: function (model) {
+            if (model.get ('sending')) {
+                this.addClass ('show');
+            } else {
+                this.removeClass ('show');
+            }
+        }.observes ('sending').on ('change'),
+        
+        notify: function (model, sender) {
+            var _this;
+            
+            _this   = this;
+            
+            if (sender.name === 'hidenotify') {
+                if (model.get ('hidenotify') === true) {
+                    this.removeClass ('fail');
+                    this.removeClass ('success');
+                }
+            } else if (model.get ('success') === true) {
+                this.html ('Erfolgreich gespeichert!');
+                
+                this.removeClass ('fail');
+                this.addClass ('success');
+                
+                window.setTimeout (function () {
+                    _this.removeClass ('success');
+                }, 3000);
+            } else {
+                this.html ('Fehler während des Speicherns!<br>Error-Code: '+model.get ('success'));
+                
+                this.removeClass ('success');
+                this.addClass ('fail');
+                
+                window.setTimeout (function () {
+                    _this.removeClass ('fail');
+                }, 3000);
+            }
+        }
+        .observes ('success').on ('change')
+        .observes ('hidenotify').on ('change')
     };
 })());

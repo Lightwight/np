@@ -44,6 +44,14 @@ class AuthController extends ControllerHelper
         return $user ? Auth::register ($user) : $this->error ($this->REQ_ERR_INVALID_ARGS);
     }
     
+    public function adminRegister (Model $registerModel, Model $userModel)
+    {
+        $register   = $registerModel->result ();
+        $user       = $userModel->result ();
+        
+        return $user && $register ? Auth::adminRegister ($register, $user) : $this->error ($this->REQ_ERR_INVALID_ARGS);
+    }
+    
     public function getRegisterConfirmation ($code)
     {
         return Auth::registerConfirmation ($code);
@@ -67,5 +75,10 @@ class AuthController extends ControllerHelper
     public function changeUser ($prename, $name, $gender, $company, $ustid)
     {
         return Auth::changeUser ($prename, $name, $gender, $company, $ustid);
+    }
+    
+    public function adminChangeUser ($prename, $name, $gender, $email, $group, $userID)
+    {
+        return Auth::adminChangeUser ($prename, $name, $gender, $email, $group, $userID);
     }
 }

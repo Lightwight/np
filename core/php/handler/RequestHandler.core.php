@@ -446,7 +446,7 @@ class RequestHandler
     {
         $authParams                 = isset (self::$parameters['auth']) ? self::$parameters['auth'] : false;
         self::$parameters['auth']   = null;
-        
+
         if ($authParams)
         {
             if (isset ($authParams['login']) && isset ($authParams['login']['email']) && isset ($authParams['login']['password']))
@@ -485,6 +485,62 @@ class RequestHandler
                     )
                 );
             } 
+            else if (isset ($authParams['adminRegister']) 
+                     && isset ($authParams['adminRegister']['gender']) 
+                     && isset ($authParams['adminRegister']['name'])
+                     && isset ($authParams['adminRegister']['prename'])
+                     && isset ($authParams['adminRegister']['group'])
+                     && isset ($authParams['adminRegister']['email']))
+            {
+              
+                $oSql       = Sql::getInstance ();
+                $gender     = $authParams['adminRegister']['gender'] === 'male' ? 'male' : 'female';
+                $name       = filter_var ($authParams['adminRegister']['name'], FILTER_SANITIZE_STRING);
+                $prename    = filter_var ($authParams['adminRegister']['prename'], FILTER_SANITIZE_STRING);
+                $email      = $oSql->real_escape_string (filter_var ($authParams['adminRegister']['email'], FILTER_VALIDATE_EMAIL));
+                $group      = (int)$authParams['adminRegister']['group'];
+
+                self::$parameters['auth']   = array 
+                (
+                    'adminRegister'  => array 
+                    (
+                        'gender'    => $gender,
+                        'name'      => $name,
+                        'prename'   => $prename,
+                        'email'     => $email,
+                        'group'     => $group
+                    )
+                );
+            } 
+            else if (isset ($authParams['adminChangeUser'])
+                    && isset ($authParams['adminChangeUser']['gender'])
+                    && isset ($authParams['adminChangeUser']['name'])
+                    && isset ($authParams['adminChangeUser']['prename'])
+                    && isset ($authParams['adminChangeUser']['email'])
+                    && isset ($authParams['adminChangeUser']['group'])
+                    && isset ($authParams['adminChangeUser']['id'])
+            ) {
+                $oSql       = Sql::getInstance ();
+                $gender     = $authParams['adminChangeUser']['gender'] === 'male' ? 'male' : 'female';
+                $name       = filter_var ($authParams['adminChangeUser']['name'], FILTER_SANITIZE_STRING);
+                $prename    = filter_var ($authParams['adminChangeUser']['prename'], FILTER_SANITIZE_STRING);
+                $email      = $oSql->real_escape_string (filter_var ($authParams['adminChangeUser']['email'], FILTER_VALIDATE_EMAIL));
+                $group      = (int)$authParams['adminChangeUser']['group'];
+                $userID     = (int)$authParams['adminChangeUser']['id'];
+
+                self::$parameters['auth']   = array 
+                (
+                    'adminChangeUser'  => array 
+                    (
+                        'gender'    => $gender,
+                        'name'      => $name,
+                        'prename'   => $prename,
+                        'email'     => $email,
+                        'group'     => $group,
+                        'userID'    => $userID
+                    )
+                );
+            }
             else if (isset ($authParams['reset']) && isset ($authParams['reset']['email']))
             {
                 $oSql       = Sql::getInstance ();

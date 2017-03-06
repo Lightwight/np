@@ -283,6 +283,62 @@ np.plugin.extend ('auth', (function () {
             return promise;
         },
         
+        adminRegister: function (user) {
+            var promise, request;
+            
+            promise = np.Promise ();
+
+            request = {
+                auth: {
+                    adminRegister:  user
+                },
+                type:       'auth'
+            };
+            
+            np.ajax({
+                type:           'POST',
+                dataType:       'json',
+                url:            '/',
+                data:           request
+            })
+            .then (function () {
+                promise.then ();
+            })
+            .fail (function (error) {
+                promise.fail (getError (error));
+            });
+            
+            return promise;            
+        },
+        
+        adminChangeUser: function (user) {
+            var promise, request;
+            
+            promise = np.Promise ();
+
+            request = {
+                auth: {
+                    adminChangeUser:    user
+                },
+                type:       'auth'
+            };
+            
+            np.ajax({
+                type:           'POST',
+                dataType:       'json',
+                url:            '/',
+                data:           request
+            })
+            .then (function () {
+                promise.then ();
+            })
+            .fail (function (error) {
+                promise.fail (getError (error));
+            });
+            
+            return promise;              
+        },
+        
         register: function () {
             var promise, request;
             
@@ -394,6 +450,8 @@ np.plugin.extend ('auth', (function () {
             
             return _hasChanged;
         },
+        
+        
         
         saveUser: function () {
             var promise, _origin, _user, request,

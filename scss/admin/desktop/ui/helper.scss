@@ -25,4 +25,11 @@
     .no-margin {
         margin: 0px;
     }
+    
+    .hide {
+        display: none;
+        
+        @include opacity(0);
+        @include transition(display 0ms ease-in, opacity 250ms ease-in);
+    }
 }

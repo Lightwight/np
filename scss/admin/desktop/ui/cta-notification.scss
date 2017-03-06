@@ -1,0 +1,71 @@
+@import "../../../modules/_np_sass.scss";
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+
+.np-scope-admin {
+    #ctaNotification {
+        position: fixed;
+        left: auto;
+        right: 7px;
+        top: 5px;
+        width: auto;
+        min-width: 330px;
+        margin: 0px auto;
+        max-width: calc(100% - 250px);
+        display: block;
+        background-color: #FFF;
+        color: #000;
+        border: 2px solid #000;
+        padding: 12px;
+        pointer-events: none;
+        height: auto;
+            
+        z-index: -1;
+        
+        @include opacity(0);
+        @include transition(opacity 250ms ease-out);
+        
+        &.success,
+        &.fail {
+            z-index: 100000;
+            pointer-events: auto;
+        }
+        
+        &.success {
+            border: 2px solid #007568;
+            color: #007568;
+            
+            @include opacity(1);
+            @include box-shadow(0px 0px 23px -6px #007568);
+            @include transition(opacity 250ms ease-in);
+        }
+        
+        &.fail {
+            border: 2px solid #ac2925;
+            color: #ac2925;
+            
+            @include opacity(1);
+            @include box-shadow(0px 0px 23px -6px #ac2925);
+            @include transition(opacity 250ms ease-in);
+        }
+    }
+}

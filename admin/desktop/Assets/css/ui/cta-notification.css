@@ -1,0 +1,84 @@
+/* current theme to display */
+/* For the content centering including menu and cart */
+/* For the main scollarea */
+/* for logo centering */
+/*
+*   This software called - np - is a lightwight MVP Framework for building web applications and
+*   was developed by Christian Peters
+*
+*   Copyright (C) 2016 Christian Peters
+*
+*   This program is free software: you can redistribute it and/or modify
+*   it under the terms of the GNU General Public License as published by
+*   the Free Software Foundation, either version 3 of the License, or
+*   (at your option) any later version.
+*
+*   This program is distributed in the hope that it will be useful,
+*   but WITHOUT ANY WARRANTY; without even the implied warranty of
+*   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+*   GNU General Public License for more details.
+*
+*   You should have received a copy of the GNU General Public License
+*   along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*
+*   Contact: Christian Peters <c.peters.eshop@gmail.com>
+*/
+.np-scope-admin #ctaNotification {
+  position: fixed;
+  left: auto;
+  right: 7px;
+  top: 5px;
+  width: auto;
+  min-width: 330px;
+  margin: 0px auto;
+  max-width: calc(100% - 250px);
+  display: block;
+  background-color: #FFF;
+  color: #000;
+  border: 2px solid #000;
+  padding: 12px;
+  pointer-events: none;
+  height: auto;
+  z-index: -1;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+  filter: alpha(opacity=0);
+  -moz-opacity: 0;
+  -khtml-opacity: 0;
+  opacity: 0;
+  -webkit-transition: opacity 250ms ease-out;
+  -moz-transition: opacity 250ms ease-out;
+  -o-transition: opacity 250ms ease-out;
+  transition: opacity 250ms ease-out; }
+  .np-scope-admin #ctaNotification.success, .np-scope-admin #ctaNotification.fail {
+    z-index: 100000;
+    pointer-events: auto; }
+  .np-scope-admin #ctaNotification.success {
+    border: 2px solid #007568;
+    color: #007568;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+    opacity: 1;
+    -moz-box-shadow: 0px 0px 23px -6px #007568;
+    -webkit-box-shadow: 0px 0px 23px -6px #007568;
+    box-shadow: 0px 0px 23px -6px #007568;
+    -webkit-transition: opacity 250ms ease-in;
+    -moz-transition: opacity 250ms ease-in;
+    -o-transition: opacity 250ms ease-in;
+    transition: opacity 250ms ease-in; }
+  .np-scope-admin #ctaNotification.fail {
+    border: 2px solid #ac2925;
+    color: #ac2925;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+    opacity: 1;
+    -moz-box-shadow: 0px 0px 23px -6px #ac2925;
+    -webkit-box-shadow: 0px 0px 23px -6px #ac2925;
+    box-shadow: 0px 0px 23px -6px #ac2925;
+    -webkit-transition: opacity 250ms ease-in;
+    -moz-transition: opacity 250ms ease-in;
+    -o-transition: opacity 250ms ease-in;
+    transition: opacity 250ms ease-in; }

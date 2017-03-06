@@ -30,7 +30,8 @@ class AuthHandler extends HandlerHelper
     
     public static function getInstance($method)    { return ( self::$instance !== null )? self::$instance : self::$instance = new self ($method);    }    
     
-    private function __construct ($method = 'get') {
+    private function __construct ($method = 'get') 
+    {
         $this->method   = strtolower (substr ($method, 0, 1)).substr ($method, 1);
     }
     
@@ -48,16 +49,20 @@ class AuthHandler extends HandlerHelper
         $login              = isset ($params['login']);
         $logout             = isset ($params['logout']);
         $register           = isset ($params['register']);
+        $adminRegister      = isset ($params['adminRegister']);
         $resetConfirm       = isset ($params['reset']);
         $setNewPass         = isset ($params['setnew']);
         $changeUser         = isset ($params['user']);
+        $adminChangeUser    = isset ($params['adminChangeUser']);
         
-        if ($login)                 { return $this->handleLogin ($params['login']);             }        
-        else if ($logout)           { return $this->handleLogout ();                            }        
-        else if ($register)         { return $this->handleRegister ($params['register']);       }
-        else if ($resetConfirm)     { return $this->handleResetPassword ($params['reset']);     }
-        else if ($setNewPass)       { return $this->handleSetNewPassword ($params['setnew']);   }
-        else if ($changeUser)       { return $this->handleChangeUser ($params['user']);         }
+        if ($login)                 { return $this->handleLogin ($params['login']);                     }
+        else if ($logout)           { return $this->handleLogout ();                                    }
+        else if ($register)         { return $this->handleRegister ($params['register']);               }
+        else if ($adminRegister)    { return $this->handleAdminRegister ($params['adminRegister']);     }
+        else if ($resetConfirm)     { return $this->handleResetPassword ($params['reset']);             }
+        else if ($setNewPass)       { return $this->handleSetNewPassword ($params['setnew']);           }
+        else if ($changeUser)       { return $this->handleChangeUser ($params['user']);                 }
+        else if ($adminChangeUser)  { return $this->handleAdminChangeUser ($params['adminChangeUser']); }
     }
     
     private function handleLogin ($params)
@@ -99,6 +104,41 @@ class AuthHandler extends HandlerHelper
         }        
     }
     
+    private function handleAdminRegister ($params)
+    {
+        $gender             = $params['gender'];
+        $name               = $params['name'];
+        $prename            = $params['prename'];
+        $email              = $params['email'];
+        $group              = $params['group'];
+        
+        if (($gender === 'male' || $gender === 'female') && $email !== '' && $name !== '' && $prename !== '' && $group > 0)
+        {
+            $controller     = new AuthController;
+            $registerRow    = array 
+            (
+                'email'     => $email,
+                'password'  => ''
+            );
+            
+            $userRow        = array
+            (
+                'gender'    => $gender, 
+                'name'      => $name,
+                'prename'   => $prename,
+                'group'     => $group,
+                'email'     => $email
+            );
+            
+            $registerModel  = new Model ('Register');
+            $userModel      = new Model ('Users');
+            
+            $result         = $controller->adminRegister ($registerModel->add ($registerRow), $userModel->add ($userRow));
+
+            return $this->prepareOutput ($result);
+        }        
+    }
+    
     private function handleResetPassword ($params)
     {
         $email  = $params['email'];
@@ -131,6 +171,14 @@ class AuthHandler extends HandlerHelper
     {
         $controller     = new AuthController;
         $result         = $controller->changeUser ($params['prename'], $params['name'], $params['gender'], $params['company'], $params['ustid']);
+
+        return $this->prepareOutput ($result);
+    }
+    
+    private function handleAdminChangeUser ($params)
+    {
+        $controller     = new AuthController;
+        $result         = $controller->adminChangeUser ($params['prename'], $params['name'], $params['gender'], $params['email'], $params['group'], $params['userID']);
 
         return $this->prepareOutput ($result);
     }
