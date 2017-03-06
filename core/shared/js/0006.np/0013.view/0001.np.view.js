@@ -285,7 +285,7 @@ np.module ('view', (function () {
                     var selector, node;
 
                     selector    = $(_this);
-                    node        = selector.find ('[data-bind="'+binding+'"]');
+                    node        = selector.find ('[data-bind="v'+binding+'"]');
 
                     if (node.length > 0) {
                         if (node[0].nodeName.toLowerCase () === 'div') {

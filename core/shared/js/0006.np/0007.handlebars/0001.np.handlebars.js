@@ -695,7 +695,7 @@ np.module ('handlebars', (function () {
                         } else if (i==='type' && typeof _systemHashes[i] !== 'undefined') {
                             _node.addAttribute ('type', (_systemHashes[i] === 'number' || _systemHashes[i] === 'mail' ? 'text' : _systemHashes[i]));
                         } else if (i==='bindAttr' && typeof _systemHashes[i] !== 'undefined') {
-                            _node.addAttribute ('data-bind', _systemHashes[i]);                    
+                            _node.addAttribute ('data-bind', 'v'+_systemHashes[i]);
                         }                     
                     } else if (i==='$') {
                         _node.addAttribute ('data-method', _systemHashes[i]);
