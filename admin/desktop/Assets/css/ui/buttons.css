@@ -69,15 +69,15 @@
       top: -1px;
       bottom: auto; }
     .np-scope-admin .btn .tooltip.left {
-      left: calc(-300% - 46px);
-      right: auto; }
+      left: auto;
+      right: 100%; }
       .np-scope-admin .btn .tooltip.left .tooltip-arrow {
         right: -5px;
         left: auto; }
     .np-scope-admin .btn .tooltip.right {
       right: auto;
       position: absolute;
-      left: calc(100% + 8px); }
+      left: 100%; }
       .np-scope-admin .btn .tooltip.right .tooltip-arrow {
         left: -5px;
         right: auto; }

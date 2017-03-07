@@ -169,7 +169,7 @@ class Auth
                     return $userID;
                 }
                 
-                return new ErrorHandler (580);
+                $error  = new ErrorHandler (580);
             }
             else 
             {
@@ -178,8 +178,10 @@ class Auth
         }
         else
         {
-            return new ErrorHandler (1062);
-        }        
+            $error  = new ErrorHandler (1062);
+        }
+        
+        return $error->getErrorMessage ();
     }
     
     public static function registerConfirmation ($code, $returnID = false)
@@ -226,6 +228,33 @@ class Auth
         return 0;        
     }
     
+    public static function removeUser ($userID)
+    {
+        if ($userID === self::userID () || self::userGroup () === 1)
+        {
+            $mUsers     = new Model ('Users');
+            $resUser    = $mUsers->findBy ('id', $userID)->result ();
+
+            if ($resUser)
+            {
+                $email          = $resUser->get ('email');
+                $mRegister      = new Model ('Register');
+                
+                $mRegister->findBy ('email', $email)->result ()->delete (true);
+                
+                return $resUser->delete (true) ? 1 : $resUser->getError ();
+            }
+            
+            $error  = new ErrorHandler (581);
+
+            return $error->getErrorMessage ();
+        }
+        
+        $error  = new ErrorHandler (520);
+
+        return $error->getErrorMessage ();
+    }
+
     private static function setResetPasswordLink ($email)
     {
         if ($email && is_string ($email) && trim ($email) !== '')
@@ -513,22 +542,24 @@ class Auth
                         NPCookie::setCookie ('auth', $cookie);
                     }
                     
-                    return true;
+                    return 1;
                 }
                 else
                 {
-                    return new ErrorHandler (2001);
+                    $error  = new ErrorHandler (2001);
                 }
             }
             else
             {
-                return new ErrorHandler (1055);
+                $error  = new ErrorHandler (1055);
             }
-        }
+        } 
         else
         {
-            return new ErrorHandler (520);
-        }        
+            $error  = new ErrorHandler (520);
+        }
+        
+        return $error->getErrorMessage ();
     }
 
     public static function getUser ()    
@@ -884,5 +915,5 @@ class Auth
         $crawlerDetect  = new CrawlerDetect ();
         
         return $crawlerDetect->isCrawler ();
-    }    
+    }
 }

@@ -54,6 +54,7 @@ class AuthHandler extends HandlerHelper
         $setNewPass         = isset ($params['setnew']);
         $changeUser         = isset ($params['user']);
         $adminChangeUser    = isset ($params['adminChangeUser']);
+        $removeUser         = isset ($params['remove']);
         
         if ($login)                 { return $this->handleLogin ($params['login']);                     }
         else if ($logout)           { return $this->handleLogout ();                                    }
@@ -63,6 +64,7 @@ class AuthHandler extends HandlerHelper
         else if ($setNewPass)       { return $this->handleSetNewPassword ($params['setnew']);           }
         else if ($changeUser)       { return $this->handleChangeUser ($params['user']);                 }
         else if ($adminChangeUser)  { return $this->handleAdminChangeUser ($params['adminChangeUser']); }
+        else if ($removeUser)       { return $this->handleRemoveUser ($params['remove']);               }
     }
     
     private function handleLogin ($params)
@@ -179,6 +181,14 @@ class AuthHandler extends HandlerHelper
     {
         $controller     = new AuthController;
         $result         = $controller->adminChangeUser ($params['prename'], $params['name'], $params['gender'], $params['email'], $params['group'], $params['userID']);
+
+        return $this->prepareOutput ($result);
+    }
+    
+    private function handleRemoveUser ($userID)
+    {
+        $controller     = new AuthController;
+        $result         = $controller->removeUser ($userID);
 
         return $this->prepareOutput ($result);
     }

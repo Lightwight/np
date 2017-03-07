@@ -236,37 +236,29 @@ np.view.extend ('AdminUserProfileView', (function () {
             }
         }.observes ('sending').on ('change'),
         
-        notify: function (model, sender) {
-            var _this;
+        notifySuccess: function (model) {
+            var isNewUser, msg, timeout;
             
-            _this   = this;
-            
-            if (sender.name === 'hidenotify') {
-                if (model.get ('hidenotify') === true) {
-                    this.removeClass ('fail');
-                    this.removeClass ('success');
-                }
-            } else if (model.get ('success') === true) {
-                this.html ('Erfolgreich gespeichert!');
+            if (model.get ('success')) {
+                isNewUser   = parseInt (model.get ('id'), 10) === -1;
+                msg         = isNewUser ? 'Der Benutzer wurde angelegt und erhält eine E-Mail zur Vergabe eines Passworts.' : 'Die Änderungen wurden gespeichert.';
+                timeout     = isNewUser ? 5000 : 3000;
                 
-                this.removeClass ('fail');
-                this.addClass ('success');
-                
-                window.setTimeout (function () {
-                    _this.removeClass ('success');
-                }, 3000);
-            } else {
-                this.html ('Fehler während des Speicherns!<br>Error-Code: '+model.get ('success'));
-                
-                this.removeClass ('success');
-                this.addClass ('fail');
-                
-                window.setTimeout (function () {
-                    _this.removeClass ('fail');
-                }, 3000);
+                np.notify (msg).asSuccess ().timeout (timeout).show ();
             }
-        }
-        .observes ('success').on ('change')
-        .observes ('hidenotify').on ('change')
+        }.observes ('success').on ('change'),
+        
+        notifyError: function (model) {
+            var error;
+            
+            error   = model.get ('error');
+            if (error) {
+                np.notify (error).asError ().timeout (3000).show ();
+            }
+        }.observes ('error').on ('change'),
+        
+        flushUser: function () {
+            np.model.Users.flush ();
+        }.observes ('route.before').on ('change')
     };
 })());

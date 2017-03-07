@@ -81,4 +81,9 @@ class AuthController extends ControllerHelper
     {
         return Auth::adminChangeUser ($prename, $name, $gender, $email, $group, $userID);
     }
+    
+    public function removeUser ($userID)
+    {
+        return Auth::removeUser ($userID);
+    }
 }

@@ -188,7 +188,7 @@
   float: left;
   width: 100%;
   height: auto; }
-  .np-scope-admin .menu-bar > a .btn {
+  .np-scope-admin .menu-bar > .btn {
     float: right;
     margin-left: 12px; }
 .np-scope-admin .flexrow-1:first-of-type form {

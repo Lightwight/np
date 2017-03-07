@@ -20,35 +20,10 @@
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
 
-np.controller.extend ('AdminUserOverviewController', {
-    view:   'AdminUserOverviewView',
-    model:  function () {
-        this.removed    = false;
-        
-        return {
-            User: this
-        };
-    },
-    
-    events: {
-        removeUser: function (view) {
-            var _t;
-            
-            _t  = this;
-            
-            np.Modal
-            .dialog ()
-            .apply (function () {
-                np.auth.removeUser (_t.get ('id'))
-                .then (function () {
-                    np.model.Users.findByID (_t.get ('id')).remove ();
-                    
-                    np.notify ('Der Benutzer wurde gelöscht.').asSuccess ().timeout (3000).show ();
-                })
-                .fail (function (error) {
-                    np.notify (error).asError ().timeout (3000).show ();
-                });
-            });
+np.view.extend ('AdminUserOverviewView', {
+    removed: function (model) {
+        if (model.get ('removed')) {
+            this.addClass ('hide');
         }
-    }
+    }.observes ('removed').on ('change')
 });

@@ -55,7 +55,27 @@
   background-color: #FFF;
   width: 100%;
   border-top: 12px rgba(211, 211, 211, 0.25) solid;
-  padding: 12px; }
+  padding: 12px;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+  filter: alpha(opacity=100);
+  -moz-opacity: 1;
+  -khtml-opacity: 1;
+  opacity: 1;
+  -webkit-transition: opacity 250ms ease-in;
+  -moz-transition: opacity 250ms ease-in;
+  -o-transition: opacity 250ms ease-in;
+  transition: opacity 250ms ease-in; }
+  .np-scope-admin .admin-overview .admin-overview-row.hide {
+    display: block !important;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    -webkit-transition: opacity 250ms ease-out;
+    -moz-transition: opacity 250ms ease-out;
+    -o-transition: opacity 250ms ease-out;
+    transition: opacity 250ms ease-out; }
 .np-scope-admin .admin-overview .input-search-container {
   position: relative;
   top: 4px;

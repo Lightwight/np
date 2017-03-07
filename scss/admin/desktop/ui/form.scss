@@ -257,12 +257,10 @@
         width: 100%;
         height: auto;
         
-        > a {
-            .btn {
-                float: right;
-                margin-left: 12px;
-            }            
-        }
+        > .btn {
+            float: right;
+            margin-left: 12px;
+        }            
     } 
     
     .flexrow-1 {

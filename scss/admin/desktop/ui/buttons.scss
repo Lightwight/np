@@ -70,8 +70,8 @@
             }
             
             &.left {
-                left: calc(-300% - 46px);
-                right: auto;
+                left: auto;
+                right: 100%;
                 
                 .tooltip-arrow {
                     right: -5px;
@@ -82,7 +82,7 @@
             &.right {
                 right: auto;
                 position: absolute;
-                left: calc(100% + 8px);
+                left: 100%;
                 
                 .tooltip-arrow {
                     left: -5px;

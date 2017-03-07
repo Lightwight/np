@@ -593,6 +593,15 @@ class RequestHandler
                     )
                 );
             }
+            else if (isset ($authParams['remove']))
+            {
+                $userID     = (int)$authParams['remove'];
+                
+                self::$parameters['auth']   = array
+                (
+                    'remove'  => $userID
+                );
+            }
         }        
     }
     

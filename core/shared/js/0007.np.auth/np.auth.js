@@ -313,7 +313,7 @@ np.plugin.extend ('auth', (function () {
                 promise.then ();
             })
             .fail (function (error) {
-                promise.fail (getError (error));
+                promise.fail (getErrorMessage (error));
             });
             
             return promise;            
@@ -341,7 +341,7 @@ np.plugin.extend ('auth', (function () {
                 promise.then ();
             })
             .fail (function (error) {
-                promise.fail (getError (error));
+                promise.fail (getErrorMessage (error));
             });
             
             return promise;              

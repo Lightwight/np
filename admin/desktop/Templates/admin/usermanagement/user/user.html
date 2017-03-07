@@ -1,3 +1,6 @@
+{{#partial admin-modal-view}}
+{{#partial cta-notification}}
+
 {{#view "AdminUserProfileView" id="admin-user-profile"}}
     {{#equals User.id -2}}
         <form class="bg-grey">
@@ -7,7 +10,6 @@
             </div>
         </form>
     {{else}}
-        {{#partial cta-notification}}
         <form class="bg-grey">
             <h4 class="form-title">Benutzerprofil</h4>
 
@@ -72,19 +74,37 @@
                 {{/inGroup}}
 
                 <div class="menu-bar">
-                    {{#a $="enableSubmit" click="applyUser" href="#" class="btn btn-primary pull-right disabled"}}
+                    {{#button click="removeUser" type="button" class="btn btn-icon red"}}
+                        <span class="sr-only">Benutzer entfernen</span>
+                        <span class="fa fa-remove"></span>
+                        
+                        <div class="tooltip left">
+                            <span>Benutzer entfernen</span>
+                            <div class="tooltip-arrow"></div>
+                        </div>                        
+                    {{/button}}
+
+                    {{#a $="enableSubmit" click="applyUser" href="#" class="btn btn-icon blue disabled"}}
                         {{#equals User.id -1}}
-                            <span class="text">Speichern</span>
                             <span class="sr-only">Benutzer speichern</span>
                         {{else}}
-                            <span class="text">&Uuml;bernehmen</span>
                             <span class="sr-only">Änderungen übernehmen</span>
                         {{/equals}}
-
-                        <span class="icon fa fa-caret-right"></span>
+                        
+                        <span class="fa fa-check"></span>
+                        
                         {{#span $="applying" class="cssload-container"}}
                             <span class="cssload-speeding-wheel"></span>
                         {{/span}}
+                        
+                        <div class="tooltip left">
+                            {{#equals User.id -1}}
+                                <span>Benutzer bearbeiten</span>
+                            {{else}}
+                                <span>Speichern</span>
+                            {{/equals}}
+                            <div class="tooltip-arrow"></div>
+                        </div>
                     {{/a}}
                 </div>                
             </div>            

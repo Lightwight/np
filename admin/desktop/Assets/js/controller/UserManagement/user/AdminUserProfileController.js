@@ -86,7 +86,7 @@ np.controller.extend ('AdminUserProfileController', (function () {
             
             user.sending            = false;
             user.success            = false;
-            user.hidenotify         = false;
+            user.error              = false;
             user.email_confirmation = user.email;
 
             return {
@@ -142,17 +142,15 @@ np.controller.extend ('AdminUserProfileController', (function () {
                 email               = this.get ('email');
                 group               = this.get ('group');
                 
-                this.set ('hidenotify', true);
                 this.set ('sending', true);
+                this.set ('success', false);
+                this.set ('error', false);
 
                 if (isNewUser) {
                     np.auth.adminRegister (this.getAll ())
                     .then (function () {
                         _this.set ('sending', false);
                         _this.set ('success', true);
-
-                        // ToDo: move to view and call before route change!
-                        np.model.Users.flush ();
                     })
                     .fail (function (error) {
                         _this.set ('sending', false);
@@ -176,9 +174,35 @@ np.controller.extend ('AdminUserProfileController', (function () {
                     })
                     .fail (function (error) {
                         _this.set ('sending', false);
-                        _this.set ('success', error);
+                        _this.set ('error', error);
                     });
                 }
+            },
+            
+            removeUser: function (view) {
+                var _t;
+
+                _t  = this;
+
+                np.Modal
+                .dialog ()
+                .apply (function () {
+                    np.auth.removeUser (_t.get ('id'))
+                    .then (function () {
+                        np.model.Users.findByID (_t.get ('id')).remove ();
+
+                        _t.set ('removed', true);
+
+                        np.notify ('Der Benutzer wurde gelöscht.').asSuccess ().timeout (3000).show ();  
+                        
+                        window.setTimeout (function () {
+                            document.location.href = '/#/admin/usermanagement/users';
+                        }, 3000);
+                    })
+                    .fail (function (error) {
+                        np.notify (error).asError ().timeout (3000).show ();
+                    });
+                });
             }
         }
     };
