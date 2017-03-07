@@ -336,9 +336,9 @@ CREATE TABLE IF NOT EXISTS `auth_rights` (
   `rights` int(11) NOT NULL DEFAULT '0' COMMENT '1=lesen, 2=schreiben, 3=lesen und schreiben',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `auth_group_id` (`group_id`,`definition_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=890 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=892 DEFAULT CHARSET=utf8;
 
--- Exportiere Daten aus Tabelle core.auth_rights: ~857 rows (ungefähr)
+-- Exportiere Daten aus Tabelle core.auth_rights: ~793 rows (ungefähr)
 DELETE FROM `auth_rights`;
 /*!40000 ALTER TABLE `auth_rights` DISABLE KEYS */;
 INSERT INTO `auth_rights` (`ID`, `group_id`, `definition_id`, `rights`) VALUES
@@ -1198,7 +1198,9 @@ INSERT INTO `auth_rights` (`ID`, `group_id`, `definition_id`, `rights`) VALUES
 	(886, 2000, 319, 3),
 	(887, 4000, 319, 1),
 	(888, 1, 320, 3),
-	(889, 4000, 320, 1);
+	(889, 4000, 320, 1),
+	(890, 4000, 321, 1),
+	(891, 4000, 322, 1);
 /*!40000 ALTER TABLE `auth_rights` ENABLE KEYS */;
 
 
@@ -1518,6 +1520,39 @@ INSERT INTO `countries` (`ID`, `code`, `en`, `de`) VALUES
 /*!40000 ALTER TABLE `countries` ENABLE KEYS */;
 
 
+-- Exportiere Struktur von Tabelle core.errors
+DROP TABLE IF EXISTS `errors`;
+CREATE TABLE IF NOT EXISTS `errors` (
+  `ID` int(11) NOT NULL AUTO_INCREMENT,
+  `error_id` int(11) NOT NULL,
+  `message` tinytext NOT NULL,
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `error` (`error_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
+
+-- Exportiere Daten aus Tabelle core.errors: ~16 rows (ungefähr)
+DELETE FROM `errors`;
+/*!40000 ALTER TABLE `errors` DISABLE KEYS */;
+INSERT INTO `errors` (`ID`, `error_id`, `message`) VALUES
+	(1, 0, 'Unbekannter Fehler.'),
+	(2, 520, 'Sie haben hierfür nicht genügend Rechte.'),
+	(3, 560, 'Fehler während des Mailversands.'),
+	(4, 580, 'Ungültige Werte. Btte prüfen Sie Ihre Eingaben.'),
+	(5, 581, 'Keine Daten vorhanden.'),
+	(6, 582, 'Steht noch nicht zur Verfügung.'),
+	(7, 600, 'Ungültige Zahlungsdaten.'),
+	(8, 601, 'Zuviele Anfrage, Bitte gedulden Sie sich einen Moment.'),
+	(9, 700, 'Verbindung verloren. Bitte melden Sie sich neu an.'),
+	(10, 1011, 'Fehler während des Löschens.'),
+	(11, 1054, 'Ungültige Daten.'),
+	(12, 1055, 'Keine Daten vorhanden.'),
+	(13, 1062, 'Doppelter Datensatz.'),
+	(14, 1064, 'Syntaxfehler.'),
+	(15, 2000, 'Datensatz konnte nicht angelegt werden.'),
+	(16, 2001, 'Datensatz konnte nicht aktualisiert werden.');
+/*!40000 ALTER TABLE `errors` ENABLE KEYS */;
+
+
 -- Exportiere Struktur von Tabelle core.log
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE IF NOT EXISTS `log` (
@@ -1618,9 +1653,9 @@ CREATE TABLE IF NOT EXISTS `models` (
   `ID` bigint(20) NOT NULL AUTO_INCREMENT,
   `name` varchar(50) NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=130 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=131 DEFAULT CHARSET=utf8;
 
--- Exportiere Daten aus Tabelle core.models: ~48 rows (ungefähr)
+-- Exportiere Daten aus Tabelle core.models: ~49 rows (ungefähr)
 DELETE FROM `models`;
 /*!40000 ALTER TABLE `models` DISABLE KEYS */;
 INSERT INTO `models` (`ID`, `name`) VALUES
@@ -1671,7 +1706,8 @@ INSERT INTO `models` (`ID`, `name`) VALUES
 	(126, 'article_payments'),
 	(127, 'article_payment_gateways'),
 	(128, 'Article_prices'),
-	(129, 'Article_pricetypes');
+	(129, 'Article_pricetypes'),
+	(130, 'Errors');
 /*!40000 ALTER TABLE `models` ENABLE KEYS */;
 
 
@@ -1685,9 +1721,9 @@ CREATE TABLE IF NOT EXISTS `model_definitions` (
   `translatable` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`),
   UNIQUE KEY `model_col` (`col`,`model_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=321 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=323 DEFAULT CHARSET=utf8;
 
--- Exportiere Daten aus Tabelle core.model_definitions: ~300 rows (ungefähr)
+-- Exportiere Daten aus Tabelle core.model_definitions: ~302 rows (ungefähr)
 DELETE FROM `model_definitions`;
 /*!40000 ALTER TABLE `model_definitions` DISABLE KEYS */;
 INSERT INTO `model_definitions` (`ID`, `model_id`, `col`, `model_type`, `translatable`) VALUES
@@ -1990,7 +2026,9 @@ INSERT INTO `model_definitions` (`ID`, `model_id`, `col`, `model_type`, `transla
 	(317, 129, 'description', 3, 0),
 	(318, 128, 'article_id', 2, 0),
 	(319, 129, 'deleted', 2, 0),
-	(320, 129, 'user', 3, 0);
+	(320, 129, 'user', 3, 0),
+	(321, 130, 'error_id', 2, 0),
+	(322, 130, 'message', 3, 1);
 /*!40000 ALTER TABLE `model_definitions` ENABLE KEYS */;
 
 
@@ -2454,12 +2492,30 @@ CREATE TABLE IF NOT EXISTS `translations` (
   `definition_id` bigint(20) NOT NULL,
   `row_id` bigint(20) NOT NULL,
   `content` mediumtext NOT NULL,
-  PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`ID`),
+  UNIQUE KEY `tranlatables` (`lang_code`,`definition_id`,`row_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8;
 
--- Exportiere Daten aus Tabelle core.translations: ~0 rows (ungefähr)
+-- Exportiere Daten aus Tabelle core.translations: ~16 rows (ungefähr)
 DELETE FROM `translations`;
 /*!40000 ALTER TABLE `translations` DISABLE KEYS */;
+INSERT INTO `translations` (`ID`, `lang_code`, `definition_id`, `row_id`, `content`) VALUES
+	(1, 'en', 322, 1, 'Unknown Error occured.'),
+	(2, 'en', 322, 2, 'Unauthorized user.'),
+	(3, 'en', 322, 3, 'Mail send error.'),
+	(4, 'en', 322, 4, 'Request error: invalid arguments.'),
+	(5, 'en', 322, 5, 'Request error: nothing fetched.'),
+	(6, 'en', 322, 6, 'Request error: not implemented.'),
+	(7, 'en', 322, 7, 'Invalid Payment parameters.'),
+	(8, 'en', 322, 8, 'Too many requests with used token.'),
+	(9, 'en', 322, 9, 'Session lost. Plesae relogin.'),
+	(10, 'en', 322, 10, 'Error on delete.'),
+	(11, 'en', 322, 11, 'Request error: invalid arguments.'),
+	(12, 'en', 322, 12, 'Empty result.'),
+	(13, 'en', 322, 13, 'Duplicate entry.'),
+	(14, 'en', 322, 14, 'Syntax error.'),
+	(15, 'en', 322, 15, 'Error on post.'),
+	(16, 'en', 322, 16, 'Error on update.');
 /*!40000 ALTER TABLE `translations` ENABLE KEYS */;
 
 

@@ -90,6 +90,14 @@ np.plugin.extend ('auth', (function () {
         return null;
     }
     
+    function getErrorMessage (error) {
+        if (error !== null && typeof error !== 'undefined' && typeof error.data !== 'undefined' && typeof error.data.responseJSON !== 'undefined' && typeof error.data.responseJSON.err !== 'undefined' && typeof error.data.responseJSON.msg !== 'undefined') {
+            return '<b>Code: '+error.data.responseJSON.err+'</b>: '+error.data.responseJSON.msg;
+        } 
+        
+        return null;
+    }
+    
     function mergeStorage (selector, data) {
         var i;
         
@@ -451,8 +459,6 @@ np.plugin.extend ('auth', (function () {
             return _hasChanged;
         },
         
-        
-        
         saveUser: function () {
             var promise, _origin, _user, request,
                 i;
@@ -489,6 +495,41 @@ np.plugin.extend ('auth', (function () {
             });
             
             return promise;            
+        },
+        
+        removeUser: function (userID) {
+            var currentUserID, promise, request;
+
+            promise         = np.Promise ();
+
+            currentUserID   = parseInt (storage.user.id, 10);
+            userID          = parseInt (userID, 10);
+
+            if (userID !== currentUserID || userID < 0) {
+                request         = {
+                    auth:   { remove: userID },
+                    type:   'auth'
+                };
+
+                np.ajax({
+                    type:           'POST',
+                    dataType:       'json',
+                    url:            '/',
+                    data:           request
+                })
+                .then (function () {
+                    promise.then ();
+                })
+                .fail (function (error) {
+                    promise.fail (getErrorMessage (error));
+                });
+            } else {
+                np.tick (function () {
+                    promise.fail ('Sie können sich nicht selbst löschen!');
+                });
+            }
+            
+            return promise;
         }
     };
 }()));

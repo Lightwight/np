@@ -1,6 +1,5 @@
-{{#div id="ctaNotification" $="notify"}}
-    Lorem ipsum dolar<br>
-    Lorem ipsum dolar<br>
-    Lorem ipsum dolar<br>
-    Lorem ipsum dolar
-{{/div}}
+{{#view "CtaNotificationView" id="ctaNotification"}}
+    {{#div $="setMessage" class="content"}}
+        {{{NPCtaNotification.message}}}
+    {{/div}}
+{{/view}}

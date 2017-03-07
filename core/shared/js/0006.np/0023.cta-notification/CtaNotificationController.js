@@ -20,31 +20,22 @@
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
 
-np.controller.extend ('AdminUserOverviewController', {
-    view:   'AdminUserOverviewView',
+np.controller.extend ('CtaNotificationController', {
+    view:   'CtaNotificationView',
     model:  function () {
         return {
-            User: this
+            NPCtaNotification: {
+                id:         1,
+
+                message:    '',
+                
+                timeout:    3000,
+                
+                show:       false,
+                hide:       false,
+                
+                type:       'success'
+            }
         };
-    },
-    
-    events: {
-        removeUser: function (view) {
-            var _t;
-            
-            _t  = this;
-            
-            np.Modal
-            .dialog ()
-            .apply (function () {
-                np.auth.removeUser (_t.get ('id'))
-                .then (function () {
-                    
-                })
-                .fail (function (error) {
-                    np.notify (error).asError ().timeout (3000).show ();
-                });
-            });
-        }
     }
 });

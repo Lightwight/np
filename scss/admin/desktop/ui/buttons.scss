@@ -41,6 +41,111 @@
             @include transition(all 200ms ease-out);
         }
         
+        &:active,
+        &.active {
+            @include box-shadow(inset 2px 3px 5px rgba(0, 0, 0, 0.25));
+        }
+        
+        .tooltip {
+            background-color: #111;
+            color: #FFF;
+            z-index: 2000;
+            font-size: 13px;
+            padding: 8px 16px 8px 16px;
+            margin: 0px; 
+            
+            pointer-events: none;
+            
+            @include opacity(0);
+            @include transition(opacity 150ms ease-in);
+            
+            .tooltip-arrow {
+                position: absolute;
+            }
+            
+            &.left,
+            &.right {
+                top: -1px;
+                bottom: auto;
+            }
+            
+            &.left {
+                left: calc(-300% - 46px);
+                right: auto;
+                
+                .tooltip-arrow {
+                    right: -5px;
+                    left: auto;
+                }
+            }
+            
+            &.right {
+                right: auto;
+                position: absolute;
+                left: calc(100% + 8px);
+                
+                .tooltip-arrow {
+                    left: -5px;
+                    right: auto;
+                }
+            }
+        }
+        
+        &:hover {
+            .tooltip {
+                @include opacity(1);
+                @include transition(opacity 150ms ease-out);
+            }
+        }
+        
+        &.btn-icon {
+            @include transition(background-color 150ms ease-in);
+            
+            &:hover {
+                @include transition(background-color 150ms ease-out);
+            }
+            
+            &.red {
+                background-color: #d9534f;
+                
+                &:hover {
+                    background-color: #FC827F;
+                }
+            }
+            
+            &.blue {
+                background-color: #337ab7;
+                
+                &:hover {
+                    background-color: #5393C8;
+                }
+            }
+            
+            &.green {
+                background-color: #5cb85c;
+                
+                &:hover {
+                    background-color: #8AD38A;
+                }
+            }
+            
+            &.orange {
+                background-color: #f0ad4e;
+                
+                &:hover {
+                    background-color: #FFC675;
+                }
+            }
+            
+            &.black {
+                background-color: #111111;
+                
+                &.hover {
+                    background-color: #525252;
+                }
+            }
+        }
+        
         &.small {
             .text {
                 font-size: 8px;

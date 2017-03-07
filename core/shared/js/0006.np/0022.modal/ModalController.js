@@ -20,31 +20,36 @@
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
 
-np.controller.extend ('AdminUserOverviewController', {
-    view:   'AdminUserOverviewView',
+np.controller.extend ('ModalController', {
+    view:   'ModalView',
     model:  function () {
         return {
-            User: this
+            NPModal: {
+                id:         1,
+                
+                fncApply:   false,
+                fncCancel:  false,
+                
+                show:       false,
+                hide:       false
+            }
         };
     },
     
     events: {
-        removeUser: function (view) {
-            var _t;
-            
-            _t  = this;
-            
-            np.Modal
-            .dialog ()
-            .apply (function () {
-                np.auth.removeUser (_t.get ('id'))
-                .then (function () {
-                    
-                })
-                .fail (function (error) {
-                    np.notify (error).asError ().timeout (3000).show ();
-                });
-            });
+        apply: function () {
+            this.set ('hide', true);
+            this.get ('fncApply') ();
+        },
+
+        cancel: function () {
+            this.set ('hide', true);
+            this.get ('fncCancel') ();
+        },
+        
+        hide: function () {
+            this.set ('hide', true);
+            this.get ('fncCancel') ();
         }
     }
 });

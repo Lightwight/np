@@ -1,6 +1,9 @@
 {{#need model Users}}
 {{#need model Auth_groups}}
 
+{{#partial admin-modal-view}}
+{{#partial cta-notification}}
+
 {{#view "AdminUsersOverviewView" class="admin-overview"}}
     <div class="flexbox">
         {{#view "AdminUsersOverviewSortableView" class="flexrow flexrow-6"}}
@@ -50,11 +53,22 @@
                             <div class="flexrow flexrow-1">{{User.prename}}</div>
                             <div class="flexrow flexrow-1">{{User.email}}</div>
                             <div class="flexrow flexrow-1 flex-end">
-                                <a href="/admin/usermanagement/user/{{User.id}}" class="btn btn-primary">
-                                    <span class="text">Bearbeiten</span>
-                                    <span class="fa fa-caret-right"></span>
-                                    <span class="sr-only">Benutzer Bearbeiten</span>
+                                <a href="/admin/usermanagement/user/{{User.id}}" class="btn btn-icon blue">
+                                    <span class="fa fa-edit"></span>
+                                    <span class="sr-only">Benutzer bearbeiten</span>
+                                    <div class="tooltip left">
+                                        <span>Benutzer bearbeiten</span>
+                                        <div class="tooltip-arrow"></div>
+                                    </div>
                                 </a>
+                                {{#button click="removeUser" type="button" class="btn btn-icon red"}}
+                                    <span class="fa fa-trash-o"></span>
+                                    <span class="sr-only">Benutzer entfernen</span>
+                                    <div class="tooltip left">
+                                        <span>Benutzer entfernen</span>
+                                        <div class="tooltip-arrow"></div>
+                                    </div>
+                                {{/button}}
                             </div>
                         </div>
                     {{/view}}

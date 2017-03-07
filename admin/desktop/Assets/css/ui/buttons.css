@@ -42,6 +42,85 @@
     -moz-transition: all 200ms ease-out;
     -o-transition: all 200ms ease-out;
     transition: all 200ms ease-out; }
+  .np-scope-admin .btn:active, .np-scope-admin .btn.active {
+    -moz-box-shadow: inset 2px 3px 5px rgba(0, 0, 0, 0.25);
+    -webkit-box-shadow: inset 2px 3px 5px rgba(0, 0, 0, 0.25);
+    box-shadow: inset 2px 3px 5px rgba(0, 0, 0, 0.25); }
+  .np-scope-admin .btn .tooltip {
+    background-color: #111;
+    color: #FFF;
+    z-index: 2000;
+    font-size: 13px;
+    padding: 8px 16px 8px 16px;
+    margin: 0px;
+    pointer-events: none;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    filter: alpha(opacity=0);
+    -moz-opacity: 0;
+    -khtml-opacity: 0;
+    opacity: 0;
+    -webkit-transition: opacity 150ms ease-in;
+    -moz-transition: opacity 150ms ease-in;
+    -o-transition: opacity 150ms ease-in;
+    transition: opacity 150ms ease-in; }
+    .np-scope-admin .btn .tooltip .tooltip-arrow {
+      position: absolute; }
+    .np-scope-admin .btn .tooltip.left, .np-scope-admin .btn .tooltip.right {
+      top: -1px;
+      bottom: auto; }
+    .np-scope-admin .btn .tooltip.left {
+      left: calc(-300% - 46px);
+      right: auto; }
+      .np-scope-admin .btn .tooltip.left .tooltip-arrow {
+        right: -5px;
+        left: auto; }
+    .np-scope-admin .btn .tooltip.right {
+      right: auto;
+      position: absolute;
+      left: calc(100% + 8px); }
+      .np-scope-admin .btn .tooltip.right .tooltip-arrow {
+        left: -5px;
+        right: auto; }
+  .np-scope-admin .btn:hover .tooltip {
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+    filter: alpha(opacity=100);
+    -moz-opacity: 1;
+    -khtml-opacity: 1;
+    opacity: 1;
+    -webkit-transition: opacity 150ms ease-out;
+    -moz-transition: opacity 150ms ease-out;
+    -o-transition: opacity 150ms ease-out;
+    transition: opacity 150ms ease-out; }
+  .np-scope-admin .btn.btn-icon {
+    -webkit-transition: background-color 150ms ease-in;
+    -moz-transition: background-color 150ms ease-in;
+    -o-transition: background-color 150ms ease-in;
+    transition: background-color 150ms ease-in; }
+    .np-scope-admin .btn.btn-icon:hover {
+      -webkit-transition: background-color 150ms ease-out;
+      -moz-transition: background-color 150ms ease-out;
+      -o-transition: background-color 150ms ease-out;
+      transition: background-color 150ms ease-out; }
+    .np-scope-admin .btn.btn-icon.red {
+      background-color: #d9534f; }
+      .np-scope-admin .btn.btn-icon.red:hover {
+        background-color: #FC827F; }
+    .np-scope-admin .btn.btn-icon.blue {
+      background-color: #337ab7; }
+      .np-scope-admin .btn.btn-icon.blue:hover {
+        background-color: #5393C8; }
+    .np-scope-admin .btn.btn-icon.green {
+      background-color: #5cb85c; }
+      .np-scope-admin .btn.btn-icon.green:hover {
+        background-color: #8AD38A; }
+    .np-scope-admin .btn.btn-icon.orange {
+      background-color: #f0ad4e; }
+      .np-scope-admin .btn.btn-icon.orange:hover {
+        background-color: #FFC675; }
+    .np-scope-admin .btn.btn-icon.black {
+      background-color: #111111; }
+      .np-scope-admin .btn.btn-icon.black.hover {
+        background-color: #525252; }
   .np-scope-admin .btn.small .text {
     font-size: 8px; }
   .np-scope-admin .btn.disabled {

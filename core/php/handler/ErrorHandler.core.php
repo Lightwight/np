@@ -73,6 +73,7 @@ class ErrorHandler extends ControllerHelper
          */
         580     => 580,     // Request error: invalid arguments
         581     => 581,     // Request error: nothing fetched
+        582     => 582,     // Request error: not implemented
         
         /*
          * SQL Errors
@@ -100,12 +101,13 @@ class ErrorHandler extends ControllerHelper
     
     private $errorsMap = array
     (
-        0       => 'Error number does not exist',
+        0       => 'Unknown Error occured',
         200     => 'All ok',
         520     => 'Unauthorized user',
         560     => 'Mail send error',
         580     => 'Request error: invalid arguments',
         581     => 'Request error: nothing fetched',
+        582     => 'Request error: not implemented',
         600     => 'Invalid Payment parameters',
         601     => 'Too many requests with used token',
         700     => 'Possible session hijacking/csrf attack. User lost session.',
@@ -129,6 +131,7 @@ class ErrorHandler extends ControllerHelper
         
         580     => 406,
         581     => 404,
+        582     => 501,
         
         600     => 406,
         601     => 429,
@@ -224,7 +227,22 @@ class ErrorHandler extends ControllerHelper
         }
     }
     
-    public function getError () { return $this->error;  }
+    public function getError ()         { return $this->error;  }
+    
+    public function getErrorMessage ()  
+    {
+        $mErrors    = new Model ('Errors');
+        $resError   = $mErrors
+                        ->findBy ('error_id', $this->errorNumber)
+                        ->orFindBy ('error_id', 0)
+                        ->orderBy ('error_id', 'desc')
+                        ->result ();
+        
+        $error          = $this->error;
+        $error['msg']   = is_array ($resError) ? $resError[0]->get ('message') : $resError->get ('message');
+        
+        return $error;
+    }
     
     private function logError ()
     {

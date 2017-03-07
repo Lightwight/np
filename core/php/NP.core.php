@@ -227,6 +227,7 @@ class NP
     
     private function handleAuth ($params)
     {
+
         if (isset ($params['auth']))
         {
             $reqType        = $this->requestHandler->getMethod ();
@@ -240,7 +241,9 @@ class NP
         }
         else
         {
-            return;
+            $error  = new ErrorHandler (582);
+
+            return json_encode ($error->getErrorMessage ());
         }
     }
     
