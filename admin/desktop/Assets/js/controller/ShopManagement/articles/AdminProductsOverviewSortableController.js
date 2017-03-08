@@ -51,26 +51,6 @@ np.controller.extend ('AdminProductsOverviewSortableController', (function () {
         },
 
         events: {
-            setFilter: function (view) {
-                var filter, sort, sortOrder, sortColumn, currOrder, search, sAppend;
-
-                filter          = parseInt (view.get ('pr_filter'), 10);
-                sAppend         = filter === 0 ? '' : (filter === 1 ? '/not-deleted' : '/deleted');
-                sort            = this.get ('sort');
-                currOrder       = sort.sortOrder;
-                sortColumn      = sort.column;
-                sortOrder       = currOrder === 'none' ? 'asc' : (currOrder === 'desc' ? 'none' : 'desc');
-                search          = np.pagination.getSearch ();
-
-                if (search.empty ()) { search  = 'all'; }
-                else {
-                    search  = search.split ('/')[0];
-                }
-
-                np.model.Products.flush ();
-                np.routeTo ('#/admin/shopmanagement/articles/'+np.pagination.getPage ()+'/'+sortColumn+'/'+sortOrder+'/'+search+sAppend);
-            },
-
             sortByProductID: function () {
                 var sortOrder, currOrder, search;
 

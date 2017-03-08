@@ -74,7 +74,7 @@ np.module('address', (function () {
                     .fail(function (rsp) {
                         var data, options, hasJson;
                         
-                        hasJson             = typeof rsp.data.responseJSON !== 'undefined';
+                        hasJson             = typeof rsp.data !== 'undefined' && typeof rsp.data.responseJSON !== 'undefined';
                         data                = hasJson ? rsp.data.responseJSON : false;
                         
                         if (data) {

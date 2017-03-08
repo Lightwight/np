@@ -102,7 +102,7 @@ class ResponseHandler
     private static function returnModel ()
     {
         $model          = self::$data;
-        
+
         return json_encode ($model);
     }
 }

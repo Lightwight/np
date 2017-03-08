@@ -30,6 +30,9 @@ class ErrorHandler extends ControllerHelper
     /* return error*/
     private $error                      = false;
     
+    /* return error as message*/
+    private $sendErrorMessage           = false;
+    
     /*
      * Error types:
      * 
@@ -74,6 +77,7 @@ class ErrorHandler extends ControllerHelper
         580     => 580,     // Request error: invalid arguments
         581     => 581,     // Request error: nothing fetched
         582     => 582,     // Request error: not implemented
+        583     => 583,     // Request error: not allowed
         
         /*
          * SQL Errors
@@ -108,6 +112,7 @@ class ErrorHandler extends ControllerHelper
         580     => 'Request error: invalid arguments',
         581     => 'Request error: nothing fetched',
         582     => 'Request error: not implemented',
+        583     => 'Request error: not allowed',
         600     => 'Invalid Payment parameters',
         601     => 'Too many requests with used token',
         700     => 'Possible session hijacking/csrf attack. User lost session.',
@@ -132,6 +137,7 @@ class ErrorHandler extends ControllerHelper
         580     => 406,
         581     => 404,
         582     => 501,
+        583     => 403,
         
         600     => 406,
         601     => 429,
@@ -140,6 +146,7 @@ class ErrorHandler extends ControllerHelper
         
         1011    => 409,
         1054    => 409,
+        1055    => 404,
         1062    => 409,
         1064    => 500,
         2000    => 500,
@@ -195,10 +202,12 @@ class ErrorHandler extends ControllerHelper
         510     => 'RSP_ERR_NOT_EXTENDED'
     );
     
-    public function __construct ($errorNumber, $sendHeader = true)  
+    public function __construct ($errorNumber, $sendHeader = true, $sendErrorMessage = false)  
     { 
-        $sendHeader = is_bool ($sendHeader) ? $sendHeader : true;
-
+        $sendHeader                 = is_bool ($sendHeader) ? $sendHeader : true;
+        $this->sendErrorMessage     = $sendErrorMessage;
+        
+        
         if (isset ($this->errors[$errorNumber]) )
         {
             $this->errorNumber  = $errorNumber;
@@ -227,7 +236,10 @@ class ErrorHandler extends ControllerHelper
         }
     }
     
-    public function getError ()         { return $this->error;  }
+    public function getError ()         
+    {
+        return $this->sendErrorMessage ? $this->getErrorMessage () : $this->error;  
+    }
     
     public function getErrorMessage ()  
     {

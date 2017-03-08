@@ -47,6 +47,7 @@ np.module('warn', function (warnData, doTrace) {
                     return m;
                 }(window));
                 
+                // Do the stack trace triggered by not existing method: error_method ():
                 error_method ();
             } catch (e) {
                 err_stack       = e.stack.split ('@').reverse ();

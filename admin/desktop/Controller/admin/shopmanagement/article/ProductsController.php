@@ -30,10 +30,18 @@ class ProductsController extends ControllerHelper implements ControllerInterface
         {
             $params     = explode ('/', $params);
             $id         = (int)$params[0] > 0 ? (int)$params[0] : 0;
-
+            
             $product    = $this->getProduct ($model, $id);
-            $product->set ('payment_gateways', $this->getPayments ($product));
-           
+            
+            if ($product)
+            {
+                $product->set ('payment_gateways', $this->getPayments ($product));
+            }
+            else
+            {
+                return array ();
+            }
+            
             return $product;
         }
         
@@ -100,7 +108,43 @@ class ProductsController extends ControllerHelper implements ControllerInterface
         return $result;
     }
 
-    public function postModel (\Model $model)           {}
+    public function postModel (\Model $model)           
+    {
+        if ($this->isGroup (1))
+        {
+            $breadcrumb = new BreadcrumbController ();
+            $slugify    = new \Cocur\Slugify\Slugify ();
+            $row        = $model->result ();
+
+            $articleID  = (int)$model->getNext ('article_id');
+            $name       = $row->get ('name');
+            $slugged    = $slugify->slugify ($name, '-');
+            $bookmark   = '/product/'.$slugged;
+
+            if ($articleID < 1000) { $articleID = 1000;   }        
+
+            $breadcrumb->addBreadcrumb ($slugged, $name);
+
+            $postID     = $model->add (array (
+                            'name'              => $name,
+                            'article_id'        => $articleID,
+                            'bookmark'          => $bookmark,
+                            'enabled'           => false
+                        ))->result ()->post ();
+
+            if ($postID)
+            {
+                return array 
+                (
+                    'id'                => $postID,
+                    'article_id'        => $articleID
+                );
+            }
+
+            return $this->error ($this->SQL_ERR_ON_POST);
+        }        
+    }
+    
     public function updateModel (\Model $model)          
     {
         $row        = $model->result ();

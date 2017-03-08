@@ -21,24 +21,6 @@
 */
 
 np.view.extend ('AdminProductsOverviewSortableView', {
-    didInsert: function () {
-        $('#admin-product-overview-filter select').niceSelect ();
-    },
-
-    setFilter: function (model) {
-        var opt;
-        
-        opt = parseInt (model.get ('filter'), 10);
-        
-        this.find ('option').each (function () {
-            if (parseInt ($(this).val (), 10) === opt) {
-                $(this).prop ('selected', 'selected');
-            } else {
-                $(this).prop ('selected', '');
-            }
-        });
-    },
-    
     setOrderProductID: function (model) {
         var sortOrder;
         

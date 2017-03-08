@@ -91,13 +91,18 @@ class ModelHandler extends HandlerHelper
                         $oModel     = new Model ($model);
                         $manip      = $controller->postModel ($oModel->add ($row));
                         $isManip    = is_object ($manip) && get_class ($manip) === 'ModelManip';
-
+                        $isError    = is_object ($manip) && get_class ($manip) === 'ErrorHandler';
+                        
                         if ($isManip)
                         {
                             $error  = $manip->error ();
                             $row    = $manip->getRow ();
 
                             $retVal[$manip->getName(true)][$vID]    = count ($error) > 0 ? $error : $row['id'];
+                        }
+                        else if ($isError)
+                        {
+                            $retVal[$model][$vID]   = $manip->getError ();
                         }
                         else
                         {
@@ -109,13 +114,18 @@ class ModelHandler extends HandlerHelper
                         $oModel     = new Model ($model);
                         $manip      = $controller->updateModel ($oModel->add ($row));
                         $isManip    = is_object($manip) && get_class ($manip) === 'ModelManip';
-
+                        $isError    = is_object ($manip) && get_class ($manip) === 'ErrorHandler';
+                        
                         if ($isManip)
                         {
                             $error  = $manip->error ();
                             $row    = $manip->getRow ();
 
                             $retVal[$manip->getName(true)][$vID]    = count ($error) > 0 ? $error : $row['id'];
+                        }
+                        else if ($isError)
+                        {
+                            $retVal[$model][$vID]   = $manip->getError ();
                         }
                         else
                         {
@@ -124,11 +134,14 @@ class ModelHandler extends HandlerHelper
                     }
                     else if ($state && $state == 'rem')
                     {
+                        // TODO: Move to custom controller logic!!!
                         $retVal = array_merge ($retVal, self::deleteRow (array( 'model' => $model, 'dataset' => array ($row))));
                     }
                     else 
                     {
-                        // TODO_ Method not allowed!
+                        $error  = new ErrorHandler (583);
+                        
+                        $retVal[$model][$vID]   = $error->getErrorMessage ();
                     }
                 } 
             }
@@ -271,16 +284,27 @@ class ModelHandler extends HandlerHelper
                     $query  = 'UPDATE `'.$tmpModel.'` SET `deleted`=1, `user`="'.$userID.'" WHERE `ID`="'.$id.'";';
 
                     $result = $oSql->query ($query);
-
-                    $retVal[$model][$id] = (int)($result != 0) ? 1 : array ('err' => 404);
+                    
+                    if ((int)($result != 0)) 
+                    {
+                        $retVal[$model][$id] = 1;
+                    }
+                    else 
+                    {
+                        $error  = new ErrorHandler (1055);
+                        $retVal[$model][$id]    = $error->getErrorMessage ();
+                    }
+//                    $retVal[$model][$id] = (int)($result != 0) ? 1 : array ('err' => 404);
                 }
             }
             else
             {
                 foreach ($data as $set)
                 {
+                    
                     $id                     = isset ($set['ID']) ? $set['ID'] : $set['id'];
-                    $retVal[$model][$id]    = array ('err' => 404);
+                    $error                  = new ErrorHandler (1055);
+                    $retVal[$model][$id]    = $error->getErrorMessage ();
                 }
             }
         }

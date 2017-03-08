@@ -186,6 +186,32 @@ np.module('model.register', function (modelName, localDefinition, data) {
         return is_broken;
     }
     
+    function getError (error, modelName) {
+        var data, tmpError, retError;
+        
+        retError    = 'Code[0] - Unknown error';
+
+        if (error !== null 
+            && typeof error !== 'undefined' 
+            && typeof error.data !== 'undefined' 
+            && typeof error.data.responseJSON !== 'undefined' 
+            && typeof error.data.responseJSON[modelName] !== 'undefined'
+        ) {
+            data        = error.data.responseJSON[modelName];
+            tmpError    = data[Object.keys(data)[0]];
+            
+            if (typeof tmpError.err !== 'undefined') {
+                retError    = 'Code ['+tmpError.err+']';
+            }
+            
+            if (typeof tmpError.msg !== 'undefined') {
+                retError   += ': '+tmpError.msg;
+            }
+        } 
+        
+        return retError;
+    }
+    
     function createModel (model, localDefinition, data) {
         if ($.isArray (data) && typeof data[0] === 'object' && data[0] === null) {
             delete data[0];
@@ -550,55 +576,55 @@ np.module('model.register', function (modelName, localDefinition, data) {
                             adapter     = _t.adapter.get ();
 
                             adapter.save ({model:name, data:rows})
-                                .then (function (result) {
-                                    var i, rows, err, has_err, doBuild;
-                                    
-                                    rows    = new Array ();
-                                    err     = new Array ();
-                                    doBuild = true;
-                                    
-                                    for (i in result) {
-                                        has_err = result[i] === null || typeof result[i].err !== 'undefined' && result[i].err > 0;
-                                        
-                                        // if i < 0 then it means, it was a new row which has been posted on server
-                                        if (i < 0) {
-                                            if (result[i] !== null && !has_err) {
-                                                rows.push (storage.update ('new', i, result[i]));
-                                            } else if (result[i] !== null){
-                                                err.push (result[i].err);
-                                            } else {
-                                                err.push (0);
-                                            }
-                                        } 
-                                        // i is > 0, it is a changed row to handle:
-                                        else {
-                                            // if row has been saved and manipulated serverside column values differs from clientside column values
-                                            // or if row has been saved and only manipulated serverside column equals clientside column:
-                                            if (result[i] !== null && !has_err) {
-                                                rows.push (storage.update ('chg', i, result[i]));
-                                            } 
-                                            // else if the response contains an error (error while saving):
-                                            else if (result[i] !== null && has_err) {
-                                                err.push (result[i].err);
-                                            } 
-                                            // else an unknown error has occured:
-                                            else if (typeof result[i] !== 'boolean') {
-                                                err.push (0);
-                                            } 
+                            .then (function (result) {
+                                var i, rows, err, has_err, doBuild;
+
+                                rows    = new Array ();
+                                err     = new Array ();
+                                doBuild = true;
+
+                                for (i in result) {
+                                    has_err = result[i] === null || typeof result[i].err !== 'undefined' && result[i].err > 0;
+
+                                    // if i < 0 then it means, it was a new row which has been posted on server
+                                    if (i < 0) {
+                                        if (result[i] !== null && !has_err) {
+                                            rows.push (storage.update ('new', i, result[i]));
+                                        } else if (result[i] !== null){
+                                            err.push (result[i].err);
+                                        } else {
+                                            err.push (0);
                                         }
+                                    } 
+                                    // i is > 0, it is a changed row to handle:
+                                    else {
+                                        // if row has been saved and manipulated serverside column values differs from clientside column values
+                                        // or if row has been saved and only manipulated serverside column equals clientside column:
+                                        if (result[i] !== null && !has_err) {
+                                            rows.push (storage.update ('chg', i, result[i]));
+                                        } 
+                                        // else if the response contains an error (error while saving):
+                                        else if (result[i] !== null && has_err) {
+                                            err.push (result[i].err);
+                                        } 
+                                        // else an unknown error has occured:
+                                        else if (typeof result[i] !== 'boolean') {
+                                            err.push (0);
+                                        } 
                                     }
-                                    
-                                    if (err.length === 0 ) {
-                                        promise.then (doBuild ? buildRows (rows) : result);
-                                    } else {
-                                        buildRows (rows);
-                                        
-                                        promise.fail (err);
-                                    }
-                                })
-                                .fail (function () {
-                                    promise.fail ();
-                                });
+                                }
+
+                                if (err.length === 0 ) {
+                                    promise.then (doBuild ? buildRows (rows) : result);
+                                } else {
+                                    buildRows (rows);
+
+                                    promise.fail (err);
+                                }
+                            })
+                            .fail (function (err) {
+                                promise.fail (getError (err, name));
+                            });
                         } else {
                             np.tick (promise.then, buildRows (rows));
                         }

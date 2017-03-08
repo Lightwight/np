@@ -1,5 +1,7 @@
 np.controller.extend ('AdminArticleController', (function () {
-    var currentArticle;
+    var isNewArticle, currentArticle;
+    
+    isNewArticle    = false;
     
     function calcPriceBrutto (netto, tax) 
     {
@@ -31,7 +33,11 @@ np.controller.extend ('AdminArticleController', (function () {
     return {
         view:   'AdminArticleView',
         model:  function () {
-            var article, categories, taxes, units, manufacturers, suppliers, warehouses;
+            var article_id, article, categories, taxes, units, manufacturers, suppliers, warehouses,
+                _def, _row;
+            
+            article_id      = getPage ();
+            isNewArticle    = article_id === -1;
 
             categories      = new Array ();
             taxes           = new Array ();
@@ -40,7 +46,26 @@ np.controller.extend ('AdminArticleController', (function () {
             suppliers       = new Array ();
             warehouses      = new Array ();
             
-            np.model.Products.findByID (getPage ()).each (function (row) {
+            if (isNewArticle) {
+                _def    = np.model.Products.definition ();
+
+                _row    = {
+                    id:         -1,
+                    sending:    false,
+                    success:    false,
+                    failed:     false
+                };
+
+                $.map (_def, function (v, k) {
+                    if (k !== 'id') { 
+                        _row[k] = v === 'number' ? 0 : ''; 
+                    }
+                });
+                
+                np.model.Products.add (_row);
+            }
+            
+            np.model.Products.findByID (article_id).each (function (row) {
                 currentArticle  = row;
                 article         = np.jsonClone (row.getAll ());
             });
@@ -78,10 +103,10 @@ np.controller.extend ('AdminArticleController', (function () {
             article.price_brutto        = calcPriceBrutto (article.price, article.tax);
             article.supplier_ek_brutto  = calcPriceBrutto (article.supplier_ek, article.supplier_tax);
             
-            article.paypal_enabled                  = parseInt (article.payment_gateways[1], 10) === 1;
-            article.debit_enabled                   = parseInt (article.payment_gateways[2], 10) === 1;
-            article.banktransfer_enabled            = parseInt (article.payment_gateways[3], 10) === 1;
-            article.cod_enabled                     = parseInt (article.payment_gateways[4], 10) === 1;
+            article.paypal_enabled                  = article_id > -1 ? parseInt (article.payment_gateways[1], 10) === 1 : 0;
+            article.debit_enabled                   = article_id > -1 ? parseInt (article.payment_gateways[2], 10) === 1 : 0;
+            article.banktransfer_enabled            = article_id > -1 ? parseInt (article.payment_gateways[3], 10) === 1 : 0;
+            article.cod_enabled                     = article_id > -1 ? parseInt (article.payment_gateways[4], 10) === 1 : 0;
             
             article.sending                         = false;
             article.savingArticleGlobalSettings     = false;
@@ -269,16 +294,24 @@ np.controller.extend ('AdminArticleController', (function () {
                 currentArticle.setDescription (_t.get ('description'));
                 
                 _t.set ('sending', true);
-                
+
                 currentArticle
                 .save ()
                 .then (function (rsp) {
                     _t.set ('sending', false);
                     _t.set ('success', true);
+                    
+                    np.notify ('Der Artikel wurde angelegt.').asSuccess ().timeout (2000).show ();
+                    
+                    if (isNewArticle) {
+                        np.routeTo ('/admin/shopmanagement/article/'+rsp.getID ());
+                    } 
                 })
                 .fail (function (err) {
                     _t.set ('sending', false);
                     _t.set ('success', false);
+                    
+                    np.notify ('Der Artikel konnte nicht gespeichert werden.<br><br>'+ err).asError ().timeout (4000).show ();
                 });
             },
             

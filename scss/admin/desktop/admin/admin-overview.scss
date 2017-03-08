@@ -86,7 +86,7 @@
             width: 100%;
             border-top: 12px rgba(211,211,211,0.25) solid;
             padding: 12px;  
-            
+
             @include opacity(1);
             @include transition(opacity 250ms ease-in);
             

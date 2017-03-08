@@ -1,0 +1,20 @@
+<div class="dialog">
+    <div class="body">
+        <span>
+            Soll der Artikel wirklich gelöscht werden?
+        </span>
+        <div class="hint">
+            <b>Hinweis</b>: Der Artikel wird deaktiviert und kann jederzeit wieder aktiviert werden.
+        </div>
+    </div>
+    <div class="footer">
+        {{#button click="apply" type="button" class="btn btn-icon red"}}
+            <span class="sr-only">Ja</span>
+            <span class="fa fa-check"></span>
+        {{/button}}
+        {{#button click="cancel" type="button" class="btn btn-icon green"}}
+            <span class="sr-only">Abbrechen</span>
+            <span class="fa fa-ban"></span>
+        {{/button}}
+    </div>
+</div>    

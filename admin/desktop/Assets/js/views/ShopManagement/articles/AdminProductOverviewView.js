@@ -48,13 +48,8 @@ np.view.extend ('AdminProductOverviewView', {
     .observes ('deleted').on ('change'),
     
     notRemoved: function (model) {
-        var message, buttons;
-        
         if (!model.get ('removed')) {
-            message     = 'Der Artikel konnte nicht entfernt werden.<br>';
-            message    += 'Bitte kontaktieren Sie Ihren Systemadministrator.';
-            
-            vex.dialog.alert ({className: 'vex-theme-top', message: message});
+            np.notify ('Der Artikel konnte nicht gelöscht werden.<br>' +model.get ('error')).asError ().timeout (4000).show ();
         }
     }.observes ('removed').on  ('change'),
     
@@ -62,8 +57,10 @@ np.view.extend ('AdminProductOverviewView', {
         var _t;
         
         _t  = this;
-        
+
         if (model.get ('removed')) {
+            np.notify ('Der Artikel wurde gelöscht').asSuccess ().timeout (2000).show ();
+
             _t.fadeOut (350, function () {
                 _t.remove ();
             });

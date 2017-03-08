@@ -361,7 +361,7 @@ np.module ('model.ajaxAdapter', (function () {
                             } else {
                                 warn ('ajax_failed', {model:model});
 
-                                promise.fail();
+                                promise.fail ();
                             }
                         })
                         .fail (function (err) {
@@ -447,7 +447,6 @@ np.module ('model.ajaxAdapter', (function () {
 
                             promise.fail (err);
                         });
-
                     } else if (!valid_model) {
                         warn ('sve_invalid_model', {model:model,tof:tof_model});
 

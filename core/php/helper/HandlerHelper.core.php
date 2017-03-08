@@ -29,6 +29,8 @@ class HandlerHelper
     protected $MAIL_ERR_SEND                        = 560;
     protected $REQ_ERR_INVALID_ARGS                 = 580;
     protected $REQ_ERR_NOT_FOUND                    = 581;
+    protected $RSP_ERR_NOT_IMPLEMENTED              = 582;
+    protected $RSP_ERR_FORBIDDEN                    = 583;
     protected $PAY_ERR_INVALID_ARGS                 = 600;
     protected $PAY_ERR_TOO_MANY_TOKEN_REQUESTS      = 601;
     protected $SQL_ERR_ON_DELETE                    = 1011;
@@ -44,6 +46,11 @@ class HandlerHelper
         return new ErrorHandler ($errorNumber, $sendHeader);
     }
     
+    protected function errorMessage ($errorNumber, $sendHeader = true)
+    {
+        return new ErrorHandler ($errorNumber, $sendHeader, true);
+    }
+
     protected function prepareOutput ($result)
     {
         $fetched    = array ();

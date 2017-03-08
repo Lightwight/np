@@ -25,6 +25,7 @@ np.controller.extend ('AdminProductOverviewController', {
     model:  function () {
         this.sending    = false;
         this.removed    = false;
+        this.error      = false;
         
         return {
             AdminProduct: this
@@ -47,10 +48,16 @@ np.controller.extend ('AdminProductOverviewController', {
             .save ()
             .then (function (rsp) {
                 _t.set ('sending', false);
+                _t.set ('removed', true);
                 _t.set ('deleted', 0);
+                
+                np.notify ('Der Artikel wurde wiederhergestellt.').asSuccess ().timeout (2000).show ();
+                np.observable.removeContext ('AdminProduct', _t.get ('id'));
             })
-            .fail (function () {
+            .fail (function (err) {
                 _t.set ('sending', false);
+        
+                np.notify ('Der Artikel konnte nicht wiederhergestellt werden.<br>' +err).asError ().timeout (4000).show ();
             });
         },
 
@@ -59,42 +66,30 @@ np.controller.extend ('AdminProductOverviewController', {
             
             _t  = this;
             
-            title       = 'Artikel entfernen';
-            message     = 'Soll der Artikel wirklich entfernt werden?';
+            np.Modal
+            .dialog ()
+            .apply (function () {
+                np.model.Products.findByID (_t.get ('id')).each (function (row) {
+                    row.remove ();
+                });
+
+                _t.set ('sending', true);
+
+                np.model.Products
+                .save ()
+                .then (function (rsp) {
+                    _t.set ('sending', false);
+                    _t.set ('removed', true);
+                    _t.set ('deleted', 1);
+
+                    np.observable.removeContext ('AdminProduct', _t.get ('id'));
+                })
+                .fail (function (err) {
+                    _t.set ('error', err);
+                    _t.set ('sending', false);
+                    _t.set ('removed', false);
                     
-            buttons = new Array 
-            (
-                $.extend ({}, vex.dialog.buttons.YES, {text: 'Ja'}),
-                $.extend ({}, vex.dialog.buttons.NO, {text: 'Abbrechen'})
-            );
-            
-            vex.dialog.open ({
-                className:  'vex-theme-top',
-                message:    '<h3>'+title+'</h3><br><span>'+message+'</span>',
-                buttons:    buttons,
-                callback:   function (data) {
-                    if (data === true) {
-                        np.model.Products.findByID (_t.get ('id')).each (function (row) {
-                            row.remove ();
-                        });
-
-                        _t.set ('sending', true);
-
-                        np.model.Products
-                        .save ()
-                        .then (function (rsp) {
-                            _t.set ('sending', false);
-                            _t.set ('removed', true);
-                            _t.set ('deleted', 1);
-                            
-                            np.observable.removeContext ('AdminProduct', _t.get ('id'));
-                        })
-                        .fail (function () {
-                            _t.set ('sending', false);
-                            _t.set ('removed', false);
-                        });
-                    }                
-                }
+                });                
             });
         }
     }

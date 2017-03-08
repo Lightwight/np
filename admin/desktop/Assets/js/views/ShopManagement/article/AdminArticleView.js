@@ -161,7 +161,7 @@ np.view.extend ('AdminArticleView', {
 
         image   = model.get ('image');
 
-        if (image.length > 0) {
+        if (image && image.length > 0) {
             this.html ('');
             this.css ('background-image', 'url('+image+')');
             this.css ('color', '#FFFFFF');
@@ -334,5 +334,9 @@ np.view.extend ('AdminArticleView', {
         } else {
             this.prop ('checked', '');
         }
-    }.observes ('cod_enabled').on ('change')
+    }.observes ('cod_enabled').on ('change'),
+    
+    flushArticles: function () {
+        np.model.Products.flush ();
+    }.observes ('route.before').on ('change')
 });

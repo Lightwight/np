@@ -34,7 +34,7 @@ class ProductsController extends ControllerHelper implements ControllerInterface
         $sort       = isset ($params[1]) ? $this->escape_string ($params[1]) : 'name';
         $sortOrder  = isset ($params[2]) ? $this->escape_string ($params[2]) : 'asc';
         $search     = isset ($params[3]) ? $this->escape_string (implode ('/', array_slice ($params, 3))) : false;
-        
+
         if ($sort === 'id') { $sort = 'ID'; }       
 
         if (!$search)
@@ -62,7 +62,7 @@ class ProductsController extends ControllerHelper implements ControllerInterface
                     if (!$in)
                     {
                         $model
-                            ->findLike ('ID', $keyword)
+                            ->findLike ('article_id', $keyword)
                             ->orFindLike ('category', $keyword)
                             ->orFindLike ('name', $keyword);
                     
@@ -71,7 +71,7 @@ class ProductsController extends ControllerHelper implements ControllerInterface
                     else
                     {
                         $model
-                            ->orFindLike ('ID', $keyword)
+                            ->orFindLike ('article_id', $keyword)
                             ->orFindLike ('category', $keyword)
                             ->orFindLike ('name', $keyword);
                     }
@@ -100,41 +100,7 @@ class ProductsController extends ControllerHelper implements ControllerInterface
 
     public function postModel (\Model $model)           
     {
-        if ($this->isGroup (1))
-        {
-            $breadcrumb = new BreadcrumbController ();
-            $slugify    = new \Cocur\Slugify\Slugify ();
-            $row        = $model->result ();
-
-            $articleID  = (int)$model->getNext ('article_id');
-            $name       = $row->get ('name');
-            $slugged    = $slugify->slugify ($name, '-');
-            $bookmark   = '/product/'.$slugged;
-
-            if ($articleID < 1000) { $articleID = 1000;   }        
-
-            $breadcrumb->addBreadcrumb ($slugged, $name);
-
-            $postID     = $model->add (array (
-                            'name'              => $name,
-                            'article_id'        => $articleID,
-                            'bookmark'          => $bookmark,
-                            'enabled'           => false
-                        ))->result ()->post ();
-
-            if ($postID)
-            {
-                return array 
-                (
-                    'id'                => $postID,
-                    'article_id'        => $articleID
-                );
-            }
-
-            return $this->error ($this->SQL_ERR_ON_POST);
-        }
-        
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
+        return $this->errorMessage ($this->RSP_ERR_NOT_IMPLEMENTED);
     }
 
     public function updateModel(\Model $model)
@@ -147,8 +113,6 @@ class ProductsController extends ControllerHelper implements ControllerInterface
         }
         
         return $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
-            
-        
     }
     
     public function deleteModel (\Model $model)         {}

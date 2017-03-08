@@ -23,14 +23,29 @@
 *
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
-.np-scope-admin #admin-products-overview-view label.small {
-  line-height: 40px; }
+.np-scope-admin #admin-products-overview-view label {
+  line-height: 34px;
+  margin-bottom: 0px; }
+  .np-scope-admin #admin-products-overview-view label.small {
+    line-height: 34px;
+    margin-bottom: 0px; }
 .np-scope-admin #admin-products-overview-view .alert-deleted {
   width: 100%;
   max-width: 132px;
   text-align: center;
   margin-top: 12px;
   line-height: 12px; }
-.np-scope-admin #admin-product-overview-filter .nice-select {
-  margin-top: 5px;
-  margin-left: 6px; }
+.np-scope-admin #admin-product-overview-filter {
+  position: relative;
+  float: left;
+  margin-left: 26px; }
+  .np-scope-admin #admin-product-overview-filter .nice-select {
+    margin-top: 0px;
+    margin-left: 12px;
+    line-height: 34px;
+    height: 34px;
+    width: 178px; }
+    .np-scope-admin #admin-product-overview-filter .nice-select ul {
+      height: auto; }
+      .np-scope-admin #admin-product-overview-filter .nice-select ul li {
+        width: 100%; }

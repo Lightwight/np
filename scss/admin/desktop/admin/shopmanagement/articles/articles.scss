@@ -24,8 +24,12 @@
 .np-scope-admin {
     #admin-products-overview-view {
         label {
+            line-height: 34px;
+            margin-bottom: 0px;            
+            
             &.small {
-                line-height: 40px;
+                line-height: 34px;
+                margin-bottom: 0px;            
             }
         }
         
@@ -39,9 +43,24 @@
     }
     
     #admin-product-overview-filter {
+        position: relative;
+        float: left;
+        margin-left: 26px;
+        
         .nice-select {
-            margin-top: 5px;
-            margin-left: 6px;
+            margin-top: 0px;
+            margin-left: 12px;
+            line-height: 34px;
+            height: 34px;
+            width: 178px;
+            
+            ul {
+                height: auto;
+                
+                li {
+                    width: 100%;
+                }
+            }
         }
     }
 }

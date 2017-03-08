@@ -1,0 +1,17 @@
+<a href="/admin/shopmanagement/article/-1" class="btn btn-icon pull-left green">
+    <span class="sr-only">Neuen Artikel anlegen</span>
+    <span class="fa fa-plus"></span>
+    <div class="tooltip right">
+        <span>Neuen Artikel anlegen</span>
+        <div class="tooltip-arrow"></div>
+    </div>
+</a>
+
+{{#view "AdminProductOverviewFilterView" id="admin-product-overview-filter"}}
+    <label class="small normal pull-left">Zeige</label>
+    {{#select $="setFilter" change="setFilter" init=true notifiy=false bindAttr="pr_filter" class="pull-left"}}
+        <option value="all">alle Artikel</option>                    
+        <option value="not-deleted">nicht gelöschte Artikel</option>                    
+        <option value="deleted">gelöschte Artikel</option>                    
+    {{/select}}
+{{/view}}
