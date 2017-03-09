@@ -95,7 +95,7 @@ class ModelHandler extends HandlerHelper
                         
                         if ($isManip)
                         {
-                            $error  = $manip->error ();
+                            $error  = $manip->getError ();
                             $row    = $manip->getRow ();
 
                             $retVal[$manip->getName(true)][$vID]    = count ($error) > 0 ? $error : $row['id'];
@@ -113,12 +113,12 @@ class ModelHandler extends HandlerHelper
                     {
                         $oModel     = new Model ($model);
                         $manip      = $controller->updateModel ($oModel->add ($row));
-                        $isManip    = is_object($manip) && get_class ($manip) === 'ModelManip';
+                        $isManip    = is_object ($manip) && get_class ($manip) === 'ModelManip';
                         $isError    = is_object ($manip) && get_class ($manip) === 'ErrorHandler';
                         
                         if ($isManip)
                         {
-                            $error  = $manip->error ();
+                            $error  = $manip->getError ();
                             $row    = $manip->getRow ();
 
                             $retVal[$manip->getName(true)][$vID]    = count ($error) > 0 ? $error : $row['id'];
@@ -134,8 +134,27 @@ class ModelHandler extends HandlerHelper
                     }
                     else if ($state && $state == 'rem')
                     {
-                        // TODO: Move to custom controller logic!!!
-                        $retVal = array_merge ($retVal, self::deleteRow (array( 'model' => $model, 'dataset' => array ($row))));
+                        $oModel     = new Model ($model);
+                        $manip      = $controller->deleteModel ($oModel->add ($row));
+                        
+                        $isManip    = is_object ($manip) && get_class ($manip) === 'ModelManip';
+                        $isError    = is_object ($manip) && get_class ($manip) === 'ErrorHandler';
+                        
+                        if ($isManip)
+                        {
+                            $error  = $manip->getError ();
+                            $row    = $manip->getRow ();
+                            
+                            $retVal[$manip->getName (true)][$vID]   = count ($error) > 0 ? $error : self::deleteRow ($manip);
+                        }
+                        else if ($isError)
+                        {
+                            $retVal[$model][$vID]   = $manip->getError ();
+                        }
+                        else
+                        {
+                            $retVal[$model][$vID]   = $manip;
+                        }
                     }
                     else 
                     {
@@ -255,60 +274,19 @@ class ModelHandler extends HandlerHelper
         return $retDef;        
     }
     
-    private static function deleteRow ($params)
+    private static function deleteRow ($manip)
     {
-        $model  = ( isset( $params['model'] ) )? $params['model'] : false;
-        $data   = ( isset( $params['dataset'] ) && is_array( $params['dataset'] ) && count( $params['dataset'] > 0 ) )? $params['dataset'] : false;
-        $retVal = array();
-        $userID = Auth::userID ();
+        $model              = $manip->getName (true);
+        $definitionHandler  = DefinitionHandler::getInstance ();
+        $defData            = $definitionHandler->resolveDefinition ($model, 1);
         
-        if ($model && $data)
+        if (isset ($defData[$model]['deleted']) && $defData[$model]['deleted'] === 'number')
         {
-            $oSql               = Sql::getInstance ();
-            
-            $retVal['model']    = $model;
-            $retVal[$model]     = array();
-            
-            $definitionHandler  = DefinitionHandler::getInstance ();
-            $defData            = $definitionHandler->resolveDefinition ($model, 2);
-
-            $definition         = array_key_exists ($model, $defData) && count ($defData[$model] > 0) ? $defData[$model] : array (); 
-            
-            $tmpModel           = strtolower (substr($model, 0, 1)).substr ($model, 1);
-
-            if (isset ($definition['deleted']) && isset ($definition['user']))
-            {
-                foreach ($data as $set)
-                {
-                    $id     = isset ($set['ID']) ? $set['ID'] : $set['id'];
-                    $query  = 'UPDATE `'.$tmpModel.'` SET `deleted`=1, `user`="'.$userID.'" WHERE `ID`="'.$id.'";';
-
-                    $result = $oSql->query ($query);
-                    
-                    if ((int)($result != 0)) 
-                    {
-                        $retVal[$model][$id] = 1;
-                    }
-                    else 
-                    {
-                        $error  = new ErrorHandler (1055);
-                        $retVal[$model][$id]    = $error->getErrorMessage ();
-                    }
-//                    $retVal[$model][$id] = (int)($result != 0) ? 1 : array ('err' => 404);
-                }
-            }
-            else
-            {
-                foreach ($data as $set)
-                {
-                    
-                    $id                     = isset ($set['ID']) ? $set['ID'] : $set['id'];
-                    $error                  = new ErrorHandler (1055);
-                    $retVal[$model][$id]    = $error->getErrorMessage ();
-                }
-            }
+            return $manip->set ('deleted', 1)->update ();
         }
+
+        $error  = new ErrorHandler (1011);
         
-        return $retVal;
+        return $error->getErrorMessage ();
     }
 }

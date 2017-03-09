@@ -608,40 +608,49 @@ class Auth
                         ->asGroup ('Customer')
                         ->result ();
    
-        $company    = $tmpCompany ? $tmpCompany->getRow ('Customer') : array ('company' => '', 'ustid' => '');
-        $user       = $tmpUser->getRow ('Customer');
+        if ($tmpUser)
+        {
+            $company    = $tmpCompany ? $tmpCompany->getRow ('Customer') : array ('company' => '', 'ustid' => '');
+            $user       = $tmpUser->getRow ('Customer');
 
-        $user['company']    = $company['company'];
-        $user['ustid']      = $company['ustid'];
-        
-        if (!isset ($_SESSION['auth'])) { $_SESSION['auth'] = array (); }
-        
-        if (isset ($user['password']))  
-        { 
-            unset ($user['password']);
-            $tmpUser->set ('password', '');
-        }
-        
-        if (isset ($user['pw_reset']))  
-        { 
-            unset ($user['pw_reset']);    
-            $tmpUser->set ('pw_reset', '');
-        }
-        
-        if (isset ($user['pw_temp']))   
-        { 
-            unset ($user['pw_temp']);     
-            $tmpUser->set ('pw_temp', '');
-        }
-        
-        $user['loggedIn']   = true;
+            $user['company']    = $company['company'];
+            $user['ustid']      = $company['ustid'];
 
-        $_SESSION['auth']   = $user;
-        
-        if ($stayLoggedIn)  { NPCookie::setCookie ('auth', $user, 2592000);     }
-        else                { NPCookie::setCookie ('auth', false);              }
+            if (!isset ($_SESSION['auth'])) { $_SESSION['auth'] = array (); }
 
-        return $tmpUser;
+            if (isset ($user['password']))  
+            { 
+                unset ($user['password']);
+                $tmpUser->set ('password', '');
+            }
+
+            if (isset ($user['pw_reset']))  
+            { 
+                unset ($user['pw_reset']);    
+                $tmpUser->set ('pw_reset', '');
+            }
+
+            if (isset ($user['pw_temp']))   
+            { 
+                unset ($user['pw_temp']);     
+                $tmpUser->set ('pw_temp', '');
+            }
+
+            $user['loggedIn']   = true;
+
+            $_SESSION['auth']   = $user;
+
+            if ($stayLoggedIn)  { NPCookie::setCookie ('auth', $user, 2592000);     }
+            else                { NPCookie::setCookie ('auth', false);              }
+
+            return $tmpUser;
+        }
+        else
+        {
+            $error  = new ErrorHandler (0);
+
+            return $error->getErrorMessage ();
+        }
     }
     
     public static function getReadable ($model, $asGroup = false)

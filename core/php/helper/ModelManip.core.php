@@ -30,7 +30,7 @@ class ModelManip extends HandlerHelper
     private $row;
     private $postable;
     
-    private $error;
+    private $_error;
     
     private $ignoreRights;
     
@@ -40,7 +40,7 @@ class ModelManip extends HandlerHelper
         $this->lModel           = strtolower (substr ($model, 0, 1)).substr ($model, 1);
         
         $this->row              = is_array ($row) && count ($row) === 1 && array_key_exists (0, $row) ? $row[0] : $row;
-        $this->error            = array ();
+        $this->_error            = array ();
 
         if (isset ($this->row['ID'])) 
         {
@@ -125,7 +125,7 @@ class ModelManip extends HandlerHelper
                     }               
                     else
                     {
-                        $this->error    = parent::error ($this->SQL_ERR_UNKNOWN_COLUMN);
+                        $this->_error    = $this->error ($this->SQL_ERR_UNKNOWN_COLUMN);
 
                         return false;
                     }
@@ -133,7 +133,7 @@ class ModelManip extends HandlerHelper
                 }
                 else
                 {
-                    $this->error    = $this->error ($errno);
+                    $this->_error    = $this->error ($errno);
 
                     return false;
                 }
@@ -200,14 +200,14 @@ class ModelManip extends HandlerHelper
             }
             else
             {
-                $this->error    = $this->error ($errno, false);
+                $this->_error    = $this->error ($errno, false);
                 
                 return false;
             }
         }
         else 
         {
-            $this->error    = $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
+            $this->_error    = $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
             
             return false;
         }        
@@ -238,7 +238,7 @@ class ModelManip extends HandlerHelper
             }
             else
             {
-                $this->error    = $this->error ($errno);
+                $this->_error    = $this->error ($errno);
                 
                 return false;
             }
@@ -281,5 +281,5 @@ class ModelManip extends HandlerHelper
     }
     
     public function postable ()     { return $this->postable;   }
-    public function getError ()     { return $this->error;      }
+    public function getError ()     { return $this->_error;     }
 }

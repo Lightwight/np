@@ -129,6 +129,11 @@ np.view.extend ('AuthLoginView', (function () {
             error       = model.get ('error');
             buttons     = new Array ();
 
+            callback    = function (data) {
+                if (data === false) { return false;                                         }
+                else                { document.location.href = '#/auth/forgot/password';    }
+            };
+
             if (error === 580) {
                 message  = 'Bitte &uuml;berpr&uuml;fen Sie Ihre Anmeldedaten.<br>';
                 message += 'Wenn Sie Ihre Passwort vergessen haben, dann k&ouml;nnen Sie sich ein neues erstellen.<br>';
@@ -140,10 +145,6 @@ np.view.extend ('AuthLoginView', (function () {
                     $.extend ({}, vex.dialog.buttons.NO, {text: 'Schließen'})
                 );
                 
-                callback    = function (data) {
-                    if (data === false) { return false;                                         }
-                    else                { document.location.href = '#/auth/forgot/password';    }
-                };
             } else {
                 message  = 'Interner Fehler<br><br>';
                 message += 'Bitte veruchen Sie es in ein paar Minuten erneut. ';
