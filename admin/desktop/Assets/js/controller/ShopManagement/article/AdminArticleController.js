@@ -29,6 +29,82 @@ np.controller.extend ('AdminArticleController', (function () {
     {
         return parseInt (np.route.getBookmarkItem (), 10);
     }
+
+    function setArticleMainSettings (_t) {
+        currentArticle.setImage (_t.get ('image'));
+        currentArticle.setName (_t.get ('name'));
+        currentArticle.setTitle (_t.get ('title'));
+        currentArticle.setDescription (_t.get ('description'));
+    }
+
+    function setArticleGlobalSettings (_t) {
+        currentArticle.setIsNew (_t.get ('is_new'));
+        currentArticle.setEnabled (_t.get ('enabled'));
+        currentArticle.setDeliverable (_t.get ('deliverable'));
+        currentArticle.setTopOffer (_t.get ('top_offer'));
+        currentArticle.setOversaleable (_t.get ('oversaleable'));
+    }    
+    
+    function setArticleSettings (_t) {
+        var weight, price, price_brutto, tax;
+
+        weight  = parseInt (_t.get ('weight'), 10);
+        if (isNaN (weight)) { weight = 0;   }
+
+        tax     = parseInt (_t.get ('tax'), 10);
+        if (isNaN (tax)) { tax = 0; }
+
+        price           = parseFloat ((''+_t.get ('price')).replace (/,/g, '.')).toFixed (5);
+        price_brutto    = calcPriceBrutto (price, tax);
+
+        currentArticle.setCategoryId (_t.get ('category_id'));
+        currentArticle.setUnitId (_t.get ('unit_id'));
+        currentArticle.setWeight (weight);
+        currentArticle.setWeightUnit (_t.get ('weight_unit'));
+        currentArticle.setPackUnit (_t.get ('pack_unit'));
+        currentArticle.setTax (tax);
+        currentArticle.setPrice (price);        
+    }
+    
+    function setArticlePayments (_t) {
+        var payments;
+
+        payments    = {
+            1:  _t.get ('paypal_enabled') === false ? 0 : 1,
+            2:  _t.get ('debit_enabled') === false ? 0 : 1,
+            3:  _t.get ('banktransfer_enabled') === false ? 0 : 1,
+            4:  _t.get ('cod_enabled') === false ? 0 : 1
+        };
+
+        currentArticle.setPaymentGateways (payments);
+    }
+
+    function setManufacturerSettings (_t) {
+        currentArticle.setManufacturerId (_t.get ('manufacturer_id'));
+        currentArticle.setHan (_t.get ('han'));
+    }
+    
+    function setSupplierSettings (_t) {
+        var price, price_brutto, tax;
+
+        tax     = parseInt (_t.get ('supplier_tax'), 10);
+        if (isNaN (tax)) { tax = 0; }
+
+        price               = parseFloat ((''+_t.get ('supplier_ek')).replace (/,/g, '.')).toFixed (5);
+        price_brutto        = parseFloat ((''+_t.get ('supplier_ek_brutto')).replace (/,/g, '.')).toFixed (5);
+
+        currentArticle.setSupplierId (_t.get ('supplier_id'));
+        currentArticle.setSupplierTax (tax);
+        currentArticle.setSupplierEk (_t.get ('supplier_ek'));
+
+        _t.set ('supplier_ek', price);
+        _t.set ('supplier_ek_brutto', price_brutto);
+    }
+
+    function setWarehouseSettings (_t) {
+        currentArticle.setWarehouseId (_t.get ('warehouse_id'));
+        currentArticle.setStock (_t.get ('stock'));
+    }
     
     return {
         view:   'AdminArticleView',
@@ -109,13 +185,6 @@ np.controller.extend ('AdminArticleController', (function () {
             article.cod_enabled                     = article_id > -1 ? parseInt (article.payment_gateways[4], 10) === 1 : 0;
             
             article.sending                         = false;
-            article.savingArticleGlobalSettings     = false;
-            article.savingArticleSettings           = false;
-            article.savingArticlePayments           = false;
-            article.savingManufacturerSettings      = false;
-            article.savingSupplierSettings          = false;
-            article.savingWarehouseSettings         = false;
-            
             article.success                         = false;
             
             return {AdminArticle: article};
@@ -284,15 +353,18 @@ np.controller.extend ('AdminArticleController', (function () {
             },
             
             saveArticle: function () {
-                var _t;
+                var _t, notifyMsg;
                 
                 _t  = this;
-
-                currentArticle.setImage (_t.get ('image'));
-                currentArticle.setName (_t.get ('name'));
-                currentArticle.setTitle (_t.get ('title'));
-                currentArticle.setDescription (_t.get ('description'));
                 
+                setArticleMainSettings (_t);
+                setArticleGlobalSettings (_t);
+                setArticleSettings (_t);
+                setArticlePayments (_t);
+                setManufacturerSettings (_t);
+                setSupplierSettings (_t);
+                setWarehouseSettings (_t);
+
                 _t.set ('sending', true);
 
                 currentArticle
@@ -301,7 +373,9 @@ np.controller.extend ('AdminArticleController', (function () {
                     _t.set ('sending', false);
                     _t.set ('success', true);
                     
-                    np.notify ('Der Artikel wurde angelegt.').asSuccess ().timeout (2000).show ();
+                    notifyMsg   = !isNewArticle ? 'Die Änderungen wurden übernommen.' : 'Der Artikel wurde angelegt.';
+
+                    np.notify (notifyMsg).asSuccess ().timeout (2000).show ();
                     
                     if (isNewArticle) {
                         np.routeTo ('/admin/shopmanagement/article/'+rsp.getID ());
@@ -312,170 +386,6 @@ np.controller.extend ('AdminArticleController', (function () {
                     _t.set ('success', false);
                     
                     np.notify ('Der Artikel konnte nicht gespeichert werden.<br><br>'+ err).asError ().timeout (4000).show ();
-                });
-            },
-            
-            saveArticleGlobalSettings: function () {
-                var _t;
-                
-                _t  = this;
-
-                currentArticle.setIsNew (_t.get ('is_new'));
-                currentArticle.setEnabled (_t.get ('enabled'));
-                currentArticle.setDeliverable (_t.get ('deliverable'));
-                currentArticle.setTopOffer (_t.get ('top_offer'));
-                currentArticle.setOversaleable (_t.get ('oversaleable'));
-
-                _t.set ('savingArticleGlobalSettings', true);
-                
-                currentArticle
-                .save ()
-                .then (function () {
-                    _t.set ('savingArticleGlobalSettings', false);
-                    _t.set ('success', true);
-                })
-                .fail (function () {
-                    _t.set ('savingArticleGlobalSettings', false);
-                    _t.set ('success', false);
-                });
-            },
-            
-            saveArticleSettings: function () {
-                var _t, weight, price, price_brutto, tax;
-                
-                _t  = this;
-
-                weight  = parseInt (_t.get ('weight'), 10);
-                if (isNaN (weight)) { weight = 0;   }
-                
-                tax     = parseInt (_t.get ('tax'), 10);
-                if (isNaN (tax)) { tax = 0; }
-
-                price           = parseFloat ((''+_t.get ('price')).replace (/,/g, '.')).toFixed (5);
-                price_brutto    = calcPriceBrutto (price, tax);
-
-                currentArticle.setCategoryId (_t.get ('category_id'));
-                currentArticle.setUnitId (_t.get ('unit_id'));
-                currentArticle.setWeight (weight);
-                currentArticle.setWeightUnit (_t.get ('weight_unit'));
-                currentArticle.setPackUnit (_t.get ('pack_unit'));
-                currentArticle.setTax (tax);
-                currentArticle.setPrice (price);
-                
-                _t.set ('savingArticleSettings', true);
-                
-                currentArticle
-                .save ()
-                .then (function () {
-                    _t.set ('savingArticleSettings', false);
-                    _t.set ('success', true);
-                })
-                .fail (function () {
-                    _t.set ('savingArticleSettings', false);
-                    _t.set ('success', false);
-                });
-            },
-            
-            saveArticlePayments: function () {
-                var _t, payments;
-                
-                _t          = this;
-                
-                payments    = {
-                    1:  _t.get ('paypal_enabled') === false ? 0 : 1,
-                    2:  _t.get ('debit_enabled') === false ? 0 : 1,
-                    3:  _t.get ('banktransfer_enabled') === false ? 0 : 1,
-                    4:  _t.get ('cod_enabled') === false ? 0 : 1
-                };
-
-                currentArticle.setPaymentGateways (payments);
-                
-                _t.set ('savingArticlePayments', true);
-                
-                currentArticle
-                .save ()
-                .then (function () {
-                    _t.set ('savingArticlePayments', false);
-                    _t.set ('success', true);
-                })
-                .fail (function () {
-                    _t.set ('savingArticlePayments', false);
-                    _t.set ('success', false);
-                });
-            },
-            
-            saveManufacturerSettings: function () {
-                var _t;
-                
-                _t  = this;
-
-                currentArticle.setManufacturerId (_t.get ('manufacturer_id'));
-                currentArticle.setHan (_t.get ('han'));
-                
-                _t.set ('savingManufacturerSettings', true);
-                
-                currentArticle
-                .save ()
-                .then (function () {
-                    _t.set ('savingManufacturerSettings', false);
-                    _t.set ('success', true);
-                })
-                .fail (function () {
-                    _t.set ('savingManufacturerSettings', false);
-                    _t.set ('success', false);
-                });
-            },
-            
-            saveSupplierSettings: function () {
-                var _t, price, price_brutto, tax;
-                
-                _t  = this;
-
-                tax     = parseInt (_t.get ('supplier_tax'), 10);
-                if (isNaN (tax)) { tax = 0; }
-
-                price               = parseFloat ((''+_t.get ('supplier_ek')).replace (/,/g, '.')).toFixed (5);
-                price_brutto        = parseFloat ((''+_t.get ('supplier_ek_brutto')).replace (/,/g, '.')).toFixed (5);
-
-                currentArticle.setSupplierId (_t.get ('supplier_id'));
-                currentArticle.setSupplierTax (tax);
-                currentArticle.setSupplierEk (_t.get ('supplier_ek'));
-                
-                _t.set ('supplier_ek', price);
-                _t.set ('supplier_ek_brutto', price_brutto);
-                _t.set ('savingSupplierSettings', true);
-                
-                currentArticle
-                .save ()
-                .then (function () {
-                    _t.set ('savingSupplierSettings', false);
-                    _t.set ('success', true);
-                })
-                .fail (function () {
-                    _t.set ('savingSupplierSettings', false);
-                    _t.set ('success', false);
-                });
-            },
-            
-            saveWarehouseSettings: function () {
-                var _t;
-                
-                _t  = this;
-
-                currentArticle.setWarehouseId (_t.get ('warehouse_id'));
-                currentArticle.setStock (_t.get ('stock'));
-                
-                _t.set ('savingWarehouseSettings', true);
-                
-                currentArticle
-                .save ()
-                .then (function () {
-                    _t.set ('savingWarehouseSettings', false);
-                    _t.set ('success', true);
-                })
-                .fail (function () {
-                    _t.set ('savingWarehouseSettings', false);
-                    _t.set ('success', false);
                 });
             }
         }

@@ -9,7 +9,39 @@
 
 {{#partial cta-notification}}
 
-{{#view "AdminArticleView" id="admin-article-view"}}
+{{#view "AdminArticleView" id="admin-article-view" class="with-top-menu"}}
+    <div class="top-menu">
+        {{#button $="disableSaveArticle" click="saveArticle" type="button" class="btn btn-icon big green pull-left"}}
+            <span class="fa fa-check"></span>
+            <span class="text">Artikel speichern</span>
+            <span class="sr-only">Artikel speichern</span>
+            
+            {{#span $="savingArticle" class="cssload-container"}}
+                <span class="cssload-speeding-wheel"></span>
+            {{/span}}
+        {{/button}}
+        
+        {{#button click="removeArticle" type="button" class="btn btn-icon big red pull-left"}}
+            <span class="fa fa-trash"></span>
+            <span class="text">Artikel löschen</span>
+            <span class="sr-only">Artikel löschen</span>
+            
+            {{#span $="deletingArticle" class="cssload-container"}}
+                <span class="cssload-speeding-wheel"></span>
+            {{/span}}
+        {{/button}}
+        
+        {{#button click="cancelArticle" type="button" class="btn btn-icon big orange pull-right"}}
+            <span class="fa fa-ban"></span>
+            <span class="text">Abbrechen</span>
+            <span class="sr-only">Abbrechen</span>
+            
+            {{#span $="deletingArticle" class="cssload-container"}}
+                <span class="cssload-speeding-wheel"></span>
+            {{/span}}
+        {{/button}}
+    </div>
+
     <form class="bg-grey fullwidth">
         <h4 class="form-title">Artikel bearbeiten</h4>
 
@@ -36,16 +68,6 @@
                     {{#textarea change="setDescription" bindAttr="description" placeholder="Artikelbeschreibung" value=AdminArticle.description class="fullwidth"}}{{{AdminArticle.description}}}{{/textarea}}
                 </div>
             </div>
-        </div>
-
-        <div class="menu-bar">
-            {{#button $="disableSaveArticle" click="saveArticle" type="button" class="btn btn-primary pull-right"}}
-                <span class="text">Artikel speichern</span>
-                <span class="fa fa-caret-right"></span>
-                {{#span $="savingArticle" class="cssload-container"}}
-                    <span class="cssload-speeding-wheel"></span>
-                {{/span}}
-            {{/button}}
         </div>
     </form>
         
@@ -88,16 +110,6 @@
                 <label for="article-toggle-5"></label>
             </div>
         </div>
-
-        <div class="menu-bar">
-            {{#button type="button" $="disableSaveArticleGlobalSettings" click="saveArticleGlobalSettings" class="btn btn-simple small pull-right"}}
-                <span class="text">Speichern</span>
-                <span class="sr-only">Änderungen speichern</span>
-                {{#span $="savingArticleGlobalSettings" class="cssload-container"}}
-                    <span class="cssload-speeding-wheel"></span>
-                {{/span}}
-            {{/button}}
-        </div>                
     </form>  
 
         <form class="bg-grey sidemenu fullwidth">
@@ -159,16 +171,6 @@
                 <label class="small normal pull-left">Preis (brutto):</label>
                 {{{input change="setPriceBrutto" bindAttr="price_brutto" type="text" class="pull-right" value=AdminArticle.price_brutto}}}
             </div>
-
-            <div class="menu-bar">
-                {{#button type="button" $="disableSaveArticleSettings" click="saveArticleSettings" class="btn btn-simple small pull-right"}}
-                    <span class="text">Speichern</span>
-                    <span class="sr-only">Änderungen speichern</span>
-                    {{#span $="savingArticleSettings" class="cssload-container"}}
-                        <span class="cssload-speeding-wheel"></span>
-                    {{/span}}
-                {{/button}}
-            </div>                
         </form>  
             
         <form class="bg-grey sidemenu fullwidth">
@@ -202,16 +204,6 @@
                     <label for="article-pg-toggle-4"></label>
                 </div>
             </div>
-
-            <div class="menu-bar">
-                {{#button type="button" $="disableSaveArticlePayment" click="saveArticlePayments" class="btn btn-simple small pull-right"}}
-                    <span class="text">Speichern</span>
-                    <span class="sr-only">Änderungen speichern</span>
-                    {{#span $="savingArticlePayments" class="cssload-container"}}
-                        <span class="cssload-speeding-wheel"></span>
-                    {{/span}}
-                {{/button}}
-            </div>                
         </form>  
             
         <form class="bg-grey sidemenu fulwidth">
@@ -230,16 +222,6 @@
                 <label class="small normal pull-left">HAN</label>
                 {{{input change="setHAN" bindAttr="han" type="text" class="pull-right" value=AdminArticle.han}}}
             </div>     
-
-            <div class="menu-bar">
-                {{#a click="saveManufacturerSettings" href="#" class="btn btn-simple small pull-right"}}
-                    <span class="text">Speichern</span>
-                    <span class="sr-only">Änderungen speichern</span>
-                    {{#span $="savingManufacturerSettings" class="cssload-container"}}
-                        <span class="cssload-speeding-wheel"></span>
-                    {{/span}}
-                {{/a}}
-            </div>                
         </form>            
             
         <form class="bg-grey sidemenu fullwidth">
@@ -272,16 +254,6 @@
                 <label class="small normal pull-left">EK Brutto</label>
                 {{{input change="setEKBrutto" bindAttr="supplier_ek_brutto" type="text" class="pull-right" value=AdminArticle.supplier_ek_brutto}}}
             </div>           
-
-            <div class="menu-bar">
-                {{#button type="button" $="disableSaveSupplierSettings" click="saveSupplierSettings" class="btn btn-simple small pull-right"}}
-                    <span class="text">Speichern</span>
-                    <span class="sr-only">Änderungen speichern</span>
-                    {{#span $="savingSupplierSettings" class="cssload-container"}}
-                        <span class="cssload-speeding-wheel"></span>
-                    {{/span}}
-                {{/button}}
-            </div>                
         </form>
             
         <form class="bg-grey sidemenu fullwidth">
@@ -298,16 +270,6 @@
             <div class="form-group fullwidth">
                 <label class="small normal pull-left">Bestand</label>
                 {{{input change="setStock" bindAttr="stock" type="text" class="pull-right" value=AdminArticle.stock}}}
-            </div>                
-
-            <div class="menu-bar">
-                {{#button $="disableSaveWarehouseSettings" type="button" click="saveWarehouseSettings" class="btn btn-simple small pull-right"}}
-                    <span class="text">Speichern</span>
-                    <span class="sr-only">Änderungen speichern</span>
-                    {{#span $="savingWarehouseSettings" class="cssload-container"}}
-                        <span class="cssload-speeding-wheel"></span>
-                    {{/span}}
-                {{/button}}
             </div>                
         </form>
     </div>

@@ -23,6 +23,11 @@
 *
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
+.np-scope-admin .form-container {
+  position: relative;
+  float: left;
+  width: 100%;
+  height: auto; }
 .np-scope-admin form {
   position: relative;
   float: left;
@@ -37,6 +42,8 @@
   .np-scope-admin form.sidemenu .form-group select {
     float: right;
     width: 130px; }
+  .np-scope-admin form.sidemenu .form-group .cmn-toggle {
+    width: 1px; }
   .np-scope-admin form.sidemenu .form-group input .iconable {
     width: 80px;
     height: 30px; }
@@ -90,7 +97,7 @@
     font-size: 14px;
     margin: 0px;
     min-width: 130px;
-    color: #777; }
+    color: #FFF; }
     .np-scope-admin form .form-group > label.small {
       font-size: 14px;
       min-width: 0px; }
@@ -129,7 +136,8 @@
       opacity: 0; }
   .np-scope-admin form .form-title {
     font-weight: bold;
-    float: left; }
+    float: left;
+    color: #FFF; }
 .np-scope-admin .form-group {
   position: relative;
   float: left;

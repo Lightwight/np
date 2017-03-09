@@ -45,6 +45,29 @@ np.controller.extend ('AdminMenuChildController', {
 
                 this.set ('open', true);
             }
-        }
+        },
+        
+        openMenu: function (model) {
+            var observables, menus, childMenus;
+            
+            if (!this.get ('open')) {
+                observables = np.observable.getObservables ();
+
+                if (typeof observables.actionEvents.AdminMenuChild !== 'undefined') {
+                    menus       = observables.actionEvents.AdminMenuChild;
+                    childMenus  = observables.actionEvents.AdminMenuSubChild;
+
+                    $.each (menus, function (inx, val) {
+                        np.observable.update ('AdminMenuChild', parseInt (inx, 10), 'open', false);
+                    });
+
+                    $.each (childMenus, function (inx, val) {
+                        np.observable.update ('AdminMenuSubChild', parseInt (inx, 10), 'open', false);
+                    });
+                }
+
+                this.set ('open', true);
+            }
+        }        
     }
 });

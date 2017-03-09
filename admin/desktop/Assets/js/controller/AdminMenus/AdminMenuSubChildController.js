@@ -20,34 +20,26 @@
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
 
-np.controller.extend ('AdminMenuController', {
-    view:   'AdminMenuView',
+np.controller.extend ('AdminMenuSubChildController', {
+    view:   'AdminMenuSubChildView',
     model:  function () {
-//        console.log (this);
-        this.open   = ('/'+np.route.getBookmarkItem (true)).indexOf (this.route) === 0;
-
         return {
-            AdminMenu: this
+            AdminMenuSubChild: this
         };
     },
     
     events: {
-        openMenu: function (model) {
-            var observables, menus, childMenus;
+        openLink: function (model) {
+            var observables, childMenus;
             
             if (!this.get ('open')) {
                 observables = np.observable.getObservables ();
 
-                if (typeof observables.actionEvents.AdminMenu !== 'undefined') {
-                    menus       = observables.actionEvents.AdminMenu;
-                    childMenus  = observables.actionEvents.AdminMenuChild;
-
-                    $.each (menus, function (inx, val) {
-                        np.observable.update ('AdminMenu', parseInt (inx, 10), 'open', false);
-                    });
+                if (typeof observables.actionEvents.AdminMenuSubChild !== 'undefined') {
+                    childMenus  = observables.actionEvents.AdminMenuSubChild;
 
                     $.each (childMenus, function (inx, val) {
-                        np.observable.update ('AdminMenuChild', parseInt (inx, 10), 'open', false);
+                        np.observable.update ('AdminMenuSubChild', parseInt (inx, 10), 'open', false);
                     });
                 }
 

@@ -924,7 +924,9 @@ np.module('model.register', function (modelName, localDefinition, data) {
                 
                 l   = data.length;
                 
-                for (i=0; i<l; i++) { _t[name].add(data[i], true);    }
+                for (i=0; i<l; i++) { 
+                    _t[name].add(data[i], true);    
+                }
             }
             
             function createColumnMethods (definition) {

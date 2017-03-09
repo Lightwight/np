@@ -16,14 +16,34 @@
 
                                 <ul>
                                     {{#each AdminMenu.children}}
-                                        <li>
-                                            {{#view "AdminMenuChildView" class="admin-child-menu"}}
-                                                {{#a click="openLink" href=AdminMenuChild.route}}
-                                                    <span class="text">{{{AdminMenuChild.menu}}}</span>
-                                                    <span class="icon fa {{{AdminMenuChild.icon}}}"></span>
-                                                {{/a}}
-                                            {{/view}}
-                                        </li>
+                                        {{#view "AdminMenuChildView" class="admin-child-menu"}}
+                                            {{#li $="openMenu" click="openMenu" init=true}}
+                                                {{#isObject AdminMenuChild.children}}
+                                                    {{#a click="openMenu"}}
+                                                        <span class="text">{{{AdminMenuChild.menu}}}</span>
+                                                        <span class="icon fa {{{AdminMenuChild.icon}}}"></span>
+                                                    {{/a}}
+                                                
+                                                    <ul>
+                                                        {{#each AdminMenuChild.children}}
+                                                            {{#view "AdminMenuSubChildView" class="admin-sub-child-view"}}
+                                                                {{#li $="openMenu" init=true}}
+                                                                    {{#a click="openLink" href=AdminMenuSubChild.route}}
+                                                                        <span class="text">{{{AdminMenuSubChild.menu}}}</span>
+                                                                        <span class="icon fa {{{AdminMenuSubChild.icon}}}"></span>
+                                                                    {{/a}}
+                                                                {{/li}}
+                                                            {{/view}}
+                                                        {{/each}}
+                                                    </ul>
+                                                {{else}}
+                                                    {{#a click="openLink" href=AdminMenuChild.route}}
+                                                        <span class="text">{{{AdminMenuChild.menu}}}</span>
+                                                        <span class="icon fa {{{AdminMenuChild.icon}}}"></span>
+                                                    {{/a}}
+                                                {{/isObject}}
+                                            {{/li}}
+                                        {{/view}}
                                     {{/each}}
                                 </ul>
                             {{else}}

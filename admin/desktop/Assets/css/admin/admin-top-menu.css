@@ -23,5 +23,21 @@
 *
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
-.np-scope-admin .bg-grey {
-  background-color: rgba(0, 0, 0, 0.25); }
+.np-scope-admin .with-top-menu {
+  margin-top: 60px; }
+  .np-scope-admin .with-top-menu .top-menu {
+    position: fixed;
+    top: 0px;
+    left: 250px;
+    right: 0px;
+    background-color: #FFF;
+    width: calc(100% - 250px);
+    padding: 12px 12px 12px 12px;
+    z-index: 10;
+    -moz-box-shadow: 1px 0px 3px 0px #000;
+    -webkit-box-shadow: 1px 0px 3px 0px #000;
+    box-shadow: 1px 0px 3px 0px #000; }
+    .np-scope-admin .with-top-menu .top-menu .btn.pull-right:not(:first-child) {
+      margin-left: 12px; }
+    .np-scope-admin .with-top-menu .top-menu .btn.pull-left:not(:last-child) {
+      margin-right: 12px; }

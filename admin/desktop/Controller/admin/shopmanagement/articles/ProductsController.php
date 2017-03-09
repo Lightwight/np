@@ -115,6 +115,15 @@ class ProductsController extends ControllerHelper implements ControllerInterface
         return $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
     }
     
-    public function deleteModel (\Model $model)         {}
+    public function deleteModel (\Model $model)         
+    {
+        if ($this->isGroup (1))
+        {
+            return $model->result ();
+        }
+        
+        return $this->errorMessage ($this->AUTH_ERR_UNAUTHORIZED);
+    }
+
     public function uploadFile (\Model $model, $file)   {}
 }

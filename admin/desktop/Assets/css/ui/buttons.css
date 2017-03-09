@@ -101,6 +101,20 @@
       -moz-transition: background-color 150ms ease-out;
       -o-transition: background-color 150ms ease-out;
       transition: background-color 150ms ease-out; }
+    .np-scope-admin .btn.btn-icon.big {
+      padding: 0px 12px; }
+      .np-scope-admin .btn.btn-icon.big .fa,
+      .np-scope-admin .btn.btn-icon.big .text {
+        position: relative;
+        float: left;
+        text-align: center;
+        line-height: 34px; }
+      .np-scope-admin .btn.btn-icon.big .fa {
+        border-right: 1px #FFF solid;
+        padding-right: 12px; }
+      .np-scope-admin .btn.btn-icon.big .text {
+        padding-left: 12px;
+        padding-right: 0px; }
     .np-scope-admin .btn.btn-icon.red {
       background-color: #d9534f; }
       .np-scope-admin .btn.btn-icon.red:hover {

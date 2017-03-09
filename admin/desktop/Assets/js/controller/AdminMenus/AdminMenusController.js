@@ -24,46 +24,49 @@ np.controller.extend ('AdminMenusController', {
     view:       'AdminMenusView',
     
     model:  function () {
-        var menus, currentMenu, parentID;
+        var tmpMenus, menus, currentMenu, parentID;
         
+        tmpMenus        = new Array ();
         menus           = new Array ();
         currentMenu     = np.routeController.getRoute ();
-
+        
+        // Map menus into object:
         np.model.Admin_menus.findAll ()
+        .orderBy ('order', 'asc')
         .each (function (row) {
             var menu;
-    
-            menu        = np.jsonClone (row.getAll ());
-            parentID    = menu.parent;
-            menu.open   = currentMenu.indexOf (menu.route) > -1;
-
-            if (parentID === 0) {
-                menus.push (menu);
+            
+            menu            = row.getAll ();
+            menu.open       = currentMenu.indexOf (menu.route) > -1;
+            menu.children   = new Array ();
+            
+            tmpMenus.push (menu);
+        });
+        
+        // Assign child menus to parent menus:
+        $.each (tmpMenus, function (inx, menuData) {
+            if (menuData.parent > 0) {
+                var inx;
                 
-                if (typeof menus.children !== 'undefined') { delete menus.children; }
-            } else {
-                $.each (menus, function (inx, menuData) {
-                    if (menuData.id === parentID) {
-                        if (typeof menus[inx].children === 'undefined') {
-                            menus[inx].children = new Array ();
-                        }                        
-                        
-                        menus[inx].children.push (menu);
-                        
-                        return false;
-                    }
-                });
+                inx     = tmpMenus.map (function (o) { return o.id; }).indexOf (menuData.parent);
+                tmpMenus[inx].children.push (menuData);
+            }
+        }); 
+        
+        // Remove all menus with empty children:
+        $.each (tmpMenus, function (inx, menuData) {
+            if (menuData.children.length === 0) {
+                delete tmpMenus[inx].children;
             }
         });
         
-        $.each (menus, function (inx, menu) {
-            if (typeof menu.children !== 'undefined') {
-                menus[inx].children.sort (function (a, b) {
-                    return a.order - b.order;
-                });
+        // Remove all menus on top level which are cild menus:
+        $.each (tmpMenus, function (inx, menuData) {
+            if (menuData.parent === 0) {
+                menus.push (menuData);
             }
         });
-        
+
         return {
             AdminMenus: {
                 id: -1,

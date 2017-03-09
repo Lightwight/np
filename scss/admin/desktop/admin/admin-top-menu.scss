@@ -1,7 +1,4 @@
-/* current theme to display */
-/* For the content centering including menu and cart */
-/* For the main scollarea */
-/* for logo centering */
+@import "../../../modules/_np_sass.scss";
 /*
 *   This software called - np - is a lightwight MVP Framework for building web applications and
 *   was developed by Christian Peters
@@ -23,5 +20,34 @@
 *
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
-.np-scope-admin .bg-grey {
-  background-color: rgba(0, 0, 0, 0.25); }
+
+.np-scope-admin {
+    .with-top-menu {
+        margin-top: 60px;
+
+        .top-menu {
+            position: fixed;
+            
+            top: 0px;
+            left: 250px;
+            right: 0px;
+            background-color: #FFF;
+            
+            width: calc(100% - 250px);
+            padding: 12px 12px 12px 12px;
+            z-index: 10;
+            
+            @include box-shadow(1px 0px 3px 0px #000);
+            
+            .btn {
+                &.pull-right:not(:first-child) {
+                    margin-left: 12px;
+                }
+                
+                &.pull-left:not(:last-child) {
+                    margin-right: 12px;
+                }
+            }
+        }
+    }
+}
