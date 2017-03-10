@@ -23,7 +23,7 @@
 *
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
-.np-scope-admin #modal-view {
+.np-scope-admin .np-modal-view {
   position: fixed;
   top: 0px;
   bottom: 0px;
@@ -38,8 +38,12 @@
   filter: alpha(opacity=0);
   -moz-opacity: 0;
   -khtml-opacity: 0;
-  opacity: 0; }
-  .np-scope-admin #modal-view .background {
+  opacity: 0;
+  -webkit-transition: opacity 250ms ease-out;
+  -moz-transition: opacity 250ms ease-out;
+  -o-transition: opacity 250ms ease-out;
+  transition: opacity 250ms ease-out; }
+  .np-scope-admin .np-modal-view .background {
     position: absolute;
     top: 0px;
     left: 0px;
@@ -48,14 +52,18 @@
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.55); }
-  .np-scope-admin #modal-view.show {
+  .np-scope-admin .np-modal-view.show {
     pointer-events: auto;
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
     -moz-opacity: 1;
     -khtml-opacity: 1;
-    opacity: 1; }
-  .np-scope-admin #modal-view .modal {
+    opacity: 1;
+    -webkit-transition: opacity 250ms ease-in;
+    -moz-transition: opacity 250ms ease-in;
+    -o-transition: opacity 250ms ease-in;
+    transition: opacity 250ms ease-in; }
+  .np-scope-admin .np-modal-view .modal {
     position: relative;
     left: auto;
     right: auto;
@@ -67,17 +75,17 @@
     bottom: auto;
     padding: 24px;
     box-shadow: 0 0 8px 0px #000; }
-    .np-scope-admin #modal-view .modal .dialog {
+    .np-scope-admin .np-modal-view .modal .dialog {
       position: relative;
       float: left; }
-      .np-scope-admin #modal-view .modal .dialog .body,
-      .np-scope-admin #modal-view .modal .dialog .footer {
+      .np-scope-admin .np-modal-view .modal .dialog .body,
+      .np-scope-admin .np-modal-view .modal .dialog .footer {
         position: relative;
         float: left;
         width: 100%; }
-      .np-scope-admin #modal-view .modal .dialog .footer {
+      .np-scope-admin .np-modal-view .modal .dialog .footer {
         margin-top: 24px; }
-    .np-scope-admin #modal-view .modal .hint {
+    .np-scope-admin .np-modal-view .modal .hint {
       font-size: 13px;
       margin-top: 14px;
       border: 1px #000 dashed;

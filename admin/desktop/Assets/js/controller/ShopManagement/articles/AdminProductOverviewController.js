@@ -62,7 +62,7 @@ np.controller.extend ('AdminProductOverviewController', {
         },
 
         removeProduct: function () {
-            var _t, message, title, buttons;
+            var _t;
             
             _t  = this;
             

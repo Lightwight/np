@@ -29,6 +29,7 @@ np.controller.extend ('ModalController', {
                 
                 fncApply:   false,
                 fncCancel:  false,
+                nodeID:     '',
                 
                 show:       false,
                 hide:       false

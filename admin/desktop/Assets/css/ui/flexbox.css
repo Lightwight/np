@@ -39,8 +39,8 @@
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap; }
   .np-scope-admin .flexbox > .flexrow {
-    padding-left: 12px;
-    padding-right: 12px; }
+    /*            padding-left: 12px;
+                padding-right: 12px;*/ }
     .np-scope-admin .flexbox > .flexrow.flex-end {
       text-align: end;
       padding-right: 0px; }

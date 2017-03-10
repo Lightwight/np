@@ -22,14 +22,22 @@
 
 np.view.extend ('ModalView', {
     showModal: function (model) {
+        var nodeID;
+        
+        nodeID  = model.get ('nodeID');
+        
         if (model.get ('show')) {
-            this.addClass ('show');
+            $(nodeID).addClass ('show');
         }
     }.observes ('show').on ('change'),
     
     hideModal: function (model) {
+        var nodeID;
+        
+        nodeID  = model.get ('nodeID');
+        
         if (model.get ('hide')) {
-            this.removeClass ('show');
+            $(nodeID).removeClass ('show');
         }
     }.observes ('hide').on ('change')
 });

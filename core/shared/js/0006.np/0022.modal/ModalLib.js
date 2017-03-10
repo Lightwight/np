@@ -20,56 +20,58 @@
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
 
-np.module ('Modal', (function () {
-    return {
-        dialog: function () {
-            var _t, _fncApply, _fncCancel;
-            
-            _t          = this;
-            _fncApply   = function () {};
-            _fncCancel  = function () {};
+np.module ('Modal', {
+    dialog: function (nodeID) {
+        var _t, _nodeID, _fncApply, _fncCancel;
+        
+        
+        _t          = this;
+        _fncApply   = function () {};
+        _fncCancel  = function () {};
 
-            function _apply () {
-                try {
-                    _fncApply ();
-                } catch (e) { 
-                    console.log ('Module Modal cannot execute - apply - function.\nError: '+e); 
-                }
+        _nodeID     = typeof (nodeID) === 'string' && $(nodeID).length > 0 ? nodeID : '#modal-view';
+
+        function _apply () {
+            try {
+                _fncApply ();
+            } catch (e) { 
+                console.log ('Module Modal cannot execute - apply - function.\nError: '+e); 
             }
-            
-            function _cancel () {
-                try {
-                    _fncCancel ();
-                } catch (e) { 
-                    console.log ('Module Modal cannot execute - cancel - function.\nError: '+e); 
-                }
-            }
-
-            np.observable.update ('NPModal', 1, 'fncApply', _apply);
-            np.observable.update ('NPModal', 1, 'fncCancel', _cancel);
-            np.observable.update ('NPModal', 1, 'show', true);
-            
-            return {
-                apply: function (fncApply) {
-                    _fncApply   = fncApply;
-                    
-                    return {
-                        cancel: function (fncCancel) {
-                            _fncCancel  = fncCancel;
-                        }
-                    };
-                },
-                
-                cancel: function (fncCancel) {
-                    _fncCancel  = fncCancel;
-
-                    return {
-                        apply: function (fncApply) {
-                            _fncApply   = fncApply;
-                        }
-                    };
-                }
-            };
         }
-    };
-})());
+
+        function _cancel () {
+            try {
+                _fncCancel ();
+            } catch (e) { 
+                console.log ('Module Modal cannot execute - cancel - function.\nError: '+e); 
+            }
+        }
+
+        np.observable.update ('NPModal', 1, 'nodeID', _nodeID);
+        np.observable.update ('NPModal', 1, 'fncApply', _apply);
+        np.observable.update ('NPModal', 1, 'fncCancel', _cancel);
+        np.observable.update ('NPModal', 1, 'show', true);
+
+        return {
+            apply: function (fncApply) {
+                _fncApply   = fncApply;
+
+                return {
+                    cancel: function (fncCancel) {
+                        _fncCancel  = fncCancel;
+                    }
+                };
+            },
+
+            cancel: function (fncCancel) {
+                _fncCancel  = fncCancel;
+
+                return {
+                    apply: function (fncApply) {
+                        _fncApply   = fncApply;
+                    }
+                };
+            }
+        };
+    }
+});

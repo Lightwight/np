@@ -1,4 +1,4 @@
-<div class="wrapper" id="admin-auth-login-wrapper">
+<div class="wrapper bg-grey" id="admin-auth-login-wrapper">
     {{#view "AuthLoginView"}}
         <form id="authLogin" class="no-margin">
             <h4 class="form-title">Geben Sie hier Ihre Anmeldedaten ein</h4>
@@ -22,11 +22,11 @@
             <div class="menu-bar">
                 <a class="pull-right note" href="/auth/forgot/password">Passwort vergessen?</a>
 
-                {{#button type="button" $="validUser" init=true click="submit" class="btn btn-primary pull-right clear-right disabled"}}
+                {{#button type="button" $="validUser" init=true click="submit" class="btn btn-icon big blue pull-right clear-right disabled"}}
+                    {{{span $="notSending" class="icon fa fa-sign-in"}}}
                     <span class="text">anmelden</span>
                     <span class="sr-only">anmelden</span>
-
-                    {{{span $="notSending" class="icon fa fa-caret-right"}}}
+                    
                     {{#span $="sending" class="cssload-container"}}
                         <div class="cssload-speeding-wheel"></div>
                     {{/span}}

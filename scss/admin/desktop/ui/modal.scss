@@ -22,7 +22,7 @@
 */
 
 .np-scope-admin {
-    #modal-view {
+    .np-modal-view {
         position: fixed;
         top: 0px;
         bottom: 0px;
@@ -36,6 +36,7 @@
         pointer-events: none;
         
         @include opacity(0);
+        @include transition(opacity 250ms ease-out);
         
         .background {
             position: absolute;
@@ -53,7 +54,8 @@
         &.show {
             pointer-events: auto;
             
-            @include opacity(1)
+            @include opacity(1);
+            @include transition(opacity 250ms ease-in);
         }
         
         .modal {

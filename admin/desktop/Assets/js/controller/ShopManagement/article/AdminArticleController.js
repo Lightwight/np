@@ -373,7 +373,7 @@ np.controller.extend ('AdminArticleController', (function () {
                     _t.set ('sending', false);
                     _t.set ('success', true);
                     
-                    notifyMsg   = !isNewArticle ? 'Die Änderungen wurden übernommen.' : 'Der Artikel wurde angelegt.';
+                    notifyMsg   = !isNewArticle ? 'Der Artikel wurde gespeichert.' : 'Der Artikel wurde angelegt.';
 
                     np.notify (notifyMsg).asSuccess ().timeout (2000).show ();
                     
@@ -387,6 +387,39 @@ np.controller.extend ('AdminArticleController', (function () {
                     
                     np.notify ('Der Artikel konnte nicht gespeichert werden.<br><br>'+ err).asError ().timeout (4000).show ();
                 });
+            },
+            
+            removeArticle: function (view) {
+                var _t;
+
+                _t  = this;
+
+                np.Modal
+                .dialog ('#remove-article')
+                .apply (function () {
+                    np.model.Products.findByID (_t.get ('id')).each (function (row) {
+                        row.remove ();
+                    });
+
+                    _t.set ('sending', true);
+
+                    np.model.Products
+                    .save ()
+                    .then (function (rsp) {
+                        _t.set ('sending', false);
+                        _t.set ('removed', true);
+                        _t.set ('deleted', 1);
+
+                        np.notify ('Der Artikel wurde gelöscht.').asSuccess ().timeout (2000).show ();
+                        np.observable.removeContext ('AdminProduct', _t.get ('id'));
+                    })
+                    .fail (function (err) {
+                        _t.set ('error', err);
+                        _t.set ('sending', false);
+                        _t.set ('removed', false);
+
+                    });                
+                });                
             }
         }
     };
