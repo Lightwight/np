@@ -154,11 +154,11 @@ class RoutesController extends ControllerHelper implements ControllerInterface
                 $this->exportSitemap ();
             }
 
-            return $posted && $updated ? 1 : $this->error ($this->SQL_ERR_ON_UPDATE);
+            return $posted && $updated ? 1 : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE);
         }
         else
         {
-            return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+            return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
         }
     }
 

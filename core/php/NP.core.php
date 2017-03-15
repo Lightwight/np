@@ -143,14 +143,12 @@ class NP
                 {
                     NPCookie::sendCookies ();
 
-                    $response       = array ('err' => 700);
-
-                    $errorHandler   = new ErrorHandler (700, true);
+                    $error          = new ErrorHandler (ErrorCodeHelper::$_AUTH_SESSION_LOST_OR_HIJACKED);
 
                     $responder      = ResponseCodes::getInstance ();
 
                     $responder->setResponseCode (ResponseCodes::RSP_ERR_GONE);
-                    $responder->send ($response);
+                    $responder->send ($error->getError());
                 }
             }
             else 
@@ -241,9 +239,9 @@ class NP
         }
         else
         {
-            $error  = new ErrorHandler (582);
+            $error  = new ErrorHandler (ErrorCodeHelper::$_SYS_ERR_NOT_IMPLEMENTED);
 
-            return json_encode ($error->getErrorMessage ());
+            return json_encode ($error->getError ());
         }
     }
     

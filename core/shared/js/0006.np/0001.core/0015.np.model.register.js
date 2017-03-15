@@ -189,7 +189,10 @@ np.module('model.register', function (modelName, localDefinition, data) {
     function getError (error, modelName) {
         var data, tmpError, retError;
         
-        retError    = 'Code[0] - Unknown error';
+        retError    = {
+            code:   0,
+            msg:    'Unknown error'
+        };
 
         if (error !== null 
             && typeof error !== 'undefined' 
@@ -200,12 +203,12 @@ np.module('model.register', function (modelName, localDefinition, data) {
             data        = error.data.responseJSON[modelName];
             tmpError    = data[Object.keys(data)[0]];
             
-            if (typeof tmpError.err !== 'undefined') {
-                retError    = 'Code ['+tmpError.err+']';
+            if (typeof tmpError.error !== 'undefined') {
+                retError.code   = tmpError.error;
             }
             
             if (typeof tmpError.msg !== 'undefined') {
-                retError   += ': '+tmpError.msg;
+                retError.msg    = tmpError.msg;
             }
         } 
         

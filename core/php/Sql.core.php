@@ -25,8 +25,22 @@
 class Sql
 {
     private static $instance    = null;
+    private static $connection  = null;
     
-    private $connection         = null;
+    /*
+     * Error code mapping for table errors (mysql error to error_id)
+     */
+    private $errorMap           = array
+    (
+        1011    => 9,   // MySql HY000 (ER_CANT_DELETE_FILE): Error on delete
+        1054    => 18,  // MySql SQLSTATE: 42S22 (ER_BAD_FIELD_ERROR): Unknown column %s in %S
+        1055    => 11,  // MySql SQLSTATE: EMPTY RESULT
+        1062    => 12,  // MySql SQLSTATE: 23000 (ER_DUP_ENTRY): Duplicate entry (Record already exists)
+        1064    => 13,  // MySql SQLSTATE: 42000 (ER_PARSE_ERROR): %s near '%s' at line %
+        2000    => 14,  // MySql ERROR ON POST
+        2001    => 15   // MySql ERROR ON UPDATE
+    );
+    
     private $result             = null;
     private $counter            = null;
     
@@ -34,6 +48,8 @@ class Sql
     private $db                 = null;
     private $user               = null;
     private $pass               = null;
+    
+    private $lastError          = false;
 
     private $table              = null;
     private $config             = null;
@@ -42,7 +58,9 @@ class Sql
     
     public static function getInstance ()   
     {
-        if (self::$instance === null)   { self::$instance = new self;   }
+        if (self::$instance === null)   { 
+            self::$instance = new self;   
+        }
         
         self::$instance->connect ();
         
@@ -61,24 +79,24 @@ class Sql
         
         $this->config       = $config;
         
-        if ($this->host == null)
+        if (self::$connection === null)
         {
             $this->host         = $config['sql']['host'];
             $this->db           = $config['sql']['db'];
             $this->user         = $config['sql']['user'];
             $this->pass         = $config['sql']['pass'];
             $this->lock_timeout = isset ($config['sql']['lock_timeout']) && (int)$config['sql']['lock_timeout'] > 0 ? (int)$config['sql']['lock_timeout'] : 60;
-            
-            if (!is_object ($this->connection) || get_class ($this->connection) !== 'mysqli')
+
+            if (!is_object (self::$connection ) || get_class (self::$connection) !== 'mysqli')
             {
-                $this->connection   = mysqli_connect ($this->host, $this->user, $this->pass);
+                self::$connection   = mysqli_connect ($this->host, $this->user, $this->pass);
                 
-                mysqli_select_db ($this->connection, $this->db);
+                mysqli_select_db (self::$connection, $this->db);
             }
         }
     }
     
-    public function getConnection ()    { return $this->connection; }
+    public function getConnection ()    { return self::$connection; }
     
     public function setHost ($host)
     {
@@ -110,20 +128,32 @@ class Sql
     
     public function disconnect () 
     {
-        if( is_resource ($this->connection) )   { mysqli_close ($this->connection); }
+        if( is_resource (self::$connection) )   { mysqli_close (self::$connection); }
     }
  
-    public function lastError () 
+    public function lastError ($mapped = false) 
     {
-        return mysqli_errno ($this->connection);
+        return !$mapped ? $this->lastError : $this->mapError ($this->lastError);
+    }
+    
+    public function mapError ($errno)
+    {
+        if ($this->lastError !== false)
+        {
+            return array_key_exists ($errno, $this->errorMap) ? $this->errorMap[$errno] : 0;
+        }
+        
+        return false;
     }
     
     public function query ($query, $lock_name = false, $lock_timeout = false)
     {
-        $user   = isset ($_SESSION['auth']['user']) ? $_SESSION['auth']['user'] : false;
-        $userID = $user ? (int)$_SESSION['auth']['user']['id'] : 0;
-        
-        mysqli_query ($this->connection, 'SET CHARACTER SET utf8');
+        $user               = isset ($_SESSION['auth']['user']) ? $_SESSION['auth']['user'] : false;
+        $userID             = $user ? (int)$_SESSION['auth']['user']['id'] : 0;
+
+        $this->lastError    = false;
+
+        mysqli_query (self::$connection, 'SET CHARACTER SET utf8');
 
         if (is_object ($this->result) && get_class ($this->result) === 'mysqli_result') { mysqli_free_result ($this->result);   }
         
@@ -131,8 +161,8 @@ class Sql
             && isset ($this->config['log']['sqlQueries'])
             && $this->config['log']['sqlQueries'] === true
         ) {
-            $logQuery       = 'INSERT INTO `log` (`user_id`, `type`, `log`) VALUES ("'.$userID.'", "SQL_QUERY", \''.mysqli_real_escape_string ($this->connection, $query).'\');';
-            mysqli_query ($this->connection, $logQuery);
+            $logQuery       = 'INSERT INTO `log` (`user_id`, `type`, `log`) VALUES ("'.$userID.'", "SQL_QUERY", \''.mysqli_real_escape_string (self::$connection, $query).'\');';
+            mysqli_query (self::$connection, $logQuery);
         }
 
         $lock_timeout   = (int)$lock_timeout > 0 ? (int)$lock_timeout : $this->lock_timeout;
@@ -143,7 +173,8 @@ class Sql
 
         if ($lock)
         {
-            $this->result   = mysqli_query ($this->connection, $query);
+            $this->result   = mysqli_query (self::$connection, $query);
+            
             $this->counter  = null;
 
             $rows           = array ();
@@ -152,7 +183,7 @@ class Sql
             {
                 if ($this->result == 1)    
                 {
-                    $rows = mysqli_insert_id ($this->connection);
+                    $rows = mysqli_insert_id (self::$connection);
 
                     if ($rows === 0)  { $rows = 'duplicate';    }
                 }
@@ -165,18 +196,20 @@ class Sql
             {
                 if ($this->result == 1)
                 {
-                    $rows   = mysqli_affected_rows ($this->connection);
-                }
+                    $rows   = mysqli_affected_rows (self::$connection);
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           }
                 else
                 {
-                    $rows   = false;
+                    $this->lastError    = self::$connection->errno;
+
+                    $rows               = false;
                 }
             }
             else if (strpos ($query, 'SELECT SQL_CALC_FOUND_ROWS') === 0)
             {
                 if (is_object ($this->result) && get_class ($this->result) === 'mysqli_result')
                 {
-                    $this->result   = mysqli_query ($this->connection, 'SELECT FOUND_ROWS();');
+                    $this->result   = mysqli_query (self::$connection, 'SELECT FOUND_ROWS();');
                     
                     if (is_object ($this->result) && get_class ($this->result) === 'mysqli_result')
                     {
@@ -224,7 +257,7 @@ class Sql
         return $this->counter;
     }
     
-    public function real_escape_string( $string )   { return mysqli_real_escape_string ($this->connection, $string);   }
+    public function real_escape_string( $string )   { return mysqli_real_escape_string (self::$connection, $string);   }
     
     public function tableExists ($table)
     {
@@ -304,7 +337,7 @@ class Sql
     private function getLock ($name, $timeout = 60, $query2 = '', $test = true)
     {
         $query  = 'SELECT GET_LOCK("'.$name.'", '.$timeout.');';
-        $result = mysqli_query ($this->connection, $query);
+        $result = mysqli_query (self::$connection, $query);
         
         return is_object ($result) && strtolower (get_class ($result)) === 'mysqli_result' && @mysqli_num_rows ($result) == 1 && ($row = mysqli_fetch_array ($result)) && $row[0] == 1;
     }
@@ -312,7 +345,7 @@ class Sql
     private function releaseLock ($name)
     {
         $query  = 'SELECT RELEASE_LOCK("'.$name.'");';
-        $result = mysqli_query ($this->connection, $query);
+        $result = mysqli_query (self::$connection, $query);
         
         return is_object ($result) && strtolower (get_class ($result)) === 'mysqli_result' && @mysqli_num_rows ($result) == 1 && ($row = mysqli_fetch_array ($result)) && ($row[0] == 1 || is_null ($row[0]));
     }

@@ -80,7 +80,7 @@ class Article_unitsController extends ControllerHelper implements ControllerInte
             );
         }
         
-        return $this->error ($this->SQL_ERR_ON_POST);
+        return $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
     }
 
     public function updateModel (\Model $model)         {}

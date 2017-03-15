@@ -238,11 +238,11 @@ class PaymentHelper extends ControllerHelper
                 
                 $this->saveError ($order->get ('id'), $response->getMessage ());
 
-                return $this->error ($this->PAY_ERR_TOO_MANY_TOKEN_REQUESTS);
+                return $this->getError (ErrorCodeHelper::$_PAYMENT_TOO_MANY_TOKEN_REQUESTS);
             }        
         }
         
-        return $this->error ($this->REQ_ERR_NOT_FOUND);
+        return $this->getError (ErrorCodeHelper::$_REQ_EMPTY_RESULT);
     }
     
     protected function deleteActiveOrder ()

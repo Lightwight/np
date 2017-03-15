@@ -132,7 +132,7 @@ class GalleryController extends ControllerHelper
                     $result->set ('content', json_encode ($galleries));
                     $result->set ('user_id', $userID);
 
-                    return $result->update () ? $galleryID : $this->error ($this->SQL_ERR_ON_UPDATE);
+                    return $result->update () ? $galleryID : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE);
                 }
                 else
                 {
@@ -147,12 +147,12 @@ class GalleryController extends ControllerHelper
 
                     $mContent->resetResult ();
 
-                    return $mContent->add ($contentRow)->result ()->post () ? $galleryID : $this->error ($this->SQL_ERR_ON_POST);
+                    return $mContent->add ($contentRow)->result ()->post () ? $galleryID : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
                 }
             }
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function updateGallery ($params)
@@ -176,10 +176,10 @@ class GalleryController extends ControllerHelper
                 return $result->update ();
             }
 
-            return $this->error ($this->SQL_ERR_UNKNOWN_COLUMN);
+            return $this->getError (ErrorCodeHelper::$_SQL_UNKNOWN_COLUMN);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);        
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function deleteGallery ($params)
@@ -223,9 +223,9 @@ class GalleryController extends ControllerHelper
                 return $result->update ();
             }
 
-            return $this->error ($this->REQ_ERR_INVALID_ARGS);
+            return $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
 }

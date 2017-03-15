@@ -128,7 +128,7 @@ class Simple_offersController extends ControllerHelper
                     $result->set ('content', json_encode ($offers));
                     $result->set ('user_id', $userID);
 
-                    return $result->update () ? $offerID : $this->error ($this->SQL_ERR_ON_UPDATE);
+                    return $result->update () ? $offerID : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE);
                 }
                 else
                 {
@@ -143,12 +143,12 @@ class Simple_offersController extends ControllerHelper
 
                     $mContent->resetResult ();
 
-                    return $mContent->add ($contentRow)->result ()->post () ? $offerID : $this->error ($this->SQL_ERR_ON_POST);
+                    return $mContent->add ($contentRow)->result ()->post () ? $offerID : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
                 }
             }
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function updateOffers ($params)
@@ -172,10 +172,10 @@ class Simple_offersController extends ControllerHelper
                 return $result->update ();
             }
 
-            return $this->error ($this->SQL_ERR_UNKNOWN_COLUMN);
+            return $this->getError (ErrorCodeHelper::$_SYS_ERR_UNKNOWN);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function deleteOffer ($params)
@@ -219,9 +219,9 @@ class Simple_offersController extends ControllerHelper
                 return $result->update ();
             }
 
-            return $this->error ($this->REQ_ERR_INVALID_ARGS);
+            return $this->getEerror (ErrorCodeHelper::$_REQ_INVALID_ARGS);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
 }

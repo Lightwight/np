@@ -170,6 +170,6 @@ class CheckoutHandler extends HandlerHelper
             return $this->prepareOutput ($result);
         }
         
-        return $this->error ($this->REQ_ERR_INVALID_ARGS);
+        return $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
     }
 }

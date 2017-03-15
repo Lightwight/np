@@ -29,7 +29,7 @@ class Article_unitsController extends ControllerHelper implements ControllerInte
         $params     = explode ('/', $params);
         $id         = (int)$params[0] > 0 ? (int)$params[0] : 0;
         
-        return $id > 0 ? $model->findBy ('unit_id', $id)->excludeDeleted ()->result () : $this->error ($this->REQ_ERR_INVALID_ARGS);
+        return $id > 0 ? $model->findBy ('unit_id', $id)->excludeDeleted ()->result () : $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
     }
 
     public function postModel (\Model $model)           {}

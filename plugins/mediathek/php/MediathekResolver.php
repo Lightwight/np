@@ -140,7 +140,7 @@ class MediathekResolver extends ControllerHelper
                             )
                         )
                     )
-                ) : $this->error ($this->REQ_ERR_INVALID_ARGS);
+                ) : $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
             }
         }
     }

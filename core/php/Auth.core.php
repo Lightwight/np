@@ -33,8 +33,10 @@ class Auth
         {
             return self::setUser ($user->getRow (), $stayLoggedIn);
         }
+        
+        $error  = new ErrorHandler (ErrorCodeHelper::$_REQ_INVALID_ARGS);
 
-        return new ErrorHandler (580, true);
+        return $error->getError ();
     }
 
     public static function logout ()
@@ -115,7 +117,9 @@ class Auth
         }
         else
         {
-            return new ErrorHandler (1062);
+            $error  = new ErrorHandler (ErrorCodeHelper::$_SQL_DUPLICATE_ENTRY);
+            
+            return $error->getError ();
         }        
     }
     
@@ -163,13 +167,22 @@ class Auth
                 {
                     if ($sendMail)
                     {
-                        return self::sendSetPasswortLink ($email) ? $userID : new ErrorHandler (560);
+                        if (self::sendSetPasswortLink ($email))
+                        {
+                            return $userID;
+                        }
+                        else
+                        {
+                            $error  = new ErrorHandler (ErrorCodeHelper::$_MAIL_ERR_SEND);
+                            
+                            return $error->getError ();
+                        }
                     }
                     
                     return $userID;
                 }
                 
-                $error  = new ErrorHandler (580);
+                $error  = new ErrorHandler (ErrorCodeHelper::$_REQ_INVALID_ARGS);
             }
             else 
             {
@@ -178,10 +191,10 @@ class Auth
         }
         else
         {
-            $error  = new ErrorHandler (1062);
+            $error  = new ErrorHandler (ErrorCodeHelper::$_SQL_DUPLICATE_ENTRY);
         }
         
-        return $error->getErrorMessage ();
+        return $error->getError ();
     }
     
     public static function registerConfirmation ($code, $returnID = false)
@@ -245,14 +258,14 @@ class Auth
                 return $resUser->delete (true) ? 1 : $resUser->getError ();
             }
             
-            $error  = new ErrorHandler (581);
+            $error  = new ErrorHandler (ErrorCodeHelper::$_REQ_EMPTY_RESULT);
 
-            return $error->getErrorMessage ();
+            return $error->getError ();
         }
         
-        $error  = new ErrorHandler (520);
+        $error  = new ErrorHandler (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
 
-        return $error->getErrorMessage ();
+        return $error->getError ();
     }
 
     private static function setResetPasswordLink ($email)
@@ -316,7 +329,9 @@ class Auth
             return $mailed ? 1 : null;
         }
         
-        return new ErrorHandler (600);
+        $error  = new ErrorHandler (ErrorCodeHelper::$_PAYMENT_IVALID_PAYMENT_DATA);
+
+        return $error->getError ();
     }
     
     public static function sendSetPasswortLink ($email)
@@ -347,7 +362,9 @@ class Auth
             return $mailed ? 1 : null;
         }
         
-        return new ErrorHandler (600);
+        $error  = new ErrorHandler (ErrorCodeHelper::$_PAYMENT_IVALID_PAYMENT_DATA);
+
+        return $error->getError ();
     }
     
     public static function validateResetPasswordLink ($pw_reset)
@@ -405,10 +422,14 @@ class Auth
                 }
             }
             
-            return new ErrorHandler (580);
+            $error  = new ErrorHandler (ErrorCodeHelper::$_REQ_INVALID_ARGS);
+            
+            return $error->getError ();
         }
         
-        return new ErrorHandler (581);
+        $error  = new ErrorHandler (ErrorCodeHelper::$_REQ_EMPTY_RESULT);
+        
+        return $error->getError ();
     }
     
     public static function changeUser ($prename, $name, $gender, $company = '', $ustid = '', $_userID = false)
@@ -491,7 +512,9 @@ class Auth
         }
         else
         {
-            return new ErrorHandler (520);
+            $error  = new ErrorHandler (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
+
+            return $error->getError ();
         }        
     }
     
@@ -546,20 +569,20 @@ class Auth
                 }
                 else
                 {
-                    $error  = new ErrorHandler (2001);
+                    $error  = new ErrorHandler (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE);
                 }
             }
             else
             {
-                $error  = new ErrorHandler (1055);
+                $error  = new ErrorHandler (ErrorCodeHelper::$_SQL_EMPTY_RESULT);
             }
         } 
         else
         {
-            $error  = new ErrorHandler (520);
+            $error  = new ErrorHandler (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
         }
         
-        return $error->getErrorMessage ();
+        return $error->getError ();
     }
 
     public static function getUser ()    
@@ -647,9 +670,9 @@ class Auth
         }
         else
         {
-            $error  = new ErrorHandler (0);
+            $error  = new ErrorHandler (ErrorCodeHelper::$_SYS_ERR_UNKNOWN);
 
-            return $error->getErrorMessage ();
+            return $error->getError ();
         }
     }
     
@@ -862,7 +885,14 @@ class Auth
             $mailer->AltBody    = $altBody;        
         }
 
-        return $mailer->send () ? true : new ErrorHandler (560);
+        if ($mailer->send ())
+        {
+            return true;
+        }
+        
+        $error  = new ErrorHandler (ErrorCodeHelper::$_MAIL_ERR_SEND);
+
+        return  $error->getError ();
     }
     
     private static function setting ($config, $setting = null)

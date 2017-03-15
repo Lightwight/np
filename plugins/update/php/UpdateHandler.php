@@ -89,6 +89,6 @@ class UpdateHandler extends HandlerHelper
 //            return $this->prepareOutput ($result);
 //        }
         
-        return $this->error ($this->REQ_ERR_INVALID_ARGS);
+        return $this->getError (ErrorCodeHelper::$_SYS_ERR_NOT_IMPLEMENTED);
     }
 }

@@ -413,7 +413,8 @@ class PageFetcher extends HandlerHelper
 
                 if ($controller)
                 {
-                    $result             = $controller->getModel (new Model ($model), ($this->item ? $this->item : null));
+                    $_model             = new Model ($model);
+                    $result             = $controller->getModel ($_model, ($this->item ? $this->item : null));
 
                     $fetched[$model]    = is_array ($result) ? $result : array ($result);
                 }

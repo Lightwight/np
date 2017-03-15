@@ -110,7 +110,48 @@
         {{#ifCheckout}}
             <div class="container-center">
                 <div class="wrapper">
-                    {{#partial checkout-overview-view}}
+                    {{#view "CheckoutOverviewView"}}
+                        <form>
+                            {{#label $="setWelcome" init=true}}Herzlich Willkommen{{/label}}
+
+                            {{#if CheckoutOverview.valid.all}}
+                                <div class="form-group fullwidth">
+                                    <span>Sie k&ouml;nnen jetzt Ihre Bestellung pr&uuml;fen.</span>
+                                </div>
+
+                                <div class="menu-bar">
+                                    <a class="btn btn-secondary btn-chevron" href="/checkout/verification" role="button">
+                                        <span class="text">Bestellung pr&uuml;fen</span>
+                                        <span class="sr-only">Bestellung pr&uuml;fen</span>
+                                    </a>
+                                </div>
+                            {{else}}
+                                <div class="form-group fullwidth">
+                                    <span>Jetzt m&uuml;ssen Sie nur noch Ihre Daten vervollst&auml;ndigen.</span>
+                                </div>          
+
+                                <div class="menu-bar">
+                                    {{#ifNot CheckoutOverview.valid.adress}}
+                                        <a class="btn btn-secondary btn-chevron" href="/checkout/address" role="button">
+                                            <span class="icon glyphicon glyphicon-chevron-right"></span>
+                                            <span class="text">Empf&auml;ngerdaten eingeben</span>
+                                            <span class="sr-only">Empf&auml;ngerdaten eingeben</span>
+                                        </a>
+                                    {{/ifNot}} 
+
+                                    {{#if CheckoutOverview.valid.adress}}
+                                        {{#ifNot CheckoutOverview.valid.payment}}
+                                            <a class="btn btn-secondary btn-chevron" href="/checkout/payment" role="button">
+                                                <span class="icon glyphicon glyphicon-chevron-right"></span>
+                                                <span class="text">Zahlungsart eingeben</span>
+                                                <span class="sr-only">Zahlungsart eingeben</span>
+                                            </a>
+                                        {{/ifNot}} 
+                                    {{/if}}
+                                </div>
+                            {{/if}}                    
+                        </form>
+                    {{/view}}
                 </div>
             </div>
         {{else}}

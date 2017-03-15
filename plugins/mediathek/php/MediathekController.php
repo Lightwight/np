@@ -144,26 +144,28 @@ class MediathekController extends ControllerHelper
                     else 
                     {
                         @unlink ($path.$id.$name);
-                        $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+                        
+                        $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
                         $result[$realname]  = array ('id' => $id, 'error' => 'mime');
                     }
                 }
                 else
                 {
                     @unlink ($path.$id.$name);
-                    $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+                    
+                    $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
                     $result[$realname]  = array ('id' => $id, 'error' => 'move2');
                 }
             }
             else 
             {
-                $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+                $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
                 $result[$realname]  = array ('id' => -1, 'error' => 'move');
             }
         }
         else
         {
-            $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+            $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
             $result[$realname]  = array ('id' => -1, 'error' => 'sql');
         }        
         
@@ -214,7 +216,7 @@ class MediathekController extends ControllerHelper
 
         if (!$id)
         {
-            $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+            $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
             $result[$realname]  = array ('id' => -1, 'error' => 'sql');
             
             return $result;
@@ -222,7 +224,7 @@ class MediathekController extends ControllerHelper
         
         if (!move_uploaded_file ($file['tmp_name'], $path.$id.$fileName))
         {
-            $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+            $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
             $result[$realname]  = array ('id' => -1, 'error' => 'move_temp');
             
             return $result;
@@ -230,7 +232,7 @@ class MediathekController extends ControllerHelper
         
         if (!file_exists ($path.$id.$fileName))
         {
-            $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+            $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
             $result[$realname]  = array ('id' => -1, 'error' => 'move_temp2');
             
             return $result;
@@ -297,7 +299,7 @@ class MediathekController extends ControllerHelper
 
         if (!$this->validUploadableFileSize ($file))
         {
-            $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+            $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
             $result[$realname]  = array ('id' => -1, 'error' => 'file_size', 'file_size' => $this->getMaxUploadableFileSize ());
             
             return $result;
@@ -306,7 +308,7 @@ class MediathekController extends ControllerHelper
         // Currently only Images, Videos and Audios are supported.
         if (!$methodExist)
         {
-            $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+            $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
             $result[$realname]  = array ('id' => -1, 'error' => 'filetype_unsup');
             
             return $result;
@@ -320,13 +322,13 @@ class MediathekController extends ControllerHelper
         }
         else 
         {
-            $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+            $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
             $result[$realname]  = array ('id' => -1, 'error' => !$controllerValidated ? 'mime' : 'no_auth');
             
             return $result;
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function addFolder ($params)
@@ -345,7 +347,7 @@ class MediathekController extends ControllerHelper
             
             $postID = $mFolders->add ($folder)->result ()->post ();
 
-            return $postID ? array ('folder_id' => $max, 'id' => $postID) : $this->error ($this->SQL_ERR_ON_POST);
+            return $postID ? array ('folder_id' => $max, 'id' => $postID) : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
         }
     }
     
@@ -366,10 +368,10 @@ class MediathekController extends ControllerHelper
                 return $resFolders->update ();
             }
             
-            return $this->error ($this->SQL_ERR_NOT_FOUND);
+            return $this->getError (ErrorCodeHelper::$_SQL_EMPTY_RESULT);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function updateImage ($params)
@@ -395,10 +397,10 @@ class MediathekController extends ControllerHelper
                 return $resMediathek->update ();
             }
             
-            return $this->error ($this->SQL_ERR_NOT_FOUND);
+            return $this->getError (ErrorCodeHelper::$_SQL_EMPTY_RESULT);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
 
     public function addVideo ($params)
@@ -419,7 +421,7 @@ class MediathekController extends ControllerHelper
             return $mMediathek->add ($video)->result ()->post ();
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function removeFolder ($folder_id)
@@ -441,7 +443,7 @@ class MediathekController extends ControllerHelper
             return $mMediathek->findBy ('id', $id)->result ()->delete (true);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     private function generateThumbs ($image, $w, $h, $path, $id, $name)
@@ -527,6 +529,6 @@ class MediathekController extends ControllerHelper
             return $mediathek;
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
 }

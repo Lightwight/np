@@ -100,19 +100,12 @@ class ProductsController extends ControllerHelper implements ControllerInterface
 
     public function postModel (\Model $model)           
     {
-        return $this->errorMessage ($this->RSP_ERR_NOT_IMPLEMENTED);
+        return $this->getError (ErrorCodeHelper::$_SYS_ERR_NOT_IMPLEMENTED);
     }
 
     public function updateModel(\Model $model)
     {
-        $product    = $model->result ();
-                
-        if ($this->isGroup (1))
-        {
-            return $product->set ('deleted', $product->get ('deleted'))->update ();
-        }
-        
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
+        return $this->getError (ErrorCodeHelper::$_REQ_EMPTY_RESULT);
     }
     
     public function deleteModel (\Model $model)         
@@ -122,7 +115,7 @@ class ProductsController extends ControllerHelper implements ControllerInterface
             return $model->result ();
         }
         
-        return $this->errorMessage ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
 
     public function uploadFile (\Model $model, $file)   {}

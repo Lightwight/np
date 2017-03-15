@@ -408,9 +408,9 @@ class RouteHandler extends HandlerHelper
                 }
                 else
                 {
-                    if (!isset ($errors[$model][$row['err']])) 
+                    if (!isset ($errors[$model][$row['error']])) 
                     {
-                        $errors[$model][$row['err']]    = true;
+                        $errors[$model][$row['error']]  = true;
                         $mergedModels[$model][]         = $row;
                     }
                 }
@@ -454,7 +454,7 @@ class RouteHandler extends HandlerHelper
 
         $json       = array ('route' => $this->origin);
 
-        $json[$this->origin]    = $errCode === false ? $page : $errHelper->getErrorPage ($page);
+        $json[$this->origin]    = $errCode !== 0 ? $page : $errHelper->getErrorPage ($page);
         
         if ($this->needDefaults)
         {

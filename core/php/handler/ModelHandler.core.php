@@ -95,10 +95,10 @@ class ModelHandler extends HandlerHelper
                         
                         if ($isManip)
                         {
-                            $error  = $manip->getError ();
+                            $error  = $manip->getModelError ();
                             $row    = $manip->getRow ();
 
-                            $retVal[$manip->getName(true)][$vID]    = count ($error) > 0 ? $error : $row['id'];
+                            $retVal[$manip->getName(true)][$vID]    = $error ? $error : $row['id'];
                         }
                         else if ($isError)
                         {
@@ -118,10 +118,10 @@ class ModelHandler extends HandlerHelper
                         
                         if ($isManip)
                         {
-                            $error  = $manip->getError ();
+                            $error  = $manip->getModelError ();
                             $row    = $manip->getRow ();
 
-                            $retVal[$manip->getName(true)][$vID]    = count ($error) > 0 ? $error : $row['id'];
+                            $retVal[$manip->getName(true)][$vID]    = $error > 0 ? $error : $row['id'];
                         }
                         else if ($isError)
                         {
@@ -142,10 +142,10 @@ class ModelHandler extends HandlerHelper
                         
                         if ($isManip)
                         {
-                            $error  = $manip->getError ();
+                            $error  = $manip->getModelError ();
                             $row    = $manip->getRow ();
                             
-                            $retVal[$manip->getName (true)][$vID]   = count ($error) > 0 ? $error : self::deleteRow ($manip);
+                            $retVal[$manip->getName (true)][$vID]   = $error ? $error : self::deleteRow ($manip);
                         }
                         else if ($isError)
                         {
@@ -158,9 +158,9 @@ class ModelHandler extends HandlerHelper
                     }
                     else 
                     {
-                        $error  = new ErrorHandler (583);
+                        $error  = new ErrorHandler (ErrorCodeHelper::$_AUTH_NOT_ENOUGH_PRIVILEGES);
                         
-                        $retVal[$model][$vID]   = $error->getErrorMessage ();
+                        $retVal[$model][$vID]   = $error->getError ();
                     }
                 } 
             }
@@ -169,37 +169,38 @@ class ModelHandler extends HandlerHelper
         return $retVal;
     }
     
-    private static function updateRow( $model, $row )
+    private static function updateRow ($model, $row)
     {
         $oSql       = Sql::getInstance ();        
-        $blacklist  = array( 'status', 'ID', 'id' );
+        $blacklist  = array ('status', 'ID', 'id');
        
         $set        = '';
         $where      = '';
         $id         = 0;
         
-        foreach( $row as $col => $value )
+        foreach ($row as $col => $value)
         {
-            if( !in_array( $col, $blacklist ) ) 
+            if (!in_array ($col, $blacklist)) 
             { 
-                $set   .= '`'.$oSql->real_escape_string( $col ).'`="'.$oSql->real_escape_string( $value ).'",';
+                $set   .= '`'.$oSql->real_escape_string ($col).'`="'.$oSql->real_escape_string ($value).'",';
             }
         }
         
-        $set    = ( strlen( $set ) > 0 )? substr( $set, 0, strlen( $set ) - 1 ) : false;
+        $set    = strlen ($set) > 0 ? substr ($set, 0, strlen ($set) - 1) : false;
         
-        // TODO: Implement Check if query success:
-        if( $set )  
+        if ($set)  
         {
-            $id     = isset( $row['ID'] ) ? (int)$row['ID'] : (int)$row['id'];
-            $query  = 'UPDATE `'.$oSql->real_escape_string( $model ).'` SET '.$set.' WHERE `'.$model.'`.`ID`='.$id.';';
+            $id     = isset ($row['ID']) ? (int)$row['ID'] : (int)$row['id'];
+            $query  = 'UPDATE `'.$oSql->real_escape_string ($model).'` SET '.$set.' WHERE `'.$model.'`.`ID`='.$id.';';
 
-            $oSql->query( $query );
+            $oSql->query ($query);
+            
+            $errno  = $oSql->lastError (true);
+
+            return !$errno ? $id : $this->getError ($errno);
         }
-
-        $errno  = $oSql->lastError ();
-
-        return  $errno === 0 ? $id : $this->error ($errno);
+        
+        return $this->getError (ErrorCodeHelper::$_SQL_INVALID_ARGUMENTS);
     }
     
     public static function fetchModel ($params)
@@ -258,15 +259,17 @@ class ModelHandler extends HandlerHelper
 
                 $result = $oSql->query ($query);
 
-                $errno  = mysqli_errno ($oSql->getConnection ());
+                $errno  = $oSql->mapError (mysqli_errno ($oSql->getConnection ()));
 
                 if ($errno === 0)
                 {
-                    $retDef[$model] = (is_array ( $result ) && count ($result) > 0)? $result : array ();
+                    $retDef[$model] = (is_array ($result) && count ($result) > 0) ? $result : array ();
                 }
                 else
                 {
-                    return new ErrorHandler ($errno, false);
+                    $error  = new ErrorHandler ($errno);
+                    
+                    return $error->getError ();
                 }
             }
         }
@@ -282,11 +285,13 @@ class ModelHandler extends HandlerHelper
         
         if (isset ($defData[$model]['deleted']) && $defData[$model]['deleted'] === 'number')
         {
-            return $manip->set ('deleted', 1)->update ();
+            $updated    = $manip->set ('deleted', 1)->update ();
+
+            return $updated ? $updated : $manip->getModelError ();
         }
 
-        $error  = new ErrorHandler (1011);
+        $error  = new ErrorHandler (ErrorCodeHelper::$_SQL_ERROR_ON_DELETE);
         
-        return $error->getErrorMessage ();
+        return $error->getError ();
     }
 }

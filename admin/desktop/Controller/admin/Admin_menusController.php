@@ -34,7 +34,7 @@ class Admin_menusController extends ControllerHelper implements ControllerInterf
                     ->result ();
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function postModel (\Model $model)           {}

@@ -50,7 +50,7 @@ class NewsController extends ProductsHelper
 
         $posted = $result->post ();
         
-        return $posted ? $posted : $this->error ($this->SQL_ERR_ON_POST);
+        return $posted ? $posted : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
     }
 
     public function updateModel (Model $model)  
@@ -67,7 +67,7 @@ class NewsController extends ProductsHelper
 
         $updated        = $result->update ();
         
-        return $updated ? $updated: $this->error ($this->SQL_ERR_ON_UPDATE);
+        return $updated ? $updated: $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE);
     }
     
     public function deleteModel (Model $model)  {}

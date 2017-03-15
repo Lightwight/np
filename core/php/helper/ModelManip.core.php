@@ -40,7 +40,7 @@ class ModelManip extends HandlerHelper
         $this->lModel           = strtolower (substr ($model, 0, 1)).substr ($model, 1);
         
         $this->row              = is_array ($row) && count ($row) === 1 && array_key_exists (0, $row) ? $row[0] : $row;
-        $this->_error            = array ();
+        $this->_error           = false;
 
         if (isset ($this->row['ID'])) 
         {
@@ -106,9 +106,9 @@ class ModelManip extends HandlerHelper
 
                 $oSql->query ($query);
 
-                $errno  = $oSql->lastError ();
+                $errno  = $oSql->lastError (true);
 
-                if ($errno === 0)
+                if ($errno === false)
                 {
                     $fetcher            = new Model ($this->hModel);
                     $fetchedRow         = $fetcher->findBy ('id', $id)->result ();
@@ -125,7 +125,9 @@ class ModelManip extends HandlerHelper
                     }               
                     else
                     {
-                        $this->_error    = $this->error ($this->SQL_ERR_UNKNOWN_COLUMN);
+                        $error          = new ErrorHandler (ErrorCodeHelper::$_SQL_UNKNOWN_COLUMN);
+                        
+                        $this->_error   = $error->getError ();
 
                         return false;
                     }
@@ -133,7 +135,9 @@ class ModelManip extends HandlerHelper
                 }
                 else
                 {
-                    $this->_error    = $this->error ($errno);
+                    $error          = new ErrorHandler ($errno);
+
+                    $this->_error   = $error->getError ();
 
                     return false;
                 }
@@ -180,9 +184,9 @@ class ModelManip extends HandlerHelper
             $query .= $cols.' VALUES '.$vals.';';
 
             $id     = $oSql->query ($query);
-            $errno  = $oSql->lastError ($oSql->getConnection ());
+            $errno  = $oSql->lastError (true);
                
-            if ($errno === 0)
+            if ($errno === false)
             {
                 foreach ($row as $column => $val)
                 {
@@ -200,14 +204,17 @@ class ModelManip extends HandlerHelper
             }
             else
             {
-                $this->_error    = $this->error ($errno, false);
+                $error          = new ErrorHandler ($errno);
+
+                $this->_error   = $error->getError ();
                 
                 return false;
             }
         }
         else 
         {
-            $this->_error    = $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
+            $error          = new ErrorHandler (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
+            $this->_error   = $error->getError ();
             
             return false;
         }        
@@ -230,15 +237,16 @@ class ModelManip extends HandlerHelper
 
             $oSql->query ($query);
             
-            $errno  = $oSql->lastError ();
+            $errno  = $oSql->lastError (true);
             
-            if ($errno === 0)
+            if ($errno === false)
             {
                 return true;
             }
             else
             {
-                $this->_error    = $this->error ($errno);
+                $error          = new ErrorHandler ($errno);
+                $this->_error   = $error->getError ();
                 
                 return false;
             }
@@ -280,6 +288,6 @@ class ModelManip extends HandlerHelper
         }
     }
     
-    public function postable ()     { return $this->postable;   }
-    public function getError ()     { return $this->_error;     }
+    public function postable ()         { return $this->postable;   }
+    public function getModelError ()    { return $this->_error;     }
 }

@@ -38,129 +38,126 @@
   flex-direction: row;
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap; }
-  .np-scope-admin .flexbox > .flexrow {
-    /*            padding-left: 12px;
-                padding-right: 12px;*/ }
-    .np-scope-admin .flexbox > .flexrow.flex-end {
-      text-align: end;
-      padding-right: 0px; }
-    .np-scope-admin .flexbox > .flexrow.menu-bar {
-      margin-top: 12px; }
-      .np-scope-admin .flexbox > .flexrow.menu-bar > .btn {
-        float: right; }
-        .np-scope-admin .flexbox > .flexrow.menu-bar > .btn .fa {
-          font-size: 12px; }
-    .np-scope-admin .flexbox > .flexrow.small {
-      line-height: 14px;
-      font-size: 12px;
-      color: #777; }
-    .np-scope-admin .flexbox > .flexrow.flexrow-1 {
-      width: 10%;
-      -webkit-box-flex: 1;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 1;
-      /* OLD - Firefox 19- */
-      -webkit-flex: 1;
-      /* Chrome */
-      -ms-flex: 1;
-      /* IE 10 */
-      flex: 1; }
-    .np-scope-admin .flexbox > .flexrow.flexrow-2 {
-      width: 20%;
-      -webkit-box-flex: 2;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 2;
-      /* OLD - Firefox 19- */
-      -webkit-flex: 2;
-      /* Chrome */
-      -ms-flex: 2;
-      /* IE 10 */
-      flex: 2; }
-    .np-scope-admin .flexbox > .flexrow.flexrow-3 {
-      width: 30%;
-      -webkit-box-flex: 3;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 3;
-      /* OLD - Firefox 19- */
-      -webkit-flex: 3;
-      /* Chrome */
-      -ms-flex: 3;
-      /* IE 10 */
-      flex: 3; }
-    .np-scope-admin .flexbox > .flexrow.flexrow-4 {
-      width: 40%;
-      -webkit-box-flex: 4;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 4;
-      /* OLD - Firefox 19- */
-      -webkit-flex: 4;
-      /* Chrome */
-      -ms-flex: 4;
-      /* IE 10 */
-      flex: 4; }
-    .np-scope-admin .flexbox > .flexrow.flexrow-5 {
-      width: 50%;
-      -webkit-box-flex: 5;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 5;
-      /* OLD - Firefox 19- */
-      -webkit-flex: 5;
-      /* Chrome */
-      -ms-flex: 5;
-      /* IE 10 */
-      flex: 5; }
-    .np-scope-admin .flexbox > .flexrow.flexrow-6 {
-      width: 60%;
-      -webkit-box-flex: 6;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 6;
-      /* OLD - Firefox 19- */
-      -webkit-flex: 6;
-      /* Chrome */
-      -ms-flex: 6;
-      /* IE 10 */
-      flex: 6; }
-    .np-scope-admin .flexbox > .flexrow.flexrow-7 {
-      width: 70%;
-      -webkit-box-flex: 7;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 7;
-      /* OLD - Firefox 19- */
-      -webkit-flex: 7;
-      /* Chrome */
-      -ms-flex: 7;
-      /* IE 10 */
-      flex: 7; }
-    .np-scope-admin .flexbox > .flexrow.flexrow-8 {
-      width: 80%;
-      -webkit-box-flex: 8;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 8;
-      /* OLD - Firefox 19- */
-      -webkit-flex: 8;
-      /* Chrome */
-      -ms-flex: 8;
-      /* IE 10 */
-      flex: 8; }
-    .np-scope-admin .flexbox > .flexrow.flexrow-9 {
-      width: 90%;
-      -webkit-box-flex: 9;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 9;
-      /* OLD - Firefox 19- */
-      -webkit-flex: 9;
-      /* Chrome */
-      -ms-flex: 9;
-      /* IE 10 */
-      flex: 9; }
-    .np-scope-admin .flexbox > .flexrow.flexrow-10 {
-      width: 100%;
-      -webkit-box-flex: 10;
-      /* OLD - iOS 6-, Safari 3.1-6 */
-      -moz-box-flex: 10;
-      /* OLD - Firefox 19- */
-      -webkit-flex: 10;
-      /* Chrome */
-      -ms-flex: 10;
-      /* IE 10 */
-      flex: 10; }
+  .np-scope-admin .flexbox > .flexrow.flex-end {
+    text-align: end;
+    padding-right: 0px; }
+  .np-scope-admin .flexbox > .flexrow.menu-bar {
+    margin-top: 12px; }
+    .np-scope-admin .flexbox > .flexrow.menu-bar > .btn {
+      float: right; }
+      .np-scope-admin .flexbox > .flexrow.menu-bar > .btn .fa {
+        font-size: 12px; }
+  .np-scope-admin .flexbox > .flexrow.small {
+    line-height: 14px;
+    font-size: 12px;
+    color: #777; }
+  .np-scope-admin .flexbox > .flexrow.flexrow-1 {
+    width: 10%;
+    -webkit-box-flex: 1;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 1;
+    /* OLD - Firefox 19- */
+    -webkit-flex: 1;
+    /* Chrome */
+    -ms-flex: 1;
+    /* IE 10 */
+    flex: 1; }
+  .np-scope-admin .flexbox > .flexrow.flexrow-2 {
+    width: 20%;
+    -webkit-box-flex: 2;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 2;
+    /* OLD - Firefox 19- */
+    -webkit-flex: 2;
+    /* Chrome */
+    -ms-flex: 2;
+    /* IE 10 */
+    flex: 2; }
+  .np-scope-admin .flexbox > .flexrow.flexrow-3 {
+    width: 30%;
+    -webkit-box-flex: 3;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 3;
+    /* OLD - Firefox 19- */
+    -webkit-flex: 3;
+    /* Chrome */
+    -ms-flex: 3;
+    /* IE 10 */
+    flex: 3; }
+  .np-scope-admin .flexbox > .flexrow.flexrow-4 {
+    width: 40%;
+    -webkit-box-flex: 4;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 4;
+    /* OLD - Firefox 19- */
+    -webkit-flex: 4;
+    /* Chrome */
+    -ms-flex: 4;
+    /* IE 10 */
+    flex: 4; }
+  .np-scope-admin .flexbox > .flexrow.flexrow-5 {
+    width: 50%;
+    -webkit-box-flex: 5;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 5;
+    /* OLD - Firefox 19- */
+    -webkit-flex: 5;
+    /* Chrome */
+    -ms-flex: 5;
+    /* IE 10 */
+    flex: 5; }
+  .np-scope-admin .flexbox > .flexrow.flexrow-6 {
+    width: 60%;
+    -webkit-box-flex: 6;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 6;
+    /* OLD - Firefox 19- */
+    -webkit-flex: 6;
+    /* Chrome */
+    -ms-flex: 6;
+    /* IE 10 */
+    flex: 6; }
+  .np-scope-admin .flexbox > .flexrow.flexrow-7 {
+    width: 70%;
+    -webkit-box-flex: 7;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 7;
+    /* OLD - Firefox 19- */
+    -webkit-flex: 7;
+    /* Chrome */
+    -ms-flex: 7;
+    /* IE 10 */
+    flex: 7; }
+  .np-scope-admin .flexbox > .flexrow.flexrow-8 {
+    width: 80%;
+    -webkit-box-flex: 8;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 8;
+    /* OLD - Firefox 19- */
+    -webkit-flex: 8;
+    /* Chrome */
+    -ms-flex: 8;
+    /* IE 10 */
+    flex: 8; }
+  .np-scope-admin .flexbox > .flexrow.flexrow-9 {
+    width: 90%;
+    -webkit-box-flex: 9;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 9;
+    /* OLD - Firefox 19- */
+    -webkit-flex: 9;
+    /* Chrome */
+    -ms-flex: 9;
+    /* IE 10 */
+    flex: 9; }
+  .np-scope-admin .flexbox > .flexrow.flexrow-10 {
+    width: 100%;
+    -webkit-box-flex: 10;
+    /* OLD - iOS 6-, Safari 3.1-6 */
+    -moz-box-flex: 10;
+    /* OLD - Firefox 19- */
+    -webkit-flex: 10;
+    /* Chrome */
+    -ms-flex: 10;
+    /* IE 10 */
+    flex: 10; }

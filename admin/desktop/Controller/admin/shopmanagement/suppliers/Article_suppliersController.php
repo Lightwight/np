@@ -81,7 +81,7 @@ class Article_suppliersController extends ControllerHelper implements Controller
             );
         }
         
-        return $this->error ($this->SQL_ERR_ON_POST);
+        return $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
     }
 
     public function updateModel (\Model $model)         {}

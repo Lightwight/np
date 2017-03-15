@@ -254,7 +254,7 @@ class CheckoutController extends PaymentHelper
                 
                 $updated    = $currentOrder->update ();
 
-                return $updated ? 1 : $this->error ($this->SQL_ERR_ON_UPDATE);
+                return $updated ? 1 : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE);
             }
             else
             {
@@ -267,11 +267,11 @@ class CheckoutController extends PaymentHelper
                 
                 $posted     = $resOrder->post ();
 
-                return $posted ? 1 : $this->error ($this->SQL_ERR_ON_POST);
+                return $posted ? 1 : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
             }
         }
 
-        return $this->error ($this->PAY_ERR_INVALID_ARGS);
+        return $this->getError (ErrorCodeHelper::$_PAYMENT_IVALID_PAYMENT_DATA);
     }
     
     public function postAddress ($params)
@@ -287,7 +287,7 @@ class CheckoutController extends PaymentHelper
             return $billingPosted && $shippingPosted;
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     private function updateAuthUser ($gender, $prename, $name)
@@ -373,8 +373,15 @@ class CheckoutController extends PaymentHelper
                 $success    = $posted ? true : false;
             }
         }
-
-        return $success ? 1 : new ErrorHandler (1064);
+        
+        if ($success)
+        {
+            return 1;
+        }
+        
+        $error  = new ErrorHandler (ErrorCodeHelper::$_SQL_SYNTAX_ERROR);
+        
+        return $error->getError ();
     }
     
     private function postShippingAddress ($params)
@@ -452,8 +459,15 @@ class CheckoutController extends PaymentHelper
                 $success    = $posted ? true : false;
             }
         }
-
-        return $success ? 1 : new ErrorHandler (1064);
+        
+        if ($success)
+        {
+            return 1;
+        }
+        
+        $error  = new ErrorHandler (ErrorCodeHelper::$_SQL_SYNTAX_ERROR);
+        
+        return $error->getError ();
     }
     
     public function postCompany ($company, $ustid)
@@ -486,14 +500,14 @@ class CheckoutController extends PaymentHelper
                 $success    = $posted ? true : false;
             }
             
-            return $success ? 1 : $this->error ($this->REQ_ERR_INVALID_ARGS);
+            return $success ? 1 : $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
         }
         else if (!$this->loggedIn())
         {
-            return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+            return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
         }
         
-        return $this->error($this->REQ_ERR_NOT_FOUND);
+        return $this->getError (ErrorCodeHelper::$_REQ_EMPTY_RESULT);
     }
     
     public function confirmOrder ($dInfo = false, $gateway = false)
@@ -553,7 +567,7 @@ class CheckoutController extends PaymentHelper
             return $mCheckout->result ();
         } 
         
-        $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+        $this->getAddress (ErrorCodeHelper::$_REQ_INVALID_ARGS);
                 
         return 0;
     }
@@ -592,7 +606,7 @@ class CheckoutController extends PaymentHelper
             return $mCheckout->result ();
         }
         
-        $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+        $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
 
         return 0;
     }
@@ -655,7 +669,7 @@ class CheckoutController extends PaymentHelper
             return $mCheckout->result ();
         }
         
-        $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+        $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
         
         return 0;        
     }
@@ -694,7 +708,7 @@ class CheckoutController extends PaymentHelper
             return $mCheckout->result ();
         }
         
-        $this->error ($this->REQ_ERR_INVALID_ARGS, true);
+        $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
         
         return 0;
     }

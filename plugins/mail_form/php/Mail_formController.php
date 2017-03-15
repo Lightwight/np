@@ -104,7 +104,7 @@ class Mail_formController extends ControllerHelper
             return $this->mail ($to, $subject, $body, $altBody);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function addMailForm ($params)
@@ -200,7 +200,7 @@ class Mail_formController extends ControllerHelper
                     $result->set ('content', json_encode ($fData));
                     $result->set ('user_id', $userID);
 
-                    return $result->update () ? $fieldID : $this->error ($this->SQL_ERR_ON_UPDATE);
+                    return $result->update () ? $fieldID : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE);
                 }
                 else
                 {
@@ -215,12 +215,12 @@ class Mail_formController extends ControllerHelper
 
                     $mContent->resetResult ();
 
-                    return $mContent->add ($contentRow)->result ()->post () ? $fieldID : $this->error ($this->SQL_ERR_ON_POST);
+                    return $mContent->add ($contentRow)->result ()->post () ? $fieldID : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
                 }
             }
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function updateMailForm ($params)
@@ -281,10 +281,10 @@ class Mail_formController extends ControllerHelper
                 }
             }
 
-            return $this->error ($this->SQL_ERR_UNKNOWN_COLUMN);
+            return $this->getError (ErrorCodeHelper::$_SQL_UNKNOWN_COLUMN);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function deleteMailFormField ($params)
@@ -329,9 +329,9 @@ class Mail_formController extends ControllerHelper
                 return $result->update ();
             }
 
-            return $this->error ($this->REQ_ERR_INVALID_ARGS);
+            return $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
 }

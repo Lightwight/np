@@ -98,9 +98,9 @@ class User_ordersController extends ControllerHelper implements ControllerInterf
         } 
         else if (!$orderID)
         {
-            return $this->error ($this->REQ_ERR_INVALID_ARGS, false);
+            return $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
         }
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
 
     public function postModel (\Model $model)   {}
@@ -119,7 +119,7 @@ class User_ordersController extends ControllerHelper implements ControllerInterf
             return $userOrder->update ();
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED, false);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function deleteModel (\Model $model)         {}

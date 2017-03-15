@@ -120,7 +120,7 @@ class SliderController extends ControllerHelper
                     $result->set ('content', json_encode ($slides));
                     $result->set ('user_id', $userID);
 
-                    return $result->update () ? $slideID : $this->error ($this->SQL_ERR_ON_UPDATE);
+                    return $result->update () ? $slideID : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE);
                 }
                 else
                 {
@@ -135,12 +135,12 @@ class SliderController extends ControllerHelper
 
                     $mContent->resetResult ();
 
-                    return $mContent->add ($contentRow)->result ()->post () ? $slideID : $this->error ($this->SQL_ERR_ON_POST);
+                    return $mContent->add ($contentRow)->result ()->post () ? $slideID : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
                 }
             }
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function updateSlides ($params)
@@ -164,10 +164,10 @@ class SliderController extends ControllerHelper
                 return $result->update ();
             }
 
-            return $this->error ($this->SQL_ERR_UNKNOWN_COLUMN);
+            return $this->getError (ErrorCodeHelper::$_SQL_UNKNOWN_COLUMN);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function deleteSlide ($params)
@@ -212,9 +212,9 @@ class SliderController extends ControllerHelper
                 return $result->update ();
             }
 
-            return $this->error ($this->REQ_ERR_INVALID_ARGS);
+            return $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
 }

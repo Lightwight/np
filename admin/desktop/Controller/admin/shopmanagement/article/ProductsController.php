@@ -45,7 +45,7 @@ class ProductsController extends ControllerHelper implements ControllerInterface
             return $product;
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     private function getProduct ($model, $id)
@@ -141,7 +141,7 @@ class ProductsController extends ControllerHelper implements ControllerInterface
                 );
             }
 
-            return $this->error ($this->SQL_ERR_ON_POST);
+            return $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
         }        
     }
     
@@ -205,7 +205,7 @@ class ProductsController extends ControllerHelper implements ControllerInterface
             return $model->result ();
         }
         
-        return $this->errorMessage ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     private function saveArticlePaymentGateways ($product)

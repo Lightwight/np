@@ -944,16 +944,19 @@ class Model extends ControllerHelper
         }
 
         $result         = $oSql->query ($querySelect);
-        $errno          = mysqli_errno ($oSql->getConnection ());
+        
+        $errno          = $oSql->lastError (true);
 
-        if ($errno === 0)
+        if ($errno === false)
         {
             $retDef[$model] = (is_array ($result) && count ($result) > 0) ? $result : array ();
             $retDef[$model] = $this->translate ($retDef[$model]);
         }
         else
         {
-            return new ErrorHandler ($errno, false);
+            $error  = new ErrorHandler ($errno);
+            
+            return $error->getError ();
         }  
         
         $this->resetResult ();

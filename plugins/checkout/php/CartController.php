@@ -83,7 +83,7 @@ class CartController extends ProductsHelper
             {
                 $updated    = $this->updateCart ($product, $article_id, $uPrice, $uAgio, $uTax, $uStock, $rAmount);
 
-                if (!$updated)  { return $this->error ($this->SQL_ERR_PARSE_ERROR); }
+                if (!$updated)  { return $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE); }
             }
 
             $product['amount']  = (int)$rAmount;
@@ -105,7 +105,7 @@ class CartController extends ProductsHelper
             return $mProduct;
         }
 
-        return $this->error ($this->REQ_ERR_NOT_FOUND);
+        return $this->getError (ErrorCodeHelper::$_REQ_EMPTY_RESULT);
     }
     
     /*
@@ -163,7 +163,7 @@ class CartController extends ProductsHelper
             {
                 $updated    = $this->updateCart ($article_id, $uPrice, $uAgio, $uTax, $uStock, $rAmount);
 
-                if (!$updated)  { return $this->error ($this->SQL_ERR_PARSE_ERROR); }
+                if (!$updated)  { return $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE); }
             }
 
             $product['amount']  = (int)$rAmount;
@@ -185,7 +185,7 @@ class CartController extends ProductsHelper
             return $mProduct;
         }
 
-        return $this->error ($this->REQ_ERR_NOT_FOUND);
+        return $this->getError (ErrorCodeHelper::$_REQ_EMPTY_RESULT);
     }
     
     public function updateArticle ($article)
@@ -233,7 +233,7 @@ class CartController extends ProductsHelper
             {
                 $updated    = $this->updateCart ($product, $article_id, $uPrice, $uAgio, $uTax, $uStock, $rAmount);
 
-                if (!$updated)  { return $this->error ($this->SQL_ERR_PARSE_ERROR); }
+                if (!$updated)  { return $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE); }
             }
 
             $product['amount']  = (int)$rAmount;
@@ -255,7 +255,7 @@ class CartController extends ProductsHelper
             return $mProduct;
         }
 
-        return $this->error ($this->REQ_ERR_NOT_FOUND);        
+        return $this->getError (ErrorCodeHelper::$_REQ_EMPTY_RESULT);
     }
     
     public function removeArticle ($article_id)
@@ -271,10 +271,10 @@ class CartController extends ProductsHelper
             $mCheckout  = new Model ('Checkout', true);
             $mCheckout->add (array ('differsFromOrder' => $this->differsFromOrder()));
             
-            return $removed ? $mCheckout->result () : $this->error ($this->SQL_ERR_PARSE_ERROR);
+            return $removed ? $mCheckout->result () : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_DELETE);
         }
         
-        return $this->error ($this->REQ_ERR_NOT_FOUND);
+        return $this->getError (ErrorCodeHelper::$_REQ_EMPTY_RESULT);
     }
     
     public function getCart ()

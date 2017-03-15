@@ -29,7 +29,7 @@ class AuthController extends ControllerHelper
         $result     = $model->result();
         $user       = $result ? $result : false;
         
-        return $user ? Auth::login ($user->get ('email'), $user->get ('password'), $user->get ('stayLoggedIn')) : $this->error ($this->REQ_ERR_INVALID_ARGS);
+        return $user ? Auth::login ($user->get ('email'), $user->get ('password'), $user->get ('stayLoggedIn')) : $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
     }
     
     public function logout ()
@@ -41,7 +41,7 @@ class AuthController extends ControllerHelper
     {
         $user   = $model->result ();
         
-        return $user ? Auth::register ($user) : $this->error ($this->REQ_ERR_INVALID_ARGS);
+        return $user ? Auth::register ($user) : $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
     }
     
     public function adminRegister (Model $registerModel, Model $userModel)
@@ -49,7 +49,7 @@ class AuthController extends ControllerHelper
         $register   = $registerModel->result ();
         $user       = $userModel->result ();
         
-        return $user && $register ? Auth::adminRegister ($register, $user) : $this->error ($this->REQ_ERR_INVALID_ARGS);
+        return $user && $register ? Auth::adminRegister ($register, $user) : $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
     }
     
     public function getRegisterConfirmation ($code)

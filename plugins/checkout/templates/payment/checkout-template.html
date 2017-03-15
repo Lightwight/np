@@ -2,230 +2,160 @@
     <div class="wrapper">
         {{#ifCheckout}}
             {{#view "CheckoutView"}}
-                {{#ifNot this.Checkout.validAdress}}
-                    {{#partial checkout-overview-view}}
-                {{else}}
-                    {{#view "CheckoutPaymentView"}}
-                        {{#if Checkout.invalidGateway}}
-                            <div class="note-container">
-                                <div class="note">
-                                    <span class="pull-left t-left fullwidth">
-                                        Sie haben einen Artikel im Warenkorb, der nicht {{Checkout.currentGateway.prefix}} "{{Checkout.currentGateway.name}}" bezahlt werden kann.<br><br>
-                                        Da Ihre derzeitig ausgewählte Zahlungsart "{{Checkout.currentGateway.name}}" ist, bitten wir Sie, eine andere Zahlungsart auszuwählen um mit der Bestellung fortfahren zu können.
-                                    </span>
+                {{#view "CheckoutPaymentView"}}
+                    <form>
+                        <label>W&auml;hlen Sie Ihre Zahlungsart</label>
+
+                        {{#div class="form-group payment"}}
+                            
+                            {{#a $="isPayPalEnabled" init=true click="payPerPayPal" href="#" class="btn btn-secondary btn-chevron big btn-paypal"}}
+                                <span class="text hidden-xs">Ich möchte mit</span>
+                                <span class="text visible-xs">mit</span>
+                                <span class="fa fa-paypal payment-logo"></span>
+                                <span class="text hidden-xs">PayPal bezahlen</span>
+                                <span class="text visible-xs">PayPal</span>
+                                <span class="sr-only">mit paypal bezahlen</span>
+                            {{/a}}
+                            
+                        {{/div}}
+                        {{#div $="isPayPalSelected" init=true class="form-paypal form-payment"}}
+                            {{#div $="contactedPayPalLabel" class="form-label"}}PayPal wird kontaktiert{{/div}}
+                            {{#div $="preparePayPal" class="form-info prepare no-border"}}
+                                Bitte haben Sie einen Augenblick Geduld. PayPal wird für die Zahlung vorbereitet ... 
+                                {{#span $="isSendingPayPal" class="cssload-container white"}}
+                                    <span class="cssload-speeding-wheel"></span>
+                                {{/span}}
+                            {{/div}}
+
+                            {{#div $="contactedPayPal" class="form-info prepare"}}PayPal konnte kontaktiert werden. <span class="icon fa fa-check"></span>{{/div}}
+                            {{#div $="contactedPayPal" class="form-info contacted"}}
+                                Klicken Sie nun auf den Button - Weiterleiten - um auf die PayPal-Seite
+                                zu gelangen und folgen Sie den dortigen Anweisungen.
+                                Danach werden Sie wieder auf unsere Homepage zurückgeleitet
+                                und Sie haben dann die Möglichkeit, Ihre Bestellung zu
+                                überprüfen und ggfs. zu ändern.<br><br>
+                                HINWEIS: Die Zahlung wird erst wirksam, sobald Sie Ihre 
+                                Bestellung auf "shisha.de" bestätigt haben.
+                            {{/div}}
+
+                            {{#div $="failedPayPal" class="form-info prepare"}}PayPal konnte nicht kontaktiert werden. <span class="icon glyphicon glyphicon-ban-circle"></span>{{/div}}
+                            {{#div $="failedPayPal" class="form-info contacted"}}
+                                Das kann folgende Gr&uuml;nde haben:<br><br>
+                                1) PayPal ist derzeitig offline.<br><br>
+                                Versuchen Sie es in ein paar Minuten erneut. M&ouml;glicherweise
+                                ist PayPal dann wieder online.<br><br>
+                                2) Sie haben gerade keine Internetverbindung.<br><br>
+                                Warten Sie ca. 5 bis 10 Minuten, bis Ihr Internetprovider die Verbindung wiedergergestellt hat.
+                                Sollten Sie dann immer noch keine Verbindung haben, dann kontaktieren Sie Ihren Internetprovider.
+                                3) Es finden gerade Wartungsarbeiten statt.<br><br>
+                                Versuchen Sie es in einer Stunde erneut. Bis dahin sollte die
+                                Bezahlung per PayPal wieder m&ouml;glich sein.<br><br>
+                            {{/div}}
+
+                            <div class="menu-bar">
+                                <a class="link" href="/datenschutz">
+                                    <span class="small">Datenschutzbestimmungen</span>
+                                </a>
+
+                                {{#button type="button" click="processPayPal" $="redirectPayPalEnabled" init=true class="disabled btn btn-primary btn-chevron pull-right"}}
+                                    <span class="text">Weiterleiten</span>
+                                    <span class="sr-only">Weiterleiten</span>
+                                {{/button}}
+                            </div>
+                        {{/div}}
+
+                        {{#div class="form-group payment"}}
+                            {{#a $="isDebitEnabled" init=true click="processDebit" href="#" class="btn btn-secondary btn-chevron big btn-debit"}}
+                                <span class="text hidden-xs">Ich möchte per</span>
+                                <span class="text visible-xs">per</span>
+                                <span class="fa fa-credit-card payment-logo"></span>
+                                <span class="text hidden-xs">Lastschrift bezahlen</span>
+                                <span class="text visible-xs">Lastschrift</span>
+                                <span class="sr-only">per lastschrift bezahlen</span>
+                            {{/a}}
+                        {{/div}}
+
+                        {{#div $="isDebitSelected" class="form-debit form-payment"}}
+                            <div class="form-label">WICHTIG: Kontodaten eintragen</div>
+                            <div class="form-info">Tragen Sie in dasd untere IBAN Feld Ihre Kontodaten ein</div>
+                            <div class="form-group fullwidth text-container">
+                                <label>Zahlungsempfänger:</label><span>SHISHA</span>
+                                <label>Gläubiger-Identifikationsnummer:</label><span>DEXXX</span>
+                                <label>Mandatsreferenz:</label><span>Die Mandatsreferenz wird Ihnen in einer separaten E-Mail zugesendet, nachdem der Auftrag durchgeführt wurde.</span>
+                            </div>
+                            <div class="form-group fullwidth text-container">
+                                <h3 class="pull-left">SEPA-Lastschrift-Mandat</h3>
+                                <div>Ich ermächtige die SHISHA, Straße 5, 520066 Aachen (Gläubiger Identifikationsnummer DEXXX), im Rahmen eines Dauermandats, (wiederkehrend) Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der SHISHA auf mein Konto gezogenen Lastschriften einzulösen.</div>
+                                <div class="divide"></div>
+                                <div>Ich bin damit einverstanden, dass die Frist, mit der mir der SEPA-Lastschrifteinzug spätestens vorab angekündigt wird, auf 5 Tage verkürzt wird.</div>
+                                <div class="divide"></div>
+                                <div>HINWEIS: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrags verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.</div>
+                            </div>
+
+                            <div class="form-group user-info fullwidth">
+                                <label>Vorname und Name (Kontoinhaber):</label>
+                                <div class="sepa-owner">{{Checkout.user.name}}, {{Checkout.user.prename}}</div>
+                                <label>Strasse und Hausnummer:</label>
+                                <div class="sepa-street">{{Checkout.billing.street}}</div>
+                                <label>PLZ und Ort:</label>
+                                <div class="sepa-city">{{Checkout.billing.postal}} {{Checkout.billing.city}}</div>
+                                <label>Land:</label>
+                                <div class="sepa-country">{{Checkout.billing.country}}</div>
+                            </div>
+
+                            <div class="form-group fullwidth">
+                                <label>IBAN:</label> 
+                                <div class="iban-wrapper">
+                                    <div class="iban-placeholder">
+                                        {{#div change="setIBAN" $="maskIBAN" init=true data-length="4" class="iban-input iban0" contenteditable="true"}}{{Checkout.iban0}}{{/div}}
+                                        {{#div change="setIBAN" $="maskIBAN" data-length="4" class="iban-input iban1" contenteditable="true"}}{{Checkout.iban1}}{{/div}}
+                                        {{#div change="setIBAN" $="maskIBAN" data-length="4" class="iban-input iban2" contenteditable="true"}}{{Checkout.iban2}}{{/div}}
+                                        {{#div change="setIBAN" $="maskIBAN" data-length="4" class="iban-input iban3" contenteditable="true"}}{{Checkout.iban3}}{{/div}}
+                                        {{#div change="setIBAN" $="maskIBAN" data-length="4" class="iban-input iban4" contenteditable="true"}}{{Checkout.iban4}}{{/div}}
+                                        {{#div change="setIBAN" $="maskIBAN" data-length="2" class="iban-input iban5" contenteditable="true"}}{{Checkout.iban5}}{{/div}}
+
+                                        {{#different Checkout.billing.country "Deutschland"}}
+                                            {{#div change="setIBAN" $="maskIBAN" data-length="12" class="iban-input iban6" contenteditable="true"}}{{Checkout.iban6}}{{/div}}
+                                        {{/different}}
+                                    </div>
                                 </div>
                             </div>
-                        {{/if}}
-                        <form>
-                            <label>W&auml;hlen Sie Ihre Zahlungsart</label>
 
-                            {{#div $="isPayPalAvailable" init=true class="no-display"}}
-                                {{#div class="form-group payment"}}
-                                    {{#a $="isPayPalEnabled" init=true click="payPerPayPal" href="#" class="btn btn-secondary btn-chevron big btn-paypal"}}
-                                        <span class="text hidden-xs">Ich möchte mit</span>
-                                        <span class="text visible-xs">mit</span>
-                                        <span class="fa fa-paypal payment-logo"></span>
-                                        <span class="text hidden-xs">PayPal bezahlen</span>
-                                        <span class="text visible-xs">PayPal</span>
-                                        <span class="sr-only">mit paypal bezahlen</span>
-                                    {{/a}}
-                                {{/div}}
-                                {{#div $="isPayPalSelected" init=true class="form-paypal form-payment"}}
-                                    {{#div $="contactedPayPalLabel" class="form-label"}}PayPal wird kontaktiert{{/div}}
-                                    {{#div $="preparePayPal" class="form-info prepare no-border"}}
-                                        Bitte haben Sie einen Augenblick Geduld. PayPal wird für die Zahlung vorbereitet ... 
-                                        {{#span $="isSendingPayPal" class="cssload-container transparent"}}
-                                            <span class="cssload-speeding-wheel"></span>
-                                        {{/span}}
-                                    {{/div}}
+                            {{#different Checkout.billing.country "Deutschland"}}
+                                <div class="form-group fullwidth">
+                                    <label>SWIFT/BIC:</label>
+                                    {{{input change="setBIC" bindAttr="bic" class="form-control sepa-bic" type="text"}}}
+                                </div>
+                            {{/different}}
 
-                                    {{#div $="contactedPayPal" class="form-info prepare"}}PayPal konnte kontaktiert werden. <span class="icon fa fa-check"></span>{{/div}}
-                                    {{#div $="contactedPayPal" class="form-info contacted"}}
-                                        Klicken Sie nun auf den Button - Weiterleiten - um auf die PayPal-Seite
-                                        zu gelangen und folgen Sie den dortigen Anweisungen.
-                                        Danach werden Sie wieder auf unsere Homepage zurückgeleitet
-                                        und Sie haben dann die Möglichkeit, Ihre Bestellung zu
-                                        überprüfen und ggfs. zu ändern.<br><br>
-                                        HINWEIS: Die Zahlung wird erst wirksam, sobald Sie Ihre 
-                                        Bestellung auf "shisha.de" bestätigt haben.
-                                    {{/div}}
+                            <div class="form-group user-sign fullwidth">
+                                <div class="group">
+                                    <div class="sign-city">{{Checkout.billing.city}}</div>
+                                    <label>Ort</label>
+                                </div>
+                                <div class="group">
+                                    <div class="sign-date">{{now "d.m.Y H:i"}} Uhr</div>
+                                    <label>Datum / Uhrzeit</label>
+                                </div>
 
-                                    {{#div $="failedPayPal" class="form-info prepare"}}PayPal konnte nicht kontaktiert werden. <span class="icon glyphicon glyphicon-ban-circle"></span>{{/div}}
-                                    {{#div $="failedPayPal" class="form-info contacted"}}
-                                        Das kann folgende Gr&uuml;nde haben:<br><br>
-                                        1) PayPal ist derzeitig offline.<br><br>
-                                        Versuchen Sie es in ein paar Minuten erneut. M&ouml;glicherweise
-                                        ist PayPal dann wieder online.<br><br>
-                                        2) Sie haben gerade keine Internetverbindung.<br><br>
-                                        Warten Sie ca. 5 bis 10 Minuten, bis Ihr Internetprovider die Verbindung wiedergergestellt hat.
-                                        Sollten Sie dann immer noch keine Verbindung haben, dann kontaktieren Sie Ihren Internetprovider.
-                                        3) Es finden gerade Wartungsarbeiten statt.<br><br>
-                                        Versuchen Sie es in einer Stunde erneut. Bis dahin sollte die
-                                        Bezahlung per PayPal wieder m&ouml;glich sein.<br><br>
-                                    {{/div}}
+                                <div class="group clear">
+                                    <div class="sign-signature">{{Checkout.user.prename}} {{Checkout.user.name}}</div>
+                                    <label>Unterschrift</label>
+                                </div>
+                            </div>
 
-                                    <div class="menu-bar">
-                                        <a class="link" href="/datenschutz">
-                                            <span class="small">Datenschutzbestimmungen</span>
-                                        </a>
+                            <div class="form-group fullwidth">
+                                <a href="/datenschutz" class="pull-left">
+                                    <span class="small">Datenschutzbestimmungen</span>
+                                </a>
+                            </div>
 
-                                        {{#button type="button" click="processPayPal" $="redirectPayPalEnabled" init=true class="disabled btn btn-primary btn-chevron pull-right"}}
-                                            <span class="text">Weiterleiten</span>
-                                            <span class="sr-only">Weiterleiten</span>
-                                        {{/button}}
-                                    </div>
-                                {{/div}}
-                            {{/div}}
-
-                            {{#div $="isDebitAvailable" init=true class="no-display"}}
-                                {{#div class="form-group payment"}}
-                                    {{#a $="isDebitEnabled" init=true click="processDebit" href="#" class="btn btn-secondary btn-chevron big btn-debit"}}
-                                        <span class="text hidden-xs">Ich möchte per</span>
-                                        <span class="text visible-xs">per</span>
-                                        <span class="fa fa-credit-card payment-logo"></span>
-                                        <span class="text hidden-xs">Lastschrift bezahlen</span>
-                                        <span class="text visible-xs">Lastschrift</span>
-                                        <span class="sr-only">per lastschrift bezahlen</span>
-                                    {{/a}}
-                                {{/div}}
-                                {{#div $="isDebitSelected" class="form-debit form-payment"}}
-                                    <div class="form-label">WICHTIG: Kontodaten eintragen</div>
-                                    <div class="form-info">Tragen Sie in dasd untere IBAN Feld Ihre Kontodaten ein</div>
-                                    <div class="form-group fullwidth text-container">
-                                        <label>Zahlungsempfänger:</label><span>SHISHA</span>
-                                        <label>Gläubiger-Identifikationsnummer:</label><span>DEXXX</span>
-                                        <label>Mandatsreferenz:</label><span>Die Mandatsreferenz wird Ihnen in einer separaten E-Mail zugesendet, nachdem der Auftrag durchgeführt wurde.</span>
-                                    </div>
-                                    <div class="form-group fullwidth text-container">
-                                        <h3 class="pull-left">SEPA-Lastschrift-Mandat</h3>
-                                        <div>Ich ermächtige die SHISHA, Straße 5, 520066 Aachen (Gläubiger Identifikationsnummer DEXXX), im Rahmen eines Dauermandats, (wiederkehrend) Zahlungen von meinem Konto mittels Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der SHISHA auf mein Konto gezogenen Lastschriften einzulösen.</div>
-                                        <div class="divide"></div>
-                                        <div>Ich bin damit einverstanden, dass die Frist, mit der mir der SEPA-Lastschrifteinzug spätestens vorab angekündigt wird, auf 5 Tage verkürzt wird.</div>
-                                        <div class="divide"></div>
-                                        <div>HINWEIS: Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrags verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.</div>
-                                    </div>
-
-                                    <div class="form-group user-info fullwidth">
-                                        <label>Vorname und Name (Kontoinhaber):</label>
-                                        <div class="sepa-owner">{{Checkout.user.name}}, {{Checkout.user.prename}}</div>
-                                        <label>Strasse und Hausnummer:</label>
-                                        <div class="sepa-street">{{Checkout.billing.street}}</div>
-                                        <label>PLZ und Ort:</label>
-                                        <div class="sepa-city">{{Checkout.billing.postal}} {{Checkout.billing.city}}</div>
-                                        <label>Land:</label>
-                                        <div class="sepa-country">{{Checkout.billing.country}}</div>
-                                    </div>
-
-                                    <div class="form-group fullwidth">
-                                        <label>IBAN:</label> 
-                                        <div class="iban-wrapper">
-                                            <div class="iban-placeholder">
-                                                {{#div change="setIBAN" $="maskIBAN" init=true data-length="4" class="iban-input iban0" contenteditable="true"}}{{Checkout.iban0}}{{/div}}
-                                                {{#div change="setIBAN" $="maskIBAN" data-length="4" class="iban-input iban1" contenteditable="true"}}{{Checkout.iban1}}{{/div}}
-                                                {{#div change="setIBAN" $="maskIBAN" data-length="4" class="iban-input iban2" contenteditable="true"}}{{Checkout.iban2}}{{/div}}
-                                                {{#div change="setIBAN" $="maskIBAN" data-length="4" class="iban-input iban3" contenteditable="true"}}{{Checkout.iban3}}{{/div}}
-                                                {{#div change="setIBAN" $="maskIBAN" data-length="4" class="iban-input iban4" contenteditable="true"}}{{Checkout.iban4}}{{/div}}
-                                                {{#div change="setIBAN" $="maskIBAN" data-length="2" class="iban-input iban5" contenteditable="true"}}{{Checkout.iban5}}{{/div}}
-
-                                                {{#different Checkout.billing.country "Deutschland"}}
-                                                    {{#div change="setIBAN" $="maskIBAN" data-length="12" class="iban-input iban6" contenteditable="true"}}{{Checkout.iban6}}{{/div}}
-                                                {{/different}}
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    {{#different Checkout.billing.country "Deutschland"}}
-                                        <div class="form-group fullwidth">
-                                            <label>SWIFT/BIC:</label>
-                                            {{{input change="setBIC" bindAttr="bic" class="form-control sepa-bic" type="text"}}}
-                                        </div>
-                                    {{/different}}
-
-                                    <div class="form-group user-sign fullwidth">
-                                        <div class="group">
-                                            <div class="sign-city">{{Checkout.billing.city}}</div>
-                                            <label>Ort</label>
-                                        </div>
-                                        <div class="group">
-                                            <div class="sign-date">{{now "d.m.Y H:i"}} Uhr</div>
-                                            <label>Datum / Uhrzeit</label>
-                                        </div>
-
-                                        <div class="group clear">
-                                            <div class="sign-signature">{{Checkout.user.prename}} {{Checkout.user.name}}</div>
-                                            <label>Unterschrift</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group fullwidth">
-                                        <a href="/datenschutz" class="pull-left">
-                                            <span class="small">Datenschutzbestimmungen</span>
-                                        </a>
-                                    </div>
-
-                                    <div class="menu-bar">
-                                        {{#div $="failedDebit" class="form-debit"}}
-                                            <div class="form-label">
-                                                <span class="glyphicon glyphicon-info-sign"></span>
-                                                Auswahl "Bank&uuml;berweisung" fehlgeschlagen.
-                                            </div>
-                                            <div class="form-info">
-                                                Die Bezahlung per Bank&uuml;berweisung ist im Moment nicht m&ouml;glich.<br><br>
-                                                Das kann folgende Gr&uuml;nde haben:<br><br>
-                                                1) Es finden gerade Wartungsarbeiten statt.<br><br>
-                                                Versuchen Sie es in einer Stunde erneut. Bis dahin sollte die
-                                                Bezahlung per Nachnahme wieder m&ouml;glich sein.<br><br>
-                                                2) Sie haben gerade keine Internetverbindung.<br><br>
-                                                Warten Sie ca. 5 bis 10 Minuten, bis Ihr Internetprovider die Verbindung wiedergergestellt hat.
-                                                Sollten Sie dann immer noch keine Verbindung haben, dann kontaktieren Sie Ihren Internetprovider.
-                                            </div>
-                                        {{/div}}
-
-                                        {{#button type="button" click="payPerDebit" $="debitDataValid" init=true class="disabled btn btn-primary btn-chevron pull-right"}}
-                                            <span class="text">Kontodaten &uuml;bernehmen</span>
-                                            <span class="sr-only">Kontodaten &uuml;bernehmen</span>
-                                        {{/button}}
-                                    </div>
-                                {{/div}}
-                            {{/div}}
-
-                            {{#div $="isBankTransferAvailable" init=true class="no-display"}}
-                                {{#div class="form-group payment"}}
-                                    {{#a $="isBankTransferEnabled" init=true click="payPerBankTransfer" href="#" class="btn btn-secondary btn-chevron big btn-bank-transfer"}}
-                                        <span class="text hidden-xs">Ich möchte per </span>
-                                        <span class="text visible-xs">per </span>
-                                        <span class="fa fa-university payment-logo"></span>
-                                        <span class="text hidden-xs">Bank&uuml;berweisung bezahlen</span>
-                                        <span class="text visible-xs">Bank&uuml;berweisung</span>
-                                        <span class="sr-only">per Banküberweisung bezahlen</span>
-                                    {{/a}}
-                                {{/div}}
-                                {{#div $="successBankTransfer" init=true class="form-bank-transfer form-payment"}}
-                                    <div class="form-label">Kontodaten aufschreiben</div>
-                                    <div class="form-info">Schreiben Sie sich die folgenden Kontodaten für Ihre &Uuml;berweisung auf</div>
-                                    <div class="form-group fullwidth">
-                                        <label>Zahlungsempfänger</label>
-                                        <div class="form-control fullwidth">SHISHA</div>
-                                    </div>
-                                    <div class="form-group fullwidth">
-                                        <label>IBAN</label>
-                                        <div class="form-control fullwidth">DEXXX</div>
-                                    </div>
-
-                                    <div class="form-group fullwidth">
-                                        <label>BIC</label>
-                                        <div class="form-control fullwidth">HXXX</div>
-                                    </div>
-                                    <div class="form-group fullwidth">
-                                        <label>Verwendungszweck</label>
-                                        <div class="form-control fullwidth">{{Checkout.orderID}}</div>
-                                    </div>
-                                {{/div}}
-                                {{#div $="failedBankTransfer" class="form-bank-transfer form-payment"}}
+                            <div class="menu-bar">
+                                {{#div $="failedDebit" class="form-debit"}}
                                     <div class="form-label">
                                         <span class="glyphicon glyphicon-info-sign"></span>
                                         Auswahl "Bank&uuml;berweisung" fehlgeschlagen.
-                                    </div><br>
+                                    </div>
                                     <div class="form-info">
                                         Die Bezahlung per Bank&uuml;berweisung ist im Moment nicht m&ouml;glich.<br><br>
                                         Das kann folgende Gr&uuml;nde haben:<br><br>
@@ -236,59 +166,113 @@
                                         Warten Sie ca. 5 bis 10 Minuten, bis Ihr Internetprovider die Verbindung wiedergergestellt hat.
                                         Sollten Sie dann immer noch keine Verbindung haben, dann kontaktieren Sie Ihren Internetprovider.
                                     </div>
-                                {{/div}}  
-                            {{/div}}
-
-                            {{#div $="isCODAvailable" init=true class="no-display"}}
-                                {{#div class="form-group payment"}}
-                                    {{#a $="isCODEnabled" init=true click="payPerCOD" href="#" class="btn btn-secondary btn-chevron big"}}
-                                        <span class="text hidden-xs">Ich möchte per</span>
-                                        <span class="text visible-xs">per</span>
-                                        <span class="fa fa-briefcase payment-logo"></span>
-                                        <span class="text hidden-xs">Nachnahme bezahlen</span>
-                                        <span class="text visible-xs">Nachnahme</span>
-                                        <span class="sr-only">per Nachnahme bezahlen</span>
-
-                                        {{#span $="isSendingCOD" class="cssload-container big"}}
-                                            <span class="cssload-speeding-wheel"></span>
-                                        {{/span}}
-                                    {{/a}}
                                 {{/div}}
-                                {{#div $="successCOD" init=true class="form-cod form-payment"}}
-                                    <div class="form-label">Bezahlung per Nachnahme</div>
-                                    <div class="form-info">
-                                        Sie haben sich f&uuml;r die Bezahlung per Nachnahme entschieden und bezahlen Ihre Ware erst, sobald diese bei Ihnen angekommen ist.
-                                    </div>
-                                {{/div}}                    
-                                {{#div $="failedCOD" class="form-cod form-payment"}}
-                                    <div class="form-label">
-                                        <span class="glyphicon glyphicon-info-sign"></span>
-                                        Auswahl "Bezahlung per Nachnahme" fehlgeschlagen.
-                                    </div>
-                                    <div class="form-info">
-                                        Die Bezahlung per Nachnahme ist im Moment nicht m&ouml;glich.<br><br>
-                                        Das kann folgende Gr&uuml;nde haben:<br><br>
-                                        1) Es finden gerade Wartungsarbeiten statt.<br><br>
-                                        Versuchen Sie es in einer Stunde erneut. Bis dahin sollte die
-                                        Bezahlung per Nachnahme wieder m&ouml;glich sein.<br><br>
-                                        2) Sie haben gerade keine Internetverbindung.<br><br>
-                                        Warten Sie ca. 5 bis 10 Minuten, bis Ihr Internetprovider die Verbindung wiedergergestellt hat.
-                                        Sollten Sie dann immer noch keine Verbindung haben, dann kontaktieren Sie Ihren Internetprovider.
-                                    </div>
-                                {{/div}}   
-                            {{/div}}
-                        </form>
-                    {{/view}}
 
-                    {{#a $="enableCheckoutNextStep" id="checkoutStep3" click="nextStep" init=true href="#" class="btn btn-primary btn-chevron checkout-next-step pull-right disabled"}}
-                        <span class="text">Bestellung pr&uuml;fen</span>
-                        <span class="sr-only">Bestellung pr&uuml;fen</span>
+                                {{#button type="button" click="payPerDebit" $="debitDataValid" init=true class="disabled btn btn-primary btn-chevron pull-right"}}
+                                    <span class="text">Kontodaten &uuml;bernehmen</span>
+                                    <span class="sr-only">Kontodaten &uuml;bernehmen</span>
+                                {{/button}}
+                            </div>
+                        {{/div}}
 
-                        {{#span $="isSending" class="cssload-container"}}
-                            <span class="cssload-speeding-wheel"></span>
-                        {{/span}}
-                    {{/a}}
-                {{/ifNot}}
+                        {{#div class="form-group payment"}}
+                            {{#a $="isBankTransferEnabled" init=true click="payPerBankTransfer" href="#" class="btn btn-secondary btn-chevron big btn-bank-transfer"}}
+                                <span class="text hidden-xs">Ich möchte per </span>
+                                <span class="text visible-xs">per </span>
+                                <span class="fa fa-university payment-logo"></span>
+                                <span class="text hidden-xs">Bank&uuml;berweisung bezahlen</span>
+                                <span class="text visible-xs">Bank&uuml;berweisung</span>
+                                <span class="sr-only">per Banküberweisung bezahlen</span>
+                            {{/a}}
+                        {{/div}}
+                        {{#div $="successBankTransfer" init=true class="form-bank-transfer form-payment"}}
+                            <div class="form-label">Kontodaten aufschreiben</div>
+                            <div class="form-info">Schreiben Sie sich die folgenden Kontodaten für Ihre &Uuml;berweisung auf</div>
+                            <div class="form-group fullwidth">
+                                <label>Zahlungsempfänger</label>
+                                <div class="form-control fullwidth">SHISHA</div>
+                            </div>
+                            <div class="form-group fullwidth">
+                                <label>IBAN</label>
+                                <div class="form-control fullwidth">DEXXX</div>
+                            </div>
+
+                            <div class="form-group fullwidth">
+                                <label>BIC</label>
+                                <div class="form-control fullwidth">HXXX</div>
+                            </div>
+                            <div class="form-group fullwidth">
+                                <label>Verwendungszweck</label>
+                                <div class="form-control fullwidth">{{Checkout.orderID}}</div>
+                            </div>
+                        {{/div}}    
+
+                        {{#div $="failedBankTransfer" class="form-bank-transfer form-payment"}}
+                            <div class="form-label">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                                Auswahl "Bank&uuml;berweisung" fehlgeschlagen.
+                            </div><br>
+                            <div class="form-info">
+                                Die Bezahlung per Bank&uuml;berweisung ist im Moment nicht m&ouml;glich.<br><br>
+                                Das kann folgende Gr&uuml;nde haben:<br><br>
+                                1) Es finden gerade Wartungsarbeiten statt.<br><br>
+                                Versuchen Sie es in einer Stunde erneut. Bis dahin sollte die
+                                Bezahlung per Nachnahme wieder m&ouml;glich sein.<br><br>
+                                2) Sie haben gerade keine Internetverbindung.<br><br>
+                                Warten Sie ca. 5 bis 10 Minuten, bis Ihr Internetprovider die Verbindung wiedergergestellt hat.
+                                Sollten Sie dann immer noch keine Verbindung haben, dann kontaktieren Sie Ihren Internetprovider.
+                            </div>
+                        {{/div}}       
+
+                        {{#div class="form-group payment"}}
+                            {{#a $="isCODEnabled" init=true click="payPerCOD" href="#" class="btn btn-secondary btn-chevron big"}}
+                                <span class="text hidden-xs">Ich möchte per</span>
+                                <span class="text visible-xs">per</span>
+                                <span class="fa fa-briefcase payment-logo"></span>
+                                <span class="text hidden-xs">Nachnahme bezahlen</span>
+                                <span class="text visible-xs">Nachnahme</span>
+                                <span class="sr-only">per Nachnahme bezahlen</span>
+                                
+                                {{#span $="isSendingCOD" class="cssload-container big"}}
+                                    <span class="cssload-speeding-wheel"></span>
+                                {{/span}}
+                            {{/a}}
+                        {{/div}}
+
+                        {{#div $="successCOD" init=true class="form-cod form-payment"}}
+                            <div class="form-label">Bezahlung per Nachnahme</div>
+                            <div class="form-info">
+                                Sie haben sich f&uuml;r die Bezahlung per Nachnahme entschieden und bezahlen Ihre Ware erst, sobald diese bei Ihnen angekommen ist.
+                            </div>
+                        {{/div}}                    
+
+                        {{#div $="failedCOD" class="form-cod form-payment"}}
+                            <div class="form-label">
+                                <span class="glyphicon glyphicon-info-sign"></span>
+                                Auswahl "Bezahlung per Nachnahme" fehlgeschlagen.
+                            </div>
+                            <div class="form-info">
+                                Die Bezahlung per Nachnahme ist im Moment nicht m&ouml;glich.<br><br>
+                                Das kann folgende Gr&uuml;nde haben:<br><br>
+                                1) Es finden gerade Wartungsarbeiten statt.<br><br>
+                                Versuchen Sie es in einer Stunde erneut. Bis dahin sollte die
+                                Bezahlung per Nachnahme wieder m&ouml;glich sein.<br><br>
+                                2) Sie haben gerade keine Internetverbindung.<br><br>
+                                Warten Sie ca. 5 bis 10 Minuten, bis Ihr Internetprovider die Verbindung wiedergergestellt hat.
+                                Sollten Sie dann immer noch keine Verbindung haben, dann kontaktieren Sie Ihren Internetprovider.
+                            </div>
+                        {{/div}}                    
+                    </form>
+                {{/view}}
+
+                {{#a $="enableCheckoutNextStep" id="checkoutStep3" click="nextStep" init=true href="#" class="btn btn-primary btn-chevron checkout-next-step disabled"}}
+                    <span class="text">Bestellung pr&uuml;fen</span>
+                    <span class="sr-only">Bestellung pr&uuml;fen</span>
+
+                    {{#span $="isSending" class="cssload-container"}}
+                        <span class="cssload-speeding-wheel"></span>
+                    {{/span}}
+                {{/a}}
             {{/view}}
         {{else}}       
             {{#partial checkout-empty-cart}}

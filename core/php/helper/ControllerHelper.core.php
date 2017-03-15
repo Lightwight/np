@@ -173,7 +173,7 @@ class ControllerHelper extends HandlerHelper
             $mailer->AltBody    = $altBody.($plainSign ? "\r\n\r\n".'_________________'."\r\n\r\n".$htmlSign : '');        
         }
 
-        return $mailer->send () ? true : $this->error ($this->MAIL_ERR_SEND);
+        return $mailer->send () ? true : $this->getError (ErrorCodeHelper::$_MAIL_ERR_SEND);
     }
     
     protected function hash ($value)

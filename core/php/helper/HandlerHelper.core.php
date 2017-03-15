@@ -41,16 +41,13 @@ class HandlerHelper
     protected $SQL_ERR_ON_POST                      = 2000;
     protected $SQL_ERR_ON_UPDATE                    = 2001;
     
-    protected function error ($errorNumber, $sendHeader = true)
+    protected function getError ($errno = 0, $returnAsObject = true)
     {
-        return new ErrorHandler ($errorNumber, $sendHeader);
+        $error  = new ErrorHandler ($errno);
+        
+        return $error->getError ($returnAsObject);
     }
     
-    protected function errorMessage ($errorNumber, $sendHeader = true)
-    {
-        return new ErrorHandler ($errorNumber, $sendHeader, true);
-    }
-
     protected function prepareOutput ($result)
     {
         $fetched    = array ();
@@ -68,7 +65,7 @@ class HandlerHelper
             {
                 if (is_object ($manip) && get_class ($manip) === 'ModelManip')
                 {
-                    $error      = $manip->getError ();
+                    $error      = $manip->getModelError ();
                     $row        = $manip->getRow ();    
                     $name       = $manip->getName ();
 
@@ -91,7 +88,7 @@ class HandlerHelper
                     foreach ($manip as $subManip)
                     {
 
-                        $error      = $subManip->getError ();
+                        $error      = $subManip->getModelError ();
                         $row        = $subManip->getRow ();    
                         $name       = $subManip->getName ();
 
@@ -118,11 +115,11 @@ class HandlerHelper
         }
         else if ($isManip)
         {
-            $error      = $result->getError ();
+            $error      = $result->getModelError ();
             $row        = $result->getRow ();    
             $name       = $result->getName ();
 
-            if (count ($error) > 0)
+            if ($error > 0)
             {
                 $fetched[$name] = $error;
             }

@@ -30,9 +30,6 @@
         @include flex-wrap(wrap);
         
         > .flexrow {
-/*            padding-left: 12px;
-            padding-right: 12px;*/
-            
             &.flex-end {
                 text-align: end;
                 padding-right: 0px;

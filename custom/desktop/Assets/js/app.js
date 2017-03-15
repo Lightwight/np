@@ -1,4 +1,4 @@
 np.setup.config ({
-    theme:      'blue_black',
+    theme:      '[YOUR_THEME_NAME_HERE]',
     debug:      false
 });

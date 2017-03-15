@@ -69,7 +69,7 @@ class SeoController extends ControllerHelper
             return 1;
         }
         
-        return $this->error ($this->REQ_ERR_INVALID_ARGS);
+        return $this->getEerror (ErrorCodeHelper::$_REQ_INVALID_ARGS);
     }
     
     public function exportSitemap ()
@@ -127,7 +127,7 @@ class SeoController extends ControllerHelper
             return 1;
         }
         
-        return $this->error ($this->REQ_ERR_INVALID_ARGS);        
+        return $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
     }
     
     
@@ -169,7 +169,7 @@ class SeoController extends ControllerHelper
             }
         }
 
-        return $updated && $inserted ? $updated : $this->error ($this->SQL_ERR_ON_UPDATE);        
+        return $updated && $inserted ? $updated : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE);
     }
     
     private function deleteRobots () 

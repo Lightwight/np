@@ -1,0 +1,56 @@
+{{#need model Article_variation_groups}}
+
+{{#yield modal-remove-group}}
+{{#partial cta-notification}}
+
+{{#view "AdminVariationGroupView" id="admin-variation-group-view" class="with-top-menu"}}
+    {{#equals AdminVariationGroup.id -2}}
+        <form class="bg-grey">
+            <h4 class="form-title">Variationsgruppe nicht gefunden</h4>
+            <div class="info-box">
+                Die Variationsgruppe konnte nicht gefunden werden. Möglicherweise haben Sie einen falschen Link aufgerufen.
+            </div>
+        </form>
+    {{else}}
+        <div class="top-menu">
+            {{#button $="disableSaveGroup" click="saveGroup" type="button" class="btn btn-icon big green pull-left"}}
+                <span class="fa fa-check"></span>
+                <span class="text">Variationsgruppe speichern</span>
+                <span class="sr-only">Variationsgruppe speichern</span>
+
+                {{#span $="savingGroup" class="cssload-container"}}
+                    <span class="cssload-speeding-wheel"></span>
+                {{/span}}
+            {{/button}}
+            
+            {{#different  AdminVariationGroup.id -1}}
+                {{#button click="removeGroup" type="button" class="btn btn-icon big red pull-left"}}
+                    <span class="fa fa-trash"></span>
+                    <span class="text">Variationsgruppe löschen</span>
+                    <span class="sr-only">Variationsgruppe löschen</span>
+
+                    {{#span $="deletingArticle" class="cssload-container"}}
+                        <span class="cssload-speeding-wheel"></span>
+                    {{/span}}
+                {{/button}}
+            {{/different}}
+
+            {{#a $="removedGroup" href="/admin/shopmanagement/variations/groups" class="btn btn-icon big orange pull-right"}}
+                <span class="fa fa-ban"></span>
+                <span class="text">Abbrechen</span>
+                <span class="sr-only">Abbrechen</span>
+            {{/a}}
+        </div>
+
+        <form class="bg-grey">
+            <h4 class="form-title">Variationsgruppe bearbeiten</h4>
+
+            <div class="form-group fullwidth">
+                <div class="form-group fullwidth">
+                    <label>Gruppenname</label>
+                    {{{input change="setGroupName" bindAttr="group_name" type="text" placeholder="Gruppenname" value=AdminVariationGroup.group_name class="input-name"}}}
+                </div>
+            </div>
+        </form>
+    {{/equals}}
+{{/view}}

@@ -141,7 +141,7 @@ class VitaController extends ControllerHelper
                     $result->set ('content', json_encode ($vData));
                     $result->set ('user_id', $userID);
 
-                    return $result->update () ? $vitaID : $this->error ($this->SQL_ERR_ON_UPDATE);
+                    return $result->update () ? $vitaID : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_UPDATE);
                 }
                 else
                 {
@@ -156,12 +156,12 @@ class VitaController extends ControllerHelper
 
                     $mContent->resetResult ();
 
-                    return $mContent->add ($contentRow)->result ()->post () ? $vitaID : $this->error ($this->SQL_ERR_ON_POST);
+                    return $mContent->add ($contentRow)->result ()->post () ? $vitaID : $this->getError (ErrorCodeHelper::$_SQL_ERROR_ON_POST);
                 }
             }
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function updateVita ($params)
@@ -218,10 +218,10 @@ class VitaController extends ControllerHelper
                 }
             }
 
-            return $this->error ($this->SQL_ERR_UNKNOWN_COLUMN);
+            return $this->getError (ErrorCodeHelper::$_SQL_UNKNOWN_COLUMN);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function deleteVita ($params)
@@ -266,9 +266,9 @@ class VitaController extends ControllerHelper
                 return $result->update ();
             }
 
-            return $this->error ($this->REQ_ERR_INVALID_ARGS);
+            return $this->getError (ErrorCodeHelper::$_REQ_INVALID_ARGS);
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
 }

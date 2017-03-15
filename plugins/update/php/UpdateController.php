@@ -69,14 +69,14 @@ class UpdateController extends ControllerHelper
                 }
                 else if ($code === 401)
                 {
-                    return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+                    return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
                 }
                 
-                return $this->error ($this->REQ_ERR_UNKNOWN);
+                return $this->getError (ErrorCodeHelper::$_SYS_ERR_UNKNOWN);
             }
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function update ()
@@ -109,7 +109,7 @@ class UpdateController extends ControllerHelper
 
         }
         
-        return $this->error ($this->AUTH_ERR_UNAUTHORIZED);  
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);  
     }
     
     private function createFileBackups ($majors)
@@ -272,18 +272,18 @@ class UpdateController extends ControllerHelper
                 }
                 else
                 {
-                    return $this->error ($this->REQ_ERR_UNKNOWN);
+                    return $this->getError (ErrorCodeHelper::$_SYS_ERR_UNKNOWN);
                 }
             }
             else if ($code === 401)
             {
-                return $this->error ($this->AUTH_ERR_UNAUTHORIZED);
+                return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
             }
 
-            return $this->error ($this->REQ_ERR_UNKNOWN);
+            return $this->getError (ErrorCodeHelper::$_SYS_ERR_UNKNOWN);
         }
 
-        return $this->error ($this->REQ_ERR_UNKNOWN);        
+        return $this->getError (ErrorCodeHelper::$_SYS_ERR_UNKNOWN);
     }
     
     private function validChecksum ($file, $checksum)
