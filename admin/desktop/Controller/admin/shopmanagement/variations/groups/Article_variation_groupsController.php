@@ -99,7 +99,12 @@ class Article_variation_groupsController extends ControllerHelper implements Con
 
     public function updateModel(\Model $model)
     {
-        return $this->getError (ErrorCodeHelper::$_REQ_EMPTY_RESULT);
+        if ($this->isGroup (1))
+        {
+            return $model->result ()->set ('deleted', 0)->update ();
+        }
+        
+        return $this->getError (ErrorCodeHelper::$_AUTH_UNAUTHORIZED);
     }
     
     public function deleteModel (\Model $model)         

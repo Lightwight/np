@@ -90,8 +90,10 @@ class ModelHandler extends HandlerHelper
                     {
                         $oModel     = new Model ($model);
                         $manip      = $controller->postModel ($oModel->add ($row));
+                        
                         $isManip    = is_object ($manip) && get_class ($manip) === 'ModelManip';
                         $isError    = is_object ($manip) && get_class ($manip) === 'ErrorHandler';
+                        $isNull     = $manip === null;
                         
                         if ($isManip)
                         {
@@ -104,6 +106,11 @@ class ModelHandler extends HandlerHelper
                         {
                             $retVal[$model][$vID]   = $manip->getError ();
                         }
+                        else if ($isNull)
+                        {
+                            $error                  = new ErrorHandler (ErrorCodeHelper::$_SYS_ERR_NOT_IMPLEMENTED);
+                            $retVal[$model][$vID]   = $error->getError (false);
+                        }
                         else
                         {
                             $retVal[$model][$vID]   = $manip;
@@ -113,19 +120,26 @@ class ModelHandler extends HandlerHelper
                     {
                         $oModel     = new Model ($model);
                         $manip      = $controller->updateModel ($oModel->add ($row));
+
                         $isManip    = is_object ($manip) && get_class ($manip) === 'ModelManip';
                         $isError    = is_object ($manip) && get_class ($manip) === 'ErrorHandler';
+                        $isNull     = $manip === null;
                         
                         if ($isManip)
                         {
                             $error  = $manip->getModelError ();
                             $row    = $manip->getRow ();
 
-                            $retVal[$manip->getName(true)][$vID]    = $error > 0 ? $error : $row['id'];
+                            $retVal[$manip->getName (true)][$vID]    = $error > 0 ? $error : $row['id'];
                         }
                         else if ($isError)
                         {
                             $retVal[$model][$vID]   = $manip->getError ();
+                        }
+                        else if ($isNull)
+                        {
+                            $error                  = new ErrorHandler (ErrorCodeHelper::$_SYS_ERR_NOT_IMPLEMENTED);
+                            $retVal[$model][$vID]   = $error->getError (false);
                         }
                         else
                         {
@@ -139,6 +153,7 @@ class ModelHandler extends HandlerHelper
                         
                         $isManip    = is_object ($manip) && get_class ($manip) === 'ModelManip';
                         $isError    = is_object ($manip) && get_class ($manip) === 'ErrorHandler';
+                        $isNull     = $manip === null;
                         
                         if ($isManip)
                         {
@@ -151,6 +166,11 @@ class ModelHandler extends HandlerHelper
                         {
                             $retVal[$model][$vID]   = $manip->getError ();
                         }
+                        else if ($isNull)
+                        {
+                            $error                  = new ErrorHandler (ErrorCodeHelper::$_SYS_ERR_NOT_IMPLEMENTED);
+                            $retVal[$model][$vID]   = $error->getError (false);
+                        }
                         else
                         {
                             $retVal[$model][$vID]   = $manip;
@@ -158,9 +178,8 @@ class ModelHandler extends HandlerHelper
                     }
                     else 
                     {
-                        $error  = new ErrorHandler (ErrorCodeHelper::$_AUTH_NOT_ENOUGH_PRIVILEGES);
-                        
-                        $retVal[$model][$vID]   = $error->getError ();
+                        $error                  = new ErrorHandler (ErrorCodeHelper::$_REQ_INVALID_ARGS);
+                        $retVal[$model][$vID]   = $error->getError (false);
                     }
                 } 
             }

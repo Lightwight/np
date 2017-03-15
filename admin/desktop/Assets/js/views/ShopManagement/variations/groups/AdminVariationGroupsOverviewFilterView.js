@@ -1,7 +1,3 @@
-/* current theme to display */
-/* For the content centering including menu and cart */
-/* For the main scollarea */
-/* for logo centering */
 /*
 *   This software called - np - is a lightwight MVP Framework for building web applications and
 *   was developed by Christian Peters
@@ -23,9 +19,19 @@
 *
 *   Contact: Christian Peters <c.peters.eshop@gmail.com>
 */
-.np-scope-admin #admin-products-overview-view .alert-deleted {
-  width: 100%;
-  max-width: 132px;
-  text-align: center;
-  margin-top: 12px;
-  line-height: 12px; }
+
+np.view.extend ('AdminVariationGroupsOverviewFilterView', (function () {
+    var _nsFilter;
+
+    _nsFilter   = '#admin-variation-groups-overview-filter select';
+
+    return {
+        didInsert: function () {
+            $(_nsFilter).niceSelect ();
+        },
+
+        setFilter: function (model) {
+            $(_nsFilter).val (model.get ('filter')).niceSelect ('update');
+        }
+    };
+})());

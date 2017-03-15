@@ -7,13 +7,11 @@
     </div>
 </a>
 
-{{#if this}}
-    {{#view "AdminVariationGroupsOverviewFilterView" id="admin-variation-groups-overview-filter"}}
-        <label class="small normal pull-left">Zeige</label>
-        {{#select $="setFilter" change="setFilter" init=true notifiy=false bindAttr="pr_filter" class="pull-left"}}
-            <option value="all">alle Gruppen</option>                    
-            <option value="not-deleted">nicht gelöschte Gruppen</option>
-            <option value="deleted">gelöschte Gruppen</option>                    
-        {{/select}}
-    {{/view}}
-{{/if}}
+{{#view "AdminVariationGroupsOverviewFilterView" id="admin-variation-groups-overview-filter" class="custom-filter"}}
+    <label class="small normal pull-left">Zeige</label>
+    {{#select $="setFilter" change="setFilter" init=true notifiy=false bindAttr="pr_filter" class="pull-left"}}
+        <option value="all">alle Gruppen</option>                    
+        <option value="not-deleted">nicht gelöschte Gruppen</option>
+        <option value="deleted">gelöschte Gruppen</option>                    
+    {{/select}}
+{{/view}}

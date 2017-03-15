@@ -7,7 +7,7 @@
     </div>
 </a>
 
-{{#view "AdminProductOverviewFilterView" id="admin-product-overview-filter"}}
+{{#view "AdminProductOverviewFilterView" id="admin-product-overview-filter" class="custom-filter"}}
     <label class="small normal pull-left">Zeige</label>
     {{#select $="setFilter" change="setFilter" init=true notifiy=false bindAttr="pr_filter" class="pull-left"}}
         <option value="all">alle Artikel</option>                    

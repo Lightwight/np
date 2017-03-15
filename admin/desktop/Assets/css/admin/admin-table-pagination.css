@@ -34,6 +34,26 @@
     float: left;
     margin-left: 8px;
     height: 34px; }
+    .np-scope-admin .admin-table-pagination .custom-controls .custom-filter {
+      position: relative;
+      float: left;
+      margin-left: 26px; }
+      .np-scope-admin .admin-table-pagination .custom-controls .custom-filter label {
+        line-height: 34px;
+        margin-bottom: 0px; }
+        .np-scope-admin .admin-table-pagination .custom-controls .custom-filter label.small {
+          line-height: 34px;
+          margin-bottom: 0px; }
+      .np-scope-admin .admin-table-pagination .custom-controls .custom-filter .nice-select {
+        margin-top: 0px;
+        margin-left: 12px;
+        line-height: 34px;
+        height: 34px;
+        width: auto; }
+        .np-scope-admin .admin-table-pagination .custom-controls .custom-filter .nice-select ul {
+          height: auto; }
+          .np-scope-admin .admin-table-pagination .custom-controls .custom-filter .nice-select ul li {
+            width: 100%; }
   .np-scope-admin .admin-table-pagination ul {
     list-style: none;
     float: right;

@@ -25,6 +25,7 @@ np.controller.extend ('AdminProductOverviewController', {
     model:  function () {
         this.sending    = false;
         this.removed    = false;
+        this.undeleted  = false;
         this.error      = false;
         
         return {
@@ -33,34 +34,6 @@ np.controller.extend ('AdminProductOverviewController', {
     },
     
     events: {
-        undeleteProduct: function () {
-            var _t;
-            
-            _t  = this;
-            
-            np.model.Products.findByID (_t.get ('id')).each (function (row) {
-                row.setDeleted (0);
-            });
-
-            _t.set ('sending', true);
-
-            np.model.Products
-            .save ()
-            .then (function (rsp) {
-                _t.set ('sending', false);
-                _t.set ('removed', true);
-                _t.set ('deleted', 0);
-                
-                np.notify ('Der Artikel wurde wiederhergestellt.').asSuccess ().timeout (2000).show ();
-                np.observable.removeContext ('AdminProduct', _t.get ('id'));
-            })
-            .fail (function (err) {
-                _t.set ('sending', false);
-        
-                np.notify ('Der Artikel konnte nicht wiederhergestellt werden.<br>' +err).asError ().timeout (4000).show ();
-            });
-        },
-
         removeProduct: function () {
             var _t;
             
@@ -90,6 +63,37 @@ np.controller.extend ('AdminProductOverviewController', {
                     _t.set ('removed', false);
                     
                 });                
+            });
+        },
+        
+        undeleteProduct: function () {
+            var _t, code, msg, error;
+            
+            _t  = this;
+            
+            np.model.Products.findByID (_t.get ('id')).each (function (row) {
+                row.setDeleted (0);
+            });
+
+            _t.set ('sending', true);
+            _t.set ('error', false);
+
+            np.model.Products
+            .save ()
+            .then (function (rsp) {
+                _t.set ('sending', false);
+                _t.set ('deleted', 0);
+                
+                np.notify ('Der Artikel wurde wiederhergestellt.').asSuccess ().timeout (2000).show ();
+                np.observable.removeContext ('AdminProduct', _t.get ('id'));
+            })
+            .fail (function (err) {
+                code    = err.code;
+                msg     = err.msg;
+
+                _t.set ('sending', false);
+        
+                np.notify ('Der Artikel konnte nicht wiederhergestellt werden.<br>' +err).asError ().timeout (4000).show ();
             });
         }
     }

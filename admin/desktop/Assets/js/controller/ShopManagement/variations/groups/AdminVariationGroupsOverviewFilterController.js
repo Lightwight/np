@@ -67,7 +67,7 @@ np.controller.extend ('AdminVariationGroupsOverviewFilterController', (function 
                     search  = search.split ('/')[0];
                 }
 
-                np.model.Products.flush ();
+                np.model.Article_variation_groups.flush ();
                 np.routeTo ('#/admin/shopmanagement/variations/groups/'+np.pagination.getPage ()+'/'+sortColumn+'/'+sortOrder+'/'+search+sAppend);
             }
         }

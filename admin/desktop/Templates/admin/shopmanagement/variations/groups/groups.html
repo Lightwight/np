@@ -1,5 +1,6 @@
 {{#need model Article_variation_groups}}
 
+{{#partial admin-modal-view}}
 {{#partial cta-notification}}
 
 {{#view "AdminVariationGroupsOverviewView" class="admin-overview"}}
@@ -49,11 +50,24 @@
                                         <div class="tooltip-arrow"></div>
                                     </div>
                                 </a>
-                                {{#button click="removeGroup" type="button" class="btn btn-icon red"}}
+                                {{#button $="disableRemoveGroup" init=true click="removeGroup" type="button" class="btn btn-icon red"}}
                                     <span class="fa fa-trash-o"></span>
                                     <span class="sr-only">Gruppe entfernen</span>
                                     <div class="tooltip left">
                                         <span>Gruppe entfernen</span>
+                                        <div class="tooltip-arrow"></div>
+                                    </div>
+                                {{/button}}
+                                {{#button $="disableUndeleteGroup" init=true click="undeleteGroup" type="button" class="btn btn-icon orange no-display"}}
+                                    <span class="fa fa-undo"></span>
+                                    <span class="sr-only">Gruppe {{AdminVariationGroup.group_name}} wiederherstellen</span>
+
+                                    {{#span $="sending" class="cssload-container"}}
+                                        <div class="cssload-speeding-wheel"></div>
+                                    {{/span}}
+                                    
+                                    <div class="tooltip left">
+                                        <span>Gruppe wiederherstellen</span>
                                         <div class="tooltip-arrow"></div>
                                     </div>
                                 {{/button}}

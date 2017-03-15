@@ -24,6 +24,8 @@ np.controller.extend ('AdminVariationGroupOverviewController', {
     view:   'AdminVariationGroupOverviewView',
     model:  function () {
         this.removed    = false;
+        this.success    = false;
+        this.error      = false;
         
         return {
             AdminVariationGroup: this
@@ -32,7 +34,7 @@ np.controller.extend ('AdminVariationGroupOverviewController', {
     
     events: {
         removeGroup: function () {
-            var _t;
+            var _t, code, msg, error;
             
             _t  = this;
             
@@ -44,22 +46,60 @@ np.controller.extend ('AdminVariationGroupOverviewController', {
                 });
 
                 _t.set ('sending', true);
+                _t.set ('success', false);
+                _t.set ('error', false);
 
                 np.model.Article_variation_groups
                 .save ()
                 .then (function (rsp) {
                     _t.set ('sending', false);
                     _t.set ('removed', true);
+                    _t.set ('success', 'Die Variationsgruppe wurde gelöscht');
+                    
                     _t.set ('deleted', 1);
-
                     np.observable.removeContext ('AdminVarationGroup', _t.get ('id'));
                 })
                 .fail (function (err) {
-                    _t.set ('error', err);
-                    _t.set ('sending', false);
-                    _t.set ('removed', false);
+                    code    = err.code;
+                    msg     = err.msg;
                     
+                    error   = 'Die Variationsgruppe konnte nicht gelöscht werden.<br>Code ['+code+'] : '+msg;
+                    
+                    _t.set ('sending', false);
+                    _t.set ('error', error);
                 });                
+            });
+        },
+        
+        undeleteGroup: function () {
+            var _t, code, msg, error;
+            
+            _t  = this;
+            
+            np.model.Article_variation_groups.findByID (_t.get ('id')).each (function (row) {
+                row.setDeleted (0);
+            });
+
+            _t.set ('sending', true);
+            _t.set ('success', false);
+            _t.set ('error', false);
+            
+            np.model.Article_variation_groups
+            .save ()
+            .then (function (rsp) {
+                _t.set ('sending', false);
+                _t.set ('success', 'Die Variationsgruppe wurde wiederhergestellt.');
+
+                _t.set ('deleted', 0);
+                np.observable.removeContext ('AdminVariationGroup', _t.get ('id'));
+            })
+            .fail (function (err) {
+                code    = err.code;
+                msg     = err.msg;
+                error   = 'Die Variationsgruppe konnte nicht wiederhergestellt werden.<br>Code ['+err.code+'] : '+err.msg;
+
+                _t.set ('sending', false);
+                _t.set ('error', error);
             });
         }
     }

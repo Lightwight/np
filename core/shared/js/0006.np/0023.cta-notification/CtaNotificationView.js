@@ -27,6 +27,9 @@ np.view.extend ('CtaNotificationView', (function () {
     
     return {
         setNotificationType: function (model) {
+            this.removeClass ('success');
+            this.removeClass ('fail');
+
             this.addClass (model.get ('type'));
         }.observes ('type').on ('change'),
 
